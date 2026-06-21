@@ -7,7 +7,7 @@ import { JsonLd, organizationSchema } from "@/lib/structured-data";
 const googleAnalyticsId = process.env.NEXT_PUBLIC_GA_ID;
 
 const splitCriticalCss = `
-.split-landing{position:relative;min-height:100svh;overflow:hidden;color:#fff;background:linear-gradient(145deg,#06142f 0%,#052469 56%,#003399 100%)}
+.split-landing{position:relative;min-height:100svh;min-height:100dvh;overflow:hidden;color:#fff;background:linear-gradient(145deg,#06142f 0%,#052469 56%,#003399 100%)}
 .landing-intro{position:relative;z-index:2;text-align:center}
 .landing-intro h1{margin:0;color:#fff;font-weight:780;line-height:1.02;letter-spacing:0}
 .split-grid{position:relative;z-index:2;display:grid}

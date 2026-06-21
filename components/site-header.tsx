@@ -62,6 +62,8 @@ export function SiteHeader({ navigationContext }: { navigationContext?: "funding
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const drawerRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
+  const openMenu = useCallback(() => setMenuOpen(true), []);
+  const closeMenu = useCallback(() => setMenuOpen(false), []);
 
   const getHrefParts = useCallback((href: string) => {
     const [rawPath = "", rawHash] = href.split("#");
@@ -159,7 +161,7 @@ export function SiteHeader({ navigationContext }: { navigationContext?: "funding
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        setMenuOpen(false);
+        closeMenu();
         return;
       }
       if (event.key !== "Tab" || !first || !last) return;
@@ -177,7 +179,7 @@ export function SiteHeader({ navigationContext }: { navigationContext?: "funding
       document.removeEventListener("keydown", handleKeyDown);
       menuButton?.focus();
     };
-  }, [menuOpen]);
+  }, [closeMenu, menuOpen]);
 
   const isActive = (href: string) => {
     const { path, hash } = getHrefParts(href);
@@ -188,7 +190,7 @@ export function SiteHeader({ navigationContext }: { navigationContext?: "funding
   };
 
   const handleNavigationClick = (event: MouseEvent<HTMLAnchorElement>, href: string) => {
-    setMenuOpen(false);
+    closeMenu();
     const { path, hash } = getHrefParts(href);
     const isSamePageAnchor = path === pathname && !href.includes("?");
     if (!isSamePageAnchor) return;
@@ -239,7 +241,7 @@ export function SiteHeader({ navigationContext }: { navigationContext?: "funding
         <span>Ai o întrebare?</span>
         {siteConfig.phoneHref && <a href={`tel:${siteConfig.phoneHref}`} aria-label={`Sună ${siteConfig.name}`} title={`Sună ${siteConfig.name}`}><Phone aria-hidden="true" /> {siteConfig.phoneDisplay}</a>}
         <a href={`mailto:${siteConfig.email}`} aria-label={`Trimite email către ${siteConfig.name}`} title={`Trimite email către ${siteConfig.name}`}><Mail aria-hidden="true" /> {siteConfig.email}</a>
-        <Link className="sidebar-cta" href={context.contactHref} onClick={() => setMenuOpen(false)} aria-label={`Solicită o discuție cu ${siteConfig.name}`} title={`Solicită o discuție cu ${siteConfig.name}`}>
+        <Link className="sidebar-cta" href={context.contactHref} onClick={closeMenu} aria-label={`Solicită o discuție cu ${siteConfig.name}`} title={`Solicită o discuție cu ${siteConfig.name}`}>
           Solicită o discuție
         </Link>
       </div>
@@ -266,10 +268,15 @@ export function SiteHeader({ navigationContext }: { navigationContext?: "funding
         <button
           ref={menuButtonRef}
           className="menu-button"
-          onClick={() => setMenuOpen(true)}
+          type="button"
+          onClick={openMenu}
+          onPointerDown={(event) => {
+            if (event.pointerType !== "mouse") openMenu();
+          }}
           aria-label="Deschide meniul"
           aria-expanded={menuOpen}
           aria-controls="mobile-navigation-drawer"
+          aria-haspopup="dialog"
         >
           <Menu aria-hidden="true" />
         </button>
@@ -285,8 +292,8 @@ export function SiteHeader({ navigationContext }: { navigationContext?: "funding
           aria-label={`Meniu ${context.label}`}
         >
           <div className="drawer-top">
-            <Link href="/" onClick={() => setMenuOpen(false)} aria-label={`${siteConfig.name}, pagina de alegere`} title={`${siteConfig.name}, pagina de alegere`}><Brand /></Link>
-            <button onClick={() => setMenuOpen(false)} aria-label="Închide meniul"><X aria-hidden="true" /></button>
+            <Link href="/" onClick={closeMenu} aria-label={`${siteConfig.name}, pagina de alegere`} title={`${siteConfig.name}, pagina de alegere`}><Brand /></Link>
+            <button type="button" onClick={closeMenu} aria-label="Închide meniul"><X aria-hidden="true" /></button>
           </div>
           <p className="drawer-context"><Sparkles /> {context.label}</p>
           {navContent}
