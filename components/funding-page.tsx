@@ -66,11 +66,11 @@ export function FundingPage() {
         "evaluare-fonduri",
         "intrebari-fonduri"
       ]} />
-      <section className="inner-hero funding-hero" id="funding-hero">
+      <section className="inner-hero funding-hero" id="funding-hero" aria-labelledby="funding-hero-title" aria-describedby="funding-hero-description">
         <div className="section-container inner-hero-content">
           <p className="eyebrow eyebrow-light"><Landmark /> Consultanță fonduri europene</p>
-          <h1>Consultanță fonduri europene<br />pentru proiecte <em>bine construite.</em></h1>
-          <p>Analiză responsabilă, documentație atentă și sprijin de la alegerea programului până la implementare.</p>
+          <h1 id="funding-hero-title">Consultanță fonduri europene<br />pentru proiecte <em>bine construite.</em></h1>
+          <p id="funding-hero-description">Analiză responsabilă, documentație atentă și sprijin de la alegerea programului până la implementare.</p>
           <div className="inner-hero-actions">
             <a className="primary-button yellow-button" href="/contact?service=fonduri-europene" aria-label="Solicită analiza inițială pentru fonduri europene" title="Solicită analiza inițială pentru fonduri europene">Solicită analiza inițială <ArrowRight aria-hidden="true" /></a>
             <a className="secondary-link" href="#servicii-fonduri" aria-label="Vezi serviciile de consultanță pentru fonduri europene" title="Vezi serviciile de consultanță pentru fonduri europene">Vezi serviciile</a>
@@ -84,36 +84,37 @@ export function FundingPage() {
       </section>
       <HeroBackgroundPreload selector=".funding-hero .section-container.inner-hero-content" />
 
-      <section className="content-section funding-section" id="servicii-fonduri">
+      <section className="content-section funding-section" id="servicii-fonduri" aria-labelledby="funding-services-title" aria-describedby="funding-services-description">
         <div className="section-container">
           <header className="section-title-row">
             <div>
               <p className="eyebrow"><Landmark /> Servicii complete</p>
-              <h2>Servicii de consultanță fonduri europene pentru proiecte <em>implementate corect.</em></h2>
+              <h2 id="funding-services-title">Servicii de consultanță fonduri europene pentru proiecte <em>implementate corect.</em></h2>
             </div>
-            <p>Nu promitem finanțări garantate. Oferim analiză realistă, documentație riguroasă și sprijin consecvent pe întregul parcurs.</p>
+            <p id="funding-services-description">Nu promitem finanțări garantate. Oferim analiză realistă, documentație riguroasă și sprijin consecvent pe întregul parcurs.</p>
           </header>
 
-          <div className="funding-service-grid">
+          <div className="funding-service-grid" role="list" aria-describedby="funding-services-description">
             {services.map((service, index) => {
               const Icon = service.icon;
               return (
-                <article className="funding-service-card" key={service.title}>
+                <article className="funding-service-card" key={service.title} role="listitem" aria-labelledby={`funding-service-${index + 1}-title`} aria-describedby={`funding-service-${index + 1}-description`}>
                   <span className="card-number">0{index + 1}</span>
                   <span className="service-round-icon"><Icon /></span>
-                  <h3>{service.title}</h3>
-                  <p>{service.text}</p>
+                  <h3 id={`funding-service-${index + 1}-title`}>{service.title}</h3>
+                  <p id={`funding-service-${index + 1}-description`}>{service.text}</p>
                 </article>
               );
             })}
           </div>
 
-          <div className="visual-story visual-story-funding" id="repere-fonduri" aria-label="Repere pentru consultanța de fonduri europene">
+          <section className="visual-story visual-story-funding" id="repere-fonduri" aria-labelledby="funding-story-title" aria-describedby="funding-story-description">
             <figure className="visual-story-media">
               <Image
                 src="/images/fonduri-europene-consultanta-real.webp"
                 alt="Consultanță fonduri europene cu documente de proiect, bugete și analiză de eligibilitate"
                 fill
+                loading="lazy"
                 sizes="(max-width: 960px) 100vw, 48vw"
               />
               <figcaption>
@@ -123,8 +124,8 @@ export function FundingPage() {
             </figure>
             <div className="visual-story-copy">
               <p className="eyebrow"><SearchCheck /> Repere clare</p>
-              <h3>Mai multă încredere în decizie, înainte să pornești proiectul.</h3>
-              <p>Colaborarea pune accent pe structură, documente controlate, buget urmărit și pași vizibili, astfel încât decizia de aplicare să fie una informată.</p>
+              <h3 id="funding-story-title">Mai multă încredere în decizie, înainte să pornești proiectul.</h3>
+              <p id="funding-story-description">Colaborarea pune accent pe structură, documente controlate, buget urmărit și pași vizibili, astfel încât decizia de aplicare să fie una informată.</p>
               <div className="service-metrics">
                 {fundingStats.map(([value, label, detail]) => (
                   <article key={label}>
@@ -135,13 +136,13 @@ export function FundingPage() {
                 ))}
               </div>
             </div>
-          </div>
+          </section>
 
-          <div className="fit-panel funding-fit-panel" aria-label="Pentru cine este potrivită consultanța pentru fonduri europene">
+          <section className="fit-panel funding-fit-panel" aria-labelledby="funding-fit-title" aria-describedby="funding-fit-description">
             <div className="fit-panel-copy">
               <p className="eyebrow"><ShieldCheck /> Potrivire realistă</p>
-              <h3>Pentru cine are sens să începem analiza.</h3>
-              <p>O finanțare nerambursabilă bună nu pornește din dorința de a aplica oriunde, ci din potrivirea dintre investiție, program și capacitatea de implementare.</p>
+              <h3 id="funding-fit-title">Pentru cine are sens să începem analiza.</h3>
+              <p id="funding-fit-description">O finanțare nerambursabilă bună nu pornește din dorința de a aplica oriunde, ci din potrivirea dintre investiție, program și capacitatea de implementare.</p>
             </div>
             <div className="fit-grid">
               {fundingFit.map(([title, text]) => (
@@ -151,12 +152,12 @@ export function FundingPage() {
                 </article>
               ))}
             </div>
-          </div>
+          </section>
 
-          <div className="funding-benefits" id="beneficii-fonduri">
+          <section className="funding-benefits" id="beneficii-fonduri" aria-labelledby="funding-benefits-title">
             <div className="benefit-copy">
               <p className="eyebrow eyebrow-light">Beneficiile colaborării</p>
-              <h3>Decizii mai bune înainte de investiții importante.</h3>
+              <h3 id="funding-benefits-title">Decizii mai bune înainte de investiții importante.</h3>
               <p>Primești o imagine clară asupra eligibilității, riscurilor, documentelor și responsabilităților înainte să aloci timp și resurse.</p>
             </div>
             <ul>
@@ -165,24 +166,24 @@ export function FundingPage() {
               <li><Check /> Documente verificate înainte de depunere</li>
               <li><Check /> Suport și după aprobarea proiectului</li>
             </ul>
-          </div>
+          </section>
 
-          <div className="compact-check-panel">
+          <section className="compact-check-panel" aria-labelledby="funding-checklist-title">
             <div>
               <p className="eyebrow"><ClipboardCheck /> Ce clarificăm</p>
-              <h3>Întrebările care reduc riscul înainte de dosar.</h3>
+              <h3 id="funding-checklist-title">Întrebările care reduc riscul înainte de dosar.</h3>
             </div>
             <ul>
               {fundingChecklist.map((item) => <li key={item}><Check /> {item}</li>)}
             </ul>
-          </div>
+          </section>
 
           <EligibilityChecker />
 
-          <div className="process-block" id="proces-fonduri">
+          <section className="process-block" id="proces-fonduri" aria-labelledby="funding-process-title">
             <div className="process-heading">
               <p className="eyebrow">Procesul de colaborare</p>
-              <h3>Proces clar pentru accesarea fondurilor europene.</h3>
+              <h3 id="funding-process-title">Proces clar pentru accesarea fondurilor europene.</h3>
             </div>
             <div className="process-steps">
               {steps.map(([number, title, text]) => (
@@ -193,7 +194,7 @@ export function FundingPage() {
                 </article>
               ))}
             </div>
-          </div>
+          </section>
 
           <section className="semantic-content funding-semantic-content" id="evaluare-fonduri" aria-labelledby="funding-content-title">
             <div className="semantic-content-intro">
@@ -242,10 +243,10 @@ export function FundingPage() {
             items={fundingFaq}
           />
 
-          <div className="section-cta funding-cta">
-            <div><p>Ai o idee de investiție?</p><h3>Verifică dacă există o linie de finanțare potrivită.</h3></div>
+          <section className="section-cta funding-cta" aria-labelledby="funding-cta-title">
+            <div><p>Ai o idee de investiție?</p><h3 id="funding-cta-title">Verifică dacă există o linie de finanțare potrivită.</h3></div>
             <a className="primary-button yellow-button" href="/contact?service=fonduri-europene" aria-label="Solicită analiza pentru o linie de finanțare europeană" title="Solicită analiza pentru fonduri europene">Solicită analiza <ArrowRight aria-hidden="true" /></a>
-          </div>
+          </section>
         </div>
       </section>
     </SiteShell>

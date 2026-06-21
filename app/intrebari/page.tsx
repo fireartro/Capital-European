@@ -22,11 +22,11 @@ export default function Page() {
         faqSchema(generalFaq)
       ]} />
       <SiteShell>
-        <section className="inner-hero faq-hero">
+        <section className="inner-hero faq-hero" aria-labelledby="faq-page-title" aria-describedby="faq-page-description">
           <div className="section-container inner-hero-content">
             <p className="eyebrow eyebrow-light"><CircleHelp /> Întrebări frecvente</p>
-            <h1>Informații clare înainte<br />de orice <em>decizie.</em></h1>
-            <p>Am adunat răspunsurile la cele mai frecvente întrebări despre servicii și procesul de colaborare.</p>
+            <h1 id="faq-page-title">Informații clare înainte<br />de orice <em>decizie.</em></h1>
+            <p id="faq-page-description">Am adunat răspunsurile la cele mai frecvente întrebări despre servicii și procesul de colaborare.</p>
           </div>
         </section>
         <FaqSection />

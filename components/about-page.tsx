@@ -25,20 +25,20 @@ const workingRhythm = [
 export function AboutPage() {
   return (
     <SiteShell>
-      <section className="inner-hero about-hero">
+      <section className="inner-hero about-hero" aria-labelledby="about-hero-title" aria-describedby="about-hero-description">
         <div className="section-container inner-hero-content">
           <p className="eyebrow eyebrow-light"><BookOpenCheck /> Despre noi</p>
-          <h1>Organizare care dă<br />încredere <em>deciziilor.</em></h1>
-          <p>Suntem partenerul care aduce structură în activitatea administrativă și rigoare în proiectele de finanțare.</p>
+          <h1 id="about-hero-title">Organizare care dă<br />încredere <em>deciziilor.</em></h1>
+          <p id="about-hero-description">Suntem partenerul care aduce structură în activitatea administrativă și rigoare în proiectele de finanțare.</p>
         </div>
       </section>
 
-      <section className="content-section about-section">
+      <section className="content-section about-section" aria-labelledby="about-approach-title">
         <div className="section-container about-layout">
           <div className="about-panel">
             <span className="about-mark"><BookOpenCheck /></span>
             <p className="eyebrow eyebrow-light">Abordarea noastră</p>
-            <h2>Complexitatea devine un proces clar.</h2>
+            <h2 id="about-approach-title">Complexitatea devine un proces clar.</h2>
             <p>Combinăm disciplina administrativă cu o abordare consultativă. Fiecare colaborare are pași clari, responsabilități definite și comunicare transparentă.</p>
             <a href="/contact" aria-label="Cunoaște echipa ProBirou printr-o discuție" title="Cunoaște echipa ProBirou">Cunoaște echipa printr-o discuție <ArrowRight aria-hidden="true" /></a>
           </div>
@@ -64,12 +64,12 @@ export function AboutPage() {
         </div>
       </section>
 
-      <section className="content-section about-story">
+      <section className="content-section about-story" aria-labelledby="about-audience-title">
         <div className="section-container about-story-layout">
           <div className="story-grid">
             <div>
               <p className="eyebrow">Pentru cine lucrăm</p>
-              <h2>Suport potrivit pentru companii care vor să crească organizat.</h2>
+              <h2 id="about-audience-title">Suport potrivit pentru companii care vor să crească organizat.</h2>
             </div>
             <div className="story-copy">
               <p>Lucrăm cu antreprenori, IMM-uri, ONG-uri și echipe care au nevoie fie de un proiect bine pregătit, fie de o administrare mai eficientă.</p>
@@ -83,6 +83,7 @@ export function AboutPage() {
                 src="/images/probirou-consultanta-organizare-real.webp"
                 alt="Consultanți ProBirou discutând un proces administrativ și un plan de proiect"
                 fill
+                loading="lazy"
                 sizes="(max-width: 960px) 100vw, 52vw"
               />
             </figure>

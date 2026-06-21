@@ -9,12 +9,12 @@ export function FaqSection() {
   const [activeFaq, setActiveFaq] = useState(0);
 
   return (
-    <section className="section faq" id="faq">
+    <section className="section faq" id="faq" aria-labelledby="general-faq-title" aria-describedby="general-faq-description">
       <div className="shell faq-layout">
         <div className="faq-intro">
           <p className="kicker">Întrebări frecvente</p>
-          <h2>Informații clare înainte de orice <em>decizie.</em></h2>
-          <p>Nu ai găsit răspunsul? Discută direct cu echipa noastră.</p>
+          <h2 id="general-faq-title">Informații clare înainte de orice <em>decizie.</em></h2>
+          <p id="general-faq-description">Nu ai găsit răspunsul? Discută direct cu echipa noastră.</p>
           {siteConfig.phoneHref
             ? <a href={`tel:${siteConfig.phoneHref}`} aria-label={`Sună ${siteConfig.name} pentru întrebări frecvente`} title={`Sună ${siteConfig.name}`}><Phone aria-hidden="true" /> {siteConfig.phoneDisplay}</a>
             : <a href={`mailto:${siteConfig.email}`} aria-label={`Trimite email către ${siteConfig.name} pentru întrebări`} title={`Trimite email către ${siteConfig.name}`}>{siteConfig.email}</a>}
@@ -27,11 +27,12 @@ export function FaqSection() {
                 onClick={() => setActiveFaq(activeFaq === index ? -1 : index)}
                 aria-expanded={activeFaq === index}
                 aria-controls={`faq-answer-${index}`}
+                id={`faq-question-${index}`}
               >
                 <span>{question}</span><span className="faq-toggle" aria-hidden="true">{activeFaq === index ? <X /> : <ChevronDown />}</span>
               </button>
               {activeFaq === index && (
-                <div className="faq-answer" id={`faq-answer-${index}`} role="region" aria-label={question}>
+                <div className="faq-answer" id={`faq-answer-${index}`} role="region" aria-labelledby={`faq-question-${index}`}>
                   <p>{answer}</p>
                 </div>
               )}

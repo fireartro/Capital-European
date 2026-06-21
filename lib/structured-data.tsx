@@ -50,6 +50,28 @@ export function organizationSchema(): JsonObject {
           "@type": "Country",
           name: "Romania"
         },
+        hasOfferCatalog: {
+          "@type": "OfferCatalog",
+          name: "Servicii ProBirou",
+          itemListElement: [
+            {
+              "@type": "Offer",
+              itemOffered: {
+                "@type": "Service",
+                name: "Consultanță fonduri europene",
+                url: absoluteUrl("/fonduri-europene")
+              }
+            },
+            {
+              "@type": "Offer",
+              itemOffered: {
+                "@type": "Service",
+                name: "Servicii administrative externalizate",
+                url: absoluteUrl("/servicii-administrative")
+              }
+            }
+          ]
+        },
         openingHours: "Mo-Fr 08:00-18:00",
         priceRange: "$$"
       }

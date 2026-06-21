@@ -27,7 +27,7 @@ const landingProof = [
 export function HomePage() {
   return (
     <SiteShell showFooter={false} showNavigation={false} showWhatsApp={false}>
-      <section className="split-landing" aria-labelledby="split-title">
+      <section className="split-landing" aria-labelledby="split-title" aria-describedby="split-description">
         <Link className="split-brand" href="/" aria-label={`${siteConfig.name}, pagina de alegere`} title={`${siteConfig.name}, pagina de alegere`}><Brand /></Link>
         <div className="eu-stars" aria-hidden="true">
           {Array.from({ length: 12 }, (_, index) => <span className={`eu-star star-${index + 1}`} key={index}>★</span>)}
@@ -35,16 +35,17 @@ export function HomePage() {
         <div className="landing-intro">
           <p className="eyebrow"><Sparkles /> Două direcții. Un singur partener de încredere.</p>
           <h1 id="split-title">Consultanță fonduri europene și servicii administrative în România</h1>
-          <p className="landing-intro-copy">Alege serviciul potrivit, iar noi te ghidăm de la prima întrebare până la rezultat: finanțare, documente, back-office și pași administrativi clari.</p>
+          <p className="landing-intro-copy" id="split-description">Alege serviciul potrivit, iar noi te ghidăm de la prima întrebare până la rezultat: finanțare, documente, back-office și pași administrativi clari.</p>
         </div>
 
-        <nav className="split-grid" aria-label="Alege categoria de servicii">
-          <article className="choice-card choice-funding">
+        <nav className="split-grid" aria-labelledby="split-services-title">
+          <h2 className="visually-hidden" id="split-services-title">Alege categoria de servicii ProBirou</h2>
+          <article className="choice-card choice-funding" aria-labelledby="choice-funding-title" aria-describedby="choice-funding-description">
             <div className="choice-copy">
               <span className="choice-index">01 / Finanțare</span>
               <span className="choice-icon"><Landmark aria-hidden="true" /></span>
-              <h2>Consultanță<br />Fonduri Europene</h2>
-              <p>Analiză de eligibilitate, documentație, depunere și sprijin în implementarea proiectului.</p>
+              <h2 id="choice-funding-title">Consultanță<br />Fonduri Europene</h2>
+              <p id="choice-funding-description">Analiză de eligibilitate, documentație, depunere și sprijin în implementarea proiectului.</p>
               <a
                 className="choice-button"
                 href="/fonduri-europene"
@@ -67,12 +68,12 @@ export function HomePage() {
             </div>
           </article>
 
-          <article className="choice-card choice-admin">
+          <article className="choice-card choice-admin" aria-labelledby="choice-admin-title" aria-describedby="choice-admin-description">
             <div className="choice-copy">
               <span className="choice-index">02 / Administrativ</span>
               <span className="choice-icon"><Files aria-hidden="true" /></span>
-              <h2>Servicii<br />Administrative</h2>
-              <p>Documente, secretariat, back-office și înființare firmă, organizate profesionist.</p>
+              <h2 id="choice-admin-title">Servicii<br />Administrative</h2>
+              <p id="choice-admin-description">Documente, secretariat, back-office și înființare firmă, organizate profesionist.</p>
               <a
                 className="choice-button"
                 href="/servicii-administrative"
@@ -94,7 +95,8 @@ export function HomePage() {
           </article>
         </nav>
 
-        <div className="landing-proof-grid" aria-label="Cum începe colaborarea cu ProBirou">
+        <section className="landing-proof-grid" aria-labelledby="landing-proof-title">
+          <h2 className="visually-hidden" id="landing-proof-title">Cum începe colaborarea cu ProBirou</h2>
           {landingProof.map(([Icon, title, text]) => (
             <article key={title}>
               <Icon aria-hidden="true" />
@@ -104,7 +106,7 @@ export function HomePage() {
               </div>
             </article>
           ))}
-        </div>
+        </section>
 
         <footer className="landing-trust" aria-label="Avantajele colaborării">
           <span><LockKeyhole /> Confidențialitate</span>

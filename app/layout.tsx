@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import "./globals.css";
+import { ServiceWorkerRegister } from "@/components/service-worker-register";
 import { siteConfig } from "@/lib/site-config";
 import { JsonLd, organizationSchema } from "@/lib/structured-data";
 
@@ -9,7 +10,7 @@ const googleAnalyticsId = process.env.NEXT_PUBLIC_GA_ID;
 const splitCriticalCss = `
 .split-landing{position:relative;min-height:100svh;min-height:100dvh;overflow:hidden;color:#fff;background:linear-gradient(145deg,#06142f 0%,#052469 56%,#003399 100%)}
 .landing-intro{position:relative;z-index:2;text-align:center}
-.landing-intro h1{margin:0;color:#fff;font-weight:780;line-height:1.02;letter-spacing:0}
+.landing-intro h1{margin:0;color:#fff;font-weight:780;line-height:1.12;letter-spacing:0}
 .split-grid{position:relative;z-index:2;display:grid}
 .choice-card{position:relative;overflow:hidden}
 `;
@@ -91,6 +92,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body>
         <JsonLd data={organizationSchema()} />
         {children}
+        <ServiceWorkerRegister />
         {googleAnalyticsId && (
           <>
             <Script

@@ -55,11 +55,11 @@ export function AdminPage() {
         "externalizare-administrativa",
         "intrebari-administrative"
       ]} />
-      <section className="inner-hero admin-hero" id="admin-hero">
+      <section className="inner-hero admin-hero" id="admin-hero" aria-labelledby="admin-hero-title" aria-describedby="admin-hero-description">
         <div className="section-container inner-hero-content">
           <p className="eyebrow eyebrow-light"><Files /> Servicii administrative externalizate</p>
-          <h1>Ordine în documente.<br />Mai mult timp pentru <em>afacere.</em></h1>
-          <p>Preluăm activitățile administrative recurente și le transformăm în procese clare, predictibile și ușor de urmărit pentru antreprenori, IMM-uri și ONG-uri.</p>
+          <h1 id="admin-hero-title">Ordine în documente.<br />Mai mult timp pentru <em>afacere.</em></h1>
+          <p id="admin-hero-description">Preluăm activitățile administrative recurente și le transformăm în procese clare, predictibile și ușor de urmărit pentru antreprenori, IMM-uri și ONG-uri.</p>
           <div className="inner-hero-actions">
             <a className="primary-button yellow-button" href="/contact?service=servicii-administrative" aria-label="Solicită o ofertă pentru servicii administrative externalizate" title="Solicită ofertă pentru servicii administrative">Solicită o ofertă <ArrowRight aria-hidden="true" /></a>
             <a className="secondary-link" href="#servicii-administrative" aria-label="Vezi serviciile administrative externalizate ProBirou" title="Vezi serviciile administrative">Vezi serviciile</a>
@@ -67,21 +67,21 @@ export function AdminPage() {
         </div>
       </section>
 
-      <section className="content-section admin-section" id="servicii-administrative">
+      <section className="content-section admin-section" id="servicii-administrative" aria-labelledby="admin-services-title" aria-describedby="admin-services-description">
         <div className="section-container">
           <header className="section-title-row">
             <div>
               <p className="eyebrow"><Files /> Servicii administrative</p>
-              <h2>Servicii administrative externalizate pentru companii organizate.</h2>
+              <h2 id="admin-services-title">Servicii administrative externalizate pentru companii organizate.</h2>
             </div>
-            <p>Alegi exact activitățile pe care vrei să le delegi, iar volumul poate fi ajustat pe măsură ce compania evoluează.</p>
+            <p id="admin-services-description">Alegi exact activitățile pe care vrei să le delegi, iar volumul poate fi ajustat pe măsură ce compania evoluează.</p>
           </header>
 
-          <div className="visual-story visual-story-admin" id="repere-administrative" aria-label="Repere pentru serviciile administrative externalizate">
+          <section className="visual-story visual-story-admin" id="repere-administrative" aria-labelledby="admin-story-title" aria-describedby="admin-story-description">
             <div className="visual-story-copy">
               <p className="eyebrow"><FileCheck2 /> Back-office organizat</p>
-              <h3>Un birou administrativ care se simte prezent, chiar dacă este externalizat.</h3>
-              <p>Colaborarea urmărește documentele, solicitările și responsabilitățile într-un flux ușor de predat, verificat și ajustat pe măsură ce compania crește.</p>
+              <h3 id="admin-story-title">Un birou administrativ care se simte prezent, chiar dacă este externalizat.</h3>
+              <p id="admin-story-description">Colaborarea urmărește documentele, solicitările și responsabilitățile într-un flux ușor de predat, verificat și ajustat pe măsură ce compania crește.</p>
               <div className="service-metrics">
                 {adminStats.map(([value, label, detail]) => (
                   <article key={label}>
@@ -97,6 +97,7 @@ export function AdminPage() {
                 src="/images/servicii-administrative-workflow-real.webp"
                 alt="Servicii administrative externalizate cu documente organizate, laptop și flux de lucru"
                 fill
+                loading="lazy"
                 sizes="(max-width: 960px) 100vw, 48vw"
               />
               <figcaption>
@@ -104,27 +105,27 @@ export function AdminPage() {
                 <span>Procese urmărite, arhivă coerentă și comunicare mai ușor de delegat.</span>
               </figcaption>
             </figure>
-          </div>
+          </section>
 
-          <div className="admin-service-grid">
-            {services.map((service) => {
+          <div className="admin-service-grid" role="list" aria-describedby="admin-services-description">
+            {services.map((service, index) => {
               const Icon = service.icon;
               return (
-                <article className="admin-service-card" key={service.title}>
+                <article className="admin-service-card" key={service.title} role="listitem" aria-labelledby={`admin-service-${index + 1}-title`} aria-describedby={`admin-service-${index + 1}-description`}>
                   <span className="admin-card-icon"><Icon /></span>
-                  <h3>{service.title}</h3>
-                  <p>{service.text}</p>
+                  <h3 id={`admin-service-${index + 1}-title`}>{service.title}</h3>
+                  <p id={`admin-service-${index + 1}-description`}>{service.text}</p>
                   <ul>{service.benefits.map((benefit) => <li key={benefit}><Check /> {benefit}</li>)}</ul>
                   <a href="/contact?service=servicii-administrative" aria-label={`Solicită detalii despre ${service.title}`} title={`Solicită detalii despre ${service.title}`}>Solicită detalii <ArrowRight aria-hidden="true" /></a>
                 </article>
               );
             })}
 
-            <article className="company-card" id="infiintare-firma">
+            <article className="company-card" id="infiintare-firma" aria-labelledby="company-setup-title" aria-describedby="company-setup-description">
               <div className="company-card-copy">
                 <span className="company-label"><Building2 /> Serviciu nou</span>
-                <h3>Înființare firmă</h3>
-                <p>Te ajutăm să pornești corect, cu documentele pregătite și pașii administrativi explicați clar.</p>
+                <h3 id="company-setup-title">Înființare firmă</h3>
+                <p id="company-setup-description">Te ajutăm să pornești corect, cu documentele pregătite și pașii administrativi explicați clar.</p>
                 <ul>
                   <li><Check /> Orientare pentru alegerea formei juridice</li>
                   <li><Check /> Pregătirea documentelor necesare</li>
@@ -139,11 +140,11 @@ export function AdminPage() {
             </article>
           </div>
 
-          <div className="operations-board" aria-label="Ce poate include externalizarea administrativă">
+          <section className="operations-board" aria-labelledby="operations-title" aria-describedby="operations-description">
             <div className="operations-copy">
               <p className="eyebrow"><FolderKanban /> Flux operațional</p>
-              <h3>Activitățile sunt grupate pe fluxuri, nu lăsate ca sarcini izolate.</h3>
-              <p>O colaborare bună trebuie să fie ușor de urmărit: ce intră, cine aprobă, ce se predă și când se verifică.</p>
+              <h3 id="operations-title">Activitățile sunt grupate pe fluxuri, nu lăsate ca sarcini izolate.</h3>
+              <p id="operations-description">O colaborare bună trebuie să fie ușor de urmărit: ce intră, cine aprobă, ce se predă și când se verifică.</p>
             </div>
             <div className="operations-lanes">
               {adminWorkflow.map(([title, items]) => (
@@ -155,7 +156,7 @@ export function AdminPage() {
                 </article>
               ))}
             </div>
-          </div>
+          </section>
 
           <section className="semantic-content" id="externalizare-administrativa" aria-labelledby="administrative-content-title">
             <div className="semantic-content-intro">
