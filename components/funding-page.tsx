@@ -53,6 +53,12 @@ const fundingChecklist = [
   "obligațiile după aprobarea proiectului"
 ] as const;
 
+const fundingConversionSteps = [
+  ["1", "Trimite contextul", "Investiția dorită, locația, domeniul de activitate și termenul urmărit."],
+  ["2", "Clarificăm eligibilitatea", "Separăm ce este verificabil acum de ce trebuie completat înainte de dosar."],
+  ["3", "Decizi informat", "Primești următorii pași, riscurile principale și documentele care merită pregătite."]
+] as const;
+
 export function FundingPage() {
   return (
     <SiteShell navigationContext="funding">
@@ -176,6 +182,24 @@ export function FundingPage() {
             <ul>
               {fundingChecklist.map((item) => <li key={item}><Check /> {item}</li>)}
             </ul>
+          </section>
+
+          <section className="conversion-panel funding-conversion-panel" aria-labelledby="funding-conversion-title" aria-describedby="funding-conversion-description">
+            <div className="conversion-copy">
+              <p className="eyebrow"><SearchCheck /> Început fără presiune</p>
+              <h3 id="funding-conversion-title">Nu trebuie să ai dosarul complet ca să ceri o evaluare.</h3>
+              <p id="funding-conversion-description">Trimite contextul proiectului, iar prima discuție clarifică dacă merită continuat, ce informații lipsesc și ce termen este realist.</p>
+              <a className="primary-button yellow-button" href="/contact?service=fonduri-europene" aria-label="Trimite contextul proiectului pentru o evaluare de fonduri europene" title="Trimite contextul proiectului">Trimite contextul proiectului <ArrowRight aria-hidden="true" /></a>
+            </div>
+            <div className="conversion-steps" role="list" aria-label="Pașii primei evaluări pentru fonduri europene">
+              {fundingConversionSteps.map(([number, title, text]) => (
+                <article key={number} role="listitem">
+                  <span>{number}</span>
+                  <h4>{title}</h4>
+                  <p>{text}</p>
+                </article>
+              ))}
+            </div>
           </section>
 
           <EligibilityChecker />

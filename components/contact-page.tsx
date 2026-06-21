@@ -1,4 +1,5 @@
 import { Mail, MessageCircle, Phone, ShieldCheck } from "lucide-react";
+import { ContactFormAnchor } from "@/components/contact-form-anchor";
 import { ContactForm } from "@/components/contact-form";
 import { SiteShell } from "@/components/site-shell";
 import type { ContactInput } from "@/lib/contact-schema";
@@ -8,6 +9,12 @@ const contactSteps = [
   ["01", "Trimite contextul", "Spune-ne serviciul, urgența și ce documente sau obiective există deja."],
   ["02", "Primești întrebări clare", "Revenim cu punctele care trebuie clarificate înainte de ofertă."],
   ["03", "Stabilim pașii", "Definim ce se poate face, în ce ordine și ce informații mai sunt necesare."]
+] as const;
+
+const contactAssurances = [
+  "Nu ai nevoie de o documentație completă pentru prima discuție.",
+  "Nu promitem rezultate garantate; clarificăm ce este realist.",
+  "Datele rămân folosite strict pentru solicitarea transmisă."
 ] as const;
 
 export function ContactPage({ defaultService }: { defaultService?: ContactInput["service"] }) {
@@ -25,6 +32,7 @@ export function ContactPage({ defaultService }: { defaultService?: ContactInput[
             <p className="eyebrow eyebrow-light">Hai să discutăm</p>
             <h1 id="contact-page-title">Spune-ne ce vrei<br />să rezolvi.</h1>
             <p id="contact-page-description">Îți răspundem cu întrebările potrivite, o evaluare inițială și următorii pași concreți.</p>
+            <ContactFormAnchor />
             <div className="contact-options">
               {siteConfig.phoneHref && <a href={`tel:${siteConfig.phoneHref}`} aria-label={`Sună ${siteConfig.name}`} title={`Sună ${siteConfig.name}`}><span><Phone aria-hidden="true" /></span><div><small>Telefon</small><b>{siteConfig.phoneDisplay}</b></div></a>}
               <a href={`mailto:${siteConfig.email}`} aria-label={`Trimite email către ${siteConfig.name}`} title={`Trimite email către ${siteConfig.name}`}><span><Mail aria-hidden="true" /></span><div><small>Email</small><b>{siteConfig.email}</b></div></a>
@@ -43,8 +51,11 @@ export function ContactPage({ defaultService }: { defaultService?: ContactInput[
               ))}
             </div>
             <div className="privacy-note"><ShieldCheck /><span>Datele tale sunt folosite exclusiv pentru a răspunde solicitării.</span></div>
+            <ul className="contact-assurances" aria-label="Asigurări înainte de trimiterea formularului">
+              {contactAssurances.map((item) => <li key={item}><ShieldCheck aria-hidden="true" /> {item}</li>)}
+            </ul>
           </div>
-          <div className="form-wrap"><ContactForm defaultService={defaultService} /></div>
+          <div className="form-wrap" id="formular-contact"><ContactForm defaultService={defaultService} /></div>
         </div>
       </section>
     </SiteShell>

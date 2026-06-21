@@ -20,6 +20,7 @@ export function SiteFooter() {
           {siteConfig.phoneHref && <a href={`tel:${siteConfig.phoneHref}`} aria-label={`Sună ${siteConfig.name}`} title={`Sună ${siteConfig.name}`}>{siteConfig.phoneDisplay}</a>}
           <a href={`mailto:${siteConfig.email}`} aria-label={`Trimite email către consultanții ${siteConfig.name}`} title={`Trimite email către ${siteConfig.name}`}>{siteConfig.email}</a>
           <span>{siteConfig.address}</span>
+          <a className="footer-cta-link" href="/contact" aria-label="Trimite o solicitare către consultanții ProBirou" title="Trimite solicitarea">Trimite o solicitare</a>
         </div>
       </div>
       <div className="section-container footer-bottom">

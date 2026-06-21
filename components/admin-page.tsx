@@ -44,6 +44,12 @@ const adminWorkflow = [
   ["Back-office", ["relația cu furnizorii", "raportări interne", "procese ușor de delegat"]]
 ] as const;
 
+const adminConversionSteps = [
+  ["1", "Alegi un flux mic", "Începem cu documente, secretariat sau o zonă administrativă clară."],
+  ["2", "Stabilim regulile", "Definim ce se predă, cine aprobă, cum se verifică și la ce interval."],
+  ["3", "Extindem controlat", "După ce fluxul funcționează, poți adăuga activități fără haos operațional."]
+] as const;
+
 export function AdminPage() {
   return (
     <SiteShell navigationContext="admin">
@@ -63,6 +69,11 @@ export function AdminPage() {
           <div className="inner-hero-actions">
             <a className="primary-button yellow-button" href="/contact?service=servicii-administrative" aria-label="Solicită o ofertă pentru servicii administrative externalizate" title="Solicită ofertă pentru servicii administrative">Solicită o ofertă <ArrowRight aria-hidden="true" /></a>
             <a className="secondary-link" href="#servicii-administrative" aria-label="Vezi serviciile administrative externalizate ProBirou" title="Vezi serviciile administrative">Vezi serviciile</a>
+          </div>
+          <div className="hero-proof">
+            <span><Check /> Poți începe cu un singur flux</span>
+            <span><Check /> Documente și termene urmărite</span>
+            <span><Check /> Reguli clare de predare</span>
           </div>
         </div>
       </section>
@@ -158,6 +169,24 @@ export function AdminPage() {
             </div>
           </section>
 
+          <section className="conversion-panel admin-conversion-panel" aria-labelledby="admin-conversion-title" aria-describedby="admin-conversion-description">
+            <div className="conversion-copy">
+              <p className="eyebrow"><FileCheck2 /> Delegare controlată</p>
+              <h3 id="admin-conversion-title">Nu trebuie să externalizezi tot biroul din prima.</h3>
+              <p id="admin-conversion-description">Începem cu un proces concret, îl facem ușor de verificat și apoi decizi dacă extinzi colaborarea.</p>
+              <a className="primary-button blue-button" href="/contact?service=servicii-administrative" aria-label="Solicită o discuție despre servicii administrative externalizate" title="Discută despre servicii administrative">Discută despre un flux <ArrowRight aria-hidden="true" /></a>
+            </div>
+            <div className="conversion-steps" role="list" aria-label="Pașii pentru delegarea unui flux administrativ">
+              {adminConversionSteps.map(([number, title, text]) => (
+                <article key={number} role="listitem">
+                  <span>{number}</span>
+                  <h4>{title}</h4>
+                  <p>{text}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+
           <section className="semantic-content" id="externalizare-administrativa" aria-labelledby="administrative-content-title">
             <div className="semantic-content-intro">
               <p className="eyebrow"><FileCheck2 aria-hidden="true" /> Externalizare administrativă</p>
@@ -190,6 +219,11 @@ export function AdminPage() {
             description="Clarificări despre externalizare, documente, confidențialitate și modul de colaborare."
             items={administrativeFaq}
           />
+
+          <section className="section-cta admin-cta" aria-labelledby="admin-cta-title">
+            <div><p>Vrei să scapi de munca administrativă repetitivă?</p><h3 id="admin-cta-title">Trimite-ne ce proces vrei să delegi și îți spunem cum poate fi organizat.</h3></div>
+            <a className="primary-button yellow-button" href="/contact?service=servicii-administrative" aria-label="Solicită o ofertă pentru servicii administrative" title="Solicită ofertă servicii administrative">Solicită o ofertă <ArrowRight aria-hidden="true" /></a>
+          </section>
         </div>
       </section>
     </SiteShell>

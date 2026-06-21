@@ -5,6 +5,7 @@ node_modules
 .codex-logs
 .codex-tools
 out
+output/
 .env
 .env.local
 .env.*.local

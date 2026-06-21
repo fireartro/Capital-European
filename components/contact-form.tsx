@@ -17,6 +17,12 @@ const services = [
   ["fonduri-europene", "Fonduri europene"]
 ] as const;
 
+const formTrust = [
+  "Poți trimite și o descriere scurtă, fără dosar complet.",
+  "Datele sunt folosite doar pentru răspunsul la solicitare.",
+  "Validare pe client și server înainte de înregistrare."
+] as const;
+
 export function ContactForm({ defaultService = "fonduri-europene" }: { defaultService?: ContactInput["service"] }) {
   const [serverMessage, setServerMessage] = useState("");
   const [sent, setSent] = useState(false);
@@ -69,7 +75,11 @@ export function ContactForm({ defaultService = "fonduri-europene" }: { defaultSe
       <div className="form-heading">
         <p className="kicker">Evaluare inițială</p>
         <h2>Contactați consultanții ProBirou.</h2>
+        <p className="form-intro">Prima solicitare trebuie să clarifice situația, nu să te oblige să pregătești totul înainte să știi dacă are sens.</p>
       </div>
+      <ul className="form-trust-list" aria-label="Ce se întâmplă cu solicitarea trimisă">
+        {formTrust.map((item) => <li key={item}><Check aria-hidden="true" /> {item}</li>)}
+      </ul>
       <div className="form-grid">
         <label>
           <span>Nume și prenume</span>

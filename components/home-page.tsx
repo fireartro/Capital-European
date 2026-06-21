@@ -52,7 +52,7 @@ export function HomePage() {
                 aria-label="Intră pe pagina dedicată consultanței pentru fonduri europene"
                 title="Consultanță fonduri europene ProBirou"
               >
-                Vezi fonduri europene <ArrowRight aria-hidden="true" />
+                Verifică oportunitatea <ArrowRight aria-hidden="true" />
               </a>
             </div>
             <div className="eu-emblem" aria-hidden="true">
@@ -80,7 +80,7 @@ export function HomePage() {
                 aria-label="Intră pe pagina dedicată serviciilor administrative"
                 title="Servicii administrative externalizate ProBirou"
               >
-                Vezi servicii administrative <ArrowRight aria-hidden="true" />
+                Organizează administrativul <ArrowRight aria-hidden="true" />
               </a>
             </div>
             <div className="admin-visual" aria-hidden="true">
