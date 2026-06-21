@@ -60,18 +60,25 @@ export function SiteHeader({ navigationContext }: { navigationContext?: "funding
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState({ pathname: "", hash: "" });
   const menuButtonRef = useRef<HTMLLabelElement>(null);
+  const menuToggleRef = useRef<HTMLInputElement>(null);
   const drawerRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const menuToggleId = "mobile-navigation-toggle";
-  const openMenu = useCallback(() => setMenuOpen(true), []);
-  const closeMenu = useCallback(() => setMenuOpen(false), []);
+
+  const setMenuState = useCallback((nextOpen: boolean) => {
+    if (menuToggleRef.current) {
+      menuToggleRef.current.checked = nextOpen;
+    }
+    setMenuOpen(nextOpen);
+  }, []);
+
+  const closeMenu = useCallback(() => setMenuState(false), [setMenuState]);
 
   const handleMenuKeyDown = useCallback((event: ReactKeyboardEvent<HTMLLabelElement>, nextOpen: boolean) => {
     if (event.key !== "Enter" && event.key !== " ") return;
     event.preventDefault();
-    setMenuOpen(nextOpen);
-    document.getElementById(menuToggleId)?.click();
-  }, [menuToggleId]);
+    setMenuState(nextOpen);
+  }, [setMenuState]);
 
   const getHrefParts = useCallback((href: string) => {
     const [rawPath = "", rawHash] = href.split("#");
@@ -223,7 +230,7 @@ export function SiteHeader({ navigationContext }: { navigationContext?: "funding
 
   const navigationContent = (
     <>
-      <Link className="back-to-choice" href="/" aria-label="Schimbă categoria de servicii ProBirou" title="Schimbă categoria de servicii">
+      <Link className="back-to-choice" href="/" onClick={closeMenu} aria-label="Schimbă categoria de servicii ProBirou" title="Schimbă categoria de servicii">
         <ArrowLeft aria-hidden="true" />
         <span>Schimbă categoria</span>
       </Link>
@@ -252,15 +259,15 @@ export function SiteHeader({ navigationContext }: { navigationContext?: "funding
     <>
       <div className="sidebar-contact">
         <span>Ai o întrebare?</span>
-        {siteConfig.phoneHref && <a href={`tel:${siteConfig.phoneHref}`} aria-label={`Sună ${siteConfig.name}`} title={`Sună ${siteConfig.name}`}><Phone aria-hidden="true" /> {siteConfig.phoneDisplay}</a>}
-        <a href={`mailto:${siteConfig.email}`} aria-label={`Trimite email către ${siteConfig.name}`} title={`Trimite email către ${siteConfig.name}`}><Mail aria-hidden="true" /> {siteConfig.email}</a>
+        {siteConfig.phoneHref && <a href={`tel:${siteConfig.phoneHref}`} onClick={closeMenu} aria-label={`Sună ${siteConfig.name}`} title={`Sună ${siteConfig.name}`}><Phone aria-hidden="true" /> {siteConfig.phoneDisplay}</a>}
+        <a href={`mailto:${siteConfig.email}`} onClick={closeMenu} aria-label={`Trimite email către ${siteConfig.name}`} title={`Trimite email către ${siteConfig.name}`}><Mail aria-hidden="true" /> {siteConfig.email}</a>
         <Link className="sidebar-cta" href={context.contactHref} onClick={closeMenu} aria-label={`Solicită o discuție cu ${siteConfig.name}`} title={`Solicită o discuție cu ${siteConfig.name}`}>
           Solicită o discuție
         </Link>
       </div>
       <div className="sidebar-legal">
-        <a href="/confidentialitate" aria-label="Citește politica de confidențialitate ProBirou" title="Politica de confidențialitate ProBirou">Confidențialitate</a>
-        <a href="/termeni" aria-label="Citește termenii și condițiile ProBirou" title="Termeni și condiții ProBirou">Termeni</a>
+        <a href="/confidentialitate" onClick={closeMenu} aria-label="Citește politica de confidențialitate ProBirou" title="Politica de confidențialitate ProBirou">Confidențialitate</a>
+        <a href="/termeni" onClick={closeMenu} aria-label="Citește termenii și condițiile ProBirou" title="Termeni și condiții ProBirou">Termeni</a>
       </div>
     </>
   );
@@ -279,10 +286,10 @@ export function SiteHeader({ navigationContext }: { navigationContext?: "funding
       </aside>
 
       <input
+        ref={menuToggleRef}
         className="mobile-menu-toggle"
         id={menuToggleId}
         type="checkbox"
-        checked={menuOpen}
         onChange={(event) => setMenuOpen(event.currentTarget.checked)}
         tabIndex={-1}
         aria-hidden="true"
@@ -296,7 +303,6 @@ export function SiteHeader({ navigationContext }: { navigationContext?: "funding
           htmlFor={menuToggleId}
           role="button"
           tabIndex={0}
-          onClick={openMenu}
           onKeyDown={(event) => handleMenuKeyDown(event, true)}
           aria-label="Deschide meniul"
           aria-expanded={menuOpen}
@@ -322,7 +328,6 @@ export function SiteHeader({ navigationContext }: { navigationContext?: "funding
               htmlFor={menuToggleId}
               role="button"
               tabIndex={0}
-              onClick={closeMenu}
               onKeyDown={(event) => handleMenuKeyDown(event, false)}
               aria-label="Închide meniul"
             >

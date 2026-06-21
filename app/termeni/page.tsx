@@ -5,7 +5,7 @@ import { breadcrumbSchema, JsonLd } from "@/lib/structured-data";
 
 export const metadata = createPageMetadata({
   title: "Termeni și condiții",
-  description: `Termenii de utilizare ai website-ului ${siteConfig.name}.`,
+  description: `Termenii de utilizare ai website-ului ${siteConfig.name}, cu informații despre servicii, responsabilități, limitări și condițiile de colaborare.`,
   path: "/termeni"
 });
 

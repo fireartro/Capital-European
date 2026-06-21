@@ -302,7 +302,7 @@ h2 em { color: var(--eu-blue); font-style: normal; }
 .funding-benefits li svg { color: var(--eu-yellow); }
 .visual-story { display: grid; grid-template-columns: minmax(0, 1.02fr) minmax(0, .98fr); gap: 38px; align-items: center; margin-top: 38px; }
 .visual-story-admin { margin: 0 0 36px; }
-.visual-story > *, .about-media-panel > *, .service-metrics article, .about-stat-grid article { min-width: 0; }
+.visual-story > *, .about-layout > *, .about-media-panel > *, .service-metrics article, .about-stat-grid article { min-width: 0; }
 .visual-story-media { position: relative; min-height: 410px; aspect-ratio: 4 / 3; margin: 0; overflow: hidden; border-radius: 18px; background: #eaf1fb; box-shadow: 0 22px 60px rgba(4, 31, 73, .1); }
 .visual-story-media img { object-fit: cover; transition: transform .7s ease; }
 .visual-story:hover .visual-story-media img { transform: scale(1.035); }
@@ -588,7 +588,7 @@ h2 em { color: var(--eu-blue); font-style: normal; }
   .landing-proof-grid { display: none; }
 }
 
-@media (max-width: 960px) {
+@media (max-width: 1100px) {
   :root { --sidebar-width: 0px; }
   .site-content { margin-left: 0; padding-top: 68px; }
   .no-navigation .site-content { padding-top: 0; }
@@ -632,7 +632,7 @@ h2 em { color: var(--eu-blue); font-style: normal; }
 }
 
 @media (max-width: 640px) {
-  .section-container, .faq .shell { width: min(100% - 28px, 1180px); }
+  .section-container, .faq .shell { width: min(1180px, calc(100% - 28px)); }
   .content-section, .faq { padding: 68px 0; }
   .split-landing { width: 100%; min-height: 100svh; min-height: 100dvh; padding: calc(72px + env(safe-area-inset-top)) 18px calc(22px + env(safe-area-inset-bottom)); }
   .split-brand { left: 18px; top: 17px; }
@@ -665,7 +665,7 @@ h2 em { color: var(--eu-blue); font-style: normal; }
   .funding-service-card:last-child { border-bottom: 0; }
   .visual-story { margin-top: 30px; gap: 24px; }
   .visual-story-admin { margin: 0 0 30px; }
-  .visual-story-media, .about-media { min-height: 260px; border-radius: 14px; }
+  .visual-story-media, .about-media { width: 100%; max-width: 100%; min-height: 0; aspect-ratio: 4 / 3; border-radius: 14px; }
   .visual-story-media figcaption { left: 12px; right: 12px; bottom: 12px; padding: 13px; }
   .visual-story-copy h3 { font-size: 1.58rem; line-height: 1.16; }
   .visual-story-copy > p:not(.eyebrow) { font-size: .82rem; line-height: 1.65; }
@@ -688,6 +688,8 @@ h2 em { color: var(--eu-blue); font-style: normal; }
   .admin-service-card { min-height: auto; padding: 25px 22px; }
   .company-card { padding: 28px 22px; }
   .company-card .primary-button { width: 100%; }
+  .about-panel, .principles-grid, .about-rhythm { width: 100%; max-width: 100%; }
+  .principles-grid article { min-width: 0; }
   .about-panel { min-height: auto; padding: 30px 22px; }
   .about-mark { margin-bottom: 34px; }
   .about-rhythm { margin-top: 0; }
