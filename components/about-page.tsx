@@ -82,7 +82,8 @@ export function AboutPage() {
               <Image
                 src="/images/probirou-consultanta-organizare-real.webp"
                 alt="Consultanți ProBirou discutând un proces administrativ și un plan de proiect"
-                fill
+                width={1400}
+                height={1050}
                 loading="lazy"
                 sizes="(max-width: 960px) 100vw, 52vw"
               />

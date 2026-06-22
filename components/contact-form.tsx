@@ -114,7 +114,7 @@ export function ContactForm({ defaultService = "fonduri-europene" }: { defaultSe
       </div>
       <label className="consent">
         <input type="checkbox" {...register("consent")} required aria-invalid={!!errors.consent} aria-describedby={errors.consent ? "consent-error" : undefined} />
-        <span>Sunt de acord cu prelucrarea datelor pentru soluționarea solicitării, conform <a href="/confidentialitate" aria-label="Citește politica de confidențialitate ProBirou" title="Politica de confidențialitate ProBirou">politicii de confidențialitate</a>.</span>
+        <span>Sunt de acord cu prelucrarea datelor pentru soluționarea solicitării, conform <a href="/confidentialitate" title="Politica de confidențialitate ProBirou">politicii de confidențialitate</a>.</span>
       </label>
       {errors.consent && <small className="standalone-error" id="consent-error">{errors.consent.message}</small>}
       {serverMessage && <p className="server-error" role="alert" aria-live="polite">{serverMessage}</p>}

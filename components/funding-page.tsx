@@ -100,11 +100,11 @@ export function FundingPage() {
             <p id="funding-services-description">Nu promitem finanțări garantate. Oferim analiză realistă, documentație riguroasă și sprijin consecvent pe întregul parcurs.</p>
           </header>
 
-          <div className="funding-service-grid" role="list" aria-describedby="funding-services-description">
+          <div className="funding-service-grid" aria-describedby="funding-services-description">
             {services.map((service, index) => {
               const Icon = service.icon;
               return (
-                <article className="funding-service-card" key={service.title} role="listitem" aria-labelledby={`funding-service-${index + 1}-title`} aria-describedby={`funding-service-${index + 1}-description`}>
+                <article className="funding-service-card" key={service.title} aria-labelledby={`funding-service-${index + 1}-title`} aria-describedby={`funding-service-${index + 1}-description`}>
                   <span className="card-number">0{index + 1}</span>
                   <span className="service-round-icon"><Icon /></span>
                   <h3 id={`funding-service-${index + 1}-title`}>{service.title}</h3>
@@ -119,7 +119,8 @@ export function FundingPage() {
               <Image
                 src="/images/fonduri-europene-consultanta-real.webp"
                 alt="Consultanță fonduri europene cu documente de proiect, bugete și analiză de eligibilitate"
-                fill
+                width={1400}
+                height={1050}
                 loading="lazy"
                 sizes="(max-width: 960px) 100vw, 48vw"
               />
@@ -191,9 +192,9 @@ export function FundingPage() {
               <p id="funding-conversion-description">Trimite contextul proiectului, iar prima discuție clarifică dacă merită continuat, ce informații lipsesc și ce termen este realist.</p>
               <a className="primary-button yellow-button" href="/contact?service=fonduri-europene" aria-label="Trimite contextul proiectului pentru o evaluare de fonduri europene" title="Trimite contextul proiectului">Trimite contextul proiectului <ArrowRight aria-hidden="true" /></a>
             </div>
-            <div className="conversion-steps" role="list" aria-label="Pașii primei evaluări pentru fonduri europene">
+            <div className="conversion-steps" aria-label="Pașii primei evaluări pentru fonduri europene">
               {fundingConversionSteps.map(([number, title, text]) => (
-                <article key={number} role="listitem">
+                <article key={number}>
                   <span>{number}</span>
                   <h4>{title}</h4>
                   <p>{text}</p>
@@ -230,15 +231,15 @@ export function FundingPage() {
               </p>
               <p className="official-links">
                 Pentru verificarea programelor și ghidurilor oficiale, consultă și{" "}
-                <a href={siteConfig.officialResources.mipe} target="_blank" rel="noopener noreferrer" aria-label="Deschide site-ul oficial MIPE despre fonduri europene" title="Site oficial MIPE">
+                <a href={siteConfig.officialResources.mipe} target="_blank" rel="noopener noreferrer" title="Site oficial MIPE">
                   Ministerul Investițiilor și Proiectelor Europene
                 </a>
                 ,{" "}
-                <a href={siteConfig.officialResources.fonduriUe} target="_blank" rel="noopener noreferrer" aria-label="Deschide portalul oficial fonduri-ue.ro" title="Portal oficial fonduri-ue.ro">
+                <a href={siteConfig.officialResources.fonduriUe} target="_blank" rel="noopener noreferrer" title="Portal oficial fonduri-ue.ro">
                   portalul fonduri-ue.ro
                 </a>
                 {" "}și{" "}
-                <a href={siteConfig.officialResources.pnrr} target="_blank" rel="noopener noreferrer" aria-label="Deschide portalul oficial PNRR România" title="Portal oficial PNRR România">
+                <a href={siteConfig.officialResources.pnrr} target="_blank" rel="noopener noreferrer" title="Portal oficial PNRR România">
                   PNRR România
                 </a>
                 .

@@ -35,7 +35,7 @@ export function ContactPage({ defaultService }: { defaultService?: ContactInput[
             <ContactFormAnchor />
             <div className="contact-options">
               {siteConfig.phoneHref && <a href={`tel:${siteConfig.phoneHref}`} aria-label={`Sună ${siteConfig.name}`} title={`Sună ${siteConfig.name}`}><span><Phone aria-hidden="true" /></span><div><small>Telefon</small><b>{siteConfig.phoneDisplay}</b></div></a>}
-              <a href={`mailto:${siteConfig.email}`} aria-label={`Trimite email către ${siteConfig.name}`} title={`Trimite email către ${siteConfig.name}`}><span><Mail aria-hidden="true" /></span><div><small>Email</small><b>{siteConfig.email}</b></div></a>
+              <a href={`mailto:${siteConfig.email}`} title={`Trimite email către ${siteConfig.name}`}><span><Mail aria-hidden="true" /></span><div><small>Email</small><b>{siteConfig.email}</b></div></a>
               {siteConfig.whatsappNumber && <a href={getWhatsAppUrl()} target="_blank" rel="noopener noreferrer" aria-label={`Scrie către ${siteConfig.name} pe WhatsApp`} title={`Scrie către ${siteConfig.name} pe WhatsApp`}><span><MessageCircle aria-hidden="true" /></span><div><small>WhatsApp</small><b>Scrie-ne direct</b></div></a>}
             </div>
             <div className="contact-steps" aria-labelledby="contact-steps-title">

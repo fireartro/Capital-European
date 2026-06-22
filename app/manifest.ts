@@ -16,8 +16,8 @@ export default function manifest(): MetadataRoute.Manifest {
     lang: "ro",
     categories: ["business", "productivity"],
     icons: [
-      { src: new URL("/icon", siteConfig.url).toString(), sizes: "32x32", type: "image/png" },
-      { src: new URL("/icon", siteConfig.url).toString(), sizes: "any", type: "image/png", purpose: "maskable" }
+      { src: "/icon", sizes: "32x32", type: "image/png" },
+      { src: "/icon", sizes: "any", type: "image/png", purpose: "maskable" }
     ]
   };
 }

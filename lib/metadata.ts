@@ -20,7 +20,8 @@ export function createPageMetadata({
     alternates: {
       canonical: path,
       languages: {
-        "ro-RO": path
+        "ro-RO": path,
+        "x-default": path
       }
     },
     openGraph: {

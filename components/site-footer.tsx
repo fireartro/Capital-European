@@ -18,7 +18,7 @@ export function SiteFooter() {
         <div>
           <h3>Contact consultanți ProBirou</h3>
           {siteConfig.phoneHref && <a href={`tel:${siteConfig.phoneHref}`} aria-label={`Sună ${siteConfig.name}`} title={`Sună ${siteConfig.name}`}>{siteConfig.phoneDisplay}</a>}
-          <a href={`mailto:${siteConfig.email}`} aria-label={`Trimite email către consultanții ${siteConfig.name}`} title={`Trimite email către ${siteConfig.name}`}>{siteConfig.email}</a>
+          <a href={`mailto:${siteConfig.email}`} title={`Trimite email către ${siteConfig.name}`}>{siteConfig.email}</a>
           <span>{siteConfig.address}</span>
           <a className="footer-cta-link" href="/contact" aria-label="Trimite o solicitare către consultanții ProBirou" title="Trimite solicitarea">Trimite o solicitare</a>
         </div>
@@ -26,7 +26,7 @@ export function SiteFooter() {
       <div className="section-container footer-bottom">
         <span>© {new Date().getFullYear()} {siteConfig.name}. Toate drepturile rezervate.</span>
         <div>
-          <a href="/confidentialitate" aria-label="Politica de confidențialitate ProBirou" title="Politica de confidențialitate">Confidențialitate</a>
+          <a href="/confidentialitate" title="Politica de confidențialitate">Confidențialitate</a>
           <a href="/termeni" aria-label="Termeni și condiții ProBirou" title="Termeni și condiții">Termeni</a>
           <a href="/cookies" aria-label="Politica de cookies ProBirou" title="Politica de cookies">Cookies</a>
         </div>

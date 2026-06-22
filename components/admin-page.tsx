@@ -107,7 +107,8 @@ export function AdminPage() {
               <Image
                 src="/images/servicii-administrative-workflow-real.webp"
                 alt="Servicii administrative externalizate cu documente organizate, laptop și flux de lucru"
-                fill
+                width={1400}
+                height={1050}
                 loading="lazy"
                 sizes="(max-width: 960px) 100vw, 48vw"
               />
@@ -118,11 +119,11 @@ export function AdminPage() {
             </figure>
           </section>
 
-          <div className="admin-service-grid" role="list" aria-describedby="admin-services-description">
+          <div className="admin-service-grid" aria-describedby="admin-services-description">
             {services.map((service, index) => {
               const Icon = service.icon;
               return (
-                <article className="admin-service-card" key={service.title} role="listitem" aria-labelledby={`admin-service-${index + 1}-title`} aria-describedby={`admin-service-${index + 1}-description`}>
+                <article className="admin-service-card" key={service.title} aria-labelledby={`admin-service-${index + 1}-title`} aria-describedby={`admin-service-${index + 1}-description`}>
                   <span className="admin-card-icon"><Icon /></span>
                   <h3 id={`admin-service-${index + 1}-title`}>{service.title}</h3>
                   <p id={`admin-service-${index + 1}-description`}>{service.text}</p>
@@ -143,7 +144,7 @@ export function AdminPage() {
                   <li><Check /> Asistență pentru depunerea dosarului</li>
                   <li><Check /> Suport administrativ după înființare</li>
                 </ul>
-                <a className="primary-button yellow-button" href="/contact?service=infiintare-firma" aria-label="Discută cu ProBirou despre înființarea firmei tale" title="Discută despre înființarea firmei">Discută despre firma ta <ArrowRight aria-hidden="true" /></a>
+                <a className="primary-button yellow-button" href="/contact?service=infiintare-firma" title="Discută despre înființarea firmei">Discută despre firma ta <ArrowRight aria-hidden="true" /></a>
               </div>
               <ol className="company-steps" aria-label="Pașii pentru înființarea firmei">
                 {companySteps.map(([number, label]) => <li key={number}><span>{number}</span><p>{label}</p></li>)}
@@ -174,11 +175,11 @@ export function AdminPage() {
               <p className="eyebrow"><FileCheck2 /> Delegare controlată</p>
               <h3 id="admin-conversion-title">Nu trebuie să externalizezi tot biroul din prima.</h3>
               <p id="admin-conversion-description">Începem cu un proces concret, îl facem ușor de verificat și apoi decizi dacă extinzi colaborarea.</p>
-              <a className="primary-button blue-button" href="/contact?service=servicii-administrative" aria-label="Solicită o discuție despre servicii administrative externalizate" title="Discută despre servicii administrative">Discută despre un flux <ArrowRight aria-hidden="true" /></a>
+              <a className="primary-button blue-button" href="/contact?service=servicii-administrative" title="Discută despre servicii administrative">Discută despre un flux <ArrowRight aria-hidden="true" /></a>
             </div>
-            <div className="conversion-steps" role="list" aria-label="Pașii pentru delegarea unui flux administrativ">
+            <div className="conversion-steps" aria-label="Pașii pentru delegarea unui flux administrativ">
               {adminConversionSteps.map(([number, title, text]) => (
-                <article key={number} role="listitem">
+                <article key={number}>
                   <span>{number}</span>
                   <h4>{title}</h4>
                   <p>{text}</p>

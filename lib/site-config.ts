@@ -1,3 +1,15 @@
+function normalizeSiteUrl(value?: string) {
+  if (!value) return "";
+  const withProtocol = /^https?:\/\//i.test(value) ? value : `https://${value}`;
+  return withProtocol.replace(/\/+$/, "");
+}
+
+const resolvedSiteUrl =
+  normalizeSiteUrl(process.env.NEXT_PUBLIC_SITE_URL) ||
+  normalizeSiteUrl(process.env.VERCEL_PROJECT_PRODUCTION_URL) ||
+  normalizeSiteUrl(process.env.VERCEL_URL) ||
+  "https://probirou.ro";
+
 export const siteConfig = {
   name: "ProBirou",
   namePrefix: "Pro",
@@ -5,7 +17,7 @@ export const siteConfig = {
   tagline: "Consultanță și servicii administrative",
   description:
     "Consultanță pentru fonduri europene și servicii administrative complete pentru antreprenori, ONG-uri și companii.",
-  url: "https://probirou.ro",
+  url: resolvedSiteUrl,
   defaultOgImage: "/opengraph-image",
   officialResources: {
     mipe: "https://mfe.gov.ro/",

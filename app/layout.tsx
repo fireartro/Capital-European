@@ -70,10 +70,10 @@ export const metadata: Metadata = {
     }
   },
   icons: {
-    icon: new URL("/icon", siteConfig.url).toString(),
-    apple: new URL("/icon", siteConfig.url).toString()
+    icon: "/icon",
+    apple: "/icon"
   },
-  manifest: new URL("/manifest.webmanifest", siteConfig.url).toString()
+  manifest: "/manifest.webmanifest"
 };
 
 export const viewport: Viewport = {

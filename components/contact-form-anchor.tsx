@@ -18,7 +18,6 @@ export function ContactFormAnchor() {
       className="contact-primary-link"
       href="#formular-contact"
       onClick={scrollToForm}
-      aria-label="Mergi la formularul de contact ProBirou"
       title="Completează formularul"
     >
       Completează formularul <ArrowRight aria-hidden="true" />

@@ -49,7 +49,6 @@ export function HomePage() {
               <a
                 className="choice-button"
                 href="/fonduri-europene"
-                aria-label="Intră pe pagina dedicată consultanței pentru fonduri europene"
                 title="Consultanță fonduri europene ProBirou"
               >
                 Verifică oportunitatea <ArrowRight aria-hidden="true" />
@@ -77,7 +76,6 @@ export function HomePage() {
               <a
                 className="choice-button"
                 href="/servicii-administrative"
-                aria-label="Intră pe pagina dedicată serviciilor administrative"
                 title="Servicii administrative externalizate ProBirou"
               >
                 Organizează administrativul <ArrowRight aria-hidden="true" />

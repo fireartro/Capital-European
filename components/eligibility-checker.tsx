@@ -58,7 +58,7 @@ export function EligibilityChecker() {
           <span><CheckCircle2 aria-hidden="true" /> {score}/5 criterii bifate</span>
           <h3>{result.title}</h3>
           <p>{result.text}</p>
-          <a href="/contact?service=fonduri-europene" aria-label="Solicită verificarea eligibilității pentru fonduri europene" title="Solicită verificarea eligibilității">
+          <a href="/contact?service=fonduri-europene" title="Solicită verificarea eligibilității">
             Verifică eligibilitatea <ArrowRight aria-hidden="true" />
           </a>
         </div>

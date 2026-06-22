@@ -19,7 +19,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { type KeyboardEvent as ReactKeyboardEvent, type MouseEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { type MouseEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Brand } from "@/components/brand";
 import { siteConfig } from "@/lib/site-config";
 
@@ -59,26 +59,15 @@ const generalNavigation: NavigationItem[] = [
 export function SiteHeader({ navigationContext }: { navigationContext?: "funding" | "admin" | "general" }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState({ pathname: "", hash: "" });
-  const menuButtonRef = useRef<HTMLLabelElement>(null);
-  const menuToggleRef = useRef<HTMLInputElement>(null);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
   const drawerRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
-  const menuToggleId = "mobile-navigation-toggle";
 
   const setMenuState = useCallback((nextOpen: boolean) => {
-    if (menuToggleRef.current) {
-      menuToggleRef.current.checked = nextOpen;
-    }
     setMenuOpen(nextOpen);
   }, []);
 
   const closeMenu = useCallback(() => setMenuState(false), [setMenuState]);
-
-  const handleMenuKeyDown = useCallback((event: ReactKeyboardEvent<HTMLLabelElement>, nextOpen: boolean) => {
-    if (event.key !== "Enter" && event.key !== " ") return;
-    event.preventDefault();
-    setMenuState(nextOpen);
-  }, [setMenuState]);
 
   const getHrefParts = useCallback((href: string) => {
     const [rawPath = "", rawHash] = href.split("#");
@@ -260,14 +249,14 @@ export function SiteHeader({ navigationContext }: { navigationContext?: "funding
       <div className="sidebar-contact">
         <span>Ai o întrebare?</span>
         {siteConfig.phoneHref && <a href={`tel:${siteConfig.phoneHref}`} onClick={closeMenu} aria-label={`Sună ${siteConfig.name}`} title={`Sună ${siteConfig.name}`}><Phone aria-hidden="true" /> {siteConfig.phoneDisplay}</a>}
-        <a href={`mailto:${siteConfig.email}`} onClick={closeMenu} aria-label={`Trimite email către ${siteConfig.name}`} title={`Trimite email către ${siteConfig.name}`}><Mail aria-hidden="true" /> {siteConfig.email}</a>
+        <a href={`mailto:${siteConfig.email}`} onClick={closeMenu} title={`Trimite email către ${siteConfig.name}`}><Mail aria-hidden="true" /> {siteConfig.email}</a>
         <Link className="sidebar-cta" href={context.contactHref} onClick={closeMenu} aria-label={`Solicită o discuție cu ${siteConfig.name}`} title={`Solicită o discuție cu ${siteConfig.name}`}>
           Solicită o discuție
         </Link>
       </div>
       <div className="sidebar-legal">
-        <a href="/confidentialitate" onClick={closeMenu} aria-label="Citește politica de confidențialitate ProBirou" title="Politica de confidențialitate ProBirou">Confidențialitate</a>
-        <a href="/termeni" onClick={closeMenu} aria-label="Citește termenii și condițiile ProBirou" title="Termeni și condiții ProBirou">Termeni</a>
+        <a href="/confidentialitate" onClick={closeMenu} title="Politica de confidențialitate ProBirou">Confidențialitate</a>
+        <a href="/termeni" onClick={closeMenu} title="Termeni și condiții ProBirou">Termeni</a>
       </div>
     </>
   );
@@ -285,37 +274,27 @@ export function SiteHeader({ navigationContext }: { navigationContext?: "funding
         {supportContent}
       </aside>
 
-      <input
-        ref={menuToggleRef}
-        className="mobile-menu-toggle"
-        id={menuToggleId}
-        type="checkbox"
-        onChange={(event) => setMenuOpen(event.currentTarget.checked)}
-        tabIndex={-1}
-        aria-hidden="true"
-      />
       <header className="mobile-header">
         <Link href="/" aria-label={`${siteConfig.name}, pagina de alegere`} title={`${siteConfig.name}, pagina de alegere`}><Brand compact /></Link>
         <span className="mobile-context">{context.label}</span>
-        <label
+        <button
+          type="button"
           ref={menuButtonRef}
           className="menu-button"
-          htmlFor={menuToggleId}
-          role="button"
-          tabIndex={0}
-          onKeyDown={(event) => handleMenuKeyDown(event, true)}
+          onClick={() => setMenuState(true)}
           aria-label="Deschide meniul"
           aria-expanded={menuOpen}
           aria-controls="mobile-navigation-drawer"
           aria-haspopup="dialog"
         >
           <Menu aria-hidden="true" />
-        </label>
+        </button>
       </header>
 
       <div
           ref={drawerRef}
           className="mobile-drawer"
+          data-open={menuOpen ? "true" : undefined}
           id="mobile-navigation-drawer"
           role="dialog"
           aria-modal="true"
@@ -323,16 +302,14 @@ export function SiteHeader({ navigationContext }: { navigationContext?: "funding
         >
           <div className="drawer-top">
             <Link href="/" onClick={closeMenu} aria-label={`${siteConfig.name}, pagina de alegere`} title={`${siteConfig.name}, pagina de alegere`}><Brand /></Link>
-            <label
+            <button
+              type="button"
               className="drawer-close"
-              htmlFor={menuToggleId}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(event) => handleMenuKeyDown(event, false)}
+              onClick={closeMenu}
               aria-label="Închide meniul"
             >
               <X aria-hidden="true" />
-            </label>
+            </button>
           </div>
           <p className="drawer-context"><Sparkles /> {context.label}</p>
           {navigationContent}
