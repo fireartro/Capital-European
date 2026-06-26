@@ -112,7 +112,7 @@ export function SiteHeader({ navigationContext }: { navigationContext?: "funding
     let frame = 0;
     const updateActiveSection = () => {
       frame = 0;
-      if (window.scrollY < 140 || !localItems.length) {
+      if (!localItems.length) {
         setActiveSection((current) =>
           current.pathname === pathname && current.hash === ""
             ? current
@@ -121,14 +121,33 @@ export function SiteHeader({ navigationContext }: { navigationContext?: "funding
         return;
       }
 
-      const viewportAnchor = window.innerHeight * .34;
+      const sections = localItems
+        .map((item) => ({ ...item, element: document.getElementById(item.hash.slice(1)) }))
+        .filter((item): item is (typeof item & { element: HTMLElement }) => Boolean(item.element))
+        .sort((a, b) => a.element.getBoundingClientRect().top - b.element.getBoundingClientRect().top);
+
+      if (!sections.length) {
+        setActiveSection((current) =>
+          current.pathname === pathname && current.hash === ""
+            ? current
+            : { pathname, hash: "" }
+        );
+        return;
+      }
+
+      const viewportAnchor = window.innerHeight * 0.34;
       let nextHash = "";
-      localItems.forEach((item) => {
-        const section = document.getElementById(item.hash.slice(1));
-        if (section && section.getBoundingClientRect().top <= viewportAnchor) {
+
+      sections.forEach((item) => {
+        const top = item.element.getBoundingClientRect().top;
+        if (top <= viewportAnchor) {
           nextHash = item.hash;
         }
       });
+
+      if (!nextHash && window.scrollY > 140) {
+        nextHash = sections[0].hash;
+      }
 
       setActiveSection((current) =>
         current.pathname === pathname && current.hash === nextHash

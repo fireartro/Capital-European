@@ -6,7 +6,7 @@ export function SiteFooter() {
     <footer className="site-footer">
       <div className="section-container footer-main">
         <div>
-          <Brand />
+          <Brand variant="light" />
           <p>{siteConfig.description}</p>
         </div>
         <div>

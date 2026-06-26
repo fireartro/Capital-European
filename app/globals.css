@@ -78,7 +78,10 @@ h2 em { color: var(--eu-blue); font-style: normal; }
 .cookie-banner { position: fixed; z-index: 3200; left: 50%; bottom: 16px; transform: translateX(-50%); width: min(100%, 960px); max-width: calc(100% - 32px); display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; padding: 18px 22px; border-radius: 18px; box-shadow: 0 24px 64px rgba(9, 30, 66, .14); background: #fff; color: var(--ink); border: 1px solid rgba(15, 23, 42, .08); }
 .cookie-banner-copy { display: grid; gap: 6px; }
 .cookie-banner-copy strong { display: block; color: var(--ink); font-size: .95rem; }
-.cookie-banner-copy span { color: var(--muted); font-size: .82rem; line-height: 1.5; }
+.cookie-banner-copy span,
+.cookie-banner-description { color: var(--muted); font-size: .82rem; line-height: 1.5; margin: 0; }
+.cookie-banner-description { margin-top: 4px; }
+.cookie-banner-description a { color: var(--eu-blue); text-decoration: underline; }
 .cookie-banner-actions { display: flex; flex-wrap: wrap; gap: 10px; justify-content: flex-end; align-items: center; }
 .cookie-banner-link, .cookie-banner-accept { border-radius: 12px; min-height: 42px; padding: 0 16px; font-size: .82rem; font-weight: 700; }
 .cookie-banner-link { display: inline-flex; align-items: center; justify-content: center; color: var(--eu-blue); background: transparent; text-decoration: none; border: 1px solid rgba(18, 52, 100, .12); }
