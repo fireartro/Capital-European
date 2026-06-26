@@ -10,7 +10,14 @@ export function CookieBanner() {
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const consent = window.localStorage.getItem(COOKIE_CONSENT_KEY);
+
+    let consent: string | null = null;
+    try {
+      consent = window.localStorage.getItem(COOKIE_CONSENT_KEY);
+    } catch {
+      consent = null;
+    }
+
     if (!consent) {
       window.requestAnimationFrame(() => setVisible(true));
     }
@@ -18,7 +25,11 @@ export function CookieBanner() {
 
   const acceptCookies = () => {
     if (typeof window !== "undefined") {
-      window.localStorage.setItem(COOKIE_CONSENT_KEY, "accepted");
+      try {
+        window.localStorage.setItem(COOKIE_CONSENT_KEY, "accepted");
+      } catch {
+        // ignore storage failures and still allow consent
+      }
       document.cookie = `${COOKIE_CONSENT_KEY}=accepted; path=/; max-age=${60 * 60 * 24 * 365}; SameSite=Lax`;
     }
     setVisible(false);
