@@ -18,7 +18,7 @@ export function Brand({ compact = false, variant = "dark" }: { compact?: boolean
           sizes={compact ? "106px" : "180px"}
           className="brand-logo"
           priority
-          style={{ backgroundColor: "transparent" }}
+        
         />
       </span>
     </span>
