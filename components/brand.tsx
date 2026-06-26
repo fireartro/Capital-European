@@ -4,8 +4,8 @@ type BrandVariant = "dark" | "light";
 
 export function Brand({ compact = false, variant = "dark" }: { compact?: boolean; variant?: BrandVariant }) {
   const logoSrc = variant === "light"
-    ? "/images/Consultanta Fonduri Europene si Servicii Administrari firme 1.webp"
-    : "/images/Consultanta Fonduri Europene si Servicii Administrari firme 2.webp";
+    ? "/images/Consultanta-Fonduri-Europene-si-Servicii-Administrari-firme-1.webp"
+    : "/images/Consultanta-Fonduri-Europene-si-Servicii-Administrari-firme-2.webp";
 
   return (
     <span className={`brand ${compact ? "brand-compact" : ""} brand-${variant}`}>
