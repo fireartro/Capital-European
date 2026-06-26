@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import "./globals.css";
 import { ServiceWorkerRegister } from "@/components/service-worker-register";
+import { CookieBanner } from "@/components/cookie-banner";
 import { siteConfig } from "@/lib/site-config";
 import { JsonLd, organizationSchema } from "@/lib/structured-data";
 
@@ -91,6 +92,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       </head>
       <body>
         <JsonLd data={organizationSchema()} />
+        <CookieBanner />
         {children}
         <ServiceWorkerRegister />
         {googleAnalyticsId && (

@@ -56,12 +56,17 @@ const generalNavigation: NavigationItem[] = [
   { label: "Contact", href: "/contact", icon: Mail }
 ];
 
+function normalizePath(path: string) {
+  const trimmed = path.replace(/\/+$/, "");
+  return trimmed === "" ? "/" : trimmed;
+}
+
 export function SiteHeader({ navigationContext }: { navigationContext?: "funding" | "admin" | "general" }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState({ pathname: "", hash: "" });
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const drawerRef = useRef<HTMLDivElement>(null);
-  const pathname = usePathname();
+  const pathname = normalizePath(usePathname() || "/");
 
   const setMenuState = useCallback((nextOpen: boolean) => {
     setMenuOpen(nextOpen);
@@ -72,7 +77,7 @@ export function SiteHeader({ navigationContext }: { navigationContext?: "funding
   const getHrefParts = useCallback((href: string) => {
     const [rawPath = "", rawHash] = href.split("#");
     return {
-      path: (rawPath || pathname).split("?")[0],
+      path: normalizePath((rawPath || pathname).split("?")[0]),
       hash: rawHash ? `#${rawHash}` : ""
     };
   }, [pathname]);
