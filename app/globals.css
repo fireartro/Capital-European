@@ -65,8 +65,8 @@ h2 em { color: var(--eu-blue); font-style: normal; }
 /* Brand and sidebar */
 .brand { display: inline-flex; align-items: center; gap: 10px; font: 760 1.18rem var(--font-display); letter-spacing: 0; }
 .brand strong { color: var(--eu-blue); }
-.brand-logo-frame { position: relative; width: 150px; aspect-ratio: 993 / 486; display: block; flex: 0 0 auto; overflow: hidden; }
-.brand-logo { position: absolute; top: -43.8%; left: -2%; width: 103.2%; max-width: none; height: auto; display: block; }
+.brand-logo-frame { position: relative; width: 150px; aspect-ratio: 993 / 486; display: block; flex: 0 0 auto; overflow: hidden; background: transparent; }
+.brand-logo { position: absolute; top: -43.8%; left: -2%; width: 103.2%; max-width: none; height: auto; display: block; background: transparent; }
 .brand-compact .brand-logo-frame { width: 106px; }
 .sidebar-brand .brand-logo-frame { width: 170px; }
 .split-brand .brand-logo-frame { width: 180px; }
