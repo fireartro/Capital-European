@@ -40,7 +40,7 @@ export function AboutPage() {
             <p className="eyebrow eyebrow-light">Abordarea noastră</p>
             <h2 id="about-approach-title">Complexitatea devine un proces clar.</h2>
             <p>Combinăm disciplina administrativă cu o abordare consultativă. Fiecare colaborare are pași clari, responsabilități definite și comunicare transparentă.</p>
-            <a href="/contact" aria-label="Cunoaște echipa ProBirou printr-o discuție" title="Cunoaște echipa ProBirou">Cunoaște echipa printr-o discuție <ArrowRight aria-hidden="true" /></a>
+            <a href="/contact" aria-label="Cunoaște echipa Capital European printr-o discuție" title="Cunoaște echipa Capital European">Cunoaște echipa printr-o discuție <ArrowRight aria-hidden="true" /></a>
           </div>
           <div className="principles-grid">
             {principles.map(([Icon, title, text], index) => (
@@ -52,7 +52,7 @@ export function AboutPage() {
               </article>
             ))}
           </div>
-          <div className="about-rhythm" aria-label="Ritmul de lucru ProBirou">
+          <div className="about-rhythm" aria-label="Ritmul de lucru Capital European">
             {workingRhythm.map(([title, text], index) => (
               <article key={title}>
                 <span>{String(index + 1).padStart(2, "0")}</span>
@@ -80,15 +80,15 @@ export function AboutPage() {
           <div className="about-media-panel" id="repere-despre">
             <figure className="about-media">
               <Image
-                src="/images/probirou-consultanta-organizare-real.webp"
-                alt="Consultanți ProBirou discutând un proces administrativ și un plan de proiect"
+                src="/images/capital-european-consultanta-organizare-real.webp"
+                alt="Consultanți Capital European discutând un proces administrativ și un plan de proiect"
                 width={1400}
                 height={1050}
                 loading="lazy"
                 sizes="(max-width: 960px) 100vw, 52vw"
               />
             </figure>
-            <div className="about-stat-grid" aria-label="Repere despre ProBirou">
+            <div className="about-stat-grid" aria-label="Repere despre Capital European">
               {aboutStats.map(([value, label, detail]) => (
                 <article key={label}>
                   <strong>{value}</strong>

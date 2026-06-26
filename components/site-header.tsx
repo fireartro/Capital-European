@@ -219,17 +219,19 @@ export function SiteHeader({ navigationContext }: { navigationContext?: "funding
 
   const navigationContent = (
     <>
-      <Link className="back-to-choice" href="/" onClick={closeMenu} aria-label="Schimbă categoria de servicii ProBirou" title="Schimbă categoria de servicii">
+      <Link className="back-to-choice" href="/" onClick={closeMenu} aria-label="Schimbă categoria de servicii" title="Schimbă categoria de servicii">
         <ArrowLeft aria-hidden="true" />
         <span>Schimbă categoria</span>
       </Link>
       <nav className="side-nav" aria-label={`Navigare ${context.label}`}>
         {context.navigation.map((item) => {
           const Icon = item.icon;
+          const active = isActive(item.href);
           return (
             <Link
               aria-label={`Navighează la ${item.label} - ${context.label}`}
-              className={isActive(item.href) ? "active" : ""}
+              aria-current={active ? (item.href.includes("#") ? "location" : "page") : undefined}
+              className={active ? "active" : ""}
               href={item.href}
               key={item.href}
               onClick={(event) => handleNavigationClick(event, item.href)}
@@ -255,8 +257,8 @@ export function SiteHeader({ navigationContext }: { navigationContext?: "funding
         </Link>
       </div>
       <div className="sidebar-legal">
-        <a href="/confidentialitate" onClick={closeMenu} title="Politica de confidențialitate ProBirou">Confidențialitate</a>
-        <a href="/termeni" onClick={closeMenu} title="Termeni și condiții ProBirou">Termeni</a>
+        <a href="/confidentialitate" onClick={closeMenu} title="Politica de confidențialitate">Confidențialitate</a>
+        <a href="/termeni" onClick={closeMenu} title="Termeni și condiții">Termeni</a>
       </div>
     </>
   );

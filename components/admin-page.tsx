@@ -68,7 +68,7 @@ export function AdminPage() {
           <p id="admin-hero-description">Preluăm activitățile administrative recurente și le transformăm în procese clare, predictibile și ușor de urmărit pentru antreprenori, IMM-uri și ONG-uri.</p>
           <div className="inner-hero-actions">
             <a className="primary-button yellow-button" href="/contact?service=servicii-administrative" aria-label="Solicită o ofertă pentru servicii administrative externalizate" title="Solicită ofertă pentru servicii administrative">Solicită o ofertă <ArrowRight aria-hidden="true" /></a>
-            <a className="secondary-link" href="#servicii-administrative" aria-label="Vezi serviciile administrative externalizate ProBirou" title="Vezi serviciile administrative">Vezi serviciile</a>
+            <a className="secondary-link" href="#servicii-administrative" aria-label="Vezi serviciile administrative externalizate Capital European" title="Vezi serviciile administrative">Vezi serviciile</a>
           </div>
           <div className="hero-proof">
             <span><Check /> Poți începe cu un singur flux</span>

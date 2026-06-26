@@ -15,7 +15,9 @@ export function createPageMetadata({
     : `${siteConfig.name} | Fonduri europene & servicii administrative`;
 
   return {
-    title: resolvedTitle,
+    title: {
+      absolute: resolvedTitle
+    },
     description,
     alternates: {
       canonical: path,

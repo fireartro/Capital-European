@@ -20,7 +20,7 @@ export default function Page() {
         professionalServiceSchema({
           path: "/fonduri-europene",
           serviceName: "Consultanță fonduri europene",
-          description: "ProBirou oferă servicii de consultanță pentru accesarea fondurilor europene: analiză de eligibilitate, pregătirea documentației, depunerea proiectelor și sprijin în implementare."
+          description: "Capital European oferă servicii de consultanță pentru accesarea fondurilor europene: analiză de eligibilitate, pregătirea documentației, depunerea proiectelor și sprijin în implementare."
         }),
         serviceSchema({
           name: "Consultanță fonduri europene",

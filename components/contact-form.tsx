@@ -74,7 +74,7 @@ export function ContactForm({ defaultService = "fonduri-europene" }: { defaultSe
     <form className="contact-form" onSubmit={handleSubmit(submit)} aria-busy={isSubmitting} noValidate>
       <div className="form-heading">
         <p className="kicker">Evaluare inițială</p>
-        <h2>Contactați consultanții ProBirou.</h2>
+        <h2>Contactați consultanții Capital European.</h2>
         <p className="form-intro">Prima solicitare trebuie să clarifice situația, nu să te oblige să pregătești totul înainte să știi dacă are sens.</p>
       </div>
       <ul className="form-trust-list" aria-label="Ce se întâmplă cu solicitarea trimisă">
@@ -114,7 +114,7 @@ export function ContactForm({ defaultService = "fonduri-europene" }: { defaultSe
       </div>
       <label className="consent">
         <input type="checkbox" {...register("consent")} required aria-invalid={!!errors.consent} aria-describedby={errors.consent ? "consent-error" : undefined} />
-        <span>Sunt de acord cu prelucrarea datelor pentru soluționarea solicitării, conform <a href="/confidentialitate" title="Politica de confidențialitate ProBirou">politicii de confidențialitate</a>.</span>
+        <span>Sunt de acord cu prelucrarea datelor pentru soluționarea solicitării, conform <a href="/confidentialitate" title="Politica de confidențialitate Capital European">politicii de confidențialitate</a>.</span>
       </label>
       {errors.consent && <small className="standalone-error" id="consent-error">{errors.consent.message}</small>}
       {serverMessage && <p className="server-error" role="alert" aria-live="polite">{serverMessage}</p>}

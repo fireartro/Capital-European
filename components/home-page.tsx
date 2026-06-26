@@ -39,7 +39,7 @@ export function HomePage() {
         </div>
 
         <nav className="split-grid" aria-labelledby="split-services-title">
-          <h2 className="visually-hidden" id="split-services-title">Alege categoria de servicii ProBirou</h2>
+          <h2 className="visually-hidden" id="split-services-title">Alege categoria de servicii Capital European</h2>
           <article className="choice-card choice-funding" aria-labelledby="choice-funding-title" aria-describedby="choice-funding-description">
             <div className="choice-copy">
               <span className="choice-index">01 / Finanțare</span>
@@ -49,7 +49,7 @@ export function HomePage() {
               <a
                 className="choice-button"
                 href="/fonduri-europene"
-                title="Consultanță fonduri europene ProBirou"
+                title="Consultanță fonduri europene Capital European"
               >
                 Verifică oportunitatea <ArrowRight aria-hidden="true" />
               </a>
@@ -76,7 +76,7 @@ export function HomePage() {
               <a
                 className="choice-button"
                 href="/servicii-administrative"
-                title="Servicii administrative externalizate ProBirou"
+                title="Servicii administrative externalizate Capital European"
               >
                 Organizează administrativul <ArrowRight aria-hidden="true" />
               </a>
@@ -94,7 +94,7 @@ export function HomePage() {
         </nav>
 
         <section className="landing-proof-grid" aria-labelledby="landing-proof-title">
-          <h2 className="visually-hidden" id="landing-proof-title">Cum începe colaborarea cu ProBirou</h2>
+          <h2 className="visually-hidden" id="landing-proof-title">Cum începe colaborarea cu Capital European</h2>
           {landingProof.map(([Icon, title, text]) => (
             <article key={title}>
               <Icon aria-hidden="true" />

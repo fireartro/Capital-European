@@ -1,11 +1,12 @@
-const CACHE_VERSION = "probirou-v1";
+const CACHE_VERSION = "capital-european-v2";
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 const STATIC_ASSETS = [
   "/",
   "/manifest.webmanifest",
   "/icon",
+  "/images/logo-capital-european.webp",
   "/images/fonduri-europene-consultanta-real.webp",
-  "/images/probirou-consultanta-organizare-real.webp",
+  "/images/capital-european-consultanta-organizare-real.webp",
   "/images/servicii-administrative-workflow-real.webp"
 ];
 
@@ -22,7 +23,10 @@ self.addEventListener("activate", (event) => {
     caches.keys()
       .then((keys) => Promise.all(
         keys
-          .filter((key) => key.startsWith("probirou-") && key !== STATIC_CACHE)
+          .filter((key) => (
+            key.startsWith("probirou-") ||
+            key.startsWith("capital-european-")
+          ) && key !== STATIC_CACHE)
           .map((key) => caches.delete(key))
       ))
       .then(() => self.clients.claim())

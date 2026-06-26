@@ -52,7 +52,7 @@ export function organizationSchema(): JsonObject {
         },
         hasOfferCatalog: {
           "@type": "OfferCatalog",
-          name: "Servicii ProBirou",
+          name: "Servicii Capital European",
           itemListElement: [
             {
               "@type": "Offer",
