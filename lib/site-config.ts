@@ -1,20 +1,22 @@
 function normalizeSiteUrl(value?: string) {
   if (!value) return "";
-  const withProtocol = /^https?:\/\//i.test(value) ? value : `https://${value}`;
-  return withProtocol.replace(/\/+$/, "");
+  const trimmed = value.trim();
+  if (!trimmed) return "";
+  const withProtocol = /^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`;
+  return withProtocol.replace(/\/$/, "");
 }
 
 const resolvedSiteUrl =
   normalizeSiteUrl(process.env.NEXT_PUBLIC_SITE_URL) ||
   normalizeSiteUrl(process.env.VERCEL_PROJECT_PRODUCTION_URL) ||
   normalizeSiteUrl(process.env.VERCEL_URL) ||
-  "https://probirou.ro";
+  "https://capitaleuropean.ro";
 
 export const siteConfig = {
-  name: "ProBirou",
-  namePrefix: "Pro",
-  nameAccent: "Birou",
-  tagline: "Consultanță și servicii administrative",
+  name: "Capital European",
+  namePrefix: "Capital ",
+  nameAccent: "European",
+  tagline: "Creăm astăzi succesul de mâine",
   description:
     "Consultanță pentru fonduri europene și servicii administrative complete pentru antreprenori, ONG-uri și companii.",
   url: resolvedSiteUrl,
@@ -24,8 +26,8 @@ export const siteConfig = {
     fonduriUe: "https://www.fonduri-ue.ro/",
     pnrr: "https://pnrr.gov.ro/"
   },
-  lastUpdated: "2026-06-19",
-  email: "contact@probirou.ro",
+  lastUpdated: "2026-06-26",
+  email: "contact@capitaleuropean.ro",
   phoneDisplay: "",
   phoneHref: "",
   whatsappNumber: "",
