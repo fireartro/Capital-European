@@ -14,23 +14,25 @@ export function createPageMetadata({
     ? title.includes(siteConfig.name) ? title : `${title} | ${siteConfig.name}`
     : `${siteConfig.name} | Fonduri europene & servicii administrative`;
 
+  const absoluteUrl = new URL(path, siteConfig.url).toString();
+
   return {
     title: {
       absolute: resolvedTitle
     },
     description,
     alternates: {
-      canonical: path,
+      canonical: absoluteUrl,
       languages: {
-        "ro-RO": path,
-        "x-default": path
+        "ro-RO": absoluteUrl,
+        "x-default": absoluteUrl
       }
     },
     openGraph: {
       type: "website",
       locale: "ro_RO",
       siteName: siteConfig.name,
-      url: path,
+      url: absoluteUrl,
       title: resolvedTitle,
       description,
       images: [

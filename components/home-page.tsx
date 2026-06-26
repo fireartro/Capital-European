@@ -28,7 +28,7 @@ export function HomePage() {
   return (
     <SiteShell showFooter={false} showNavigation={false} showWhatsApp={false}>
       <section className="split-landing" aria-labelledby="split-title" aria-describedby="split-description">
-        <Link className="split-brand" href="/" aria-label={`${siteConfig.name}, pagina de alegere`} title={`${siteConfig.name}, pagina de alegere`}><Brand /></Link>
+        <Link className="split-brand" href="/" aria-label={`${siteConfig.name}, pagina de alegere`} title={`${siteConfig.name}, pagina de alegere`}><Brand variant="light" /></Link>
         <div className="eu-stars" aria-hidden="true">
           {Array.from({ length: 12 }, (_, index) => <span className={`eu-star star-${index + 1}`} key={index}>★</span>)}
         </div>
