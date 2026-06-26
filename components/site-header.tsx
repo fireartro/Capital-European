@@ -201,25 +201,19 @@ export function SiteHeader({ navigationContext }: { navigationContext?: "funding
   const handleNavigationClick = (event: MouseEvent<HTMLAnchorElement>, href: string) => {
     closeMenu();
     const { path, hash } = getHrefParts(href);
-    const isSamePageAnchor = path === pathname && !href.includes("?");
+    const isSamePageAnchor = path === pathname && hash;
     if (!isSamePageAnchor) return;
 
     event.preventDefault();
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const behavior: ScrollBehavior = reduceMotion ? "auto" : "smooth";
 
-    if (hash) {
-      const section = document.getElementById(hash.slice(1));
-      if (!section) return;
-      section.scrollIntoView({ behavior, block: "start" });
-      window.history.replaceState(null, "", `${path}${hash}`);
-      setActiveSection({ pathname, hash });
-      return;
-    }
+    const section = document.getElementById(hash.slice(1));
+    if (!section) return;
 
-    window.scrollTo({ top: 0, behavior });
-    window.history.replaceState(null, "", path);
-    setActiveSection({ pathname, hash: "" });
+    section.scrollIntoView({ behavior, block: "start" });
+    window.history.replaceState(null, "", `${path}${hash}`);
+    setActiveSection({ pathname, hash });
   };
 
   const navigationContent = (
