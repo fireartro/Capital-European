@@ -5,7 +5,7 @@ export function Brand({ compact = false }: { compact?: boolean }) {
     <span className={`brand ${compact ? "brand-compact" : ""}`}>
       <span className="brand-logo-frame">
         <Image
-          src="/images/logo-capital-european.webp"
+          src="/images/Consultanta Fonduri-Europene-si-Servicii-Administrari-firme-1.webp"
           alt="Capital European – Creăm astăzi succesul de mâine"
           width={1024}
           height={1024}
