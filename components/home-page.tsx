@@ -47,6 +47,13 @@ export function HomePage() {
               <span className="choice-icon"><Landmark aria-hidden="true" /></span>
               <h2 id="choice-funding-title">Consultanță<br />Fonduri Europene</h2>
               <p id="choice-funding-description">Verificarea eligibilității, pregătirea documentației, depunere și sprijin opțional în implementare.</p>
+              <Link
+                className="choice-secondary-link"
+                href="/calculator-pret-consultanta?mode=eligibilitate"
+                title="Verificare orientativă fonduri europene"
+              >
+                <Calculator aria-hidden="true" /> Verifică orientativ eligibilitatea
+              </Link>
               <a
                 className="choice-button"
                 href="/fonduri-europene"
@@ -74,6 +81,13 @@ export function HomePage() {
               <span className="choice-icon"><Files aria-hidden="true" /></span>
               <h2 id="choice-admin-title">Servicii<br />Administrative</h2>
               <p id="choice-admin-description">Documente, secretariat, back-office și sprijin administrativ pentru înființarea firmei.</p>
+              <Link
+                className="choice-secondary-link"
+                href="/calculator-pret-consultanta?mode=estimare"
+                title="Estimare orientativă servicii administrative"
+              >
+                <Calculator aria-hidden="true" /> Estimează complexitatea serviciului
+              </Link>
               <a
                 className="choice-button"
                 href="/servicii-administrative"
