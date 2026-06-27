@@ -4,8 +4,8 @@ import { createPageMetadata } from "@/lib/metadata";
 import { breadcrumbSchema, JsonLd } from "@/lib/structured-data";
 
 export const metadata = createPageMetadata({
-  title: "Contact",
-  description: "Solicită o ofertă pentru consultanță fonduri europene, servicii administrative externalizate sau înființare firmă.",
+  title: "Contact — Solicită o analiză inițială",
+  description: "Contactează Capital European pentru o analiză inițială de eligibilitate pentru fonduri europene sau o ofertă pentru servicii administrative externalizate.",
   path: "/contact"
 });
 
@@ -23,7 +23,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ s
   return (
     <>
       <JsonLd data={breadcrumbSchema([
-        { name: "Acasa", path: "/" },
+        { name: "Acasă", path: "/" },
         { name: "Contact", path: "/contact" }
       ])} />
       <ContactPage defaultService={defaultService} />

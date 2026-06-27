@@ -28,10 +28,30 @@ export function organizationSchema(): JsonObject {
         "@id": `${siteConfig.url}#organization`,
         name: siteConfig.name,
         url: siteConfig.url,
-        logo: absoluteUrl("/icon"),
+        logo: {
+          "@type": "ImageObject",
+          url: absoluteUrl("/images/Consultanta-Fonduri-Europene-si-Servicii-Administrari-firme-2.webp"),
+          width: 1252,
+          height: 615
+        },
         email: siteConfig.email,
         ...(siteConfig.phoneHref ? { telephone: siteConfig.phoneHref } : {}),
-        sameAs: siteConfig.sameAs
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: "Cluj-Napoca",
+          addressRegion: "Cluj",
+          addressCountry: "RO"
+        },
+        sameAs: siteConfig.sameAs.length > 0 ? [...siteConfig.sameAs] : undefined,
+        knowsAbout: [
+          "Fonduri europene",
+          "Consultanță PNRR",
+          "Cereri de finanțare nerambursabilă",
+          "Servicii administrative externalizate",
+          "Secretariat externalizat",
+          "Înființare firme",
+          "Back-office externalizat"
+        ]
       },
       {
         "@type": ["LocalBusiness", "ProfessionalService"],
@@ -44,12 +64,14 @@ export function organizationSchema(): JsonObject {
         address: {
           "@type": "PostalAddress",
           addressLocality: "Cluj-Napoca",
+          addressRegion: "Cluj",
           addressCountry: "RO"
         },
-        areaServed: {
-          "@type": "Country",
-          name: "Romania"
-        },
+        areaServed: [
+          { "@type": "Country", name: "România" },
+          { "@type": "City", name: "Cluj-Napoca" },
+          { "@type": "AdministrativeArea", name: "Transilvania" }
+        ],
         hasOfferCatalog: {
           "@type": "OfferCatalog",
           name: "Servicii Capital European",
@@ -59,6 +81,7 @@ export function organizationSchema(): JsonObject {
               itemOffered: {
                 "@type": "Service",
                 name: "Consultanță fonduri europene",
+                description: "Analiză de eligibilitate, pregătire documentație, depunere cereri de finanțare și implementare proiecte cu fonduri europene.",
                 url: absoluteUrl("/fonduri-europene")
               }
             },
@@ -67,13 +90,22 @@ export function organizationSchema(): JsonObject {
               itemOffered: {
                 "@type": "Service",
                 name: "Servicii administrative externalizate",
+                description: "Secretariat extern, procesare documente, back-office, organizare operațională și înființare firmă.",
                 url: absoluteUrl("/servicii-administrative")
               }
             }
           ]
         },
         openingHours: "Mo-Fr 08:00-18:00",
-        priceRange: "$$"
+        openingHoursSpecification: {
+          "@type": "OpeningHoursSpecification",
+          dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          opens: "08:00",
+          closes: "18:00"
+        },
+        priceRange: "$$",
+        currenciesAccepted: "RON, EUR",
+        paymentAccepted: "Invoice"
       }
     ]
   };

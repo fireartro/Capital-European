@@ -1,10 +1,9 @@
 import type { Metadata, Viewport } from "next";
-import Script from "next/script";
 import "./globals.css";
 import { ServiceWorkerRegister } from "@/components/service-worker-register";
 import { CookieBanner } from "@/components/cookie-banner";
 import { siteConfig } from "@/lib/site-config";
-import { JsonLd, organizationSchema } from "@/lib/structured-data";
+import { JsonLd, organizationSchema, webSiteSchema } from "@/lib/structured-data";
 
 const googleAnalyticsId = process.env.NEXT_PUBLIC_GA_ID;
 
@@ -24,14 +23,21 @@ export const metadata: Metadata = {
   },
   description: siteConfig.description,
   keywords: [
-    "servicii administrative externalizate",
-    "secretariat externalizat",
-    "administrare documente",
-    "asistență administrativă",
     "consultanță fonduri europene",
-    "fonduri europene firme",
-    "finanțare nerambursabilă",
-    "Cluj-Napoca"
+    "fonduri europene firme România",
+    "fonduri nerambursabile IMM 2025 2026",
+    "consultanță PNRR România",
+    "fonduri europene Cluj-Napoca",
+    "cereri de finanțare europeană",
+    "eligibilitate fonduri europene",
+    "fonduri europene ONG",
+    "servicii administrative externalizate",
+    "secretariat externalizat firme",
+    "back-office externalizat România",
+    "servicii administrative Cluj-Napoca",
+    "administrare documente firme",
+    "înființare firmă SRL",
+    "asistență administrativă afaceri"
   ],
   authors: [{ name: siteConfig.name }],
   creator: siteConfig.name,
@@ -92,25 +98,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       </head>
       <body>
         <JsonLd data={organizationSchema()} />
-        <CookieBanner />
+        <JsonLd data={webSiteSchema()} />
+        <CookieBanner googleAnalyticsId={googleAnalyticsId} />
         {children}
         <ServiceWorkerRegister />
-        {googleAnalyticsId && (
-          <>
-            <Script
-              src={`https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`}
-              strategy="lazyOnload"
-            />
-            <Script id="google-analytics" strategy="lazyOnload">
-              {`
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-                gtag('config', '${googleAnalyticsId}', { anonymize_ip: true });
-              `}
-            </Script>
-          </>
-        )}
       </body>
     </html>
   );

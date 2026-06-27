@@ -1,11 +1,12 @@
+import { CookieSettingsButton } from "@/components/cookie-settings-button";
 import { LegalPage } from "@/components/legal-page";
 import { createPageMetadata } from "@/lib/metadata";
 import { siteConfig } from "@/lib/site-config";
 import { breadcrumbSchema, JsonLd } from "@/lib/structured-data";
 
 export const metadata = createPageMetadata({
-  title: "Politica de cookies",
-  description: `Informații despre utilizarea cookie-urilor pe website-ul ${siteConfig.name}.`,
+  title: "Politica de cookies și setări de consimțământ",
+  description: `Categorii, scopuri, durate și opțiuni de control pentru cookie-urile utilizate pe website-ul ${siteConfig.name}.`,
   path: "/cookies"
 });
 
@@ -17,54 +18,83 @@ export default function CookiesPage() {
         { name: "Politica de cookies", path: "/cookies" }
       ])} />
       <LegalPage
-        eyebrow="Preferințe website"
+        eyebrow="Legea nr. 506/2004 · Directiva ePrivacy"
         title="Politica de cookies"
-        updated="26 iunie 2026"
+        updated="27 iunie 2026"
+        intro="Această politică explică exact ce informații pot fi stocate pe dispozitivul tău, când cerem consimțământul și cum poți refuza sau retrage o alegere fără a pierde accesul la conținutul site-ului."
+        actions={<CookieSettingsButton />}
         sections={[
           {
-            title: "1. Ce sunt cookie-urile?",
+            title: "1. Ce sunt cookie-urile și tehnologiile similare",
             content: [
-              "Cookie-urile sunt fișiere text de mici dimensiuni pe care un website le plasează în browserul tău atunci când îl vizitezi. Ele permit site-ului să îți recunoască vizita, să rețină preferințele tale și să funcționeze corect la accesările ulterioare.",
-              "Cookie-urile nu pot accesa alte date de pe dispozitivul tău, nu pot rula programe și nu conțin viruși. Sunt o tehnologie standard utilizată de aproape toate site-urile web."
+              "Cookie-urile sunt fișiere mici salvate de browser la solicitarea unui website. Tehnologiile similare includ localStorage, identificatori de consimțământ și memoria cache controlată de un service worker.",
+              "Aceste tehnologii pot avea scopuri strict tehnice sau, numai cu acordul tău, scopuri de analiză. Website-ul nu condiționează accesul la informațiile publice de acceptarea cookie-urilor opționale."
             ]
           },
           {
-            title: "2. Ce cookie-uri folosim",
+            title: "2. Temeiul legal",
             content: [
-              "Cookie-uri strict necesare: Aceste cookie-uri sunt indispensabile pentru funcționarea corectă a website-ului. Fără ele, anumite funcționalități de bază (cum ar fi securitatea conexiunii sau funcționalitățile formularului de contact) nu ar putea opera. Nu necesită consimțământul tău și nu pot fi dezactivate.",
-              "Cookie-uri funcționale: Rețin preferințele tale de navigare (de exemplu, pagina ultimei vizite sau opțiunile selectate) pentru a îmbunătăți experiența la vizitele ulterioare. Nu colectează date în scop de marketing.",
-              "Cookie-uri de platformă și găzduire: Platforma de găzduire și infrastructura tehnică pot plasa cookie-uri tehnice pentru securitate, echilibrarea traficului și prevenirea abuzurilor. Aceste cookie-uri sunt gestionate de furnizorul tehnic și respectă politicile sale de confidențialitate."
+              "Pentru stocarea sau accesarea informațiilor care nu sunt strict necesare solicităm consimțământ prealabil, în conformitate cu art. 4 alin. (5) din Legea nr. 506/2004 și cu art. 5 alin. (3) din Directiva 2002/58/CE.",
+              "Operațiunile strict necesare furnizării serviciului solicitat de utilizator se bazează pe excepția prevăzută de art. 4 alin. (6) din Legea nr. 506/2004. Când datele asociate pot identifica o persoană, se aplică și Regulamentul (UE) 2016/679."
+            ],
+            links: [
+              { label: "Legea nr. 506/2004 — Portal Legislativ", href: "https://legislatie.just.ro/Public/DetaliiDocument/172094" },
+              { label: "Directiva 2002/58/CE — EUR-Lex", href: "https://eur-lex.europa.eu/legal-content/RO/TXT/?uri=CELEX:32002L0058" }
             ]
           },
           {
-            title: "3. Cookie-uri de terți",
+            title: "3. Stocare strict necesară",
             content: [
-              "Website-ul nostru nu utilizează în prezent instrumente de analiză (Google Analytics, Hotjar etc.) sau publicitate (Facebook Pixel, Google Ads etc.). Prin urmare, nu sunt plasate cookie-uri de marketing sau profilare.",
-              "Linkurile către telefon, adresa de email și WhatsApp deschid aplicații sau servicii externe (aplicația de telefon, clientul de email, WhatsApp). Aceste servicii terțe aplică propriile politici de confidențialitate și cookie-uri, independent de website-ul nostru.",
-              "Dacă navigezi către site-uri externe prin linkurile de pe pagina noastră (resurse oficiale, platforme instituționale), acele site-uri pot plasa propriile cookie-uri conform politicilor lor."
+              "Utilizăm identificatorul propriu «ce_cookie_consent_v2» în localStorage și, ca mecanism de rezervă, într-un cookie first-party. Acesta reține versiunea politicii, alegerea pentru analiză și data actualizării.",
+              "Durata maximă este de 180 de zile. Scopul exclusiv este să respectăm alegerea ta și să nu afișăm bannerul la fiecare pagină. Nu este folosit pentru profilare, publicitate sau urmărire între website-uri.",
+              "Service worker-ul poate păstra local resurse statice ale site-ului pentru încărcare mai rapidă și funcționare robustă. Cache-ul tehnic nu este utilizat pentru analizarea comportamentului."
             ]
           },
           {
-            title: "4. Durata de stocare",
+            title: "4. Cookie-uri de analiză — opționale",
             content: [
-              "Cookie-urile de sesiune (session cookies): Sunt temporare și se șterg automat când închizi browserul. Sunt folosite pentru funcționalitățile care necesită continuitate în cadrul unei singure vizite.",
-              "Cookie-urile persistente: Rămân pe dispozitivul tău pe o perioadă determinată (de la câteva zile până la un an) sau până când le ștergi manual. Sunt folosite pentru a reține preferințele la vizitele ulterioare."
+              "Dacă variabila Google Analytics este configurată și alegi «Acceptă toate» sau activezi categoria «Analiză audiență», website-ul poate încărca Google Analytics 4.",
+              "În acest caz pot fi utilizate cookie-uri precum «_ga» și «_ga_<container>» pentru diferențierea vizitelor și generarea de statistici agregate. Durata lor este stabilită de furnizor și poate ajunge până la 2 ani, în funcție de configurația activă.",
+              "Am dezactivat semnalele Google pentru publicitate în configurarea site-ului. Nu activăm Analytics înaintea consimțământului și nu folosim această categorie pentru reclame personalizate."
             ]
           },
           {
-            title: "5. Cum poți controla cookie-urile",
+            title: "5. Ce nu folosim în prezent",
             content: [
-              "Poți gestiona și controla cookie-urile direct din setările browserului tău. Poți alege să blochezi toate cookie-urile, să ștergi cookie-urile existente sau să primești o notificare înainte ca un cookie să fie plasat.",
-              "Instrucțiuni pentru principalele browsere: Google Chrome → Setări → Confidențialitate și securitate → Cookie-uri și alte date ale site-ului. Mozilla Firefox → Opțiuni → Confidențialitate și securitate → Cookie-uri și date ale site-ului. Microsoft Edge → Setări → Cookie-uri și permisiuni pentru site. Safari → Preferințe → Confidențialitate → Gestionare date website.",
-              "Atenție: Blocarea cookie-urilor strict necesare poate afecta funcționarea corectă a website-ului sau a formularului de contact."
+              "Nu am implementat Facebook Pixel, Google Ads remarketing, Hotjar sau alte instrumente de profilare comportamentală.",
+              "Dacă vom introduce o categorie sau un furnizor nou, vom actualiza această politică și vom solicita din nou consimțământul atunci când schimbarea afectează scopurile existente."
             ]
           },
           {
-            title: "6. Modificări viitoare ale politicii",
+            title: "6. Cum alegi, refuzi sau retragi consimțământul",
             content: [
-              "Dacă în viitor vom adăuga instrumente de analiză, marketing sau orice alte servicii care implică plasarea de cookie-uri opționale, vom actualiza această politică și vom implementa un mecanism de consimțământ (banner cookies) înainte de activarea acestora.",
-              "Data ultimei actualizări a acestei politici este indicată în antetul documentului. Îți recomandăm să verifici periodic această pagină pentru a fi la curent cu eventualele modificări.",
-              "Dacă ai întrebări despre utilizarea cookie-urilor pe website-ul nostru, ne poți contacta la adresa " + "contact@capitaleuropean.ro" + "."
+              "La prima vizită poți accepta toate cookie-urile, respinge direct toate opțiunile neesențiale sau deschide setările detaliate. Butoanele de acceptare și respingere sunt disponibile în același nivel al interfeței.",
+              "Poți reveni oricând asupra alegerii folosind butonul «Setări cookies» din footer sau butonul de mai sus. Retragerea este aplicată imediat pentru încărcările viitoare și încercăm să eliminăm cookie-urile first-party de analiză deja create.",
+              "Retragerea consimțământului nu afectează legalitatea prelucrărilor efectuate anterior retragerii."
+            ]
+          },
+          {
+            title: "7. Furnizori terți și transferuri",
+            content: [
+              "Dacă Analytics este activat, Google poate prelucra date tehnice ca furnizor distinct sau persoană împuternicită, în funcție de serviciu și configurație. Consultă documentația Google înainte de a acorda consimțământul.",
+              "Accesarea linkurilor externe, inclusiv WhatsApp, platforme publice sau resurse instituționale, te transferă pe website-uri care aplică propriile politici și pot utiliza propriile cookie-uri. Acestea nu sunt controlate de noi."
+            ],
+            links: [
+              { label: "Politica Google privind datele", href: "https://policies.google.com/privacy" }
+            ]
+          },
+          {
+            title: "8. Setările browserului",
+            content: [
+              "Poți șterge sau bloca cookie-urile din setările browserului. Blocarea completă poate elimina inclusiv memorarea opțiunii tale, caz în care bannerul poate reapărea.",
+              "Pentru control suplimentar, folosește funcțiile «Confidențialitate și securitate» din Chrome, Firefox, Edge sau Safari. Setările browserului operează separat de centrul de preferințe al acestui website."
+            ]
+          },
+          {
+            title: "9. Contact și actualizări",
+            content: [
+              `Pentru întrebări privind cookie-urile sau consimțământul ne poți scrie la ${siteConfig.email}.`,
+              "Politica poate fi actualizată când se schimbă tehnologiile, furnizorii sau cadrul legal. Data versiunii curente este afișată în partea de sus a paginii."
             ]
           }
         ]}

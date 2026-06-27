@@ -4,8 +4,8 @@ import { fundingFaq } from "@/lib/service-content";
 import { breadcrumbSchema, faqSchema, JsonLd, professionalServiceSchema, serviceSchema } from "@/lib/structured-data";
 
 export const metadata = createPageMetadata({
-  title: "Consultanță fonduri europene pentru firme și ONG-uri",
-  description: "Consultanță fonduri europene: eligibilitate, identificarea programului, cerere de finanțare, buget, depunere și implementare pentru firme și ONG-uri.",
+  title: "Fonduri europene pentru firme și ONG-uri",
+  description: "Consultanță fonduri europene în Cluj-Napoca și toată România: analiză de eligibilitate, pregătire cerere de finanțare, depunere și implementare proiecte. Fără promisiuni nerealiste.",
   path: "/fonduri-europene"
 });
 

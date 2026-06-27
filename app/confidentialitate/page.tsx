@@ -4,99 +4,143 @@ import { siteConfig } from "@/lib/site-config";
 import { breadcrumbSchema, JsonLd } from "@/lib/structured-data";
 
 export const metadata = createPageMetadata({
-  title: "Politica de confidențialitate",
-  description: `Informații despre modul în care ${siteConfig.name} prelucrează datele cu caracter personal, în conformitate cu GDPR.`,
+  title: "Politica de confidențialitate și protecția datelor",
+  description: `Informații complete despre modul în care ${siteConfig.name} colectează, utilizează, păstrează și protejează datele cu caracter personal.`,
   path: "/confidentialitate"
 });
 
 export default function PrivacyPage() {
+  const legal = siteConfig.legal;
+
   return (
     <>
       <JsonLd data={breadcrumbSchema([
         { name: "Acasă", path: "/" },
-        { name: "Politică de confidențialitate", path: "/confidentialitate" }
+        { name: "Politica de confidențialitate", path: "/confidentialitate" }
       ])} />
       <LegalPage
         eyebrow="GDPR · Regulamentul (UE) 2016/679"
         title="Politica de confidențialitate"
-        updated="26 iunie 2026"
+        updated="27 iunie 2026"
+        intro="Prezenta politică descrie prelucrările de date realizate prin website, formularul de contact și comunicările ulterioare. Este aplicabilă vizitatorilor, persoanelor care solicită o ofertă și reprezentanților potențialilor clienți."
+        notice={!legal.isComplete ? (
+          <>
+            <strong>Date juridice obligatorii necompletate</strong>
+            Denumirea juridică, numărul de înregistrare, codul fiscal și sediul operatorului trebuie configurate înainte de publicarea comercială. Nu au fost inventate date în locul celor reale.
+          </>
+        ) : undefined}
         sections={[
           {
-            title: "1. Identitatea operatorului de date",
+            title: "1. Identitatea și datele de contact ale operatorului",
             content: [
-              "Operator: Capital European, cu sediul în Cluj-Napoca, România.",
-              "Contact: contact@capitaleuropean.ro",
-              "Această politică descrie modul în care Capital European colectează, utilizează, stochează și protejează datele tale cu caracter personal, în conformitate cu Regulamentul General privind Protecția Datelor (GDPR – Regulamentul UE 2016/679) și cu legislația română aplicabilă."
+              legal.isComplete
+                ? `Operatorul este ${legal.entityName}, înregistrat sub nr. ${legal.registrationNumber}, CUI ${legal.taxId}, cu sediul în ${legal.registeredOffice}.`
+                : `Website-ul este prezentat sub denumirea comercială ${siteConfig.name}. Datele juridice complete ale operatorului sunt în curs de configurare.`,
+              `Pentru solicitări privind protecția datelor ne poți contacta la ${siteConfig.email}. Dacă va fi desemnat un responsabil cu protecția datelor, datele acestuia vor fi publicate aici.`
             ]
           },
           {
-            title: "2. Datele cu caracter personal colectate",
+            title: "2. Datele pe care le putem colecta",
             content: [
-              "Prin formularul de contact de pe website, colectăm: numele și prenumele, adresa de email, numărul de telefon (opțional), serviciul pentru care soliciți informații și conținutul mesajului tău.",
-              "Nu solicităm și nu dorim să primim date sensibile prin formularul de contact (date privind starea de sănătate, convingerile politice sau religioase, originea etnică, date biometrice etc.). Te rugăm să nu incluzi astfel de informații în mesajele transmise.",
-              "Nu colectăm date despre minori (persoane sub 16 ani). Dacă ești minor, nu utiliza formularul fără acordul părinților sau tutorilor legali."
+              "Prin formularul de contact colectăm numele, adresa de email, numărul de telefon, serviciul selectat, mesajul transmis și confirmarea acceptării politicii. Câmpul anti-spam ascuns este folosit exclusiv pentru detectarea solicitărilor automate.",
+              "În comunicările ulterioare putem prelucra date de identificare și contact, funcția și organizația reprezentată, documente furnizate voluntar, istoricul comunicărilor și informațiile necesare pentru evaluarea sau executarea serviciului.",
+              "Serverul și furnizorii tehnici pot prelucra temporar adresa IP, data și ora accesului, ruta solicitată, tipul browserului și evenimente de securitate. Preferința pentru cookie-uri este stocată local conform Politicii de cookies."
             ]
           },
           {
-            title: "3. Scopul și temeiul juridic al prelucrării",
+            title: "3. Date pe care nu trebuie să ni le trimiți",
             content: [
-              "Datele colectate sunt prelucrate exclusiv în scopuri determinate și legitime: (a) răspunderea la solicitările și întrebările transmise; (b) pregătirea și transmiterea de oferte la cererea ta; (c) comunicări privind serviciile solicitate sau colaborarea în curs.",
-              "Temeiul juridic principal al prelucrării este art. 6 alin. (1) lit. (b) GDPR – demersuri precontractuale inițiate la solicitarea ta – și art. 6 alin. (1) lit. (a) GDPR – consimțământul exprimat prin completarea formularului.",
-              "Nu prelucrăm datele tale în scopuri de marketing direct fără consimțământul tău explicit și nu le transferăm terților în scop publicitar."
+              "Nu transmite prin formular categorii speciale de date, copii ale actelor de identitate, parole, date bancare complete, date medicale sau informații despre condamnări. Dacă asemenea date sunt necesare într-o colaborare, vom stabili un canal și instrucțiuni adecvate.",
+              "Dacă primim date excesive sau nerelevante, le putem șterge, anonimiza ori solicita retransmiterea documentelor printr-un canal corespunzător."
             ]
           },
           {
-            title: "4. Durata păstrării datelor",
+            title: "4. Scopurile și temeiurile juridice",
             content: [
-              "Datele colectate prin formularul de contact sunt păstrate pe durata necesară soluționării solicitării și, ulterior, pe perioada impusă de obligațiile legale aplicabile (contabile, fiscale, arhivistice).",
-              "Dacă între noi nu se încheie un contract de prestări servicii, datele vor fi șterse sau anonimizate în termen de 12 luni de la ultima comunicare.",
-              "În cazul unui raport contractual, datele relevante sunt păstrate conform legislației privind arhivarea documentelor financiar-contabile (de regulă 5–10 ani, conform legislației în vigoare)."
+              "Răspunsul la solicitări, evaluarea nevoii și pregătirea unei oferte se bazează pe demersurile precontractuale solicitate de persoana vizată — art. 6 alin. (1) lit. (b) GDPR.",
+              "Executarea contractului, administrarea relației, facturarea și gestionarea documentelor se bazează pe art. 6 alin. (1) lit. (b) și, unde este cazul, pe obligații legale conform art. 6 alin. (1) lit. (c) GDPR.",
+              "Securizarea website-ului, prevenirea abuzului, apărarea drepturilor și păstrarea evidențelor minimale se pot baza pe interesul legitim — art. 6 alin. (1) lit. (f) GDPR — după evaluarea necesității și a impactului.",
+              "Google Analytics și orice comunicare de marketing bazată pe abonare se activează numai în baza consimțământului — art. 6 alin. (1) lit. (a) GDPR."
             ]
           },
           {
-            title: "5. Destinatarii datelor",
+            title: "5. Caracterul obligatoriu al datelor",
             content: [
-              "Datele tale nu sunt vândute, închiriate sau transmise comercial niciunui terț.",
-              "Accesul la datele tale este restricționat la membrii echipei Capital European care au nevoie de ele pentru a gestiona solicitarea ta.",
-              "Datele pot fi accesate de furnizori tehnici (platformă de hosting, serviciu de email) în calitate de operatori asociați sau persoane împuternicite, exclusiv în scopuri tehnice și cu obligații contractuale stricte de confidențialitate și securitate.",
-              "În cazul în care legislația o impune, datele pot fi dezvăluite autorităților competente (autorități fiscale, instanțe judecătorești, organe de anchetă), strict în limita obligației legale."
+              "Câmpurile marcate obligatoriu sunt necesare pentru identificarea solicitării și pentru a putea răspunde. Dacă nu le furnizezi, formularul nu poate fi transmis.",
+              "Transmiterea formularului nu obligă părțile să încheie un contract și nu garantează eligibilitatea, finanțarea sau acceptarea unei solicitări."
             ]
           },
           {
-            title: "6. Securitatea datelor",
+            title: "6. Sursa datelor",
             content: [
-              "Aplicăm măsuri tehnice și organizatorice adecvate pentru protejarea datelor tale împotriva accesului neautorizat, pierderii, distrugerii sau divulgării accidentale.",
-              "Website-ul utilizează conexiune securizată HTTPS (criptare TLS). Accesul la datele din comunicările primite este restricționat prin parole și permisiuni de acces.",
-              "Deși depunem toate eforturile rezonabile pentru securizarea datelor, nicio transmitere de date prin internet nu poate fi garantată ca 100% sigură. Utilizezi website-ul și formularul de contact pe propria răspundere."
+              "În principal, obținem datele direct de la tine. Dacă reprezinți o companie sau un ONG, putem primi date profesionale de la organizația pe care o reprezinți ori din registre și surse publice relevante pentru verificarea solicitării.",
+              "Dacă ne furnizezi datele altor persoane, trebuie să ai dreptul de a face acest lucru și să le informezi despre această politică."
             ]
           },
           {
-            title: "7. Drepturile tale conform GDPR",
+            title: "7. Destinatari și persoane împuternicite",
             content: [
-              "Conform Regulamentului GDPR, ai următoarele drepturi cu privire la datele tale cu caracter personal:",
-              "Dreptul de acces (art. 15): poți solicita o copie a datelor pe care le deținem despre tine.",
-              "Dreptul la rectificare (art. 16): poți solicita corectarea datelor inexacte sau incomplete.",
-              "Dreptul la ștergere (art. 17): poți solicita ștergerea datelor, în limitele prevăzute de lege.",
-              "Dreptul la restricționarea prelucrării (art. 18): poți solicita limitarea modului în care utilizăm datele tale.",
-              "Dreptul la portabilitate (art. 20): poți solicita datele tale într-un format structurat, utilizat în mod curent.",
-              "Dreptul de opoziție (art. 21): poți obiecta față de prelucrarea datelor în anumite situații.",
-              "Dreptul de a retrage consimțământul: retragerea consimțământului nu afectează legalitatea prelucrării anterioare.",
-              "Pentru exercitarea oricăruia dintre aceste drepturi, transmite o solicitare scrisă la adresa contact@capitaleuropean.ro. Vom răspunde în termen de maximum 30 de zile."
+              "Accesul este limitat la persoanele care au nevoie de date pentru evaluarea sau executarea serviciului. Putem utiliza furnizori de găzduire, email, securitate, automatizare, CRM, contabilitate sau suport tehnic, obligați contractual să protejeze datele.",
+              "Datele pot fi transmise consultanților ori partenerilor implicați numai când este necesar, există un temei legal și au fost stabilite rolurile și obligațiile de confidențialitate.",
+              "Putem comunica date autorităților, instanțelor sau organelor de control atunci când există o obligație legală ori este necesar pentru constatarea, exercitarea sau apărarea unui drept."
             ]
           },
           {
-            title: "8. Dreptul de a depune plângere",
+            title: "8. Transferuri în afara Spațiului Economic European",
             content: [
-              "Dacă consideri că drepturile tale privind protecția datelor au fost încălcate, ai dreptul să depui o plângere la autoritatea de supraveghere competentă din România:",
-              "Autoritatea Națională de Supraveghere a Prelucrării Datelor cu Caracter Personal (ANSPDCP), B-dul G-ral. Gheorghe Magheru nr. 28–30, Sector 1, București. Website: www.dataprotection.ro. Email: anspdcp@dataprotection.ro."
+              "Unii furnizori tehnici pot prelucra date în afara Spațiului Economic European. În aceste situații verificăm existența unei decizii de adecvare, a clauzelor contractuale standard sau a unui alt mecanism permis de capitolul V GDPR.",
+              "Google Analytics nu este încărcat fără consimțământ. Dacă este activat, consultă și politica Google pentru informații despre infrastructură și mecanismele de transfer."
             ]
           },
           {
-            title: "9. Modificări ale acestei politici",
+            title: "9. Perioade de păstrare",
             content: [
-              "Ne rezervăm dreptul de a modifica această politică de confidențialitate ori de câte ori este necesar, pentru a reflecta schimbările în practicile noastre de prelucrare sau cerințele legale.",
-              "Data ultimei modificări este indicată în antetul documentului. Versiunile anterioare pot fi solicitate la adresa de contact.",
-              "Continuarea utilizării website-ului după publicarea modificărilor constituie acceptul tău față de noua versiune a politicii."
+              "Solicitările care nu conduc la un contract sunt păstrate, de regulă, maximum 12 luni de la ultima comunicare, dacă nu există un motiv legitim pentru o perioadă mai scurtă sau mai lungă.",
+              "Datele contractuale, facturile și evidențele financiar-contabile sunt păstrate pe perioadele impuse de legislația aplicabilă. Documentele de proiect sunt păstrate conform contractului și cerințelor programului de finanțare.",
+              "Preferința pentru cookie-uri este păstrată maximum 180 de zile. Datele tehnice de securitate sunt păstrate pe durate limitate stabilite în funcție de risc și de configurația furnizorului.",
+              "La expirarea termenului, datele sunt șterse, anonimizate sau arhivate separat dacă păstrarea este impusă de lege."
+            ]
+          },
+          {
+            title: "10. Drepturile persoanei vizate",
+            content: [
+              "În condițiile GDPR poți solicita accesul, rectificarea, ștergerea, restricționarea prelucrării, portabilitatea și opoziția față de prelucrările bazate pe interes legitim.",
+              "Poți retrage oricând consimțământul, la fel de ușor cum l-ai acordat. Retragerea nu afectează legalitatea prelucrării anterioare.",
+              `Trimite solicitarea la ${siteConfig.email}. Putem cere informații rezonabile pentru confirmarea identității. Răspundem fără întârzieri nejustificate și, în principiu, în maximum o lună, termen care poate fi prelungit în condițiile art. 12 GDPR.`
+            ],
+            items: [
+              "dreptul de a primi informații clare și o copie a datelor;",
+              "dreptul de a corecta date inexacte sau incomplete;",
+              "dreptul la ștergere, când condițiile legale sunt îndeplinite;",
+              "dreptul la restricționare și opoziție;",
+              "dreptul la portabilitate pentru prelucrările eligibile;",
+              "dreptul de a nu face obiectul unei decizii exclusiv automatizate cu efecte juridice semnificative."
+            ]
+          },
+          {
+            title: "11. Plângeri și căi de atac",
+            content: [
+              "Dacă apreciezi că prelucrarea încalcă GDPR, ne poți contacta pentru soluționare și ai dreptul să depui plângere la Autoritatea Națională de Supraveghere a Prelucrării Datelor cu Caracter Personal.",
+              "Exercitarea dreptului de a depune plângere nu afectează dreptul la o cale de atac judiciară."
+            ],
+            links: [
+              { label: "ANSPDCP — informații și plângeri", href: "https://www.dataprotection.ro/" },
+              { label: "Regulamentul (UE) 2016/679 — EUR-Lex", href: "https://eur-lex.europa.eu/eli/reg/2016/679/oj" }
+            ]
+          },
+          {
+            title: "12. Securitate, minori și decizii automate",
+            content: [
+              "Aplicăm măsuri tehnice și organizatorice proporționale cu riscul, inclusiv conexiuni HTTPS, validarea solicitărilor, limitarea accesului, protecție anti-spam și controale de securitate la nivelul aplicației.",
+              "Website-ul se adresează profesioniștilor și organizațiilor, nu minorilor. Nu urmărim colectarea intenționată de date de la persoane sub 16 ani.",
+              "Nu luăm decizii exclusiv automatizate care produc efecte juridice sau afectează semnificativ o persoană. Evaluările privind eligibilitatea și serviciile necesită analiză umană."
+            ]
+          },
+          {
+            title: "13. Modificarea politicii",
+            content: [
+              "Putem actualiza politica pentru a reflecta modificări legislative, tehnice sau operaționale. Versiunea nouă se publică pe această pagină cu data actualizării.",
+              "Dacă o schimbare afectează substanțial o prelucrare bazată pe consimțământ, vom solicita o alegere nouă înainte de activarea scopului respectiv."
             ]
           }
         ]}

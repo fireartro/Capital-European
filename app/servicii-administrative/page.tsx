@@ -5,7 +5,7 @@ import { breadcrumbSchema, faqSchema, JsonLd, serviceSchema } from "@/lib/struct
 
 export const metadata = createPageMetadata({
   title: "Servicii administrative externalizate",
-  description: "Servicii administrative pentru firme: documente, secretariat, back-office, organizare operațională și asistență pentru înființarea firmei.",
+  description: "Servicii administrative externalizate pentru firme din România: secretariat extern, procesare documente, back-office, organizare operațională și asistență pentru înființarea firmei.",
   path: "/servicii-administrative"
 });
 
@@ -14,7 +14,7 @@ export default function Page() {
     <>
       <JsonLd data={[
         breadcrumbSchema([
-          { name: "Acasa", path: "/" },
+          { name: "Acasă", path: "/" },
           { name: "Servicii administrative", path: "/servicii-administrative" }
         ]),
         serviceSchema({

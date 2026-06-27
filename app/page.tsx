@@ -1,6 +1,6 @@
 import { HomePage } from "@/components/home-page";
 import { createPageMetadata } from "@/lib/metadata";
-import { JsonLd, professionalServiceSchema, webSiteSchema } from "@/lib/structured-data";
+import { JsonLd, professionalServiceSchema } from "@/lib/structured-data";
 
 export const metadata = createPageMetadata({
   path: "/",
@@ -12,7 +12,6 @@ export default function Page() {
   return (
     <>
       <JsonLd data={[
-        webSiteSchema(),
         professionalServiceSchema({
           path: "/",
           serviceName: ["Consultanță fonduri europene", "Servicii administrative"],

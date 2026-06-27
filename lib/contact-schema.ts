@@ -25,7 +25,7 @@ export const contactSchema = z.object({
     "fonduri-europene"
   ]),
   message: cleanText(2000).refine((value) => value.length >= 20, "Mesajul trebuie să aibă minimum 20 de caractere."),
-  consent: z.boolean().refine((value) => value, "Acordul este obligatoriu."),
+  consent: z.boolean().refine((value) => value, "Confirmarea este obligatorie."),
   website: z.string().max(0).optional().default("")
 });
 

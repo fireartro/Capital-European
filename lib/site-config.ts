@@ -12,13 +12,21 @@ const resolvedSiteUrl =
   normalizeSiteUrl(process.env.VERCEL_URL) ||
   "https://capitaleuropean.ro";
 
+function publicValue(value?: string) {
+  return value?.trim() || "";
+}
+
+const legalEntityName = publicValue(process.env.NEXT_PUBLIC_LEGAL_ENTITY_NAME);
+const registrationNumber = publicValue(process.env.NEXT_PUBLIC_REGISTRATION_NUMBER);
+const taxId = publicValue(process.env.NEXT_PUBLIC_TAX_ID);
+const registeredOffice = publicValue(process.env.NEXT_PUBLIC_REGISTERED_OFFICE);
+
 export const siteConfig = {
   name: "Capital European",
   namePrefix: "Capital ",
   nameAccent: "European",
   tagline: "Creăm astăzi succesul de mâine",
-  description:
-    "Consultanță pentru fonduri europene și servicii administrative complete pentru antreprenori, ONG-uri și companii.",
+  description: "Capital European oferă consultanță fonduri europene și servicii administrative externalizate pentru firme, IMM-uri și ONG-uri din România. Analiză de eligibilitate, cereri de finanțare, implementare proiecte, secretariat și back-office externalizat.",
   url: resolvedSiteUrl,
   defaultOgImage: "/opengraph-image",
   officialResources: {
@@ -26,13 +34,20 @@ export const siteConfig = {
     fonduriUe: "https://www.fonduri-ue.ro/",
     pnrr: "https://pnrr.gov.ro/"
   },
-  lastUpdated: "2026-06-26",
+  lastUpdated: "2026-06-27",
   email: "contact@capitaleuropean.ro",
   phoneDisplay: "",
   phoneHref: "",
   whatsappNumber: "",
   address: "Cluj-Napoca, România",
   schedule: "L–V · 08:00–18:00",
+  legal: {
+    entityName: legalEntityName,
+    registrationNumber,
+    taxId,
+    registeredOffice,
+    isComplete: Boolean(legalEntityName && registrationNumber && taxId && registeredOffice)
+  },
   navigation: [
     { label: "Acasă", href: "/" },
     { label: "Fonduri europene", href: "/fonduri-europene" },

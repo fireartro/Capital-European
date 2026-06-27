@@ -1,4 +1,5 @@
 import { Brand } from "@/components/brand";
+import { CookieSettingsButton } from "@/components/cookie-settings-button";
 import { siteConfig } from "@/lib/site-config";
 
 export function SiteFooter() {
@@ -6,7 +7,7 @@ export function SiteFooter() {
     <footer className="site-footer">
       <div className="section-container footer-main">
         <div>
-          <Brand />
+          <Brand variant="light" />
           <p>{siteConfig.description}</p>
         </div>
         <div>
@@ -20,6 +21,9 @@ export function SiteFooter() {
           {siteConfig.phoneHref && <a href={`tel:${siteConfig.phoneHref}`} aria-label={`Sună ${siteConfig.name}`} title={`Sună ${siteConfig.name}`}>{siteConfig.phoneDisplay}</a>}
           <a href={`mailto:${siteConfig.email}`} title={`Trimite email către ${siteConfig.name}`}>{siteConfig.email}</a>
           <span>{siteConfig.address}</span>
+          {siteConfig.legal.entityName && <span>Operator: {siteConfig.legal.entityName}</span>}
+          {siteConfig.legal.registrationNumber && <span>Registrul comerțului: {siteConfig.legal.registrationNumber}</span>}
+          {siteConfig.legal.taxId && <span>CUI: {siteConfig.legal.taxId}</span>}
           <a className="footer-cta-link" href="/contact" aria-label="Trimite o solicitare către Capital European" title="Trimite solicitarea">Trimite o solicitare</a>
         </div>
       </div>
@@ -29,6 +33,7 @@ export function SiteFooter() {
           <a href="/confidentialitate" title="Politica de confidențialitate">Confidențialitate</a>
           <a href="/termeni" aria-label="Termeni și condiții" title="Termeni și condiții">Termeni</a>
           <a href="/cookies" aria-label="Politica de cookies" title="Politica de cookies">Cookies</a>
+          <CookieSettingsButton compact />
         </div>
       </div>
     </footer>

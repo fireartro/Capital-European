@@ -4,12 +4,14 @@ import { siteConfig } from "@/lib/site-config";
 import { breadcrumbSchema, JsonLd } from "@/lib/structured-data";
 
 export const metadata = createPageMetadata({
-  title: "Termeni și condiții",
-  description: `Termenii de utilizare ai website-ului ${siteConfig.name}, cu informații despre servicii, responsabilități, limitări și condițiile de colaborare.`,
+  title: "Termeni și condiții de utilizare și colaborare",
+  description: `Regulile de utilizare a website-ului ${siteConfig.name}, limitele informațiilor publicate și cadrul general aplicabil solicitărilor și serviciilor.`,
   path: "/termeni"
 });
 
 export default function TermsPage() {
+  const legal = siteConfig.legal;
+
   return (
     <>
       <JsonLd data={breadcrumbSchema([
@@ -17,64 +19,158 @@ export default function TermsPage() {
         { name: "Termeni și condiții", path: "/termeni" }
       ])} />
       <LegalPage
-        eyebrow="Informații legale"
-        title="Termeni și condiții de utilizare"
-        updated="26 iunie 2026"
+        eyebrow="Informații contractuale și reguli de utilizare"
+        title="Termeni și condiții"
+        updated="27 iunie 2026"
+        intro="Acești termeni reglementează utilizarea website-ului și transmiterea solicitărilor. Prestarea efectivă a serviciilor este guvernată de oferta și contractul încheiat separat, care prevalează în cazul oricărei neconcordanțe."
+        notice={!legal.isComplete ? (
+          <>
+            <strong>Publicarea comercială necesită datele juridice reale</strong>
+            Legea nr. 365/2002 impune afișarea permanentă a denumirii juridice, sediului, datelor de contact, numărului de înregistrare și codului fiscal. Câmpurile sunt pregătite în configurație, dar nu au fost completate cu date inventate.
+          </>
+        ) : undefined}
         sections={[
           {
-            title: "1. Informații despre operator",
+            title: "1. Operatorul website-ului",
             content: [
-              "Website-ul capitaleuropean.ro este operat de Capital European, cu sediul în Cluj-Napoca, România. Prin utilizarea acestui website, accepți în mod tacit termenii și condițiile prezentate mai jos.",
-              "Dacă nu ești de acord cu acești termeni, te rugăm să nu utilizezi website-ul nostru. Ne rezervăm dreptul de a modifica aceste condiții în orice moment, iar continuarea utilizării site-ului după publicarea modificărilor constituie acceptul tău implicat."
+              legal.isComplete
+                ? `Website-ul este operat de ${legal.entityName}, nr. de înregistrare ${legal.registrationNumber}, CUI ${legal.taxId}, sediul ${legal.registeredOffice}.`
+                : `Website-ul este prezentat sub denumirea comercială ${siteConfig.name}. Datele juridice complete ale operatorului trebuie configurate înainte de lansarea comercială.`,
+              `Contact general: ${siteConfig.email}. Program orientativ de comunicare: ${siteConfig.schedule}.`
+            ],
+            links: [
+              { label: "Legea nr. 365/2002 — Portal Legislativ", href: "https://legislatie.just.ro/Public/DetaliiDocument/77218" }
             ]
           },
           {
-            title: "2. Scopul website-ului și al serviciilor",
+            title: "2. Definiții și domeniu de aplicare",
             content: [
-              "Website-ul are scopul de a prezenta serviciile Capital European în domeniul consultanței pentru fonduri europene și al serviciilor administrative, și de a facilita contactul cu potențialii clienți.",
-              "Informațiile prezentate pe site au caracter general și orientativ. Nu reprezintă o ofertă contractuală fermă, o garanție de eligibilitate sau o asigurare a obținerii finanțării. Fiecare caz este analizat individual, în funcție de documentele și situația specifică a solicitantului.",
-              "Serviciile efective, termenii, prețul, termenele și responsabilitățile sunt stabilite exclusiv prin ofertă scrisă și contract individual, semnat de ambele părți."
+              "«Website» înseamnă paginile și funcționalitățile accesibile prin domeniul configurat pentru Capital European. «Utilizator» înseamnă orice persoană care accesează website-ul sau transmite o solicitare. «Client» înseamnă persoana fizică ori juridică ce încheie un contract de servicii.",
+              "Website-ul se adresează în principal profesioniștilor, firmelor, IMM-urilor și ONG-urilor. Dacă utilizatorul are calitatea legală de consumator, drepturile imperative conferite de legislația protecției consumatorilor nu sunt limitate prin acești termeni."
             ]
           },
           {
-            title: "3. Condiții de utilizare a website-ului",
+            title: "3. Acceptarea termenilor",
             content: [
-              "Utilizatorul se angajează să folosească website-ul în scopuri legale și conform legislației în vigoare. Este interzisă transmiterea de conținut ilegal, ofensator, fals sau care încalcă drepturile altor persoane prin formularul de contact sau prin orice altă modalitate oferită de site.",
-              "Este interzisă orice tentativă de a accesa, modifica, perturba sau deteriora funcționarea website-ului sau a infrastructurii tehnice aferente.",
-              "Utilizatorul este singurul responsabil pentru informațiile transmise prin formular sau în comunicarea cu echipa Capital European. Ne rezervăm dreptul de a nu da curs solicitărilor incomplete, neclare sau care nu sunt în acord cu serviciile oferite."
+              "Prin utilizarea website-ului confirmi că ai citit termenii aplicabili navigării. Transmiterea formularului confirmă că datele furnizate sunt corecte și că ai consultat Politica de confidențialitate.",
+              "Simpla navigare nu echivalează cu acceptarea unei oferte comerciale și nu creează o obligație de a contracta. Consimțământul pentru cookie-uri opționale este separat și poate fi refuzat fără a pierde accesul la conținut."
             ]
           },
           {
-            title: "4. Proprietate intelectuală",
+            title: "4. Scopul și natura informațiilor publicate",
             content: [
-              "Toate elementele website-ului – texte, grafică, logo, structură, cod sursă, denumiri și conținut editorial – sunt proprietatea Capital European sau a licențiatorilor săi și sunt protejate de legislația privind drepturile de autor.",
-              "Este interzisă copierea, reproducerea, distribuirea, modificarea sau utilizarea comercială a oricărui element de pe acest site fără acordul scris prealabil al Capital European.",
-              "Linkurile către resurse externe (platforme instituționale, documente oficiale) sunt furnizate ca referință și nu implică un parteneriat sau o afiliere cu entitățile respective."
+              "Conținutul are scop general, informativ și de prezentare. Nu constituie consultanță juridică, fiscală, contabilă sau o opinie profesională adaptată unei situații concrete.",
+              "Ghidurile, calendarele, valorile și condițiile programelor de finanțare se pot modifica prin acte, corrigenda sau instrucțiuni ale autorităților. Utilizatorul trebuie să consulte documentația oficială aplicabilă la data deciziei."
             ]
           },
           {
-            title: "5. Limitarea răspunderii",
+            title: "5. Solicitările și formarea contractului",
             content: [
-              "Capital European depune toate eforturile rezonabile pentru ca informațiile de pe website să fie corecte și actualizate, însă nu garantează acuratețea, completitudinea sau actualitatea acestora la orice moment în timp.",
-              "Depunerea unei cereri de finanțare nu garantează aprobarea acesteia. Decizia de aprobare aparține exclusiv autorităților de management competente, iar eligibilitatea depinde de condițiile specifice ale programului, de documentele prezentate și de situația individuală a solicitantului.",
-              "Capital European nu este responsabilă pentru pierderi directe sau indirecte rezultate din utilizarea informațiilor prezentate pe site sau din indisponibilitatea temporară a website-ului.",
-              "Linkurile externe sunt furnizate doar în scop informativ. Nu ne asumăm responsabilitatea pentru conținutul, disponibilitatea sau practicile de confidențialitate ale site-urilor terțe."
+              "Mesajul trimis prin formular, email sau telefon reprezintă o invitație la discuție, nu o comandă acceptată și nu un contract. Putem solicita documente suplimentare sau refuza motivat o solicitare care nu intră în domeniul serviciilor.",
+              "Contractul se consideră încheiat numai după acceptarea expresă a unei oferte și semnarea documentelor contractuale de către persoanele autorizate. Oferta va stabili obiectul, livrabilele, tarifele, termenele, dependențele și condițiile de încetare.",
+              "Orice termen menționat înaintea contractului este estimativ, dacă nu este confirmat în scris ca termen ferm."
             ]
           },
           {
-            title: "6. Comunicări și solicitări",
+            title: "6. Servicii privind fondurile europene",
             content: [
-              "Transmiterea unui mesaj prin formularul de contact sau la adresa de email nu creează un raport contractual și nu implică nicio obligație de prestare a serviciilor din partea Capital European.",
-              "Ne angajăm să răspundem solicitărilor în cel mai scurt timp rezonabil, în funcție de complexitatea acestora și de programul de lucru (Luni–Vineri, 08:00–18:00).",
-              "Orice comunicare comercială (oferte, propuneri de colaborare) transmisă de terți fără solicitarea noastră prealabilă nu va genera obligații din partea Capital European."
+              "Analiza de eligibilitate este realizată pe baza informațiilor și documentelor disponibile la momentul evaluării. O concluzie preliminară nu garantează eligibilitatea finală sau aprobarea finanțării.",
+              "Deciziile privind admisibilitatea, punctajul, contractarea, plata și eventualele corecții aparțin autorităților competente. Capital European nu poate garanta aprobarea, punctajul, data evaluării sau plata ajutorului.",
+              "Modificarea ghidului, epuizarea bugetului, suspendarea apelului, indisponibilitatea platformei sau interpretarea autorității pot afecta proiectul fără culpa consultantului."
             ]
           },
           {
-            title: "7. Legea aplicabilă și litigii",
+            title: "7. Servicii administrative și înființare firmă",
             content: [
-              "Prezentele condiții de utilizare sunt guvernate de legislația română în vigoare.",
-              "Orice litigiu legat de utilizarea website-ului sau de serviciile Capital European va fi soluționat pe cale amiabilă. Dacă acest lucru nu este posibil, competența aparține instanțelor judecătorești de la sediul operatorului, în conformitate cu legislația în vigoare.",
-              "Utilizatorul are, de asemenea, dreptul de a accesa platforma europeană de soluționare online a litigiilor: https://ec.europa.eu/consumers/odr."
+              "Serviciile administrative pot include organizarea documentelor, secretariat, back-office, urmărirea fluxurilor și sprijin procedural, în limitele definite prin ofertă.",
+              "Asistența pentru înființarea firmei nu înlocuiește consultanța unui avocat, notar, contabil sau consultant fiscal atunci când legea ori situația concretă impune o asemenea calificare.",
+              "Depunerea sau prelucrarea documentelor în numele clientului se efectuează numai în baza unui mandat ori a unei autorizări valabile, dacă aceasta este necesară."
+            ]
+          },
+          {
+            title: "8. Obligațiile utilizatorului și ale clientului",
+            content: [
+              "Utilizatorul și clientul trebuie să furnizeze informații complete, exacte, actuale și obținute legal, să verifice documentele înainte de aprobare și să respecte termenele comunicate.",
+              "Clientul răspunde pentru autenticitatea documentelor, realitatea declarațiilor, drepturile asupra conținutului transmis și deciziile sale comerciale.",
+              "Întârzierile, omisiunile sau modificările imputabile clientului pot conduce la recalcularea termenelor, costuri suplimentare sau imposibilitatea continuării serviciului."
+            ],
+            items: [
+              "să desemneze persoane de contact cu putere de decizie;",
+              "să comunice imediat orice schimbare relevantă;",
+              "să nu transmită date sau documente fără drept;",
+              "să păstreze copii și evidențe proprii ale documentelor aprobate;",
+              "să respecte obligațiile de cofinanțare, achiziții, raportare și arhivare aplicabile."
+            ]
+          },
+          {
+            title: "9. Utilizări interzise",
+            content: [
+              "Este interzisă utilizarea website-ului pentru activități ilegale, fraudă, transmiterea de cod malițios, testarea neautorizată a securității, suprasolicitarea infrastructurii, colectarea automată masivă de conținut sau încălcarea drepturilor altor persoane.",
+              "Putem bloca solicitările automate, abuzive, amenințătoare ori care urmăresc obținerea neautorizată de informații și putem păstra dovezile necesare apărării drepturilor."
+            ]
+          },
+          {
+            title: "10. Tarife, facturare și taxe",
+            content: [
+              "Website-ul nu afișează o listă universală de tarife deoarece volumul și complexitatea diferă. Prețul, moneda, TVA-ul, calendarul de plată și eventualele costuri terțe vor fi indicate în oferta sau contractul aplicabil.",
+              "Taxele, avizele, traducerile, semnăturile, serviciile notariale și alte costuri ale terților nu sunt incluse decât dacă documentele contractuale prevăd expres contrariul."
+            ]
+          },
+          {
+            title: "11. Proprietate intelectuală",
+            content: [
+              "Textele, identitatea vizuală, structura, grafica și elementele originale ale website-ului sunt protejate de legislația proprietății intelectuale și aparțin operatorului sau licențiatorilor săi.",
+              "Este permisă consultarea și citarea limitată cu indicarea sursei. Reproducerea substanțială, publicarea, revânzarea, modificarea sau utilizarea comercială necesită acord scris.",
+              "Drepturile asupra livrabilelor create pentru un client sunt stabilite exclusiv prin contractul de servicii."
+            ]
+          },
+          {
+            title: "12. Disponibilitate, securitate și legături externe",
+            content: [
+              "Depunem eforturi rezonabile pentru disponibilitate și securitate, dar nu garantăm funcționarea neîntreruptă, absența erorilor sau compatibilitatea cu orice dispozitiv.",
+              "Putem suspenda temporar website-ul pentru mentenanță, actualizări, incidente, măsuri de securitate sau cauze externe.",
+              "Linkurile către autorități și terți sunt oferite informativ. Nu controlăm conținutul, disponibilitatea ori practicile lor și nu rezultă o afiliere din simpla includere a unui link."
+            ]
+          },
+          {
+            title: "13. Limitarea răspunderii",
+            content: [
+              "În limita permisă de lege, operatorul nu răspunde pentru decizii luate exclusiv pe baza conținutului general al website-ului, pentru pierderi indirecte ori pentru consecințele informațiilor incomplete furnizate de utilizator.",
+              "Nicio prevedere nu exclude sau limitează răspunderea care nu poate fi exclusă legal, inclusiv pentru fraudă, intenție, culpă gravă ori alte cazuri protejate imperativ.",
+              "Răspunderea aferentă serviciilor contractate, eventualele plafoane și excluderi sunt stabilite prin contract, raportat la natura serviciului și riscurile asumate."
+            ]
+          },
+          {
+            title: "14. Confidențialitate și date cu caracter personal",
+            content: [
+              "Datele personale sunt prelucrate conform Politicii de confidențialitate. Cookie-urile și tehnologiile similare sunt descrise separat în Politica de cookies.",
+              "Obligațiile de confidențialitate privind informațiile comerciale și documentele de proiect vor fi detaliate în contract sau într-un acord separat, după caz."
+            ]
+          },
+          {
+            title: "15. Forța majoră și evenimente în afara controlului",
+            content: [
+              "Nicio parte nu răspunde pentru neexecutarea cauzată de un eveniment extern, imprevizibil, absolut invincibil și inevitabil, în condițiile legii.",
+              "Incidentele platformelor autorităților, schimbările legislative urgente, atacurile cibernetice extinse ori indisponibilitatea furnizorilor pot conduce la ajustarea rezonabilă a termenelor, fără a înlătura obligația de informare și limitare a efectelor."
+            ]
+          },
+          {
+            title: "16. Modificarea și separabilitatea termenilor",
+            content: [
+              "Putem actualiza termenii pentru schimbări legislative, operaționale sau tehnice. Noua versiune se aplică utilizării ulterioare publicării și nu modifică retroactiv contractele deja încheiate.",
+              "Dacă o clauză este nulă sau inaplicabilă, celelalte prevederi rămân valabile, iar clauza va fi interpretată în limita maximă permisă de lege."
+            ]
+          },
+          {
+            title: "17. Legea aplicabilă și soluționarea disputelor",
+            content: [
+              "Termenii sunt guvernați de legea română. Părțile vor încerca mai întâi soluționarea amiabilă printr-o notificare transmisă la adresa de contact.",
+              "În lipsa unei soluții amiabile, competența revine instanțelor stabilite de normele legale aplicabile; o clauză de competență nu poate înlătura protecția jurisdicțională imperativă a consumatorului.",
+              "Pentru litigii eligibile între consumatori și profesioniști poate fi utilizată procedura SAL administrată conform cadrului ANPC. Vechea platformă europeană ODR a fost închisă la 20 iulie 2025 și nu mai este indicată ca mijloc activ."
+            ],
+            links: [
+              { label: "Soluționarea alternativă a litigiilor — ANPC", href: "https://anpc.ro/sal/" },
+              { label: "Regulamentul (UE) 2024/3228 — închiderea platformei ODR", href: "https://eur-lex.europa.eu/eli/reg/2024/3228/oj" }
             ]
           }
         ]}
