@@ -42,7 +42,12 @@ export default function Page() {
             <div className="calculator-heading">
               <p className="eyebrow eyebrow-light"><Calculator aria-hidden="true" /> Estimare transparentă</p>
               <h1 id="calculator-title">Calculator preț consultanță fonduri europene</h1>
-              <p>Configurează situația proiectului pentru a vedea complexitatea estimată. Un interval financiar este afișat numai dacă baza comercială reală a companiei a fost configurată.</p>
+              <p>Primești rapid o estimare de complexitate și, când baza comercială este configurată, un interval orientativ. Oferta finală se stabilește numai după verificarea apelului și a documentelor.</p>
+              <div className="calculator-signals" aria-label="Caracteristicile estimării">
+                <span>Actualizare instant</span>
+                <span>Fără date personale</span>
+                <span>Fără obligație contractuală</span>
+              </div>
               <Link href="/consultanta-fonduri-europene">Vezi procesul complet de consultanță <ArrowRight aria-hidden="true" /></Link>
             </div>
             <ConsultingPriceCalculator basePriceRon={basePriceRon} />

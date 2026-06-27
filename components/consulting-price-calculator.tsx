@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, Calculator, CircleCheckBig, Info } from "lucide-react";
+import { ArrowRight, Calculator, CircleCheckBig, Info, RotateCcw } from "lucide-react";
 import { useMemo, useState } from "react";
 
 type SelectOption = {
@@ -79,16 +79,39 @@ export function ConsultingPriceCalculator({ basePriceRon }: { basePriceRon: numb
   }, [applicant, basePriceRon, documents, project, projectValue, urgency]);
 
   const hasCommercialBase = Number.isFinite(basePriceRon) && basePriceRon > 0;
+  const reset = () => {
+    setApplicant("srl");
+    setProject("equipment");
+    setProjectValue("medium");
+    setDocuments("partial");
+    setUrgency("normal");
+  };
 
   return (
     <div className="price-calculator">
       <div className="calculator-fields">
-        <label>
-          <span>Tip solicitant</span>
-          <select value={applicant} onChange={(event) => setApplicant(event.target.value)}>
-            {applicantOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
-          </select>
-        </label>
+        <div className="calculator-form-heading">
+          <span>5 factori analizați</span>
+          <h2>Configurează proiectul</h2>
+          <p>Modifică răspunsurile, iar estimarea se actualizează imediat.</p>
+        </div>
+        <fieldset className="calculator-applicant">
+          <legend>Tip solicitant</legend>
+          <div>
+            {applicantOptions.map((option) => (
+              <label key={option.value}>
+                <input
+                  type="radio"
+                  name="applicant"
+                  value={option.value}
+                  checked={applicant === option.value}
+                  onChange={(event) => setApplicant(event.target.value)}
+                />
+                <span>{option.label}</span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
         <label>
           <span>Tipul investiției</span>
           <select value={project} onChange={(event) => setProject(event.target.value)}>
@@ -113,21 +136,30 @@ export function ConsultingPriceCalculator({ basePriceRon }: { basePriceRon: numb
             {urgencyOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
           </select>
         </label>
+        <button className="calculator-reset" type="button" onClick={reset}>
+          <RotateCcw aria-hidden="true" /> Resetează răspunsurile
+        </button>
       </div>
 
       <aside className="calculator-result" aria-live="polite">
-        <span className="calculator-result-icon"><Calculator aria-hidden="true" /></span>
-        <p>Complexitate estimată</p>
-        <strong>{estimate.complexity}</strong>
+        <div className="calculator-result-header">
+          <span className="calculator-result-icon"><Calculator aria-hidden="true" /></span>
+          <span className="calculator-estimate-label">Estimare orientativă</span>
+        </div>
+        <div className="calculator-complexity">
+          <p>Complexitatea proiectului</p>
+          <strong>{estimate.complexity}</strong>
+        </div>
         {hasCommercialBase ? (
-          <>
+          <div className="calculator-price-range">
             <p>Interval orientativ pentru consultanță</p>
             <h2>{formatRon(estimate.lower)} - {formatRon(estimate.upper)}</h2>
-          </>
+            <small>Calculat din baza comercială aprobată și factorii selectați.</small>
+          </div>
         ) : (
           <div className="calculator-pending-price">
             <Info aria-hidden="true" />
-            <p>Prețul nu este publicat automat. Configurarea bazei comerciale se face prin variabila <code>NEXT_PUBLIC_ESTIMATOR_BASE_PRICE_RON</code>.</p>
+            <p>Intervalul financiar se confirmă după validarea datelor comerciale. Estimarea de complexitate rămâne disponibilă.</p>
           </div>
         )}
         <ul>
@@ -137,6 +169,7 @@ export function ConsultingPriceCalculator({ basePriceRon }: { basePriceRon: numb
         <Link className="primary-button yellow-button" href="/contact?service=consultanta">
           Cere evaluarea exactă <ArrowRight aria-hidden="true" />
         </Link>
+        <p className="calculator-disclaimer">Rezultatul nu reprezintă ofertă contractuală și nu garantează eligibilitatea sau aprobarea finanțării.</p>
       </aside>
     </div>
   );

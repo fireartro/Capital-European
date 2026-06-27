@@ -43,14 +43,15 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   compress: true,
   reactStrictMode: true,
-  experimental: {
-    sri: {
-      algorithm: "sha256"
-    }
-  },
   async headers() {
     return [
-      { source: "/(.*)", headers: securityHeaders }
+      { source: "/(.*)", headers: securityHeaders },
+      {
+        source: "/sw.js",
+        headers: [
+          { key: "Cache-Control", value: "no-store, no-cache, must-revalidate, proxy-revalidate" }
+        ]
+      }
     ];
   },
   async redirects() {
