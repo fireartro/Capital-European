@@ -27,15 +27,8 @@
   transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
 }
 
-.phone-float {
-  color: #fff;
-  background: #003399;
-}
-
-.whatsapp-float {
-  color: #fff;
-  background: #25d366;
-}
+.phone-float { color: #fff; background: #003399; }
+.whatsapp-float { color: #fff; background: #25d366; }
 
 .phone-float:hover,
 .whatsapp-float:hover {
@@ -43,35 +36,18 @@
   box-shadow: 0 20px 46px rgba(2, 16, 45, .3);
 }
 
-.phone-float > svg {
-  width: 27px;
-  height: 27px;
-  padding: 0;
-  background: transparent;
-}
-
-.whatsapp-float > svg {
-  width: 34px;
-  height: 34px;
-  padding: 0;
-  background: transparent;
-}
+.phone-float > svg { width: 27px; height: 27px; padding: 0; background: transparent; }
+.whatsapp-float > svg { width: 34px; height: 34px; padding: 0; background: transparent; }
 
 .phone-label,
 .whatsapp-label,
-.whatsapp-pulse {
-  display: none !important;
-}
+.whatsapp-pulse { display: none !important; }
 
 body:has(.cookie-banner) .quick-contact-float,
-body:has(.cookie-preferences-backdrop) .quick-contact-float {
-  display: none;
-}
+body:has(.cookie-preferences-backdrop) .quick-contact-float { display: none; }
 
 body:has(.app-layout:not(.no-navigation)) .cookie-settings-floating,
-body:has(.legal-page) .cookie-settings-floating {
-  display: inline-flex;
-}
+body:has(.legal-page) .cookie-settings-floating { display: inline-flex; }
 
 .cookie-settings-floating {
   z-index: 1180;
@@ -79,41 +55,21 @@ body:has(.legal-page) .cookie-settings-floating {
 }
 
 body:has(.cookie-banner) .cookie-settings-floating,
-body:has(.cookie-preferences-backdrop) .cookie-settings-floating {
-  display: none;
-}
+body:has(.cookie-preferences-backdrop) .cookie-settings-floating { display: none; }
 
-.contact-layout-simplified {
-  align-items: center;
-}
+.contact-layout-simplified { align-items: center; }
+.contact-layout-simplified .contact-copy { max-width: 560px; }
+.contact-layout-simplified .contact-primary-link { margin-bottom: 18px; }
+.contact-layout-simplified .contact-steps { margin-top: 8px; }
 
-.contact-layout-simplified .contact-copy {
-  max-width: 560px;
-}
-
-.contact-layout-simplified .contact-primary-link {
-  margin-bottom: 18px;
-}
-
-.contact-layout-simplified .contact-steps {
-  margin-top: 8px;
-}
-
-.content-section {
-  padding-block: 84px;
-}
-
-.section-title-row {
-  margin-bottom: 42px;
-}
+.content-section { padding-block: 84px; }
+.section-title-row { margin-bottom: 42px; }
 
 .section-title-row > p,
 .visual-story-copy > p:not(.eyebrow),
 .inner-hero-content > p:not(.eyebrow),
 .seo-service-hero .section-container > p:not(.eyebrow),
-.calculator-heading > p:not(.eyebrow) {
-  line-height: 1.72;
-}
+.calculator-heading > p:not(.eyebrow) { line-height: 1.72; }
 
 .funding-service-card,
 .admin-service-card,
@@ -121,59 +77,56 @@ body:has(.cookie-preferences-backdrop) .cookie-settings-floating {
 .seo-process-grid article,
 .fit-grid article,
 .conversion-steps article,
-.operations-lanes article {
-  padding: 26px;
+.operations-lanes article { padding: 26px; }
+
+.choice-secondary-link {
+  width: fit-content;
+  min-height: 34px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin: -7px 0 14px;
+  padding: 0 11px;
+  border: 1px solid rgba(255, 204, 0, .35);
+  border-radius: 999px;
+  color: var(--eu-yellow);
+  background: rgba(255, 204, 0, .08);
+  font-size: .72rem;
+  font-weight: 850;
 }
 
-.calculator-mode-switch {
-  max-width: 920px;
+.choice-admin .choice-secondary-link {
+  border-color: rgba(0, 51, 153, .18);
+  color: var(--eu-blue);
+  background: var(--eu-blue-light);
 }
 
-.calculator-heading {
-  margin-bottom: 32px;
-}
+.choice-secondary-link svg { width: 15px; height: 15px; }
 
-.calculator-entry {
-  margin-top: 28px;
-}
+.calculator-mode-switch { max-width: 920px; }
+.calculator-heading { margin-bottom: 32px; }
+.calculator-entry { margin-top: 28px; }
+.price-calculator { border-radius: 12px; }
 
-.price-calculator {
-  border-radius: 12px;
-}
+.calculator-result .primary-button,
+.seo-service-actions .primary-button,
+.seo-service-cta .primary-button { box-shadow: 0 16px 38px rgba(255, 204, 0, .2); }
 
-.form-wrap {
-  max-width: 640px;
-  justify-self: end;
-}
-
-.contact-form {
-  padding: 26px;
-}
-
-.form-trust-list li {
-  min-height: auto;
-}
-
-.site-footer {
-  padding-bottom: 42px;
-}
+.form-wrap { max-width: 640px; justify-self: end; }
+.contact-form { padding: 26px; }
+.form-trust-list li { min-height: auto; }
+.site-footer { padding-bottom: 42px; }
 
 @media (max-width: 820px) {
   .content-section,
-  .faq {
-    padding-block: 66px;
-  }
+  .faq { padding-block: 66px; }
 
   .inner-hero h1,
   .contact-copy h1,
   .seo-service-hero h1,
-  .calculator-heading h1 {
-    letter-spacing: -.02em;
-  }
+  .calculator-heading h1 { letter-spacing: -.02em; }
 
-  .section-title-row {
-    margin-bottom: 30px;
-  }
+  .section-title-row { margin-bottom: 30px; }
 
   .funding-service-card,
   .admin-service-card,
@@ -181,14 +134,9 @@ body:has(.cookie-preferences-backdrop) .cookie-settings-floating {
   .seo-process-grid article,
   .fit-grid article,
   .conversion-steps article,
-  .operations-lanes article {
-    padding: 22px;
-  }
+  .operations-lanes article { padding: 22px; }
 
-  .form-wrap {
-    max-width: 100%;
-    justify-self: stretch;
-  }
+  .form-wrap { max-width: 100%; justify-self: stretch; }
 }
 
 @media (max-width: 640px) {
@@ -199,48 +147,30 @@ body:has(.cookie-preferences-backdrop) .cookie-settings-floating {
   }
 
   .phone-float,
-  .whatsapp-float {
-    width: 50px;
-    height: 50px;
-    min-height: 50px;
-  }
+  .whatsapp-float { width: 50px; height: 50px; min-height: 50px; }
+  .phone-float > svg { width: 25px; height: 25px; }
+  .whatsapp-float > svg { width: 32px; height: 32px; }
 
-  .phone-float > svg {
-    width: 25px;
-    height: 25px;
-  }
-
-  .whatsapp-float > svg {
-    width: 32px;
-    height: 32px;
-  }
-
-  .contact-layout-simplified .contact-copy {
-    max-width: none;
-  }
-
-  .contact-layout-simplified .contact-steps {
-    margin-top: 4px;
-  }
+  .contact-layout-simplified .contact-copy { max-width: none; }
+  .contact-layout-simplified .contact-steps { margin-top: 4px; }
 
   .content-section,
-  .faq {
-    padding-block: 52px;
-  }
+  .faq { padding-block: 52px; }
 
   .section-title-row > p,
   .visual-story-copy > p:not(.eyebrow),
   .inner-hero-content > p:not(.eyebrow),
   .seo-service-hero .section-container > p:not(.eyebrow),
-  .calculator-heading > p:not(.eyebrow) {
-    line-height: 1.62;
+  .calculator-heading > p:not(.eyebrow) { line-height: 1.62; }
+
+  .choice-secondary-link {
+    width: 100%;
+    justify-content: center;
+    min-height: 38px;
+    margin: 0 0 10px;
+    font-size: .7rem;
   }
 
-  .calculator-entry {
-    margin-top: 20px;
-  }
-
-  .site-footer {
-    padding-bottom: 86px;
-  }
+  .calculator-entry { margin-top: 20px; }
+  .site-footer { padding-bottom: 86px; }
 }
