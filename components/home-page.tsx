@@ -25,6 +25,8 @@ const landingProof = [
   [Scale, "Recomandări responsabile", "Semnalăm ce poate fi continuat, ce trebuie verificat și unde există riscuri."]
 ] as const;
 
+const calculatorHref = "/calculator-pret-consultanta?mode=estimare";
+
 export function HomePage() {
   return (
     <SiteShell showFooter={false} showNavigation={false} showWhatsApp={true}>
@@ -49,10 +51,10 @@ export function HomePage() {
               <p id="choice-funding-description">Verificarea eligibilității, pregătirea documentației, depunere și sprijin opțional în implementare.</p>
               <Link
                 className="choice-secondary-link"
-                href="/calculator-pret-consultanta?mode=eligibilitate"
-                title="Verificare orientativă fonduri europene"
+                href={calculatorHref}
+                title="Estimare orientativă consultanță fonduri europene"
               >
-                <Calculator aria-hidden="true" /> Verifică orientativ eligibilitatea
+                <Calculator aria-hidden="true" /> Estimează complexitatea consultanței
               </Link>
               <a
                 className="choice-button"
@@ -83,7 +85,7 @@ export function HomePage() {
               <p id="choice-admin-description">Documente, secretariat, back-office și sprijin administrativ pentru înființarea firmei.</p>
               <Link
                 className="choice-secondary-link"
-                href="/calculator-pret-consultanta?mode=estimare"
+                href={calculatorHref}
                 title="Estimare orientativă servicii administrative"
               >
                 <Calculator aria-hidden="true" /> Estimează complexitatea serviciului
@@ -126,7 +128,7 @@ export function HomePage() {
           <span><Zap /> Pași bine definiți</span>
           <span><Scale /> Evaluare responsabilă</span>
           <span><Users /> Comunicare directă</span>
-          <Link href="/calculator-pret-consultanta" title="Calculator pentru fonduri și servicii administrative"><Calculator /> Calculator orientativ</Link>
+          <Link href={calculatorHref} title="Calculator pentru consultanță și servicii administrative"><Calculator /> Calculator orientativ</Link>
         </footer>
       </section>
     </SiteShell>
