@@ -32,29 +32,29 @@ type NavigationItem = {
 const fundingNavigation: NavigationItem[] = [
   { label: "Prezentare", href: "/fonduri-europene", icon: Landmark },
   { label: "Servicii", href: "/fonduri-europene#servicii-fonduri", icon: FileText },
-  { label: "Calculator", href: "/calculator-pret-consultanta?mode=eligibilitate", icon: Calculator },
   { label: "Proces", href: "/fonduri-europene#proces-fonduri", icon: ClipboardList },
   { label: "Întrebări", href: "/fonduri-europene#intrebari-fonduri", icon: CircleHelp },
-  { label: "Contact", href: "/contact?service=fonduri-europene", icon: Mail }
+  { label: "Contact", href: "/contact?service=fonduri-europene", icon: Mail },
+  { label: "Calculator", href: "/calculator-pret-consultanta?mode=eligibilitate", icon: Calculator }
 ];
 
 const adminNavigation: NavigationItem[] = [
   { label: "Prezentare", href: "/servicii-administrative", icon: FileText },
   { label: "Servicii", href: "/servicii-administrative#servicii-administrative", icon: ClipboardList },
-  { label: "Calculator", href: "/calculator-pret-consultanta?mode=estimare", icon: Calculator },
   { label: "Înființare firmă", href: "/servicii-administrative#infiintare-firma", icon: Building2 },
   { label: "Întrebări", href: "/servicii-administrative#intrebari-administrative", icon: CircleHelp },
-  { label: "Contact", href: "/contact?service=servicii-administrative", icon: Mail }
+  { label: "Contact", href: "/contact?service=servicii-administrative", icon: Mail },
+  { label: "Calculator", href: "/calculator-pret-consultanta?mode=estimare", icon: Calculator }
 ];
 
 const generalNavigation: NavigationItem[] = [
   { label: "Alegere servicii", href: "/", icon: Home },
   { label: "Fonduri europene", href: "/fonduri-europene", icon: Landmark },
   { label: "Servicii administrative", href: "/servicii-administrative", icon: FileText },
-  { label: "Calculator", href: "/calculator-pret-consultanta", icon: Calculator },
   { label: "Despre", href: "/despre", icon: BookOpenCheck },
   { label: "Întrebări", href: "/intrebari", icon: CircleHelp },
-  { label: "Contact", href: "/contact", icon: Mail }
+  { label: "Contact", href: "/contact", icon: Mail },
+  { label: "Calculator", href: "/calculator-pret-consultanta", icon: Calculator }
 ];
 
 function normalizePath(path: string) {
@@ -314,30 +314,30 @@ export function SiteHeader({ navigationContext }: { navigationContext?: "funding
       </header>
 
       <div
-          ref={drawerRef}
-          className="mobile-drawer"
-          data-open={menuOpen ? "true" : undefined}
-          hidden={!menuOpen}
-          id="mobile-navigation-drawer"
-          role="dialog"
-          aria-modal="true"
-          aria-hidden={!menuOpen}
-          aria-label={`Meniu ${context.label}`}
-        >
-          <div className="drawer-top">
-            <Link href="/" onClick={closeMenu} aria-label={`${siteConfig.name}, pagina de alegere`} title={`${siteConfig.name}, pagina de alegere`}><Brand /></Link>
-            <button
-              type="button"
-              className="drawer-close"
-              onClick={closeMenu}
-              aria-label="Închide meniul"
-            >
-              <X aria-hidden="true" />
-            </button>
-          </div>
-          <p className="drawer-context"><Sparkles /> {context.label}</p>
-          {navigationContent}
-          {supportContent}
+        ref={drawerRef}
+        className="mobile-drawer"
+        data-open={menuOpen ? "true" : undefined}
+        hidden={!menuOpen}
+        id="mobile-navigation-drawer"
+        role="dialog"
+        aria-modal="true"
+        aria-hidden={!menuOpen}
+        aria-label={`Meniu ${context.label}`}
+      >
+        <div className="drawer-top">
+          <Link href="/" onClick={closeMenu} aria-label={`${siteConfig.name}, pagina de alegere`} title={`${siteConfig.name}, pagina de alegere`}><Brand /></Link>
+          <button
+            type="button"
+            className="drawer-close"
+            onClick={closeMenu}
+            aria-label="Închide meniul"
+          >
+            <X aria-hidden="true" />
+          </button>
+        </div>
+        <p className="drawer-context"><Sparkles /> {context.label}</p>
+        {navigationContent}
+        {supportContent}
       </div>
     </>
   );
