@@ -29,13 +29,15 @@ type NavigationItem = {
   icon: typeof Home;
 };
 
+const calculatorHref = "/calculator-pret-consultanta?mode=estimare";
+
 const fundingNavigation: NavigationItem[] = [
   { label: "Prezentare", href: "/fonduri-europene", icon: Landmark },
   { label: "Servicii", href: "/fonduri-europene#servicii-fonduri", icon: FileText },
   { label: "Proces", href: "/fonduri-europene#proces-fonduri", icon: ClipboardList },
   { label: "Întrebări", href: "/fonduri-europene#intrebari-fonduri", icon: CircleHelp },
   { label: "Contact", href: "/contact?service=fonduri-europene", icon: Mail },
-  { label: "Calculator", href: "/calculator-pret-consultanta?mode=eligibilitate", icon: Calculator }
+  { label: "Calculator", href: calculatorHref, icon: Calculator }
 ];
 
 const adminNavigation: NavigationItem[] = [
@@ -44,7 +46,7 @@ const adminNavigation: NavigationItem[] = [
   { label: "Înființare firmă", href: "/servicii-administrative#infiintare-firma", icon: Building2 },
   { label: "Întrebări", href: "/servicii-administrative#intrebari-administrative", icon: CircleHelp },
   { label: "Contact", href: "/contact?service=servicii-administrative", icon: Mail },
-  { label: "Calculator", href: "/calculator-pret-consultanta?mode=estimare", icon: Calculator }
+  { label: "Calculator", href: calculatorHref, icon: Calculator }
 ];
 
 const generalNavigation: NavigationItem[] = [
@@ -54,7 +56,7 @@ const generalNavigation: NavigationItem[] = [
   { label: "Despre", href: "/despre", icon: BookOpenCheck },
   { label: "Întrebări", href: "/intrebari", icon: CircleHelp },
   { label: "Contact", href: "/contact", icon: Mail },
-  { label: "Calculator", href: "/calculator-pret-consultanta", icon: Calculator }
+  { label: "Calculator", href: calculatorHref, icon: Calculator }
 ];
 
 function normalizePath(path: string) {
