@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import "./interaction-fixes.css";
 import { ServiceWorkerCleanup } from "@/components/service-worker-cleanup";
 import { CookieBanner } from "@/components/cookie-banner";
 import { siteConfig } from "@/lib/site-config";
@@ -81,7 +82,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="ro" data-scroll-behavior="smooth">
+    <html lang="ro" data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
         <style id="critical-split-css" dangerouslySetInnerHTML={{ __html: splitCriticalCss }} />
       </head>
