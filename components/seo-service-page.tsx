@@ -5,9 +5,9 @@ import type { SeoServicePageConfig } from "@/lib/seo-service-pages";
 
 export function SeoServicePage({ page }: { page: SeoServicePageConfig }) {
   const CategoryIcon = page.category === "funding" ? Landmark : Files;
-  const calculatorHref = `/calculator-pret-consultanta?mode=${page.category === "funding" ? "eligibilitate" : "estimare"}`;
+  const calculatorHref = "/calculator-pret-consultanta?mode=estimare";
   const calculatorLabel = page.category === "funding"
-    ? "Verifică orientativ eligibilitatea"
+    ? "Estimează complexitatea consultanței"
     : "Estimează complexitatea serviciului";
 
   return (
