@@ -17,6 +17,8 @@ export function SiteShell({
   showWhatsApp?: boolean;
   navigationContext?: "funding" | "admin" | "general";
 }>) {
+  const showQuickContact = showWhatsApp && (siteConfig.phoneHref || siteConfig.whatsappNumber);
+
   return (
     <div className={`app-layout ${showNavigation ? "" : "no-navigation"}`}>
       <a className="skip-link" href="#continut" aria-label="Sari direct la conținutul paginii" title="Sari la conținut">Sari la conținut</a>
@@ -25,30 +27,31 @@ export function SiteShell({
         {children}
         {showFooter && <SiteFooter />}
       </main>
-      {showWhatsApp && siteConfig.phoneHref && (
-        <a
-          className="phone-float"
-          href={`tel:${siteConfig.phoneHref}`}
-          aria-label={`Sună ${siteConfig.name}`}
-          title={`Sună ${siteConfig.name}`}
-        >
-          <PhoneCall />
-          <span className="phone-label"><small>Telefon</small><b>{siteConfig.phoneDisplay || "Contact"}</b></span>
-        </a>
-      )}
-      {showWhatsApp && siteConfig.whatsappNumber && (
-        <a
-          className="whatsapp-float"
-          href={getWhatsAppUrl()}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={`Discută cu ${siteConfig.name} pe WhatsApp`}
-          title={`Discută cu ${siteConfig.name} pe WhatsApp`}
-        >
-          <span className="whatsapp-pulse" aria-hidden="true" />
-          <WhatsAppIcon />
-          <span className="whatsapp-label"><small>Contact direct</small><b>Scrie-ne pe WhatsApp</b></span>
-        </a>
+      {showQuickContact && (
+        <div className="quick-contact-float" aria-label="Contact rapid">
+          {siteConfig.phoneHref && (
+            <a
+              className="phone-float quick-contact-button"
+              href={`tel:${siteConfig.phoneHref}`}
+              aria-label={`Sună ${siteConfig.name} la ${siteConfig.phoneDisplay}`}
+              title={`Sună ${siteConfig.phoneDisplay}`}
+            >
+              <PhoneCall aria-hidden="true" />
+            </a>
+          )}
+          {siteConfig.whatsappNumber && (
+            <a
+              className="whatsapp-float quick-contact-button"
+              href={getWhatsAppUrl()}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Scrie către ${siteConfig.name} pe WhatsApp`}
+              title="Scrie-ne pe WhatsApp"
+            >
+              <WhatsAppIcon />
+            </a>
+          )}
+        </div>
       )}
     </div>
   );
