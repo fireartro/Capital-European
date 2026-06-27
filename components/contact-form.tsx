@@ -87,8 +87,8 @@ export function ContactForm({ defaultService = "fonduri-europene" }: { defaultSe
           {errors.name && <small id="name-error">{errors.name.message}</small>}
         </label>
         <label>
-          <span>Email profesional</span>
-          <input type="email" autoComplete="email" placeholder="ion@companie.ro" maxLength={160} required {...register("email")} aria-invalid={!!errors.email} aria-describedby={errors.email ? "email-error" : undefined} />
+          <span>Email</span>
+          <input type="email" autoComplete="email" placeholder="ion@gmail.com" maxLength={160} required {...register("email")} aria-invalid={!!errors.email} aria-describedby={errors.email ? "email-error" : undefined} />
           {errors.email && <small id="email-error">{errors.email.message}</small>}
         </label>
         <label>
