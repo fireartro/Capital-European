@@ -12,11 +12,13 @@ export default function Icon() {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        borderRadius: 7,
-        color: "#ffcc00",
-        background: "#003399",
+        borderRadius: 8,
+        color: "#021b52",
+        background: "linear-gradient(145deg, #ffcc00 0%, #ffe27a 100%)",
+        boxShadow: "inset 0 0 0 2px rgba(0, 51, 153, 0.18)",
         fontSize: 13,
-        fontWeight: 800
+        fontWeight: 900,
+        letterSpacing: -1
       }}
     >
       CE
