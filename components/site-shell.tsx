@@ -4,6 +4,10 @@ import { SiteHeader } from "@/components/site-header";
 import { getWhatsAppUrl, siteConfig } from "@/lib/site-config";
 import { WhatsAppIcon } from "@/components/whatsapp-icon";
 
+const interactionStyles = `
+.quick-contact-float{position:fixed;z-index:3600;right:max(18px,env(safe-area-inset-right));bottom:max(98px,calc(env(safe-area-inset-bottom) + 88px));display:grid;gap:10px;pointer-events:none}.quick-contact-float a{pointer-events:auto}.phone-float,.whatsapp-float{position:static!important;width:54px;height:54px;min-height:54px;display:grid!important;place-items:center;padding:0!important;border:1px solid rgba(255,255,255,.34);border-radius:999px;box-shadow:0 16px 38px rgba(2,16,45,.24);transition:transform .2s ease,box-shadow .2s ease,filter .2s ease}.phone-float{background:#003399;color:#fff}.whatsapp-float{background:#25d366;color:#fff}.phone-float:hover,.whatsapp-float:hover{transform:translateY(-3px);box-shadow:0 20px 46px rgba(2,16,45,.3)}.phone-float>svg{width:27px;height:27px;padding:0;background:transparent}.whatsapp-float>svg{width:34px;height:34px;padding:0;background:transparent}.phone-label,.whatsapp-label,.whatsapp-pulse{display:none!important}body:has(.cookie-banner) .quick-contact-float,body:has(.cookie-preferences-backdrop) .quick-contact-float{display:none}.contact-layout-simplified{align-items:center}.contact-layout-simplified .contact-copy{max-width:560px}.contact-layout-simplified .contact-primary-link{margin-bottom:18px}.contact-layout-simplified .contact-steps{margin-top:8px}@media(max-width:640px){.quick-contact-float{right:14px;bottom:max(82px,calc(env(safe-area-inset-bottom) + 72px));gap:8px}.phone-float,.whatsapp-float{width:50px;height:50px;min-height:50px}.phone-float>svg{width:25px;height:25px}.whatsapp-float>svg{width:32px;height:32px}.contact-layout-simplified .contact-copy{max-width:none}.contact-layout-simplified .contact-steps{margin-top:4px}}
+`;
+
 export function SiteShell({
   children,
   showFooter = true,
@@ -21,6 +25,7 @@ export function SiteShell({
 
   return (
     <div className={`app-layout ${showNavigation ? "" : "no-navigation"}`}>
+      <style>{interactionStyles}</style>
       <a className="skip-link" href="#continut" aria-label="Sari direct la conținutul paginii" title="Sari la conținut">Sari la conținut</a>
       {showNavigation && <SiteHeader navigationContext={navigationContext} />}
       <main className="site-content" id="continut">
