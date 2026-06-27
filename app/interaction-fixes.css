@@ -8,9 +8,7 @@
   pointer-events: none;
 }
 
-.quick-contact-float a {
-  pointer-events: auto;
-}
+.quick-contact-float a { pointer-events: auto; }
 
 .phone-float,
 .whatsapp-float {
@@ -108,6 +106,25 @@ body:has(.cookie-preferences-backdrop) .cookie-settings-floating { display: none
 .calculator-entry { margin-top: 28px; }
 .price-calculator { border-radius: 12px; }
 
+.seo-calculator-button,
+.seo-cta-actions .blue-button {
+  border: 1px solid rgba(255, 255, 255, .18);
+  background: rgba(255, 255, 255, .1);
+  box-shadow: none;
+}
+
+.seo-calculator-button:hover,
+.seo-cta-actions .blue-button:hover {
+  background: rgba(255, 255, 255, .17);
+}
+
+.seo-cta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
 .calculator-result .primary-button,
 .seo-service-actions .primary-button,
 .seo-service-cta .primary-button { box-shadow: 0 16px 38px rgba(255, 204, 0, .2); }
@@ -137,6 +154,8 @@ body:has(.cookie-preferences-backdrop) .cookie-settings-floating { display: none
   .operations-lanes article { padding: 22px; }
 
   .form-wrap { max-width: 100%; justify-self: stretch; }
+  .seo-cta-actions { justify-content: stretch; }
+  .seo-cta-actions .primary-button { width: 100%; }
 }
 
 @media (max-width: 640px) {
