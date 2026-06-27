@@ -258,21 +258,6 @@ export function CookieBanner({
         consent={consent}
       />
 
-      {view === "hidden" && (
-        <button
-          type="button"
-          className="cookie-settings-floating"
-          onClick={() => {
-            setAnalyticsDraft(consent?.analytics ?? false);
-            setMarketingDraft(consent?.marketing ?? false);
-            setView("settings");
-          }}
-        >
-          <Settings2 aria-hidden="true" />
-          Preferințe cookies
-        </button>
-      )}
-
       {view === "banner" && (
         <section
           className="cookie-banner"
