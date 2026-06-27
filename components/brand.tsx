@@ -26,10 +26,9 @@ export function Brand({
           alt="Capital European - consultanță fonduri europene și servicii administrative"
           width={logoSize.width}
           height={logoSize.height}
-          sizes={compact ? "106px" : "180px"}
+          sizes={compact ? "106px" : "(max-width: 1100px) 145px, 180px"}
           className="brand-logo"
           priority={priority}
-          unoptimized
         />
       </span>
     </span>
