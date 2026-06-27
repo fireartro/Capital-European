@@ -317,9 +317,11 @@ export function SiteHeader({ navigationContext }: { navigationContext?: "funding
           ref={drawerRef}
           className="mobile-drawer"
           data-open={menuOpen ? "true" : undefined}
+          hidden={!menuOpen}
           id="mobile-navigation-drawer"
           role="dialog"
           aria-modal="true"
+          aria-hidden={!menuOpen}
           aria-label={`Meniu ${context.label}`}
         >
           <div className="drawer-top">

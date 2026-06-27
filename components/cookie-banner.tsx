@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { BarChart3, Check, LockKeyhole, Settings2, X } from "lucide-react";
+import { BarChart3, Check, LockKeyhole, Megaphone, Settings2, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import {
   COOKIE_CONSENT_EVENT,
@@ -17,17 +17,18 @@ declare global {
   interface Window {
     dataLayer?: unknown[];
     gtag?: (...args: unknown[]) => void;
+    clarity?: ((...args: unknown[]) => void) & { q?: unknown[][] };
   }
 }
 
-function deleteAnalyticsCookies() {
+function deleteTrackingCookies(prefixes: readonly string[]) {
   const secure = window.location.protocol === "https:" ? "; Secure" : "";
   const hostname = window.location.hostname;
   const domains = [hostname, `.${hostname}`];
 
   document.cookie.split(";").forEach((entry) => {
     const name = entry.split("=")[0]?.trim();
-    if (!name?.startsWith("_ga") && name !== "_gid" && name !== "_gat") return;
+    if (!name || !prefixes.some((prefix) => name === prefix || name.startsWith(prefix))) return;
 
     document.cookie = `${name}=; Path=/; Max-Age=0; SameSite=Lax${secure}`;
     domains.forEach((domain) => {
@@ -36,13 +37,45 @@ function deleteAnalyticsCookies() {
   });
 }
 
-function AnalyticsController({ measurementId, consent }: { measurementId?: string; consent: CookieConsent | null }) {
-  useEffect(() => {
-    if (!measurementId || !consent) return;
+function appendTrackingScript(src: string, marker: string, onLoad?: () => void) {
+  const existing = document.querySelector<HTMLScriptElement>(`script[${marker}]`);
+  if (existing) {
+    if (existing.dataset.loaded === "true") onLoad?.();
+    else if (onLoad) existing.addEventListener("load", onLoad, { once: true });
+    return;
+  }
 
-    const analyticsEnabled = consent.analytics;
-    const windowFlags = window as unknown as Record<string, unknown>;
-    windowFlags[`ga-disable-${measurementId}`] = !analyticsEnabled;
+  const script = document.createElement("script");
+  script.async = true;
+  script.src = src;
+  script.setAttribute(marker, "true");
+  script.addEventListener("load", () => {
+    script.dataset.loaded = "true";
+    onLoad?.();
+  }, { once: true });
+  document.head.appendChild(script);
+}
+
+function removeTrackingScript(marker: string) {
+  document.querySelector(`script[${marker}]`)?.remove();
+}
+
+function TrackingController({
+  googleAnalyticsId,
+  googleTagManagerId,
+  clarityProjectId,
+  consent
+}: {
+  googleAnalyticsId?: string;
+  googleTagManagerId?: string;
+  clarityProjectId?: string;
+  consent: CookieConsent | null;
+}) {
+  useEffect(() => {
+    if (!consent) return;
+
+    const analyticsState = consent.analytics ? "granted" : "denied";
+    const marketingState = consent.marketing ? "granted" : "denied";
 
     window.dataLayer ??= [];
     window.gtag ??= (...args: unknown[]) => {
@@ -50,47 +83,89 @@ function AnalyticsController({ measurementId, consent }: { measurementId?: strin
     };
 
     window.gtag("consent", "update", {
-      analytics_storage: analyticsEnabled ? "granted" : "denied"
+      analytics_storage: analyticsState,
+      ad_storage: marketingState,
+      ad_user_data: marketingState,
+      ad_personalization: marketingState
     });
 
-    if (!analyticsEnabled) {
-      deleteAnalyticsCookies();
-      return;
+    if (googleAnalyticsId && /^G-[A-Z0-9]+$/i.test(googleAnalyticsId)) {
+      const windowFlags = window as unknown as Record<string, unknown>;
+      windowFlags[`ga-disable-${googleAnalyticsId}`] = !consent.analytics;
+
+      if (consent.analytics) {
+        appendTrackingScript(
+          `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(googleAnalyticsId)}`,
+          "data-ce-ga",
+          () => {
+            window.gtag?.("js", new Date());
+            window.gtag?.("config", googleAnalyticsId, {
+              anonymize_ip: true,
+              allow_google_signals: false,
+              allow_ad_personalization_signals: false
+            });
+          }
+        );
+      } else {
+        removeTrackingScript("data-ce-ga");
+      }
     }
 
-    const configure = () => {
-      window.gtag?.("js", new Date());
-      window.gtag?.("config", measurementId, {
-        anonymize_ip: true,
-        allow_google_signals: false
+    if (googleTagManagerId && /^GTM-[A-Z0-9]+$/i.test(googleTagManagerId)) {
+      if (consent.marketing) {
+        window.dataLayer.push({ "gtm.start": Date.now(), event: "gtm.js" });
+        appendTrackingScript(
+          `https://www.googletagmanager.com/gtm.js?id=${encodeURIComponent(googleTagManagerId)}`,
+          "data-ce-gtm"
+        );
+      } else {
+        removeTrackingScript("data-ce-gtm");
+      }
+    }
+
+    if (clarityProjectId && /^[a-z0-9]+$/i.test(clarityProjectId)) {
+      if (!window.clarity) {
+        const clarityQueue: unknown[][] = [];
+        const clarity = ((...args: unknown[]) => clarityQueue.push(args)) as NonNullable<Window["clarity"]>;
+        clarity.q = clarityQueue;
+        window.clarity = clarity;
+      }
+      window.clarity("consentv2", {
+        ad_Storage: marketingState,
+        analytics_Storage: analyticsState
       });
-    };
 
-    const existingScript = document.querySelector<HTMLScriptElement>("script[data-ce-analytics]");
-    if (existingScript) {
-      if (existingScript.dataset.loaded === "true") configure();
-      else existingScript.addEventListener("load", configure, { once: true });
-      return;
+      if (consent.analytics) {
+        appendTrackingScript(
+          `https://www.clarity.ms/tag/${encodeURIComponent(clarityProjectId)}`,
+          "data-ce-clarity"
+        );
+      } else {
+        window.clarity("consent", false);
+        removeTrackingScript("data-ce-clarity");
+      }
     }
 
-    const script = document.createElement("script");
-    script.async = true;
-    script.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(measurementId)}`;
-    script.dataset.ceAnalytics = "true";
-    script.addEventListener("load", () => {
-      script.dataset.loaded = "true";
-      configure();
-    }, { once: true });
-    document.head.appendChild(script);
-  }, [consent, measurementId]);
+    if (!consent.analytics) deleteTrackingCookies(["_ga", "_gid", "_gat", "_cl", "CLID", "ANONCHK", "MR", "MUID", "SM"]);
+    if (!consent.marketing) deleteTrackingCookies(["_gcl"]);
+  }, [clarityProjectId, consent, googleAnalyticsId, googleTagManagerId]);
 
   return null;
 }
 
-export function CookieBanner({ googleAnalyticsId }: { googleAnalyticsId?: string }) {
+export function CookieBanner({
+  googleAnalyticsId,
+  googleTagManagerId,
+  clarityProjectId
+}: {
+  googleAnalyticsId?: string;
+  googleTagManagerId?: string;
+  clarityProjectId?: string;
+}) {
   const [consent, setConsent] = useState<CookieConsent | null>(null);
   const [view, setView] = useState<BannerView>("loading");
   const [analyticsDraft, setAnalyticsDraft] = useState(false);
+  const [marketingDraft, setMarketingDraft] = useState(false);
   const settingsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -98,18 +173,21 @@ export function CookieBanner({ googleAnalyticsId }: { googleAnalyticsId?: string
       const storedConsent = readCookieConsent();
       setConsent(storedConsent);
       setAnalyticsDraft(storedConsent?.analytics ?? false);
+      setMarketingDraft(storedConsent?.marketing ?? false);
       setView(storedConsent ? "hidden" : "banner");
     });
 
     const openSettings = () => {
       const currentConsent = readCookieConsent();
       setAnalyticsDraft(currentConsent?.analytics ?? false);
+      setMarketingDraft(currentConsent?.marketing ?? false);
       setView("settings");
     };
     const syncConsent = (event: Event) => {
       const nextConsent = (event as CustomEvent<CookieConsent>).detail;
       setConsent(nextConsent);
       setAnalyticsDraft(nextConsent.analytics);
+      setMarketingDraft(nextConsent.marketing);
     };
 
     window.addEventListener(COOKIE_SETTINGS_EVENT, openSettings);
@@ -155,16 +233,22 @@ export function CookieBanner({ googleAnalyticsId }: { googleAnalyticsId?: string
     };
   }, [consent, view]);
 
-  const applyConsent = (analytics: boolean) => {
-    const nextConsent = saveCookieConsent(analytics);
+  const applyConsent = (analytics: boolean, marketing: boolean) => {
+    const nextConsent = saveCookieConsent({ analytics, marketing });
     setConsent(nextConsent);
     setAnalyticsDraft(analytics);
+    setMarketingDraft(marketing);
     setView("hidden");
   };
 
   return (
     <>
-      <AnalyticsController measurementId={googleAnalyticsId} consent={consent} />
+      <TrackingController
+        googleAnalyticsId={googleAnalyticsId}
+        googleTagManagerId={googleTagManagerId}
+        clarityProjectId={clarityProjectId}
+        consent={consent}
+      />
 
       {view === "hidden" && (
         <button
@@ -172,6 +256,7 @@ export function CookieBanner({ googleAnalyticsId }: { googleAnalyticsId?: string
           className="cookie-settings-floating"
           onClick={() => {
             setAnalyticsDraft(consent?.analytics ?? false);
+            setMarketingDraft(consent?.marketing ?? false);
             setView("settings");
           }}
         >
@@ -193,7 +278,7 @@ export function CookieBanner({ googleAnalyticsId }: { googleAnalyticsId?: string
             <div>
               <strong id="cookie-banner-title">Confidențialitatea ta contează</strong>
               <p id="cookie-banner-description">
-                Folosim stocare strict necesară pentru alegerea ta. Cookie-urile de analiză se activează numai dacă le accepți.
+                Folosim stocare strict necesară pentru alegerea ta. Analiza și marketingul rămân oprite până când le accepți.
                 Poți modifica opțiunea oricând din „Setări cookies”.
               </p>
               <div className="cookie-banner-links">
@@ -203,13 +288,13 @@ export function CookieBanner({ googleAnalyticsId }: { googleAnalyticsId?: string
             </div>
           </div>
           <div className="cookie-banner-actions">
-            <button type="button" className="cookie-button cookie-button-secondary" onClick={() => applyConsent(false)}>
+            <button type="button" className="cookie-button cookie-button-secondary" onClick={() => applyConsent(false, false)}>
               Respinge opționale
             </button>
             <button type="button" className="cookie-button cookie-button-secondary" onClick={() => setView("settings")}>
               <Settings2 aria-hidden="true" /> Setări
             </button>
-            <button type="button" className="cookie-button cookie-button-primary" onClick={() => applyConsent(true)}>
+            <button type="button" className="cookie-button cookie-button-primary" onClick={() => applyConsent(true, true)}>
               Acceptă toate
             </button>
           </div>
@@ -260,7 +345,7 @@ export function CookieBanner({ googleAnalyticsId }: { googleAnalyticsId?: string
                 <strong>Analiză audiență</strong>
                 <small>
                   Permite Google Analytics, dacă este configurat, pentru statistici agregate despre utilizarea site-ului.
-                  Nu folosim această categorie pentru publicitate.
+                  Microsoft Clarity poate fi folosit pentru hărți de interacțiune și înregistrări mascate.
                 </small>
               </span>
               <input
@@ -271,15 +356,31 @@ export function CookieBanner({ googleAnalyticsId }: { googleAnalyticsId?: string
               />
             </label>
 
+            <label className="cookie-category cookie-category-toggle">
+              <span className="cookie-category-icon"><Megaphone aria-hidden="true" /></span>
+              <span>
+                <strong>Marketing și etichete</strong>
+                <small>
+                  Permite încărcarea containerului Google Tag Manager. Etichetele publicate în GTM trebuie configurate să respecte consimțământul.
+                </small>
+              </span>
+              <input
+                type="checkbox"
+                checked={marketingDraft}
+                onChange={(event) => setMarketingDraft(event.target.checked)}
+                aria-label="Permite cookie-uri de marketing"
+              />
+            </label>
+
             <p className="cookie-preferences-note">
               Detalii despre durată, furnizori și retragerea consimțământului sunt disponibile în <Link href="/cookies">Politica de cookies</Link>.
             </p>
 
             <div className="cookie-preferences-actions">
-              <button type="button" className="cookie-button cookie-button-secondary" onClick={() => applyConsent(false)}>
+              <button type="button" className="cookie-button cookie-button-secondary" onClick={() => applyConsent(false, false)}>
                 Respinge opționale
               </button>
-              <button type="button" className="cookie-button cookie-button-primary" onClick={() => applyConsent(analyticsDraft)}>
+              <button type="button" className="cookie-button cookie-button-primary" onClick={() => applyConsent(analyticsDraft, marketingDraft)}>
                 Salvează preferințele
               </button>
             </div>

@@ -1,11 +1,13 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import { ServiceWorkerRegister } from "@/components/service-worker-register";
+import { ServiceWorkerCleanup } from "@/components/service-worker-cleanup";
 import { CookieBanner } from "@/components/cookie-banner";
 import { siteConfig } from "@/lib/site-config";
 import { JsonLd, organizationSchema, webSiteSchema } from "@/lib/structured-data";
 
 const googleAnalyticsId = process.env.NEXT_PUBLIC_GA_ID;
+const googleTagManagerId = process.env.NEXT_PUBLIC_GTM_ID;
+const clarityProjectId = process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID;
 
 const splitCriticalCss = `
 .split-landing{position:relative;min-height:100svh;min-height:100dvh;overflow:hidden;color:#fff;background:linear-gradient(145deg,#06142f 0%,#052469 56%,#003399 100%)}
@@ -27,14 +29,12 @@ export const metadata: Metadata = {
     "fonduri europene firme România",
     "fonduri nerambursabile IMM 2025 2026",
     "consultanță PNRR România",
-    "fonduri europene Cluj-Napoca",
     "cereri de finanțare europeană",
     "eligibilitate fonduri europene",
     "fonduri europene ONG",
     "servicii administrative externalizate",
     "secretariat externalizat firme",
     "back-office externalizat România",
-    "servicii administrative Cluj-Napoca",
     "administrare documente firme",
     "înființare firmă SRL",
     "asistență administrativă afaceri"
@@ -88,9 +88,13 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body>
         <JsonLd data={organizationSchema()} />
         <JsonLd data={webSiteSchema()} />
-        <CookieBanner googleAnalyticsId={googleAnalyticsId} />
+        <CookieBanner
+          googleAnalyticsId={googleAnalyticsId}
+          googleTagManagerId={googleTagManagerId}
+          clarityProjectId={clarityProjectId}
+        />
         {children}
-        <ServiceWorkerRegister />
+        <ServiceWorkerCleanup />
       </body>
     </html>
   );

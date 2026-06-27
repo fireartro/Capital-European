@@ -137,10 +137,11 @@ export async function POST(request: Request) {
     }
 
     try {
+      const contactData = { ...result.data, website: undefined };
       const response = await fetch(target, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(result.data),
+        body: JSON.stringify(contactData),
         redirect: "error",
         signal: AbortSignal.timeout(8_000)
       });
@@ -154,7 +155,10 @@ export async function POST(request: Request) {
   } else if (new URL(request.url).hostname === "127.0.0.1" || new URL(request.url).hostname === "localhost") {
     return jsonResponse({ success: true, demo: true }, { status: 201 });
   } else if (process.env.NODE_ENV === "production") {
-    return jsonResponse({ message: "Serviciul de contact este în curs de configurare." }, { status: 503 });
+    return jsonResponse(
+      { message: `Formularul online este temporar indisponibil. Scrie-ne direct la ${siteConfig.email}.` },
+      { status: 503 }
+    );
   }
 
   return jsonResponse({ success: true }, { status: 201 });

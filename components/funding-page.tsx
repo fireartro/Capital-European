@@ -9,8 +9,8 @@ import {
   ShieldCheck
 } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { EligibilityChecker } from "@/components/eligibility-checker";
-import { HeroBackgroundPreload } from "@/components/hero-background-preload";
 import { ServiceFaq } from "@/components/service-faq";
 import { SiteShell } from "@/components/site-shell";
 import { ScrollStarOrbit } from "@/components/scroll-star-orbit";
@@ -88,7 +88,6 @@ export function FundingPage() {
           </div>
         </div>
       </section>
-      <HeroBackgroundPreload selector=".funding-hero .section-container.inner-hero-content" />
 
       <section className="content-section funding-section" id="servicii-fonduri" aria-labelledby="funding-services-title" aria-describedby="funding-services-description">
         <div className="section-container">
@@ -267,6 +266,18 @@ export function FundingPage() {
             description="Răspunsuri directe despre eligibilitate, cererea de finanțare, termene și implementare."
             items={fundingFaq}
           />
+
+          <section className="seo-related-section" aria-labelledby="funding-guides-title">
+            <p className="eyebrow">Informații pe situații concrete</p>
+            <h2 id="funding-guides-title">Ghiduri pentru pregătirea proiectului tău.</h2>
+            <div className="seo-related-links">
+              <Link href="/consultanta-fonduri-europene"><span><strong>Consultanță fonduri europene</strong><small>Serviciul complet, de la eligibilitate la implementare.</small></span><ArrowRight aria-hidden="true" /></Link>
+              <Link href="/fonduri-europene-pentru-firme"><span><strong>Fonduri europene pentru firme</strong><small>Criterii și pregătire pentru investițiile companiilor.</small></span><ArrowRight aria-hidden="true" /></Link>
+              <Link href="/fonduri-europene-pentru-ong"><span><strong>Fonduri europene pentru ONG</strong><small>Proiecte sociale, educaționale și comunitare.</small></span><ArrowRight aria-hidden="true" /></Link>
+              <Link href="/fonduri-europene-pentru-startup"><span><strong>Fonduri europene pentru startup</strong><small>Condiții și obligații pentru afaceri aflate la început.</small></span><ArrowRight aria-hidden="true" /></Link>
+              <Link href="/calculator-pret-consultanta"><span><strong>Calculator preț consultanță</strong><small>Estimează orientativ complexitatea solicitării.</small></span><ArrowRight aria-hidden="true" /></Link>
+            </div>
+          </section>
 
           <section className="section-cta funding-cta" aria-labelledby="funding-cta-title">
             <div><p>Ai o idee de investiție?</p><h3 id="funding-cta-title">Verifică dacă există o linie de finanțare potrivită.</h3></div>

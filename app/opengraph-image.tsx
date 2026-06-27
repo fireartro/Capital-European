@@ -53,7 +53,7 @@ export default function OpenGraphImage() {
 
       {/* Bottom pills */}
       <div style={{ display: "flex", gap: 14, position: "relative" }}>
-        {["Analiză de eligibilitate", "Cereri de finanțare", "Secretariat externalizat", "Cluj-Napoca · România"].map((tag) => (
+        {["Analiză de eligibilitate", "Cereri de finanțare", "Secretariat externalizat", "Servicii în România"].map((tag) => (
           <div key={tag} style={{
             padding: "10px 18px", borderRadius: 999,
             background: "rgba(255,255,255,.1)", border: "1px solid rgba(255,255,255,.2)",

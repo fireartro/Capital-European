@@ -12,14 +12,14 @@ export default function Icon() {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        borderRadius: 8,
-        color: "#071d38",
-        background: "#63d4e7",
-        fontSize: 19,
+        borderRadius: 7,
+        color: "#ffcc00",
+        background: "#003399",
+        fontSize: 13,
         fontWeight: 800
       }}
     >
-      P
+      CE
     </div>,
     size
   );

@@ -11,6 +11,7 @@ import {
   Network
 } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { ServiceFaq } from "@/components/service-faq";
 import { SiteShell } from "@/components/site-shell";
 import { ScrollStarOrbit } from "@/components/scroll-star-orbit";
@@ -220,6 +221,16 @@ export function AdminPage() {
             description="Clarificări despre externalizare, documente, confidențialitate și modul de colaborare."
             items={administrativeFaq}
           />
+
+          <section className="seo-related-section" aria-labelledby="admin-guides-title">
+            <p className="eyebrow">Servicii detaliate</p>
+            <h2 id="admin-guides-title">Alege fluxul administrativ pe care vrei să îl delegi.</h2>
+            <div className="seo-related-links">
+              <Link href="/servicii-administrative/secretariat"><span><strong>Secretariat externalizat</strong><small>Corespondență, programări și solicitări urmărite.</small></span><ArrowRight aria-hidden="true" /></Link>
+              <Link href="/servicii-administrative/administrare-documente"><span><strong>Administrare documente</strong><small>Clasificare, evidență și responsabilități clare.</small></span><ArrowRight aria-hidden="true" /></Link>
+              <Link href="/servicii-administrative/infiintare-firma"><span><strong>Înființare firmă</strong><small>Pașii și documentele pentru pornirea societății.</small></span><ArrowRight aria-hidden="true" /></Link>
+            </div>
+          </section>
 
           <section className="section-cta admin-cta" aria-labelledby="admin-cta-title">
             <div><p>Vrei să scapi de munca administrativă repetitivă?</p><h3 id="admin-cta-title">Trimite-ne ce proces vrei să delegi și îți spunem cum poate fi organizat.</h3></div>

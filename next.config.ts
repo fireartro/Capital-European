@@ -2,6 +2,9 @@ import type { NextConfig } from "next";
 
 const isDevelopment = process.env.NODE_ENV === "development";
 const hasGoogleAnalytics = Boolean(process.env.NEXT_PUBLIC_GA_ID);
+const hasGoogleTagManager = Boolean(process.env.NEXT_PUBLIC_GTM_ID);
+const hasClarity = Boolean(process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID);
+const hasGoogleTracking = hasGoogleAnalytics || hasGoogleTagManager;
 
 const securityHeaders = [
   { key: "X-DNS-Prefetch-Control", value: "on" },
@@ -21,11 +24,11 @@ const securityHeaders = [
       "frame-ancestors 'none'",
       "object-src 'none'",
       "frame-src 'none'",
-      `img-src 'self' data: blob:${hasGoogleAnalytics ? " https://www.google-analytics.com https://www.googletagmanager.com" : ""}`,
+      `img-src 'self' data: blob:${hasGoogleTracking ? " https://www.google-analytics.com https://www.googletagmanager.com" : ""}${hasClarity ? " https://www.clarity.ms https://*.clarity.ms https://c.bing.com" : ""}`,
       "font-src 'self' data:",
       "style-src 'self' 'unsafe-inline'",
-      `script-src 'self' 'unsafe-inline'${hasGoogleAnalytics ? " https://www.googletagmanager.com" : ""}`,
-      `connect-src 'self'${hasGoogleAnalytics ? " https://www.google-analytics.com https://region1.google-analytics.com" : ""}`,
+      `script-src 'self' 'unsafe-inline'${hasGoogleTracking ? " https://www.googletagmanager.com" : ""}${hasClarity ? " https://www.clarity.ms" : ""}`,
+      `connect-src 'self'${hasGoogleTracking ? " https://www.google-analytics.com https://region1.google-analytics.com https://www.googletagmanager.com" : ""}${hasClarity ? " https://www.clarity.ms https://*.clarity.ms https://c.bing.com" : ""}`,
       "manifest-src 'self'",
       "media-src 'self'",
       "worker-src 'self' blob:",
@@ -47,14 +50,6 @@ const nextConfig: NextConfig = {
   },
   async headers() {
     return [
-      {
-        source: "/sw.js",
-        headers: [
-          { key: "Cache-Control", value: "no-cache, no-store, must-revalidate" },
-          { key: "Service-Worker-Allowed", value: "/" },
-          ...securityHeaders
-        ]
-      },
       { source: "/(.*)", headers: securityHeaders }
     ];
   },

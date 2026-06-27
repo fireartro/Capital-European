@@ -36,7 +36,7 @@ export default function TermsPage() {
               legal.isComplete
                 ? `Website-ul este operat de ${legal.entityName}, nr. de înregistrare ${legal.registrationNumber}, CUI ${legal.taxId}, sediul ${legal.registeredOffice}.`
                 : `Website-ul este prezentat sub denumirea comercială ${siteConfig.name}. Datele juridice complete ale operatorului trebuie configurate înainte de lansarea comercială.`,
-              `Contact general: ${siteConfig.email}. Program orientativ de comunicare: ${siteConfig.schedule}.`
+              `Contact general: ${siteConfig.email}.${siteConfig.schedule ? ` Program orientativ de comunicare: ${siteConfig.schedule}.` : ""}`
             ],
             links: [
               { label: "Legea nr. 365/2002 — Portal Legislativ", href: "https://legislatie.just.ro/Public/DetaliiDocument/77218" }

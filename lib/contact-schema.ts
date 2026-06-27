@@ -26,7 +26,8 @@ export const contactSchema = z.object({
   ]),
   message: cleanText(2000).refine((value) => value.length >= 20, "Mesajul trebuie să aibă minimum 20 de caractere."),
   consent: z.boolean().refine((value) => value, "Confirmarea este obligatorie."),
-  website: z.string().max(0).optional().default("")
+  // Honeypot values must reach the API so bots receive a neutral success response.
+  website: z.string().trim().max(200).optional().default("")
 });
 
 export type ContactInput = z.input<typeof contactSchema>;

@@ -20,6 +20,17 @@ const legalEntityName = publicValue(process.env.NEXT_PUBLIC_LEGAL_ENTITY_NAME);
 const registrationNumber = publicValue(process.env.NEXT_PUBLIC_REGISTRATION_NUMBER);
 const taxId = publicValue(process.env.NEXT_PUBLIC_TAX_ID);
 const registeredOffice = publicValue(process.env.NEXT_PUBLIC_REGISTERED_OFFICE);
+const contactEmail = publicValue(process.env.NEXT_PUBLIC_CONTACT_EMAIL) || "contact@capitaleuropean.ro";
+const phoneDisplay = publicValue(process.env.NEXT_PUBLIC_PHONE_DISPLAY);
+const phoneHref = publicValue(process.env.NEXT_PUBLIC_PHONE_HREF);
+const whatsappNumber = publicValue(process.env.NEXT_PUBLIC_WHATSAPP_NUMBER).replace(/\D/g, "");
+const businessAddress = publicValue(process.env.NEXT_PUBLIC_BUSINESS_ADDRESS);
+const businessSchedule = publicValue(process.env.NEXT_PUBLIC_BUSINESS_SCHEDULE);
+const socialProfiles = [
+  publicValue(process.env.NEXT_PUBLIC_FACEBOOK_URL),
+  publicValue(process.env.NEXT_PUBLIC_INSTAGRAM_URL),
+  publicValue(process.env.NEXT_PUBLIC_LINKEDIN_URL)
+].filter((value): value is string => Boolean(value && /^https:\/\//i.test(value)));
 
 export const siteConfig = {
   name: "Capital European",
@@ -35,12 +46,12 @@ export const siteConfig = {
     pnrr: "https://pnrr.gov.ro/"
   },
   lastUpdated: "2026-06-27",
-  email: "contact@capitaleuropean.ro",
-  phoneDisplay: "",
-  phoneHref: "",
-  whatsappNumber: "",
-  address: "Cluj-Napoca, România",
-  schedule: "L–V · 08:00–18:00",
+  email: contactEmail,
+  phoneDisplay,
+  phoneHref,
+  whatsappNumber,
+  address: businessAddress,
+  schedule: businessSchedule,
   legal: {
     entityName: legalEntityName,
     registrationNumber,
@@ -56,7 +67,7 @@ export const siteConfig = {
     { label: "Întrebări", href: "/intrebari" },
     { label: "Contact", href: "/contact" }
   ],
-  sameAs: []
+  sameAs: socialProfiles
 } as const;
 
 export function getWhatsAppUrl(message = "Bună ziua! Doresc mai multe informații despre serviciile oferite.") {

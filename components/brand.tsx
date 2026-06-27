@@ -14,6 +14,9 @@ export function Brand({
   const logoSrc = variant === "light"
     ? "/images/Consultanta-Fonduri-Europene-si-Servicii-Administrari-firme-1.webp"
     : "/images/Consultanta-Fonduri-Europene-si-Servicii-Administrari-firme-2.webp";
+  const logoSize = variant === "light"
+    ? { width: 700, height: 322 }
+    : { width: 700, height: 344 };
 
   return (
     <span className={`brand ${compact ? "brand-compact" : ""} brand-${variant}`}>
@@ -21,8 +24,8 @@ export function Brand({
         <Image
           src={logoSrc}
           alt="Capital European – Creăm astăzi succesul de mâine"
-          width={1024}
-          height={1024}
+          width={logoSize.width}
+          height={logoSize.height}
           sizes={compact ? "106px" : "180px"}
           className="brand-logo"
           priority={priority}

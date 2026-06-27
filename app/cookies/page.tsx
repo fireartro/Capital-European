@@ -27,7 +27,7 @@ export default function CookiesPage() {
           {
             title: "1. Ce sunt cookie-urile și tehnologiile similare",
             content: [
-              "Cookie-urile sunt fișiere mici salvate de browser la solicitarea unui website. Tehnologiile similare includ localStorage, identificatori de consimțământ și memoria cache controlată de un service worker.",
+              "Cookie-urile sunt fișiere mici salvate de browser la solicitarea unui website. Tehnologiile similare includ localStorage și identificatorii de consimțământ.",
               "Aceste tehnologii pot avea scopuri strict tehnice sau, numai cu acordul tău, scopuri de analiză. Website-ul nu condiționează accesul la informațiile publice de acceptarea cookie-urilor opționale."
             ]
           },
@@ -45,24 +45,26 @@ export default function CookiesPage() {
           {
             title: "3. Stocare strict necesară",
             content: [
-              "Utilizăm identificatorul propriu «ce_cookie_consent_v2» în localStorage și, ca mecanism de rezervă, într-un cookie first-party. Acesta reține versiunea politicii, alegerea pentru analiză și data actualizării.",
+              "Utilizăm identificatorul propriu «ce_cookie_consent_v3» în localStorage și, ca mecanism de rezervă, într-un cookie first-party. Acesta reține versiunea politicii, alegerile pentru analiză și marketing, precum și data actualizării.",
               "Durata maximă este de 180 de zile. Scopul exclusiv este să respectăm alegerea ta și să nu afișăm bannerul la fiecare pagină. Nu este folosit pentru profilare, publicitate sau urmărire între website-uri.",
-              "Service worker-ul poate păstra local resurse statice ale site-ului pentru încărcare mai rapidă și funcționare robustă. Cache-ul tehnic nu este utilizat pentru analizarea comportamentului."
+              "Website-ul nu mai instalează un service worker. Astfel reducem riscul ca browserul să păstreze o versiune veche a paginilor sau a centrului de consimțământ."
             ]
           },
           {
-            title: "4. Cookie-uri de analiză — opționale",
+            title: "4. Analiză audiență — opțională",
             content: [
-              "Dacă variabila Google Analytics este configurată și alegi «Acceptă toate» sau activezi categoria «Analiză audiență», website-ul poate încărca Google Analytics 4.",
+              "Dacă identificatorii sunt configurați și activezi categoria «Analiză audiență», website-ul poate încărca Google Analytics 4 și Microsoft Clarity. Niciunul dintre aceste instrumente nu este încărcat înaintea alegerii tale.",
               "În acest caz pot fi utilizate cookie-uri precum «_ga» și «_ga_<container>» pentru diferențierea vizitelor și generarea de statistici agregate. Durata lor este stabilită de furnizor și poate ajunge până la 2 ani, în funcție de configurația activă.",
-              "Am dezactivat semnalele Google pentru publicitate în configurarea site-ului. Nu activăm Analytics înaintea consimțământului și nu folosim această categorie pentru reclame personalizate."
+              "Microsoft Clarity poate înregistra interacțiuni mascate și poate utiliza identificatori precum «_clck» sau «_clsk». Configurarea folosește API-ul de consimțământ Clarity și dezactivează colectarea atunci când retragi acordul.",
+              "Am dezactivat semnalele Google pentru publicitate în configurarea directă GA4. Categoria de analiză nu este folosită pentru reclame personalizate."
             ]
           },
           {
-            title: "5. Ce nu folosim în prezent",
+            title: "5. Marketing și Google Tag Manager — opționale",
             content: [
-              "Nu am implementat Facebook Pixel, Google Ads remarketing, Hotjar sau alte instrumente de profilare comportamentală.",
-              "Dacă vom introduce o categorie sau un furnizor nou, vom actualiza această politică și vom solicita din nou consimțământul atunci când schimbarea afectează scopurile existente."
+              "Google Tag Manager este încărcat numai dacă activezi categoria «Marketing și etichete» și dacă identificatorul containerului este configurat. Containerul nu colectează singur date, dar poate încărca etichetele publicate în contul GTM.",
+              "Administratorul contului GTM trebuie să configureze fiecare etichetă să respecte starea de consimțământ. Nu trebuie publicate etichete care ocolesc preferințele salvate pe website.",
+              "Dacă introducem un furnizor ori un scop nou, vom actualiza politica și vom solicita din nou consimțământul când schimbarea afectează alegerile existente."
             ]
           },
           {
@@ -76,11 +78,12 @@ export default function CookiesPage() {
           {
             title: "7. Furnizori terți și transferuri",
             content: [
-              "Dacă Analytics este activat, Google poate prelucra date tehnice ca furnizor distinct sau persoană împuternicită, în funcție de serviciu și configurație. Consultă documentația Google înainte de a acorda consimțământul.",
+              "Dacă GA4 sau GTM sunt activate, Google poate prelucra date tehnice ca furnizor distinct ori persoană împuternicită, în funcție de serviciu și configurație. Dacă Microsoft Clarity este activat, Microsoft poate prelucra date tehnice și informații despre interacțiune.",
               "Accesarea linkurilor externe, inclusiv WhatsApp, platforme publice sau resurse instituționale, te transferă pe website-uri care aplică propriile politici și pot utiliza propriile cookie-uri. Acestea nu sunt controlate de noi."
             ],
             links: [
-              { label: "Politica Google privind datele", href: "https://policies.google.com/privacy" }
+              { label: "Politica Google privind datele", href: "https://policies.google.com/privacy" },
+              { label: "Declarația de confidențialitate Microsoft", href: "https://privacy.microsoft.com/ro-ro/privacystatement" }
             ]
           },
           {

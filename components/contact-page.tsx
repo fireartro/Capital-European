@@ -18,7 +18,7 @@ const contactAssurances = [
 ] as const;
 
 export function ContactPage({ defaultService }: { defaultService?: ContactInput["service"] }) {
-  const navigationContext = defaultService === "fonduri-europene"
+  const navigationContext = defaultService === "fonduri-europene" || defaultService === "consultanta"
     ? "funding"
     : defaultService
       ? "admin"

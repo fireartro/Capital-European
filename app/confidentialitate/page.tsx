@@ -60,7 +60,7 @@ export default function PrivacyPage() {
               "Răspunsul la solicitări, evaluarea nevoii și pregătirea unei oferte se bazează pe demersurile precontractuale solicitate de persoana vizată — art. 6 alin. (1) lit. (b) GDPR.",
               "Executarea contractului, administrarea relației, facturarea și gestionarea documentelor se bazează pe art. 6 alin. (1) lit. (b) și, unde este cazul, pe obligații legale conform art. 6 alin. (1) lit. (c) GDPR.",
               "Securizarea website-ului, prevenirea abuzului, apărarea drepturilor și păstrarea evidențelor minimale se pot baza pe interesul legitim — art. 6 alin. (1) lit. (f) GDPR — după evaluarea necesității și a impactului.",
-              "Google Analytics și orice comunicare de marketing bazată pe abonare se activează numai în baza consimțământului — art. 6 alin. (1) lit. (a) GDPR."
+              "Google Analytics, Microsoft Clarity, Google Tag Manager și orice comunicare de marketing bazată pe abonare se activează numai în baza consimțământului — art. 6 alin. (1) lit. (a) GDPR."
             ]
           },
           {
@@ -89,7 +89,7 @@ export default function PrivacyPage() {
             title: "8. Transferuri în afara Spațiului Economic European",
             content: [
               "Unii furnizori tehnici pot prelucra date în afara Spațiului Economic European. În aceste situații verificăm existența unei decizii de adecvare, a clauzelor contractuale standard sau a unui alt mecanism permis de capitolul V GDPR.",
-              "Google Analytics nu este încărcat fără consimțământ. Dacă este activat, consultă și politica Google pentru informații despre infrastructură și mecanismele de transfer."
+              "Google Analytics, Google Tag Manager și Microsoft Clarity nu sunt încărcate fără consimțământul corespunzător. Dacă sunt activate, consultă politicile furnizorilor pentru informații despre infrastructură și mecanismele de transfer."
             ]
           },
           {
