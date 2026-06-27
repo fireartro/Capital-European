@@ -1,4 +1,4 @@
-import { MessageCircle } from "lucide-react";
+import { MessageCircle, Phone } from "lucide-react";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { getWhatsAppUrl, siteConfig } from "@/lib/site-config";
@@ -24,6 +24,17 @@ export function SiteShell({
         {children}
         {showFooter && <SiteFooter />}
       </main>
+      {showWhatsApp && siteConfig.phoneHref && (
+        <a
+          className="phone-float"
+          href={`tel:${siteConfig.phoneHref}`}
+          aria-label={`Sună ${siteConfig.name}`}
+          title={`Sună ${siteConfig.name}`}
+        >
+          <Phone />
+          <span className="phone-label"><small>Sună</small><b>{siteConfig.phoneDisplay || "Rapid"}</b></span>
+        </a>
+      )}
       {showWhatsApp && siteConfig.whatsappNumber && (
         <a
           className="whatsapp-float"

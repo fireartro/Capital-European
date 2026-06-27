@@ -26,7 +26,7 @@ const landingProof = [
 
 export function HomePage() {
   return (
-    <SiteShell showFooter={false} showNavigation={false} showWhatsApp={false}>
+    <SiteShell showFooter={false} showNavigation={false} showWhatsApp={true}>
       <section className="split-landing" aria-labelledby="split-title" aria-describedby="split-description">
         <Link className="split-brand" href="/" aria-label={`${siteConfig.name}, pagina de alegere`} title={`${siteConfig.name}, pagina de alegere`}><Brand variant="light" priority /></Link>
         <div className="eu-stars" aria-hidden="true">
