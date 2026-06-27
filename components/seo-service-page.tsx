@@ -1,10 +1,14 @@
 import Link from "next/link";
-import { ArrowRight, Check, ChevronRight, ClipboardCheck, Landmark, Files } from "lucide-react";
+import { ArrowRight, Calculator, Check, ChevronRight, ClipboardCheck, Landmark, Files } from "lucide-react";
 import { SiteShell } from "@/components/site-shell";
 import type { SeoServicePageConfig } from "@/lib/seo-service-pages";
 
 export function SeoServicePage({ page }: { page: SeoServicePageConfig }) {
   const CategoryIcon = page.category === "funding" ? Landmark : Files;
+  const calculatorHref = `/calculator-pret-consultanta?mode=${page.category === "funding" ? "eligibilitate" : "estimare"}`;
+  const calculatorLabel = page.category === "funding"
+    ? "Verifică orientativ eligibilitatea"
+    : "Estimează complexitatea serviciului";
 
   return (
     <SiteShell navigationContext={page.category}>
@@ -22,11 +26,11 @@ export function SeoServicePage({ page }: { page: SeoServicePageConfig }) {
             <Link className="primary-button yellow-button" href={`/contact?service=${page.contactService}`}>
               Solicită evaluarea inițială <ArrowRight aria-hidden="true" />
             </Link>
+            <Link className="primary-button blue-button seo-calculator-button" href={calculatorHref}>
+              <Calculator aria-hidden="true" /> {calculatorLabel}
+            </Link>
             <div className="seo-service-secondary-actions">
               <Link href={page.parent.href}>Vezi serviciul principal</Link>
-              <Link href={`/calculator-pret-consultanta?mode=${page.category === "funding" ? "eligibilitate" : "estimare"}`}>
-                Calculator orientativ
-              </Link>
             </div>
           </div>
         </div>
@@ -111,10 +115,15 @@ export function SeoServicePage({ page }: { page: SeoServicePageConfig }) {
 
       <section className="seo-service-cta" aria-labelledby="seo-cta-title">
         <div className="section-container">
-          <div><p>Ai o situație concretă?</p><h2 id="seo-cta-title">Trimite informațiile disponibile. Clarificăm ce urmează.</h2></div>
-          <Link className="primary-button yellow-button" href={`/contact?service=${page.contactService}`}>
-            Trimite solicitarea <ArrowRight aria-hidden="true" />
-          </Link>
+          <div><p>Ai o situație concretă?</p><h2 id="seo-cta-title">Trimite informațiile disponibile sau începe cu o estimare orientativă.</h2></div>
+          <div className="seo-cta-actions">
+            <Link className="primary-button yellow-button" href={`/contact?service=${page.contactService}`}>
+              Trimite solicitarea <ArrowRight aria-hidden="true" />
+            </Link>
+            <Link className="primary-button blue-button" href={calculatorHref}>
+              <Calculator aria-hidden="true" /> Deschide calculatorul
+            </Link>
+          </div>
         </div>
       </section>
     </SiteShell>
