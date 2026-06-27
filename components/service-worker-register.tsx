@@ -7,11 +7,19 @@ export function ServiceWorkerRegister() {
     if (process.env.NODE_ENV !== "production") return;
     if (!("serviceWorker" in navigator)) return;
 
-    window.addEventListener("load", () => {
+    const register = () => {
       navigator.serviceWorker.register("/sw.js").catch(() => {
         // The site should remain fully usable if service worker registration is blocked.
       });
-    }, { once: true });
+    };
+
+    if (document.readyState === "complete") {
+      register();
+      return;
+    }
+
+    window.addEventListener("load", register, { once: true });
+    return () => window.removeEventListener("load", register);
   }, []);
 
   return null;

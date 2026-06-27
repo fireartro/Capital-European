@@ -1,10 +1,13 @@
-const CACHE_VERSION = "capital-european-v2";
+const CACHE_VERSION = "capital-european-v3";
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 const STATIC_ASSETS = [
   "/",
   "/manifest.webmanifest",
   "/icon",
-  "/images/logo-capital-european.webp",
+  "/icons/icon-192.png",
+  "/icons/icon-512.png",
+  "/images/Consultanta-Fonduri-Europene-si-Servicii-Administrari-firme-1.webp",
+  "/images/Consultanta-Fonduri-Europene-si-Servicii-Administrari-firme-2.webp",
   "/images/fonduri-europene-consultanta-real.webp",
   "/images/capital-european-consultanta-organizare-real.webp",
   "/images/servicii-administrative-workflow-real.webp"

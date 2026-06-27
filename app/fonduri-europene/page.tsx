@@ -5,7 +5,7 @@ import { breadcrumbSchema, faqSchema, JsonLd, professionalServiceSchema, service
 
 export const metadata = createPageMetadata({
   title: "Fonduri europene pentru firme și ONG-uri",
-  description: "Consultanță fonduri europene în Cluj-Napoca și toată România: analiză de eligibilitate, pregătire cerere de finanțare, depunere și implementare proiecte. Fără promisiuni nerealiste.",
+  description: "Consultanță fonduri europene în România: eligibilitate, cerere de finanțare, depunere și implementare pentru firme și ONG-uri. Fără promisiuni nerealiste.",
   path: "/fonduri-europene"
 });
 

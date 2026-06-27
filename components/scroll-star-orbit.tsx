@@ -46,10 +46,30 @@ const spiralFormation: StarPoint[] = Array.from({ length: 12 }, (_, index) => {
 });
 
 const questionFormation: StarPoint[] = [
-  { x: 92, y: 75 }, { x: 132, y: 48 }, { x: 182, y: 48 }, { x: 226, y: 72 },
-  { x: 238, y: 112 }, { x: 218, y: 148 }, { x: 178, y: 170 }, { x: 158, y: 205 },
-  { x: 158, y: 242 }, { x: 158, y: 292, scale: 1.35 }, { x: 126, y: 290, scale: .65 },
-  { x: 192, y: 290, scale: .65 }
+  { x: 236, y: 58 }, { x: 264, y: 42 }, { x: 292, y: 50 }, { x: 306, y: 75 },
+  { x: 300, y: 104 }, { x: 278, y: 124 }, { x: 256, y: 144 }, { x: 250, y: 174 },
+  { x: 250, y: 204 }, { x: 250, y: 250, scale: 1.35 }, { x: 230, y: 250, scale: .65 },
+  { x: 270, y: 250, scale: .65 }
+];
+
+const checkFormation: StarPoint[] = [
+  { x: 216, y: 155 }, { x: 230, y: 174 }, { x: 245, y: 191 }, { x: 260, y: 208 },
+  { x: 276, y: 186 }, { x: 288, y: 163 }, { x: 300, y: 140 }, { x: 312, y: 116 },
+  { x: 230, y: 120, scale: .7 }, { x: 260, y: 105, scale: .7 },
+  { x: 290, y: 92, scale: .7 }, { x: 312, y: 76, scale: .7 }
+];
+
+const processFormation: StarPoint[] = [
+  { x: 232, y: 48 }, { x: 258, y: 48 }, { x: 284, y: 48 },
+  { x: 284, y: 76 }, { x: 284, y: 104 }, { x: 258, y: 104 },
+  { x: 232, y: 104 }, { x: 232, y: 132 }, { x: 232, y: 160 },
+  { x: 258, y: 160 }, { x: 284, y: 160 }, { x: 306, y: 188, scale: 1.2 }
+];
+
+const documentFormation: StarPoint[] = [
+  { x: 228, y: 48 }, { x: 254, y: 48 }, { x: 280, y: 48 }, { x: 302, y: 70 },
+  { x: 302, y: 100 }, { x: 302, y: 130 }, { x: 302, y: 160 }, { x: 276, y: 184 },
+  { x: 248, y: 184 }, { x: 228, y: 160 }, { x: 228, y: 122 }, { x: 228, y: 84 }
 ];
 
 const scatterFormation: StarPoint[] = [
@@ -58,15 +78,25 @@ const scatterFormation: StarPoint[] = [
   { x: -20, y: 275 }, { x: 305, y: -12 }, { x: 145, y: 360 }, { x: 370, y: 235 }
 ];
 
-const formations = [orbitFormation, waveFormation, gridFormation, spiralFormation, questionFormation, orbitFormation];
+const formations = [orbitFormation, waveFormation, gridFormation, spiralFormation, checkFormation, processFormation];
 const stagePath = [
   { x: 0, y: 28, scale: .96, turn: 0 },
   { x: -26, y: 45, scale: .7, turn: 8 },
   { x: -44, y: 63, scale: .66, turn: -7 },
   { x: -32, y: 38, scale: .69, turn: 9 },
-  { x: -48, y: 66, scale: .64, turn: -5 },
-  { x: -28, y: 48, scale: .68, turn: 6 }
+  { x: -12, y: 66, scale: .64, turn: -5 },
+  { x: 4, y: 48, scale: .68, turn: 6 },
+  { x: 8, y: 38, scale: .66, turn: -4 },
+  { x: 6, y: 56, scale: .66, turn: 3 }
 ] as const;
+
+function getFormation(sectionId: string | undefined, index: number) {
+  if (sectionId?.includes("intrebari")) return questionFormation;
+  if (sectionId?.includes("proces")) return processFormation;
+  if (sectionId?.includes("calculator")) return checkFormation;
+  if (sectionId?.includes("evaluare") || sectionId?.includes("externalizare")) return documentFormation;
+  return formations[Math.min(index, formations.length - 1)];
+}
 
 export function ScrollStarOrbit({ sectionIds }: { sectionIds: readonly string[] }) {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -131,7 +161,7 @@ export function ScrollStarOrbit({ sectionIds }: { sectionIds: readonly string[] 
   const stage = stagePath[Math.min(activeIndex, stagePath.length - 1)];
   const formation = phase === "scatter"
     ? scatterFormation
-    : formations[Math.min(activeIndex, formations.length - 1)];
+    : getFormation(sectionIds[activeIndex], activeIndex);
   const stageStyle = {
     "--stage-x": `${stage.x}px`,
     "--stage-y": `${stage.y}vh`,

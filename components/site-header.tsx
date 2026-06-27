@@ -21,6 +21,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { type MouseEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Brand } from "@/components/brand";
+import { CookieSettingsButton } from "@/components/cookie-settings-button";
 import { siteConfig } from "@/lib/site-config";
 
 type NavigationItem = {
@@ -277,6 +278,7 @@ export function SiteHeader({ navigationContext }: { navigationContext?: "funding
       <div className="sidebar-legal">
         <a href="/confidentialitate" onClick={closeMenu} title="Politica de confidențialitate">Confidențialitate</a>
         <a href="/termeni" onClick={closeMenu} title="Termeni și condiții">Termeni</a>
+        <CookieSettingsButton compact />
       </div>
     </>
   );

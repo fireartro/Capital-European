@@ -4,7 +4,7 @@ import { JsonLd, professionalServiceSchema } from "@/lib/structured-data";
 
 export const metadata = createPageMetadata({
   path: "/",
-  title: "Consultanță fonduri europene și servicii administrative în România",
+  title: "Fonduri europene & servicii administrative",
   description: "Capital European oferă consultanță pentru fonduri europene, documentație, depunere, implementare și servicii administrative pentru firme și ONG-uri."
 });
 

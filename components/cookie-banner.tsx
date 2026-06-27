@@ -174,7 +174,6 @@ export function CookieBanner({ googleAnalyticsId }: { googleAnalyticsId?: string
             setAnalyticsDraft(consent?.analytics ?? false);
             setView("settings");
           }}
-          aria-label="Deschide setările pentru cookie-uri"
         >
           <Settings2 aria-hidden="true" />
           Setări cookies

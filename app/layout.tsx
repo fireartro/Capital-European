@@ -65,20 +65,9 @@ export const metadata: Metadata = {
     description: siteConfig.description,
     images: [siteConfig.defaultOgImage]
   },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-      "max-video-preview": -1
-    }
-  },
   icons: {
     icon: "/icon",
-    apple: "/icon"
+    apple: [{ url: "/icons/icon-192.png", sizes: "192x192", type: "image/png" }]
   },
   manifest: "/manifest.webmanifest"
 };

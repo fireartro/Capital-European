@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import type { ReactNode } from "react";
 import { Brand } from "@/components/brand";
+import { CookieSettingsButton } from "@/components/cookie-settings-button";
 
 export type LegalSection = {
   title: string;
@@ -34,7 +35,10 @@ export function LegalPage({
           <Link className="brand" href="/" aria-label="Înapoi la pagina principală Capital European" title="Capital European">
             <Brand variant="light" />
           </Link>
-          <Link className="legal-back" href="/" aria-label="Înapoi la site-ul Capital European" title="Înapoi la site"><ArrowLeft aria-hidden="true" /> Înapoi la site</Link>
+          <div className="legal-nav-actions">
+            <CookieSettingsButton compact />
+            <Link className="legal-back" href="/" aria-label="Înapoi la site-ul Capital European" title="Înapoi la site"><ArrowLeft aria-hidden="true" /> Înapoi la site</Link>
+          </div>
         </div>
       </header>
       <article className="shell legal-content">
