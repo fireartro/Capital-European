@@ -1,7 +1,8 @@
-import { MessageCircle, Phone } from "lucide-react";
+import { PhoneCall } from "lucide-react";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { getWhatsAppUrl, siteConfig } from "@/lib/site-config";
+import { WhatsAppIcon } from "@/components/whatsapp-icon";
 
 export function SiteShell({
   children,
@@ -31,7 +32,7 @@ export function SiteShell({
           aria-label={`Sună ${siteConfig.name}`}
           title={`Sună ${siteConfig.name}`}
         >
-          <Phone />
+          <PhoneCall />
           <span className="phone-label"><small>Telefon</small><b>{siteConfig.phoneDisplay || "Contact"}</b></span>
         </a>
       )}
@@ -45,7 +46,7 @@ export function SiteShell({
           title={`Discută cu ${siteConfig.name} pe WhatsApp`}
         >
           <span className="whatsapp-pulse" aria-hidden="true" />
-          <MessageCircle />
+          <WhatsAppIcon />
           <span className="whatsapp-label"><small>Contact direct</small><b>Scrie-ne pe WhatsApp</b></span>
         </a>
       )}

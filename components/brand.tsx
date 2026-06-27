@@ -12,11 +12,11 @@ export function Brand({
   priority?: boolean;
 }) {
   const logoSrc = variant === "light"
-    ? "/images/Consultanta-Fonduri-Europene-si-Servicii-Administrari-firme-1.webp"
-    : "/images/Consultanta-Fonduri-Europene-si-Servicii-Administrari-firme-2.webp";
+    ? "/images/logo-capital-european-light.webp"
+    : "/images/logo-capital-european-dark.webp";
   const logoSize = variant === "light"
-    ? { width: 700, height: 322 }
-    : { width: 700, height: 344 };
+    ? { width: 360, height: 166 }
+    : { width: 360, height: 177 };
 
   return (
     <span className={`brand ${compact ? "brand-compact" : ""} brand-${variant}`}>
@@ -29,6 +29,7 @@ export function Brand({
           sizes={compact ? "106px" : "180px"}
           className="brand-logo"
           priority={priority}
+          unoptimized
         />
       </span>
     </span>

@@ -1,5 +1,6 @@
 import {
   ArrowRight,
+  Calculator,
   Check,
   ClipboardCheck,
   FileCheck2,
@@ -111,6 +112,7 @@ export function HomePage() {
           <span><Zap /> Pași bine definiți</span>
           <span><Scale /> Evaluare responsabilă</span>
           <span><Users /> Comunicare directă</span>
+          <Link href="/calculator-pret-consultanta" title="Calculator pentru fonduri și servicii administrative"><Calculator /> Calculator orientativ</Link>
         </footer>
       </section>
     </SiteShell>

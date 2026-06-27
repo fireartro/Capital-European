@@ -2,20 +2,24 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Check, LoaderCircle, Send } from "lucide-react";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { contactSchema, type ContactInput } from "@/lib/contact-schema";
+import { useEffect, useState } from "react";
+import { useForm, useWatch } from "react-hook-form";
+import { contactCategoryForService, contactSchema, type ContactCategory, type ContactInput } from "@/lib/contact-schema";
 import { siteConfig } from "@/lib/site-config";
 
-const services = [
-  ["servicii-administrative", "Servicii administrative"],
-  ["documente", "Administrare documente"],
-  ["secretariat", "Secretariat"],
-  ["administrativ", "Asistență administrativă"],
-  ["consultanta", "Consultanță"],
-  ["infiintare-firma", "Înființare firmă"],
-  ["fonduri-europene", "Fonduri europene"]
-] as const;
+const servicesByCategory = {
+  "fonduri-europene": [
+    ["fonduri-europene", "Consultanță pentru fonduri europene"],
+    ["consultanta", "Analiză sau consultanță de proiect"]
+  ],
+  "servicii-administrative": [
+    ["servicii-administrative", "Pachet de servicii administrative"],
+    ["documente", "Administrare documente"],
+    ["secretariat", "Secretariat externalizat"],
+    ["administrativ", "Asistență administrativă"],
+    ["infiintare-firma", "Sprijin pentru înființare firmă"]
+  ]
+} as const;
 
 const formTrust = [
   "Este suficientă o descriere scurtă pentru primul contact.",
@@ -24,6 +28,7 @@ const formTrust = [
 ] as const;
 
 export function ContactForm({ defaultService = "fonduri-europene" }: { defaultService?: ContactInput["service"] }) {
+  const defaultCategory = contactCategoryForService(defaultService);
   const [serverMessage, setServerMessage] = useState("");
   const [sent, setSent] = useState(false);
   const [demoMode, setDemoMode] = useState(false);
@@ -31,11 +36,23 @@ export function ContactForm({ defaultService = "fonduri-europene" }: { defaultSe
     register,
     handleSubmit,
     reset,
+    control,
+    setValue,
     formState: { errors, isSubmitting }
   } = useForm<ContactInput>({
     resolver: zodResolver(contactSchema),
-    defaultValues: { service: defaultService, consent: false, website: "" }
+    defaultValues: { category: defaultCategory, service: defaultService, consent: false, website: "" }
   });
+  const category = (useWatch({ control, name: "category" }) ?? defaultCategory) as ContactCategory;
+  const selectedService = useWatch({ control, name: "service" });
+  const availableServices = servicesByCategory[category];
+
+  useEffect(() => {
+    const serviceIsAvailable = availableServices.some(([value]) => value === selectedService);
+    if (!serviceIsAvailable) {
+      setValue("service", availableServices[0][0], { shouldValidate: true });
+    }
+  }, [availableServices, selectedService, setValue]);
 
   const submit = async (data: ContactInput) => {
     setServerMessage("");
@@ -50,7 +67,7 @@ export function ContactForm({ defaultService = "fonduri-europene" }: { defaultSe
       if (!response.ok) throw new Error(result.message || "Solicitarea nu a putut fi trimisă.");
       setDemoMode(Boolean(result.demo));
       setSent(true);
-      reset({ service: defaultService, consent: false, website: "" });
+      reset({ category: defaultCategory, service: defaultService, consent: false, website: "" });
     } catch (error) {
       setServerMessage(error instanceof Error ? error.message : "A apărut o eroare. Încearcă din nou.");
     }
@@ -80,6 +97,22 @@ export function ContactForm({ defaultService = "fonduri-europene" }: { defaultSe
       <ul className="form-trust-list" aria-label="Ce se întâmplă cu solicitarea trimisă">
         {formTrust.map((item) => <li key={item}><Check aria-hidden="true" /> {item}</li>)}
       </ul>
+      <div className="form-service-path">
+        <label>
+          <span>Categoria serviciului</span>
+          <select required {...register("category")}>
+            <option value="fonduri-europene">Fonduri europene</option>
+            <option value="servicii-administrative">Servicii administrative</option>
+          </select>
+        </label>
+        <label>
+          <span>Serviciu de interes</span>
+          <select required {...register("service")} aria-invalid={!!errors.service} aria-describedby={errors.service ? "service-error" : undefined}>
+            {availableServices.map(([value, label]) => <option key={value} value={value}>{label}</option>)}
+          </select>
+          {errors.service && <small id="service-error">{errors.service.message}</small>}
+        </label>
+      </div>
       <div className="form-grid">
         <label>
           <span>Nume și prenume</span>
@@ -95,12 +128,6 @@ export function ContactForm({ defaultService = "fonduri-europene" }: { defaultSe
           <span>Telefon</span>
           <input type="tel" autoComplete="tel" placeholder="07xx xxx xxx" maxLength={24} required {...register("phone")} aria-invalid={!!errors.phone} aria-describedby={errors.phone ? "phone-error" : undefined} />
           {errors.phone && <small id="phone-error">{errors.phone.message}</small>}
-        </label>
-        <label>
-          <span>Serviciu de interes</span>
-          <select required {...register("service")}>
-            {services.map(([value, label]) => <option key={value} value={value}>{label}</option>)}
-          </select>
         </label>
         <label className="full-field">
           <span>Mesaj</span>

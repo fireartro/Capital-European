@@ -20,8 +20,8 @@ export function ServiceFaq({
         <p>{description}</p>
       </div>
       <div className="service-faq-list">
-        {items.map(([question, answer], index) => (
-          <details key={question} open={index === 0}>
+        {items.map(([question, answer]) => (
+          <details key={question}>
             <summary>{question}</summary>
             <p>{answer}</p>
           </details>

@@ -43,6 +43,27 @@ const urgencyOptions: SelectOption[] = [
   { value: "urgent", label: "Sub 4 săptămâni", factor: 1.3 }
 ];
 
+const administrativeServiceOptions: SelectOption[] = [
+  { value: "documents", label: "Administrare documente", factor: .9 },
+  { value: "secretariat", label: "Secretariat externalizat", factor: 1 },
+  { value: "backoffice", label: "Back-office recurent", factor: 1.2 },
+  { value: "company", label: "Sprijin pentru înființare firmă", factor: .85 },
+  { value: "unknown", label: "Serviciul trebuie clarificat", factor: 1 }
+];
+
+const administrativeVolumeOptions: SelectOption[] = [
+  { value: "small", label: "Volum redus sau solicitare punctuală", factor: .8 },
+  { value: "medium", label: "Volum lunar moderat", factor: 1 },
+  { value: "large", label: "Volum lunar ridicat", factor: 1.25 },
+  { value: "enterprise", label: "Mai multe fluxuri sau departamente", factor: 1.45 }
+];
+
+const administrativeReadinessOptions: SelectOption[] = [
+  { value: "ready", label: "Procesul și responsabilitățile sunt clare", factor: .9 },
+  { value: "partial", label: "Există un flux, dar trebuie organizat", factor: 1 },
+  { value: "early", label: "Procesul trebuie definit de la început", factor: 1.2 }
+];
+
 function optionFactor(options: SelectOption[], value: string) {
   return options.find((option) => option.value === value)?.factor ?? 1;
 }
@@ -55,7 +76,14 @@ function formatRon(value: number) {
   }).format(value);
 }
 
-export function ConsultingPriceCalculator({ basePriceRon }: { basePriceRon: number }) {
+export function ConsultingPriceCalculator({
+  consultingBasePriceRon,
+  adminBasePriceRon
+}: {
+  consultingBasePriceRon: number;
+  adminBasePriceRon: number;
+}) {
+  const [serviceArea, setServiceArea] = useState<"consulting" | "admin">("consulting");
   const [applicant, setApplicant] = useState("srl");
   const [project, setProject] = useState("equipment");
   const [projectValue, setProjectValue] = useState("medium");
@@ -63,23 +91,41 @@ export function ConsultingPriceCalculator({ basePriceRon }: { basePriceRon: numb
   const [urgency, setUrgency] = useState("normal");
 
   const estimate = useMemo(() => {
+    const activeProjectOptions = serviceArea === "consulting" ? projectOptions : administrativeServiceOptions;
+    const activeValueOptions = serviceArea === "consulting" ? valueOptions : administrativeVolumeOptions;
+    const activeDocumentOptions = serviceArea === "consulting" ? documentOptions : administrativeReadinessOptions;
     const score =
       optionFactor(applicantOptions, applicant) *
-      optionFactor(projectOptions, project) *
-      optionFactor(valueOptions, projectValue) *
-      optionFactor(documentOptions, documents) *
+      optionFactor(activeProjectOptions, project) *
+      optionFactor(activeValueOptions, projectValue) *
+      optionFactor(activeDocumentOptions, documents) *
       optionFactor(urgencyOptions, urgency);
     const complexity = score < 1 ? "redusă" : score < 1.35 ? "medie" : "ridicată";
+    const basePriceRon = serviceArea === "consulting" ? consultingBasePriceRon : adminBasePriceRon;
     const round = (value: number) => Math.max(100, Math.round(value / 100) * 100);
     return {
       complexity,
       lower: round(basePriceRon * score * .9),
       upper: round(basePriceRon * score * 1.15)
     };
-  }, [applicant, basePriceRon, documents, project, projectValue, urgency]);
+  }, [adminBasePriceRon, applicant, consultingBasePriceRon, documents, project, projectValue, serviceArea, urgency]);
 
-  const hasCommercialBase = Number.isFinite(basePriceRon) && basePriceRon > 0;
+  const activeBasePriceRon = serviceArea === "consulting" ? consultingBasePriceRon : adminBasePriceRon;
+  const hasCommercialBase = Number.isFinite(activeBasePriceRon) && activeBasePriceRon > 0;
+  const activeProjectOptions = serviceArea === "consulting" ? projectOptions : administrativeServiceOptions;
+  const activeValueOptions = serviceArea === "consulting" ? valueOptions : administrativeVolumeOptions;
+  const activeDocumentOptions = serviceArea === "consulting" ? documentOptions : administrativeReadinessOptions;
+
+  const changeServiceArea = (value: "consulting" | "admin") => {
+    setServiceArea(value);
+    setProject(value === "consulting" ? "equipment" : "documents");
+    setProjectValue("medium");
+    setDocuments("partial");
+    setUrgency("normal");
+  };
+
   const reset = () => {
+    setServiceArea("consulting");
     setApplicant("srl");
     setProject("equipment");
     setProjectValue("medium");
@@ -91,12 +137,37 @@ export function ConsultingPriceCalculator({ basePriceRon }: { basePriceRon: numb
     <div className="price-calculator">
       <div className="calculator-fields">
         <div className="calculator-form-heading">
-          <span>Estimare în 5 pași</span>
-          <h2>Descrie pe scurt proiectul</h2>
+          <span>Estimare în 6 pași</span>
+          <h2>Descrie serviciul de care ai nevoie</h2>
           <p>Selectează situația cea mai apropiată. Rezultatul se actualizează automat.</p>
         </div>
+        <fieldset className="calculator-service">
+          <legend>Direcția serviciului</legend>
+          <div>
+            <label>
+              <input
+                type="radio"
+                name="service-area"
+                value="consulting"
+                checked={serviceArea === "consulting"}
+                onChange={() => changeServiceArea("consulting")}
+              />
+              <span>Consultanță fonduri</span>
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="service-area"
+                value="admin"
+                checked={serviceArea === "admin"}
+                onChange={() => changeServiceArea("admin")}
+              />
+              <span>Servicii administrative</span>
+            </label>
+          </div>
+        </fieldset>
         <fieldset className="calculator-applicant">
-          <legend>Tip solicitant</legend>
+          <legend>Tip organizație</legend>
           <div>
             {applicantOptions.map((option) => (
               <label key={option.value}>
@@ -113,25 +184,25 @@ export function ConsultingPriceCalculator({ basePriceRon }: { basePriceRon: numb
           </div>
         </fieldset>
         <label>
-          <span>Obiectul principal al proiectului</span>
+          <span>{serviceArea === "consulting" ? "Obiectul principal al proiectului" : "Serviciul administrativ"}</span>
           <select value={project} onChange={(event) => setProject(event.target.value)}>
-            {projectOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
+            {activeProjectOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
           </select>
         </label>
         <label>
-          <span>Valoarea estimată a proiectului</span>
+          <span>{serviceArea === "consulting" ? "Valoarea estimată a proiectului" : "Volumul estimat"}</span>
           <select value={projectValue} onChange={(event) => setProjectValue(event.target.value)}>
-            {valueOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
+            {activeValueOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
           </select>
         </label>
         <label>
-          <span>Stadiul documentelor</span>
+          <span>{serviceArea === "consulting" ? "Stadiul documentelor" : "Stadiul procesului"}</span>
           <select value={documents} onChange={(event) => setDocuments(event.target.value)}>
-            {documentOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
+            {activeDocumentOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
           </select>
         </label>
         <label>
-          <span>Timp disponibil până la depunere</span>
+          <span>{serviceArea === "consulting" ? "Timp disponibil până la depunere" : "Termenul dorit pentru începere"}</span>
           <select value={urgency} onChange={(event) => setUrgency(event.target.value)}>
             {urgencyOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
           </select>
@@ -147,29 +218,33 @@ export function ConsultingPriceCalculator({ basePriceRon }: { basePriceRon: numb
           <span className="calculator-estimate-label">Rezultat orientativ</span>
         </div>
         <div className="calculator-complexity">
-          <p>Complexitatea proiectului</p>
+          <p>Complexitatea estimată</p>
           <strong>{estimate.complexity}</strong>
         </div>
         {hasCommercialBase ? (
           <div className="calculator-price-range">
-            <p>Interval estimativ pentru serviciul de consultanță</p>
+            <p>Interval estimativ pentru serviciul selectat</p>
             <h2>{formatRon(estimate.lower)} - {formatRon(estimate.upper)}</h2>
             <small>Calculat pe baza valorii configurate și a opțiunilor selectate.</small>
           </div>
         ) : (
           <div className="calculator-pending-price">
             <Info aria-hidden="true" />
-            <p>Intervalul de preț va fi afișat după configurarea bazei comerciale. Complexitatea orientativă rămâne disponibilă.</p>
+            <p>Intervalul de preț va fi afișat după configurarea bazei comerciale pentru această categorie. Complexitatea orientativă rămâne disponibilă.</p>
           </div>
         )}
         <ul>
           <li><CircleCheckBig aria-hidden="true" /> Estimare orientativă, nu ofertă comercială finală</li>
-          <li><CircleCheckBig aria-hidden="true" /> Prețul final depinde de apel, livrabile și documentele disponibile</li>
+          <li><CircleCheckBig aria-hidden="true" /> Prețul final depinde de volum, livrabile și informațiile disponibile</li>
         </ul>
-        <Link className="primary-button yellow-button" href="/contact?service=consultanta">
-          Solicită o ofertă pentru proiect <ArrowRight aria-hidden="true" />
+        <Link className="primary-button yellow-button" href={`/contact?service=${serviceArea === "consulting" ? "consultanta" : "servicii-administrative"}`}>
+          Solicită o ofertă personalizată <ArrowRight aria-hidden="true" />
         </Link>
-        <p className="calculator-disclaimer">Rezultatul este informativ. Nu reprezintă o ofertă comercială, nu confirmă eligibilitatea și nu garantează aprobarea finanțării.</p>
+        <p className="calculator-disclaimer">
+          {serviceArea === "consulting"
+            ? "Rezultatul este informativ, nu reprezintă o ofertă comercială, nu confirmă eligibilitatea și nu garantează aprobarea finanțării."
+            : "Rezultatul este informativ și nu reprezintă o ofertă comercială. Volumul real și cerințele stabilite în discuția inițială pot modifica estimarea."}
+        </p>
       </aside>
     </div>
   );

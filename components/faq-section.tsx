@@ -6,7 +6,7 @@ import { generalFaq } from "@/lib/service-content";
 import { siteConfig } from "@/lib/site-config";
 
 export function FaqSection() {
-  const [activeFaq, setActiveFaq] = useState(0);
+  const [activeFaq, setActiveFaq] = useState(-1);
 
   return (
     <section className="section faq" id="faq" aria-labelledby="general-faq-title" aria-describedby="general-faq-description">

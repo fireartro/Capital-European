@@ -2,9 +2,9 @@
 
 import {
   ArrowLeft,
-  BadgeCheck,
   BookOpenCheck,
   Building2,
+  Calculator,
   CircleHelp,
   ClipboardList,
   FileText,
@@ -14,7 +14,6 @@ import {
   Menu,
   Phone,
   Sparkles,
-  Users,
   X
 } from "lucide-react";
 import Link from "next/link";
@@ -33,7 +32,7 @@ type NavigationItem = {
 const fundingNavigation: NavigationItem[] = [
   { label: "Prezentare", href: "/fonduri-europene", icon: Landmark },
   { label: "Servicii", href: "/fonduri-europene#servicii-fonduri", icon: FileText },
-  { label: "Beneficii", href: "/fonduri-europene#beneficii-fonduri", icon: BadgeCheck },
+  { label: "Calculator", href: "/calculator-pret-consultanta?mode=eligibilitate", icon: Calculator },
   { label: "Proces", href: "/fonduri-europene#proces-fonduri", icon: ClipboardList },
   { label: "Întrebări", href: "/fonduri-europene#intrebari-fonduri", icon: CircleHelp },
   { label: "Contact", href: "/contact?service=fonduri-europene", icon: Mail }
@@ -42,8 +41,8 @@ const fundingNavigation: NavigationItem[] = [
 const adminNavigation: NavigationItem[] = [
   { label: "Prezentare", href: "/servicii-administrative", icon: FileText },
   { label: "Servicii", href: "/servicii-administrative#servicii-administrative", icon: ClipboardList },
+  { label: "Calculator", href: "/calculator-pret-consultanta?mode=estimare", icon: Calculator },
   { label: "Înființare firmă", href: "/servicii-administrative#infiintare-firma", icon: Building2 },
-  { label: "Despre", href: "/despre", icon: Users },
   { label: "Întrebări", href: "/servicii-administrative#intrebari-administrative", icon: CircleHelp },
   { label: "Contact", href: "/contact?service=servicii-administrative", icon: Mail }
 ];
@@ -52,6 +51,7 @@ const generalNavigation: NavigationItem[] = [
   { label: "Alegere servicii", href: "/", icon: Home },
   { label: "Fonduri europene", href: "/fonduri-europene", icon: Landmark },
   { label: "Servicii administrative", href: "/servicii-administrative", icon: FileText },
+  { label: "Calculator", href: "/calculator-pret-consultanta", icon: Calculator },
   { label: "Despre", href: "/despre", icon: BookOpenCheck },
   { label: "Întrebări", href: "/intrebari", icon: CircleHelp },
   { label: "Contact", href: "/contact", icon: Mail }
@@ -288,7 +288,7 @@ export function SiteHeader({ navigationContext }: { navigationContext?: "funding
       <aside className="sidebar">
         <header className="sidebar-header">
           <Link className="sidebar-brand" href="/" aria-label={`${siteConfig.name}, pagina de alegere`} title={`${siteConfig.name}, pagina de alegere`}>
-            <Brand />
+            <Brand priority />
             <small>{context.label}</small>
           </Link>
           {navigationContent}
@@ -297,7 +297,7 @@ export function SiteHeader({ navigationContext }: { navigationContext?: "funding
       </aside>
 
       <header className="mobile-header">
-        <Link href="/" aria-label={`${siteConfig.name}, pagina de alegere`} title={`${siteConfig.name}, pagina de alegere`}><Brand compact /></Link>
+        <Link href="/" aria-label={`${siteConfig.name}, pagina de alegere`} title={`${siteConfig.name}, pagina de alegere`}><Brand compact priority /></Link>
         <span className="mobile-context">{context.label}</span>
         <button
           type="button"

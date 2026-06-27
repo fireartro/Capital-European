@@ -22,7 +22,12 @@ export function SeoServicePage({ page }: { page: SeoServicePageConfig }) {
             <Link className="primary-button yellow-button" href={`/contact?service=${page.contactService}`}>
               Solicită evaluarea inițială <ArrowRight aria-hidden="true" />
             </Link>
-            <Link href={page.parent.href}>Vezi serviciul principal</Link>
+            <div className="seo-service-secondary-actions">
+              <Link href={page.parent.href}>Vezi serviciul principal</Link>
+              <Link href={`/calculator-pret-consultanta?mode=${page.category === "funding" ? "eligibilitate" : "estimare"}`}>
+                Calculator orientativ
+              </Link>
+            </div>
           </div>
         </div>
       </section>
@@ -79,8 +84,8 @@ export function SeoServicePage({ page }: { page: SeoServicePageConfig }) {
             <p>Răspunsurile sunt orientative. Condițiile finale depind de situația analizată și de serviciul stabilit prin ofertă.</p>
           </div>
           <div className="seo-service-faq">
-            {page.faq.map(([question, answer], index) => (
-              <details key={question} open={index === 0}>
+            {page.faq.map(([question, answer]) => (
+              <details key={question}>
                 <summary>{question}</summary>
                 <p>{answer}</p>
               </details>

@@ -21,11 +21,11 @@ const registrationNumber = publicValue(process.env.NEXT_PUBLIC_REGISTRATION_NUMB
 const taxId = publicValue(process.env.NEXT_PUBLIC_TAX_ID);
 const registeredOffice = publicValue(process.env.NEXT_PUBLIC_REGISTERED_OFFICE);
 const contactEmail = publicValue(process.env.NEXT_PUBLIC_CONTACT_EMAIL) || "contact@capitaleuropean.ro";
-const phoneDisplay = publicValue(process.env.NEXT_PUBLIC_PHONE_DISPLAY);
-const phoneHref = publicValue(process.env.NEXT_PUBLIC_PHONE_HREF);
-const whatsappNumber = publicValue(process.env.NEXT_PUBLIC_WHATSAPP_NUMBER).replace(/\D/g, "");
+const phoneDisplay = publicValue(process.env.NEXT_PUBLIC_PHONE_DISPLAY) || "0753 527 110";
+const phoneHref = publicValue(process.env.NEXT_PUBLIC_PHONE_HREF) || "+40753527110";
+const whatsappNumber = (publicValue(process.env.NEXT_PUBLIC_WHATSAPP_NUMBER) || "+40753527110").replace(/\D/g, "");
 const businessAddress = publicValue(process.env.NEXT_PUBLIC_BUSINESS_ADDRESS);
-const businessSchedule = publicValue(process.env.NEXT_PUBLIC_BUSINESS_SCHEDULE);
+const businessSchedule = publicValue(process.env.NEXT_PUBLIC_BUSINESS_SCHEDULE) || "L-V · 10:00-18:00";
 const socialProfiles = [
   publicValue(process.env.NEXT_PUBLIC_FACEBOOK_URL),
   publicValue(process.env.NEXT_PUBLIC_INSTAGRAM_URL),

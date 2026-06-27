@@ -11,7 +11,7 @@ const criteria = [
   "Activitatea vizată poate fi încadrată într-un program eligibil"
 ] as const;
 
-export function EligibilityChecker() {
+export function EligibilityChecker({ standalone = false }: { standalone?: boolean }) {
   const [checked, setChecked] = useState<Record<string, boolean>>({});
   const score = criteria.filter((criterion) => checked[criterion]).length;
 
@@ -35,7 +35,7 @@ export function EligibilityChecker() {
   }, [score]);
 
   return (
-    <section className="eligibility-checker" id="calculator-eligibilitate" aria-labelledby="eligibility-title">
+    <section className={`eligibility-checker ${standalone ? "eligibility-checker-standalone" : ""}`} id="calculator-eligibilitate" aria-labelledby="eligibility-title">
       <div className="eligibility-copy">
         <p className="eyebrow"><ClipboardCheck aria-hidden="true" /> Evaluare rapidă</p>
         <h2 id="eligibility-title">Verificare preliminară pentru fonduri europene</h2>

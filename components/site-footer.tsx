@@ -16,7 +16,7 @@ export function SiteFooter() {
           <Link href="/consultanta-fonduri-europene">Consultanță fonduri europene</Link>
           <Link href="/fonduri-europene-pentru-firme">Fonduri pentru firme</Link>
           <Link href="/fonduri-europene-pentru-ong">Fonduri pentru ONG-uri</Link>
-          <Link href="/calculator-pret-consultanta">Estimator preț consultanță</Link>
+          <Link href="/calculator-pret-consultanta">Calculator fonduri și servicii</Link>
         </div>
         <div>
           <h3>Servicii administrative</h3>
@@ -29,6 +29,7 @@ export function SiteFooter() {
           <h3>Contact</h3>
           {siteConfig.phoneHref && <a href={`tel:${siteConfig.phoneHref}`} aria-label={`Sună ${siteConfig.name}`} title={`Sună ${siteConfig.name}`}>{siteConfig.phoneDisplay}</a>}
           <a href={`mailto:${siteConfig.email}`} title={`Trimite email către ${siteConfig.name}`}>{siteConfig.email}</a>
+          {siteConfig.schedule && <span>Program: {siteConfig.schedule}</span>}
           {siteConfig.address && <span>{siteConfig.address}</span>}
           {siteConfig.legal.entityName && <span>Operator: {siteConfig.legal.entityName}</span>}
           {siteConfig.legal.registrationNumber && <span>Registrul comerțului: {siteConfig.legal.registrationNumber}</span>}

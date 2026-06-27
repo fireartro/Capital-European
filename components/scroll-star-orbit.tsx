@@ -10,11 +10,13 @@ type StarPoint = {
   rotate?: number;
 };
 
+const stableNumber = (value: number) => Math.round(value * 1000) / 1000;
+
 const orbitFormation: StarPoint[] = Array.from({ length: 12 }, (_, index) => {
   const angle = (index / 12) * Math.PI * 2 - Math.PI / 2;
   return {
-    x: 160 + Math.cos(angle) * 132,
-    y: 160 + Math.sin(angle) * 132,
+    x: stableNumber(160 + Math.cos(angle) * 132),
+    y: stableNumber(160 + Math.sin(angle) * 132),
     scale: index % 4 === 0 ? 1.25 : index % 3 === 0 ? .75 : 1,
     rotate: index * 30
   };
@@ -22,7 +24,7 @@ const orbitFormation: StarPoint[] = Array.from({ length: 12 }, (_, index) => {
 
 const waveFormation: StarPoint[] = Array.from({ length: 12 }, (_, index) => ({
   x: 20 + index * 26,
-  y: 158 + Math.sin((index / 11) * Math.PI * 2) * 62,
+  y: stableNumber(158 + Math.sin((index / 11) * Math.PI * 2) * 62),
   scale: index % 3 === 0 ? 1.25 : .82,
   rotate: index % 2 ? -18 : 18
 }));
@@ -38,9 +40,9 @@ const spiralFormation: StarPoint[] = Array.from({ length: 12 }, (_, index) => {
   const angle = index * .82;
   const radius = 24 + index * 10;
   return {
-    x: 160 + Math.cos(angle) * radius,
-    y: 160 + Math.sin(angle) * radius,
-    scale: .7 + index * .045,
+    x: stableNumber(160 + Math.cos(angle) * radius),
+    y: stableNumber(160 + Math.sin(angle) * radius),
+    scale: stableNumber(.7 + index * .045),
     rotate: index * 22
   };
 });
@@ -165,7 +167,7 @@ export function ScrollStarOrbit({ sectionIds }: { sectionIds: readonly string[] 
   const stageStyle = {
     "--stage-x": `${stage.x}px`,
     "--stage-y": `${stage.y}vh`,
-    "--stage-scale": stage.scale,
+    "--stage-scale": `${stage.scale}`,
     "--stage-turn": `${stage.turn}deg`
   } as CSSProperties;
 
@@ -183,7 +185,7 @@ export function ScrollStarOrbit({ sectionIds }: { sectionIds: readonly string[] 
           style={{
             "--star-x": `${point.x}px`,
             "--star-y": `${point.y}px`,
-            "--star-scale": point.scale ?? 1,
+            "--star-scale": `${point.scale ?? 1}`,
             "--star-rotate": `${point.rotate ?? 0}deg`,
             transitionDelay: `${index * 22}ms`
           } as CSSProperties}
