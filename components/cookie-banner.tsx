@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { BarChart3, Check, LockKeyhole, Megaphone, Settings2, X } from "lucide-react";
-import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import {
   COOKIE_CONSENT_EVENT,
@@ -163,7 +162,6 @@ export function CookieBanner({
   googleTagManagerId?: string;
   clarityProjectId?: string;
 }) {
-  const pathname = usePathname();
   const [consent, setConsent] = useState<CookieConsent | null>(null);
   const [view, setView] = useState<BannerView>("loading");
   const [analyticsDraft, setAnalyticsDraft] = useState(false);
@@ -171,13 +169,15 @@ export function CookieBanner({
   const settingsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const frame = window.requestAnimationFrame(() => {
+    const initializeConsent = () => {
       const storedConsent = readCookieConsent();
       setConsent(storedConsent);
       setAnalyticsDraft(storedConsent?.analytics ?? false);
       setMarketingDraft(storedConsent?.marketing ?? false);
       setView(storedConsent ? "hidden" : "banner");
-    });
+    };
+
+    initializeConsent();
 
     const openSettings = () => {
       const currentConsent = readCookieConsent();
@@ -190,14 +190,20 @@ export function CookieBanner({
       setConsent(nextConsent);
       setAnalyticsDraft(nextConsent.analytics);
       setMarketingDraft(nextConsent.marketing);
+      setView("hidden");
+    };
+    const handleStorage = (event: StorageEvent) => {
+      if (event.key && !event.key.includes("cookie")) return;
+      initializeConsent();
     };
 
     window.addEventListener(COOKIE_SETTINGS_EVENT, openSettings);
     window.addEventListener(COOKIE_CONSENT_EVENT, syncConsent);
+    window.addEventListener("storage", handleStorage);
     return () => {
-      window.cancelAnimationFrame(frame);
       window.removeEventListener(COOKIE_SETTINGS_EVENT, openSettings);
       window.removeEventListener(COOKIE_CONSENT_EVENT, syncConsent);
+      window.removeEventListener("storage", handleStorage);
     };
   }, []);
 
@@ -252,7 +258,7 @@ export function CookieBanner({
         consent={consent}
       />
 
-      {view === "hidden" && pathname !== "/" && (
+      {view === "hidden" && (
         <button
           type="button"
           className="cookie-settings-floating"
@@ -322,23 +328,22 @@ export function CookieBanner({
                 type="button"
                 className="cookie-preferences-close"
                 onClick={() => setView(consent ? "hidden" : "banner")}
-                aria-label="Închide setările pentru cookie-uri"
+                aria-label="Închide setările pentru cookies"
               >
                 <X aria-hidden="true" />
               </button>
             </header>
-
             <p className="cookie-preferences-intro">
-              Categoriile opționale sunt dezactivate implicit. Le poți activa separat și poți reveni oricând asupra alegerii.
+              Poți modifica opțiunile oricând. Cookie-urile strict necesare rămân active pentru securitate, memorarea alegerii și funcționarea formularului.
             </p>
 
             <div className="cookie-category">
-              <div className="cookie-category-icon"><LockKeyhole aria-hidden="true" /></div>
+              <span className="cookie-category-icon"><LockKeyhole aria-hidden="true" /></span>
               <div>
                 <h3>Strict necesare</h3>
-                <p>Memorează alegerea ta și permite funcțiile de bază ale site-ului. Nu poate fi dezactivată.</p>
+                <p>Active permanent pentru funcționarea website-ului, securitate și memorarea consimțământului.</p>
               </div>
-              <span className="cookie-category-required"><Check aria-hidden="true" /> Mereu active</span>
+              <span className="cookie-category-required"><Check aria-hidden="true" /> Activ</span>
             </div>
 
             <label className="cookie-category cookie-category-toggle">
