@@ -55,6 +55,116 @@ body:has(.legal-page) .cookie-settings-floating { display: inline-flex; }
 body:has(.cookie-banner) .cookie-settings-floating,
 body:has(.cookie-preferences-backdrop) .cookie-settings-floating { display: none; }
 
+@supports selector(body:has(.split-landing)) {
+  html:has(.split-landing),
+  body:has(.split-landing) {
+    height: 100%;
+    min-height: 100%;
+    overflow: hidden;
+    overscroll-behavior: none;
+  }
+
+  body:has(.split-landing) .app-layout,
+  body:has(.split-landing) .site-content {
+    height: 100dvh;
+    min-height: 100dvh;
+    overflow: hidden;
+  }
+}
+
+.split-landing {
+  height: 100svh;
+  height: 100dvh;
+  min-height: 0 !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 13px;
+  padding: clamp(78px, 8.8vh, 108px) 44px clamp(20px, 3vh, 30px) !important;
+  overflow: hidden !important;
+}
+
+.split-brand {
+  top: clamp(16px, 3vh, 30px) !important;
+  left: clamp(18px, 3vw, 42px) !important;
+}
+
+.split-brand .brand-logo-frame {
+  width: clamp(128px, 10vw, 180px) !important;
+}
+
+.landing-intro {
+  flex: 0 0 auto;
+  margin-bottom: 0 !important;
+}
+
+.landing-intro .eyebrow {
+  margin-bottom: clamp(7px, 1vh, 12px);
+}
+
+.landing-intro h1 {
+  font-size: clamp(1.95rem, 3.15vw, 3rem) !important;
+  line-height: 1.08 !important;
+}
+
+.landing-intro-copy {
+  margin-top: clamp(8px, 1.1vh, 12px) !important;
+  font-size: clamp(.76rem, .85vw, .9rem) !important;
+  line-height: 1.5 !important;
+}
+
+.split-grid {
+  flex: 0 1 auto;
+  gap: clamp(12px, 1.6vw, 18px) !important;
+}
+
+.choice-card {
+  min-height: clamp(285px, 39vh, 360px) !important;
+  padding: clamp(22px, 2.4vw, 34px) clamp(24px, 2.7vw, 38px) !important;
+}
+
+.choice-copy {
+  min-height: 0 !important;
+}
+
+.choice-index {
+  margin-bottom: clamp(10px, 1.6vh, 18px) !important;
+}
+
+.choice-icon {
+  margin-bottom: clamp(10px, 1.4vh, 15px) !important;
+}
+
+.choice-card h2 {
+  font-size: clamp(1.9rem, 2.7vw, 2.32rem) !important;
+}
+
+.choice-card p {
+  margin: clamp(10px, 1.35vh, 14px) 0 clamp(14px, 1.6vh, 20px) !important;
+}
+
+.landing-proof-grid {
+  flex: 0 0 auto;
+  margin-top: 0 !important;
+}
+
+.landing-trust {
+  flex: 0 0 auto;
+  margin-top: 0 !important;
+}
+
+@media (max-height: 850px) {
+  .split-landing { gap: 10px; padding-top: clamp(62px, 8vh, 88px) !important; }
+  .landing-proof-grid { display: none !important; }
+  .choice-card { min-height: clamp(270px, 42vh, 330px) !important; }
+}
+
+@media (max-height: 720px) {
+  .landing-intro-copy { display: none !important; }
+  .landing-trust { display: none !important; }
+  .choice-card { min-height: clamp(250px, 48vh, 310px) !important; }
+}
+
 .contact-layout-simplified { align-items: center; }
 .contact-layout-simplified .contact-copy { max-width: 560px; }
 .contact-layout-simplified .contact-primary-link { margin-bottom: 18px; }
@@ -156,6 +266,29 @@ body:has(.cookie-preferences-backdrop) .cookie-settings-floating { display: none
   .form-wrap { max-width: 100%; justify-self: stretch; }
   .seo-cta-actions { justify-content: stretch; }
   .seo-cta-actions .primary-button { width: 100%; }
+
+  .split-landing {
+    gap: 11px;
+    padding: calc(58px + env(safe-area-inset-top)) 0 calc(12px + env(safe-area-inset-bottom)) !important;
+  }
+
+  .split-brand .brand-logo-frame { width: 118px !important; }
+  .landing-intro { padding-inline: 12px; }
+  .landing-intro h1 { font-size: clamp(1.45rem, 5.2vw, 2.1rem) !important; }
+  .landing-intro-copy { font-size: .72rem !important; }
+  .split-grid { width: 100% !important; grid-template-columns: 1fr !important; gap: 8px !important; }
+  .choice-card { min-height: 0 !important; grid-template-columns: 1fr !important; gap: 0 !important; padding: 14px 16px !important; border-radius: 0 !important; border-inline: 0 !important; }
+  .choice-copy { min-height: 142px !important; }
+  .choice-index { margin-bottom: 8px !important; font-size: .64rem !important; }
+  .choice-icon { width: 30px !important; height: 30px !important; margin-bottom: 8px !important; }
+  .choice-card h2 { font-size: clamp(1.24rem, 5.6vw, 1.55rem) !important; }
+  .choice-card p { margin: 6px 0 9px !important; font-size: .68rem !important; line-height: 1.36 !important; }
+  .choice-card > div:last-child { display: none !important; }
+  .choice-button { min-height: 40px !important; }
+  .landing-proof-grid { display: none !important; }
+  .landing-trust { width: calc(100% - 24px) !important; max-height: 72px; overflow: hidden; justify-content: center !important; font-size: .68rem !important; }
+  .landing-trust span,
+  .landing-trust a { min-height: 27px !important; padding-inline: 8px !important; }
 }
 
 @media (max-width: 640px) {
@@ -185,11 +318,31 @@ body:has(.cookie-preferences-backdrop) .cookie-settings-floating { display: none
   .choice-secondary-link {
     width: 100%;
     justify-content: center;
-    min-height: 38px;
-    margin: 0 0 10px;
-    font-size: .7rem;
+    min-height: 34px;
+    margin: 0 0 8px;
+    font-size: .66rem;
   }
+
+  .split-landing { gap: 9px; }
+  .landing-intro .eyebrow { margin-bottom: 6px !important; font-size: .62rem !important; }
+  .landing-intro h1 { font-size: clamp(1.28rem, 6vw, 1.62rem) !important; }
+  .landing-intro-copy { display: none !important; }
+  .choice-card { padding-block: 12px !important; }
+  .choice-copy { min-height: 128px !important; }
+  .choice-card p { font-size: .64rem !important; }
+  .landing-trust { display: none !important; }
 
   .calculator-entry { margin-top: 20px; }
   .site-footer { padding-bottom: 86px; }
+}
+
+@media (max-width: 390px), (max-height: 700px) {
+  .split-landing { padding-top: calc(50px + env(safe-area-inset-top)) !important; gap: 7px; }
+  .split-brand .brand-logo-frame { width: 104px !important; }
+  .landing-intro .eyebrow { display: none !important; }
+  .choice-icon { display: none !important; }
+  .choice-copy { min-height: 116px !important; }
+  .choice-card h2 { font-size: 1.22rem !important; }
+  .choice-card p { margin-block: 5px 7px !important; }
+  .choice-button { min-height: 38px !important; }
 }
