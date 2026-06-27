@@ -23,7 +23,7 @@ export function Brand({
       <span className="brand-logo-frame">
         <Image
           src={logoSrc}
-          alt="Capital European – Creăm astăzi succesul de mâine"
+          alt="Capital European - consultanță fonduri europene și servicii administrative"
           width={logoSize.width}
           height={logoSize.height}
           sizes={compact ? "106px" : "180px"}

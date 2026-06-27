@@ -36,8 +36,8 @@ export const siteConfig = {
   name: "Capital European",
   namePrefix: "Capital ",
   nameAccent: "European",
-  tagline: "Creăm astăzi succesul de mâine",
-  description: "Capital European oferă consultanță fonduri europene și servicii administrative externalizate pentru firme, IMM-uri și ONG-uri din România. Analiză de eligibilitate, cereri de finanțare, implementare proiecte, secretariat și back-office externalizat.",
+  tagline: "Consultanță și administrare, cu pași clari",
+  description: "Capital European oferă consultanță pentru fonduri europene și servicii administrative externalizate pentru firme și ONG-uri din România: eligibilitate, documentație, implementare, secretariat și back-office.",
   url: resolvedSiteUrl,
   defaultOgImage: "/opengraph-image",
   officialResources: {
@@ -70,7 +70,7 @@ export const siteConfig = {
   sameAs: socialProfiles
 } as const;
 
-export function getWhatsAppUrl(message = "Bună ziua! Doresc mai multe informații despre serviciile oferite.") {
+export function getWhatsAppUrl(message = "Bună ziua! Aș dori să discut despre serviciile Capital European.") {
   if (!siteConfig.whatsappNumber) return "";
   return `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(message)}`;
 }

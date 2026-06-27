@@ -18,23 +18,23 @@ import { fundingFaq } from "@/lib/service-content";
 import { siteConfig } from "@/lib/site-config";
 
 const services = [
-  { icon: SearchCheck, title: "Analiză & eligibilitate", text: "Evaluăm compania, investiția și condițiile programului înainte de a începe documentația." },
-  { icon: FilePenLine, title: "Pregătirea proiectului", text: "Construim cererea, planul de afaceri, bugetul și anexele într-un dosar coerent." },
-  { icon: ClipboardCheck, title: "Depunere & clarificări", text: "Gestionăm transmiterea proiectului și răspunsurile solicitate de autoritatea finanțatoare." },
-  { icon: BarChart3, title: "Implementare & monitorizare", text: "Urmărim indicatorii, achizițiile, documentele și raportarea pe durata implementării." }
+  { icon: SearchCheck, title: "Analiză de eligibilitate", text: "Comparăm solicitantul și investiția cu regulile programului înainte de pregătirea dosarului." },
+  { icon: FilePenLine, title: "Cerere și documentație", text: "Corelăm obiectivele, activitățile, bugetul și anexele într-o documentație consecventă." },
+  { icon: ClipboardCheck, title: "Depunere și clarificări", text: "Organizăm transmiterea proiectului și răspunsurile cerute în etapa de evaluare." },
+  { icon: BarChart3, title: "Sprijin în implementare", text: "În funcție de contract, urmărim indicatorii, achizițiile, documentele și raportarea." }
 ];
 
 const steps = [
-  ["01", "Analiză inițială", "Identificăm oportunitatea potrivită și evaluăm realist eligibilitatea."],
-  ["02", "Documentație", "Pregătim proiectul, bugetul, planul și documentele suport."],
-  ["03", "Depunere", "Transmitem dosarul și gestionăm eventualele clarificări."],
-  ["04", "Implementare", "Te sprijinim să respecți obligațiile și calendarul proiectului."]
+  ["01", "Analiză inițială", "Verificăm solicitantul, investiția și condițiile programului."],
+  ["02", "Plan de lucru", "Stabilim documentele, responsabilitățile și calendarul."],
+  ["03", "Pregătire și depunere", "Construim documentația și gestionăm clarificările incluse în serviciu."],
+  ["04", "Implementare", "Dacă este contractată, urmărim obligațiile și documentele proiectului."]
 ] as const;
 
 const fundingStats = [
   ["4", "etape clare", "analiză, documentație, depunere și implementare"],
   ["3", "surse oficiale", "MIPE, fonduri-ue.ro și PNRR verificate în context"],
-  ["0", "promisiuni goale", "recomandări bazate pe eligibilitate, nu pe optimism"],
+  ["Fără", "garanții false", "decizia de finanțare aparține autorității competente"],
   ["1", "plan urmărit", "calendar, documente și responsabilități într-un fir logic"]
 ] as const;
 
@@ -75,8 +75,8 @@ export function FundingPage() {
       <section className="inner-hero funding-hero" id="funding-hero" aria-labelledby="funding-hero-title" aria-describedby="funding-hero-description">
         <div className="section-container inner-hero-content">
           <p className="eyebrow eyebrow-light"><Landmark /> Consultanță fonduri europene</p>
-          <h1 id="funding-hero-title">Consultanță fonduri europene<br />pentru proiecte <em>bine construite.</em></h1>
-          <p id="funding-hero-description">Analiză responsabilă, documentație atentă și sprijin de la alegerea programului până la implementare.</p>
+          <h1 id="funding-hero-title">Consultanță pentru fonduri europene,<br />de la eligibilitate la <em>implementare.</em></h1>
+          <p id="funding-hero-description">Verificăm programul, pregătim documentația și stabilim responsabilitățile înainte de fiecare etapă.</p>
           <div className="inner-hero-actions">
             <a className="primary-button yellow-button" href="/contact?service=fonduri-europene" aria-label="Solicită analiza inițială pentru fonduri europene" title="Solicită analiza inițială pentru fonduri europene">Solicită analiza inițială <ArrowRight aria-hidden="true" /></a>
             <a className="secondary-link" href="#servicii-fonduri" aria-label="Vezi serviciile de consultanță pentru fonduri europene" title="Vezi serviciile de consultanță pentru fonduri europene">Vezi serviciile</a>
@@ -84,7 +84,7 @@ export function FundingPage() {
           <div className="hero-proof">
             <span><ShieldCheck /> Fără promisiuni nerealiste</span>
             <span><Check /> Pași și responsabilități clare</span>
-            <span><Check /> Sprijin inclus în implementare</span>
+            <span><Check /> Sprijin în implementare, la cerere</span>
           </div>
         </div>
       </section>
@@ -93,10 +93,10 @@ export function FundingPage() {
         <div className="section-container">
           <header className="section-title-row">
             <div>
-              <p className="eyebrow"><Landmark /> Servicii complete</p>
-              <h2 id="funding-services-title">Servicii de consultanță fonduri europene pentru proiecte <em>implementate corect.</em></h2>
+              <p className="eyebrow"><Landmark /> Servicii de consultanță</p>
+              <h2 id="funding-services-title">Ce putem prelua în pregătirea și gestionarea <em>proiectului.</em></h2>
             </div>
-            <p id="funding-services-description">Nu promitem finanțări garantate. Oferim analiză realistă, documentație riguroasă și sprijin consecvent pe întregul parcurs.</p>
+            <p id="funding-services-description">Conținutul serviciului se stabilește după analiza solicitantului, a apelului și a stadiului documentelor.</p>
           </header>
 
           <div className="funding-service-grid" aria-describedby="funding-services-description">
@@ -124,14 +124,14 @@ export function FundingPage() {
                 sizes="(max-width: 960px) 100vw, 48vw"
               />
               <figcaption>
-                <strong>Analiză înainte de dosar</strong>
-                <span>Verificăm riscurile înainte să investești timp în documentație.</span>
+                <strong>Analiză înainte de documentație</strong>
+                <span>Verificăm criteriile și riscurile înainte de a construi dosarul.</span>
               </figcaption>
             </figure>
             <div className="visual-story-copy">
               <p className="eyebrow"><SearchCheck /> Repere clare</p>
-              <h3 id="funding-story-title">Mai multă încredere în decizie, înainte să pornești proiectul.</h3>
-              <p id="funding-story-description">Colaborarea pune accent pe structură, documente controlate, buget urmărit și pași vizibili, astfel încât decizia de aplicare să fie una informată.</p>
+              <h3 id="funding-story-title">O decizie informată începe cu verificarea proiectului.</h3>
+              <p id="funding-story-description">Clarificăm eligibilitatea, bugetul, documentele și obligațiile viitoare înainte de recomandarea depunerii.</p>
               <div className="service-metrics">
                 {fundingStats.map(([value, label, detail]) => (
                   <article key={label}>
@@ -147,8 +147,8 @@ export function FundingPage() {
           <section className="fit-panel funding-fit-panel" aria-labelledby="funding-fit-title" aria-describedby="funding-fit-description">
             <div className="fit-panel-copy">
               <p className="eyebrow"><ShieldCheck /> Potrivire realistă</p>
-              <h3 id="funding-fit-title">Pentru cine are sens să începem analiza.</h3>
-              <p id="funding-fit-description">O finanțare nerambursabilă bună nu pornește din dorința de a aplica oriunde, ci din potrivirea dintre investiție, program și capacitatea de implementare.</p>
+              <h3 id="funding-fit-title">Când merită începută analiza</h3>
+              <p id="funding-fit-description">Analiza are sens când există o nevoie sau o investiție concretă, informații despre solicitant și disponibilitatea de a verifica obligațiile programului.</p>
             </div>
             <div className="fit-grid">
               {fundingFit.map(([title, text]) => (
@@ -163,21 +163,21 @@ export function FundingPage() {
           <section className="funding-benefits" id="beneficii-fonduri" aria-labelledby="funding-benefits-title">
             <div className="benefit-copy">
               <p className="eyebrow eyebrow-light">Beneficiile colaborării</p>
-              <h3 id="funding-benefits-title">Decizii mai bune înainte de investiții importante.</h3>
-              <p>Primești o imagine clară asupra eligibilității, riscurilor, documentelor și responsabilităților înainte să aloci timp și resurse.</p>
+              <h3 id="funding-benefits-title">Ce primești înainte să aloci timp și resurse</h3>
+              <p>O imagine structurată asupra eligibilității, riscurilor, documentelor, bugetului și responsabilităților.</p>
             </div>
             <ul>
               <li><Check /> Program ales pe criterii reale</li>
               <li><Check /> Buget și calendar construite coerent</li>
               <li><Check /> Documente verificate înainte de depunere</li>
-              <li><Check /> Suport și după aprobarea proiectului</li>
+              <li><Check /> Opțiune de sprijin după aprobare</li>
             </ul>
           </section>
 
           <section className="compact-check-panel" aria-labelledby="funding-checklist-title">
             <div>
               <p className="eyebrow"><ClipboardCheck /> Ce clarificăm</p>
-              <h3 id="funding-checklist-title">Întrebările care reduc riscul înainte de dosar.</h3>
+              <h3 id="funding-checklist-title">Punctele pe care le verificăm înainte de dosar</h3>
             </div>
             <ul>
               {fundingChecklist.map((item) => <li key={item}><Check /> {item}</li>)}
@@ -186,9 +186,9 @@ export function FundingPage() {
 
           <section className="conversion-panel funding-conversion-panel" aria-labelledby="funding-conversion-title" aria-describedby="funding-conversion-description">
             <div className="conversion-copy">
-              <p className="eyebrow"><SearchCheck /> Început fără presiune</p>
-              <h3 id="funding-conversion-title">Nu trebuie să ai dosarul complet ca să ceri o evaluare.</h3>
-              <p id="funding-conversion-description">Trimite contextul proiectului, iar prima discuție clarifică dacă merită continuat, ce informații lipsesc și ce termen este realist.</p>
+              <p className="eyebrow"><SearchCheck /> Evaluare inițială</p>
+              <h3 id="funding-conversion-title">Poți începe fără un dosar complet</h3>
+              <p id="funding-conversion-description">Trimite informațiile disponibile despre solicitant și investiție. Prima discuție stabilește ce trebuie verificat înainte de ofertă.</p>
               <a className="primary-button yellow-button" href="/contact?service=fonduri-europene" aria-label="Trimite contextul proiectului pentru o evaluare de fonduri europene" title="Trimite contextul proiectului">Trimite contextul proiectului <ArrowRight aria-hidden="true" /></a>
             </div>
             <div className="conversion-steps" aria-label="Pașii primei evaluări pentru fonduri europene">
@@ -207,7 +207,7 @@ export function FundingPage() {
           <section className="process-block" id="proces-fonduri" aria-labelledby="funding-process-title">
             <div className="process-heading">
               <p className="eyebrow">Procesul de colaborare</p>
-              <h3 id="funding-process-title">Proces clar pentru accesarea fondurilor europene.</h3>
+              <h3 id="funding-process-title">Patru etape, cu responsabilități stabilite</h3>
             </div>
             <div className="process-steps">
               {steps.map(([number, title, text]) => (
@@ -223,7 +223,7 @@ export function FundingPage() {
           <section className="semantic-content funding-semantic-content" id="evaluare-fonduri" aria-labelledby="funding-content-title">
             <div className="semantic-content-intro">
               <p className="eyebrow"><SearchCheck aria-hidden="true" /> Evaluare și documentație</p>
-              <h2 id="funding-content-title">Consultanță pentru fonduri europene, de la eligibilitate la implementare.</h2>
+              <h2 id="funding-content-title">Ce verifică un consultant înainte de recomandarea depunerii</h2>
               <p>
                 O cerere de finanțare solidă pornește de la potrivirea reală dintre obiectivele organizației și condițiile
                 programului. Analizăm apelul, investiția, resursele și obligațiile viitoare înainte de a recomanda pregătirea proiectului.
@@ -269,7 +269,7 @@ export function FundingPage() {
 
           <section className="seo-related-section" aria-labelledby="funding-guides-title">
             <p className="eyebrow">Informații pe situații concrete</p>
-            <h2 id="funding-guides-title">Ghiduri pentru pregătirea proiectului tău.</h2>
+            <h2 id="funding-guides-title">Informații pentru tipul tău de solicitant</h2>
             <div className="seo-related-links">
               <Link href="/consultanta-fonduri-europene"><span><strong>Consultanță fonduri europene</strong><small>Serviciul complet, de la eligibilitate la implementare.</small></span><ArrowRight aria-hidden="true" /></Link>
               <Link href="/fonduri-europene-pentru-firme"><span><strong>Fonduri europene pentru firme</strong><small>Criterii și pregătire pentru investițiile companiilor.</small></span><ArrowRight aria-hidden="true" /></Link>
@@ -280,7 +280,7 @@ export function FundingPage() {
           </section>
 
           <section className="section-cta funding-cta" aria-labelledby="funding-cta-title">
-            <div><p>Ai o idee de investiție?</p><h3 id="funding-cta-title">Verifică dacă există o linie de finanțare potrivită.</h3></div>
+            <div><p>Ai o investiție sau un proiect în pregătire?</p><h3 id="funding-cta-title">Trimite contextul pentru o evaluare inițială.</h3></div>
             <a className="primary-button yellow-button" href="/contact?service=fonduri-europene" aria-label="Solicită analiza pentru o linie de finanțare europeană" title="Solicită analiza pentru fonduri europene">Solicită analiza <ArrowRight aria-hidden="true" /></a>
           </section>
         </div>

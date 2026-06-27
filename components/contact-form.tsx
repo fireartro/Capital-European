@@ -18,9 +18,9 @@ const services = [
 ] as const;
 
 const formTrust = [
-  "Poți trimite și o descriere scurtă, fără dosar complet.",
-  "Datele sunt folosite doar pentru răspunsul la solicitare.",
-  "Validare pe client și server înainte de înregistrare."
+  "Este suficientă o descriere scurtă pentru primul contact.",
+  "Nu este necesar să trimiți documente sensibile prin formular.",
+  "Solicitarea este verificată înainte de ofertare."
 ] as const;
 
 export function ContactForm({ defaultService = "fonduri-europene" }: { defaultService?: ContactInput["service"] }) {
@@ -61,8 +61,8 @@ export function ContactForm({ defaultService = "fonduri-europene" }: { defaultSe
       <div className="success-state" role="status">
         <span><Check /></span>
         <p className="kicker">Solicitare înregistrată</p>
-        <h2>Mulțumim! Revenim rapid.</h2>
-        <p>{demoMode ? "Formularul și validarea funcționează. Configurează CONTACT_WEBHOOK_URL pentru livrarea solicitărilor reale." : `Un consultant ${siteConfig.name} te va contacta pentru a înțelege exact nevoile companiei tale.`}</p>
+        <h2>Solicitarea a fost înregistrată.</h2>
+        <p>{demoMode ? "Formularul funcționează în modul de test. Configurează CONTACT_WEBHOOK_URL pentru livrarea solicitărilor reale." : `${siteConfig.name} va reveni pentru clarificarea situației și a următorilor pași.`}</p>
         <button className="button button-dark" type="button" onClick={() => setSent(false)}>
           Trimite o altă solicitare
         </button>
@@ -73,9 +73,9 @@ export function ContactForm({ defaultService = "fonduri-europene" }: { defaultSe
   return (
     <form className="contact-form" onSubmit={handleSubmit(submit)} aria-busy={isSubmitting} noValidate>
       <div className="form-heading">
-        <p className="kicker">Evaluare inițială</p>
-        <h2>Contactați consultanții Capital European.</h2>
-        <p className="form-intro">Prima solicitare trebuie să clarifice situația, nu să te oblige să pregătești totul înainte să știi dacă are sens.</p>
+        <p className="kicker">Solicitare inițială</p>
+        <h2>Spune-ne de ce serviciu ai nevoie</h2>
+        <p className="form-intro">Completează informațiile esențiale. Nu trebuie să ai dosarul sau toate documentele pregătite.</p>
       </div>
       <ul className="form-trust-list" aria-label="Ce se întâmplă cu solicitarea trimisă">
         {formTrust.map((item) => <li key={item}><Check aria-hidden="true" /> {item}</li>)}
@@ -88,7 +88,7 @@ export function ContactForm({ defaultService = "fonduri-europene" }: { defaultSe
         </label>
         <label>
           <span>Email</span>
-          <input type="email" autoComplete="email" placeholder="ion@gmail.com" maxLength={160} required {...register("email")} aria-invalid={!!errors.email} aria-describedby={errors.email ? "email-error" : undefined} />
+          <input type="email" autoComplete="email" placeholder="nume@companie.ro" maxLength={160} required {...register("email")} aria-invalid={!!errors.email} aria-describedby={errors.email ? "email-error" : undefined} />
           {errors.email && <small id="email-error">{errors.email.message}</small>}
         </label>
         <label>
@@ -104,7 +104,7 @@ export function ContactForm({ defaultService = "fonduri-europene" }: { defaultSe
         </label>
         <label className="full-field">
           <span>Mesaj</span>
-          <textarea placeholder="Descrie pe scurt situația și obiectivul tău..." maxLength={2000} required {...register("message")} aria-invalid={!!errors.message} aria-describedby={errors.message ? "message-error" : undefined} />
+          <textarea placeholder="Descrie obiectivul, situația actuală și termenul relevant..." maxLength={2000} required {...register("message")} aria-invalid={!!errors.message} aria-describedby={errors.message ? "message-error" : undefined} />
           {errors.message && <small id="message-error">{errors.message.message}</small>}
         </label>
         <label className="honeypot" aria-hidden="true">
@@ -120,9 +120,9 @@ export function ContactForm({ defaultService = "fonduri-europene" }: { defaultSe
       {serverMessage && <p className="server-error" role="alert" aria-live="polite">{serverMessage}</p>}
       <button className="button button-accent form-submit" disabled={isSubmitting} type="submit">
         {isSubmitting ? <LoaderCircle className="spin" aria-hidden="true" /> : <Send aria-hidden="true" />}
-        {isSubmitting ? "Se trimite..." : "Solicită oferta personalizată"}
+        {isSubmitting ? "Se trimite..." : "Trimite solicitarea"}
       </button>
-      <p className="form-note">Datele sunt validate pe client și server. Nu trimitem spam și nu distribuim informațiile tale.</p>
+      <p className="form-note">După trimitere, verificăm solicitarea și revenim pentru clarificări. Formularul nu creează o obligație contractuală.</p>
     </form>
   );
 }

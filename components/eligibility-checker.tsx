@@ -18,19 +18,19 @@ export function EligibilityChecker() {
   const result = useMemo(() => {
     if (score >= 5) {
       return {
-        title: "Pregătit pentru analiză detaliată",
-        text: "Ai bifat semnalele de bază. Următorul pas este verificarea apelului, cheltuielilor eligibile și documentelor cerute."
+        title: "Poți continua cu o analiză detaliată",
+        text: "Criteriile de bază sunt bifate. Urmează verificarea apelului, a cheltuielilor și a documentelor cerute."
       };
     }
     if (score >= 3) {
       return {
-        title: "Merită verificată o linie de finanțare",
-        text: "Există premise bune, dar câteva criterii trebuie clarificate înainte să investești timp în documentație."
+        title: "Sunt necesare câteva clarificări",
+        text: "Există premise pentru analiză, dar unele condiții trebuie verificate înainte de pregătirea documentației."
       };
     }
     return {
-      title: "Începe cu o analiză preliminară",
-      text: "Ai nevoie de o verificare rapidă a eligibilității, a programelor active și a condițiilor minime."
+      title: "Începe cu verificarea criteriilor de bază",
+      text: "Clarifică solicitantul, investiția, bugetul și posibilitatea de cofinanțare înainte de alegerea programului."
     };
   }, [score]);
 
@@ -38,8 +38,8 @@ export function EligibilityChecker() {
     <section className="eligibility-checker" id="calculator-eligibilitate" aria-labelledby="eligibility-title">
       <div className="eligibility-copy">
         <p className="eyebrow"><ClipboardCheck aria-hidden="true" /> Evaluare rapidă</p>
-        <h2 id="eligibility-title">Calculator rapid de eligibilitate pentru fonduri europene.</h2>
-        <p>Răspunde la câteva criterii de bază. Rezultatul este orientativ și nu înlocuiește analiza ghidului solicitantului.</p>
+        <h2 id="eligibility-title">Verificare preliminară pentru fonduri europene</h2>
+        <p>Bifează informațiile pe care le poți confirma. Rezultatul este orientativ și nu înlocuiește analiza ghidului programului.</p>
       </div>
       <div className="eligibility-tool" aria-live="polite">
         <div className="eligibility-options">
@@ -59,7 +59,7 @@ export function EligibilityChecker() {
           <h3>{result.title}</h3>
           <p>{result.text}</p>
           <a href="/contact?service=fonduri-europene" title="Solicită verificarea eligibilității">
-            Verifică eligibilitatea <ArrowRight aria-hidden="true" />
+            Solicită analiza eligibilității <ArrowRight aria-hidden="true" />
           </a>
         </div>
       </div>

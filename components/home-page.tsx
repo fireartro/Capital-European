@@ -19,9 +19,9 @@ import { SiteShell } from "@/components/site-shell";
 import { siteConfig } from "@/lib/site-config";
 
 const landingProof = [
-  [ClipboardCheck, "Clarificare înainte de ofertă", "Pornim de la context, documente și obiectiv, nu de la o listă generică de servicii."],
-  [MessageSquareText, "Comunicare directă", "Primești întrebări concrete și următorii pași, fără formulări ambigue."],
-  [Scale, "Decizie responsabilă", "Îți spunem ce merită continuat, ce trebuie verificat și unde există riscuri."]
+  [ClipboardCheck, "Evaluare înainte de ofertă", "Clarificăm obiectivul, informațiile disponibile și serviciul de care ai nevoie."],
+  [MessageSquareText, "Răspuns ușor de urmărit", "Primești întrebări concrete, responsabilități și următorii pași."],
+  [Scale, "Recomandări responsabile", "Semnalăm ce poate fi continuat, ce trebuie verificat și unde există riscuri."]
 ] as const;
 
 export function HomePage() {
@@ -33,9 +33,9 @@ export function HomePage() {
           {Array.from({ length: 12 }, (_, index) => <span className={`eu-star star-${index + 1}`} key={index}>★</span>)}
         </div>
         <div className="landing-intro">
-          <p className="eyebrow"><Sparkles /> Două direcții. Un singur partener de încredere.</p>
+          <p className="eyebrow"><Sparkles /> Două servicii. Un proces clar de la prima discuție.</p>
           <h1 id="split-title">Consultanță fonduri europene și servicii administrative în România</h1>
-          <p className="landing-intro-copy" id="split-description">Alege serviciul potrivit, iar noi te ghidăm de la prima întrebare până la rezultat: finanțare, documente, back-office și pași administrativi clari.</p>
+          <p className="landing-intro-copy" id="split-description">Alege direcția potrivită pentru proiectul sau activitatea ta. Clarificăm situația, documentele necesare și pașii următori, fără promisiuni nerealiste.</p>
         </div>
 
         <nav className="split-grid" aria-labelledby="split-services-title">
@@ -45,13 +45,13 @@ export function HomePage() {
               <span className="choice-index">01 / Finanțare</span>
               <span className="choice-icon"><Landmark aria-hidden="true" /></span>
               <h2 id="choice-funding-title">Consultanță<br />Fonduri Europene</h2>
-              <p id="choice-funding-description">Analiză de eligibilitate, documentație, depunere și sprijin în implementarea proiectului.</p>
+              <p id="choice-funding-description">Verificarea eligibilității, pregătirea documentației, depunere și sprijin opțional în implementare.</p>
               <a
                 className="choice-button"
                 href="/fonduri-europene"
                 title="Consultanță fonduri europene Capital European"
               >
-                Verifică oportunitatea <ArrowRight aria-hidden="true" />
+                Evaluează proiectul <ArrowRight aria-hidden="true" />
               </a>
             </div>
             <div className="eu-emblem" aria-hidden="true">
@@ -72,13 +72,13 @@ export function HomePage() {
               <span className="choice-index">02 / Administrativ</span>
               <span className="choice-icon"><Files aria-hidden="true" /></span>
               <h2 id="choice-admin-title">Servicii<br />Administrative</h2>
-              <p id="choice-admin-description">Documente, secretariat, back-office și înființare firmă, organizate profesionist.</p>
+              <p id="choice-admin-description">Documente, secretariat, back-office și sprijin administrativ pentru înființarea firmei.</p>
               <a
                 className="choice-button"
                 href="/servicii-administrative"
                 title="Servicii administrative externalizate Capital European"
               >
-                Organizează administrativul <ArrowRight aria-hidden="true" />
+                Vezi serviciile administrative <ArrowRight aria-hidden="true" />
               </a>
             </div>
             <div className="admin-visual" aria-hidden="true">
@@ -108,7 +108,7 @@ export function HomePage() {
 
         <footer className="landing-trust" aria-label="Avantajele colaborării">
           <span><LockKeyhole /> Confidențialitate</span>
-          <span><Zap /> Răspuns prompt</span>
+          <span><Zap /> Pași bine definiți</span>
           <span><Scale /> Evaluare responsabilă</span>
           <span><Users /> Comunicare directă</span>
         </footer>

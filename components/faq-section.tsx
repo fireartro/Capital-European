@@ -13,8 +13,8 @@ export function FaqSection() {
       <div className="shell faq-layout">
         <div className="faq-intro">
           <p className="kicker">Întrebări frecvente</p>
-          <h2 id="general-faq-title">Informații clare înainte de orice <em>decizie.</em></h2>
-          <p id="general-faq-description">Nu ai găsit răspunsul? Discută direct cu echipa noastră.</p>
+          <h2 id="general-faq-title">Răspunsuri utile înainte să alegi un <em>serviciu.</em></h2>
+          <p id="general-faq-description">Pentru o situație concretă, trimite-ne câteva detalii și îți spunem ce trebuie clarificat.</p>
           {siteConfig.phoneHref
             ? <a href={`tel:${siteConfig.phoneHref}`} aria-label={`Sună ${siteConfig.name} pentru întrebări frecvente`} title={`Sună ${siteConfig.name}`}><Phone aria-hidden="true" /> {siteConfig.phoneDisplay}</a>
             : <a href={`mailto:${siteConfig.email}`} aria-label={`Trimite email către ${siteConfig.name} pentru întrebări`} title={`Trimite email către ${siteConfig.name}`}>{siteConfig.email}</a>}

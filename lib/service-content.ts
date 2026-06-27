@@ -1,12 +1,12 @@
 import { siteConfig } from "@/lib/site-config";
 
 export const generalFaq = [
-  [`Ce tipuri de companii pot apela la ${siteConfig.name}?`, "Lucrăm cu antreprenori, IMM-uri, ONG-uri și companii în dezvoltare, atât punctual, cât și prin colaborări recurente adaptate volumului de activitate."],
-  ["Cum sunt protejate documentele și datele companiei?", "Accesul este limitat la persoanele implicate, procesele sunt documentate, iar datele transmise prin formular sunt validate și prelucrate exclusiv pentru soluționarea solicitării."],
-  ["Puteți prelua doar o parte din activitatea administrativă?", "Da. Poți delega un singur proces, un proiect temporar sau întregul back-office. Structura colaborării se poate ajusta pe parcurs."],
-  ["Cum aflu dacă proiectul meu este eligibil pentru fonduri europene?", "Începem cu o analiză inițială a companiei, investiției și criteriilor programului. Primești o evaluare realistă înainte de a investi timp în documentație."],
-  ["Oferiți sprijin și după aprobarea finanțării?", "Da. Te asistăm în implementare, monitorizare, raportare și pregătirea documentelor necesare cererilor de plată sau rambursare."],
-  ["În cât timp primesc o ofertă?", "Termenul depinde de complexitatea solicitării și de informațiile disponibile. După evaluarea inițială comunicăm un interval realist și pașii necesari pentru ofertare."]
+  [`Cui se adresează serviciile ${siteConfig.name}?`, "Antreprenorilor, firmelor și ONG-urilor care pregătesc o investiție sau vor să delege activități administrative. Colaborarea poate fi punctuală sau recurentă."],
+  ["Cum sunt protejate documentele și datele?", "Accesul este limitat la activitățile și persoanele implicate. Datele din formular sunt folosite pentru analizarea și soluționarea solicitării, conform politicii de confidențialitate."],
+  ["Pot delega un singur proces administrativ?", "Da. Putem începe cu un flux clar, precum documentele sau secretariatul, și îl putem extinde numai dacă este util."],
+  ["Cum verific eligibilitatea pentru fonduri europene?", "Comparăm solicitantul și investiția cu regulile programului: activitate, locație, buget, cofinanțare și documente. Analiza precedă pregătirea dosarului."],
+  ["Sprijinul continuă după aprobarea finanțării?", "Implementarea poate fi inclusă separat, în funcție de contract. Responsabilitățile, documentele și etapele acoperite sunt stabilite înainte de începerea serviciului."],
+  ["Când primesc o ofertă?", "După ce clarificăm obiectivul, volumul și informațiile disponibile. Comunicăm apoi livrabilele, responsabilitățile, termenul estimat și prețul."]
 ] as const;
 
 export const fundingFaq = [
@@ -16,7 +16,7 @@ export const fundingFaq = [
   ],
   [
     "Ce include consultanța pentru accesarea fondurilor europene?",
-    "Serviciul poate include identificarea programului potrivit, analiza de eligibilitate, structurarea ideii de proiect, bugetul, planul de afaceri, pregătirea anexelor, depunerea și răspunsurile la solicitările de clarificări."
+    "Serviciul poate acoperi identificarea programului, eligibilitatea, structura proiectului, bugetul, anexele, depunerea și răspunsurile la clarificări. Conținutul exact este stabilit prin ofertă."
   ],
   [
     "Puteți garanta aprobarea unui proiect?",
@@ -24,7 +24,7 @@ export const fundingFaq = [
   ],
   [
     "Oferiți sprijin și pentru implementarea proiectului aprobat?",
-    "Da. Sprijinul poate acoperi calendarul activităților, achizițiile, documentele justificative, indicatorii, cererile de plată sau rambursare și comunicarea administrativă aferentă proiectului."
+    "Da, dacă implementarea este inclusă în contract. Sprijinul poate acoperi calendarul, achizițiile, documentele justificative, indicatorii și cererile de plată sau rambursare."
   ],
   [
     "Cât durează pregătirea unei cereri de finanțare?",
@@ -35,7 +35,7 @@ export const fundingFaq = [
 export const administrativeFaq = [
   [
     "Ce sunt serviciile administrative externalizate?",
-    "Sunt activități de back-office preluate de un partener extern: redactare și procesare documente, centralizări, organizarea arhivei, secretariat, relația administrativă cu furnizorii și alte sarcini recurente."
+    "Sunt activități de back-office preluate într-un flux convenit: documente, centralizări, evidențe, secretariat, programări și alte sarcini recurente."
   ],
   [
     "Pot externaliza doar o parte din activitatea administrativă?",
@@ -47,7 +47,7 @@ export const administrativeFaq = [
   ],
   [
     "Pentru ce tipuri de organizații sunt potrivite serviciile?",
-    "Serviciile sunt potrivite pentru antreprenori, IMM-uri, ONG-uri și echipe care vor să reducă timpul consumat de sarcini administrative și să păstreze procesele de lucru ordonate."
+    "Pentru antreprenori, firme și ONG-uri care au activități recurente, dar nu au nevoie sau nu doresc să le gestioneze integral intern."
   ],
   [
     "Oferiți și asistență pentru înființarea unei firme?",

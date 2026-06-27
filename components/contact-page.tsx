@@ -6,9 +6,9 @@ import type { ContactInput } from "@/lib/contact-schema";
 import { getWhatsAppUrl, siteConfig } from "@/lib/site-config";
 
 const contactSteps = [
-  ["01", "Trimite contextul", "Spune-ne serviciul, urgența și ce documente sau obiective există deja."],
-  ["02", "Primești întrebări clare", "Revenim cu punctele care trebuie clarificate înainte de ofertă."],
-  ["03", "Stabilim pașii", "Definim ce se poate face, în ce ordine și ce informații mai sunt necesare."]
+  ["01", "Descrii situația", "Spune-ne serviciul dorit, termenul și informațiile pe care le ai deja."],
+  ["02", "Clarificăm nevoia", "Revenim cu întrebările necesare pentru a delimita serviciul și riscurile."],
+  ["03", "Primești următorii pași", "Îți comunicăm ce putem prelua, ce mai este necesar și cum poate începe colaborarea."]
 ] as const;
 
 const contactAssurances = [
@@ -29,9 +29,9 @@ export function ContactPage({ defaultService }: { defaultService?: ContactInput[
       <section className="contact-page" aria-labelledby="contact-page-title" aria-describedby="contact-page-description">
         <div className="section-container contact-layout">
           <div className="contact-copy">
-            <p className="eyebrow eyebrow-light">Hai să discutăm</p>
-            <h1 id="contact-page-title">Spune-ne ce vrei<br />să rezolvi.</h1>
-            <p id="contact-page-description">Îți răspundem cu întrebările potrivite, o evaluare inițială și următorii pași concreți.</p>
+            <p className="eyebrow eyebrow-light">Prima discuție</p>
+            <h1 id="contact-page-title">Descrie situația.<br />Clarificăm <em>următorul pas.</em></h1>
+            <p id="contact-page-description">Poți începe cu informațiile pe care le ai. Analizăm solicitarea și revenim cu întrebările necesare înainte de ofertă.</p>
             <ContactFormAnchor />
             <div className="contact-options">
               {siteConfig.phoneHref && <a href={`tel:${siteConfig.phoneHref}`} aria-label={`Sună ${siteConfig.name}`} title={`Sună ${siteConfig.name}`}><span><Phone aria-hidden="true" /></span><div><small>Telefon</small><b>{siteConfig.phoneDisplay}</b></div></a>}
@@ -50,7 +50,7 @@ export function ContactPage({ defaultService }: { defaultService?: ContactInput[
                 </article>
               ))}
             </div>
-            <div className="privacy-note"><ShieldCheck /><span>Datele tale sunt folosite exclusiv pentru a răspunde solicitării.</span></div>
+            <div className="privacy-note"><ShieldCheck /><span>Datele sunt folosite pentru analizarea și soluționarea solicitării.</span></div>
             <ul className="contact-assurances" aria-label="Asigurări înainte de trimiterea formularului">
               {contactAssurances.map((item) => <li key={item}><ShieldCheck aria-hidden="true" /> {item}</li>)}
             </ul>

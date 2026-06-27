@@ -5,7 +5,7 @@ import { breadcrumbSchema, faqSchema, JsonLd, serviceSchema } from "@/lib/struct
 
 export const metadata = createPageMetadata({
   title: "Servicii administrative externalizate",
-  description: "Servicii administrative externalizate pentru firme: secretariat, documente, back-office, organizare operațională și sprijin pentru înființarea firmei.",
+  description: "Servicii administrative externalizate pentru firme: documente, secretariat, back-office, fluxuri operaționale și sprijin administrativ pentru înființare.",
   path: "/servicii-administrative"
 });
 
@@ -19,7 +19,7 @@ export default function Page() {
         ]),
         serviceSchema({
           name: "Servicii administrative externalizate",
-          description: "Servicii administrative pentru firme: procesare documente, secretariat, back-office, organizare operationala si asistenta pentru infiintarea firmei.",
+          description: "Servicii administrative pentru firme: documente, secretariat, back-office, organizare operațională și sprijin administrativ pentru înființare.",
           path: "/servicii-administrative",
           serviceType: ["Servicii administrative", "Secretariat", "Administrare documente", "Back-office", "Infiintare firma"]
         }),

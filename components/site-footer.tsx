@@ -12,14 +12,14 @@ export function SiteFooter() {
           <p>{siteConfig.description}</p>
         </div>
         <div>
-          <h3>Servicii</h3>
+          <h3>Fonduri europene</h3>
           <Link href="/consultanta-fonduri-europene">Consultanță fonduri europene</Link>
           <Link href="/fonduri-europene-pentru-firme">Fonduri pentru firme</Link>
           <Link href="/fonduri-europene-pentru-ong">Fonduri pentru ONG-uri</Link>
-          <Link href="/calculator-pret-consultanta">Calculator consultanță</Link>
+          <Link href="/calculator-pret-consultanta">Estimator preț consultanță</Link>
         </div>
         <div>
-          <h3>Administrativ</h3>
+          <h3>Servicii administrative</h3>
           <Link href="/servicii-administrative">Servicii administrative</Link>
           <Link href="/servicii-administrative/secretariat">Secretariat externalizat</Link>
           <Link href="/servicii-administrative/administrare-documente">Administrare documente</Link>
@@ -33,7 +33,7 @@ export function SiteFooter() {
           {siteConfig.legal.entityName && <span>Operator: {siteConfig.legal.entityName}</span>}
           {siteConfig.legal.registrationNumber && <span>Registrul comerțului: {siteConfig.legal.registrationNumber}</span>}
           {siteConfig.legal.taxId && <span>CUI: {siteConfig.legal.taxId}</span>}
-          <Link className="footer-cta-link" href="/contact" aria-label="Trimite o solicitare către Capital European" title="Trimite solicitarea">Trimite o solicitare</Link>
+          <Link className="footer-cta-link" href="/contact" aria-label="Trimite o solicitare către Capital European" title="Trimite solicitarea">Descrie situația ta</Link>
         </div>
       </div>
       <div className="section-container footer-bottom">

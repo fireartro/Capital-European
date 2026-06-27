@@ -24,16 +24,16 @@ export const seoServicePages = {
   consulting: {
     path: "/consultanta-fonduri-europene",
     title: "Consultanță fonduri europene",
-    metaDescription: "Consultanță fonduri europene pentru firme și ONG-uri: eligibilitate, documentație, depunere și implementare, cu pași și riscuri explicate clar.",
+    metaDescription: "Consultanță pentru fonduri europene: analiză de eligibilitate, documentație, depunere și sprijin în implementare pentru firme și ONG-uri.",
     eyebrow: "Consultanță specializată",
     h1: "Consultanță fonduri europene, de la eligibilitate la implementare",
-    intro: "Transformăm ideea de investiție într-un proces verificabil: program potrivit, documente complete, buget coerent și responsabilități clare după aprobare.",
+    intro: "Verificăm programul, solicitantul și investiția, apoi stabilim documentele, bugetul și responsabilitățile necesare pentru fiecare etapă.",
     category: "funding",
     parent: { label: "Fonduri europene", href: "/fonduri-europene" },
     contactService: "fonduri-europene",
     serviceType: ["Consultanță fonduri europene", "Analiză eligibilitate", "Implementare proiect"],
     audienceTitle: "Când este utilă consultanța",
-    audienceIntro: "Serviciul este potrivit atunci când ai o investiție concretă și vrei să eviți o aplicare grăbită sau un proiect greu de implementat.",
+    audienceIntro: "Serviciul este util când există o investiție concretă, dar programul, eligibilitatea sau documentele trebuie clarificate înainte de depunere.",
     audience: [
       "Ai definit investiția, dar nu știi ce program se potrivește.",
       "Ai identificat un apel și vrei o verificare independentă a eligibilității.",
@@ -44,14 +44,14 @@ export const seoServicePages = {
     benefits: [
       { title: "Decizie argumentată", text: "Clarificăm criteriile eliminatorii, punctajul și riscurile înainte de a investi timp în dosar." },
       { title: "Documentație coerentă", text: "Corelăm obiectivele, activitățile, rezultatele, calendarul și bugetul proiectului." },
-      { title: "Sprijin după aprobare", text: "Urmărim obligațiile, documentele și etapele care susțin implementarea corectă." }
+      { title: "Opțiune de implementare", text: "Dacă este inclusă în contract, urmărim obligațiile, documentele și etapele proiectului aprobat." }
     ],
-    processTitle: "Cum lucrăm",
+    processTitle: "Etapele serviciului de consultanță",
     steps: [
       { title: "Analiză inițială", text: "Verificăm solicitantul, investiția, locația, codurile CAEN și capacitatea de cofinanțare." },
       { title: "Planul proiectului", text: "Definim documentele, responsabilitățile, calendarul și informațiile care lipsesc." },
       { title: "Pregătire și depunere", text: "Construim cererea și anexele, apoi gestionăm clarificările din etapa de evaluare." },
-      { title: "Implementare", text: "Organizăm urmărirea activităților, indicatorilor și documentelor justificative." }
+      { title: "Implementare contractată", text: "Organizăm urmărirea activităților, indicatorilor și documentelor justificative incluse în serviciu." }
     ],
     faq: [
       ["Poate fi garantată aprobarea proiectului?", "Nu. Decizia aparține autorității finanțatoare. Consultanța reduce erorile evitabile și clarifică riscurile înainte de depunere."],
@@ -61,16 +61,16 @@ export const seoServicePages = {
     related: [
       { href: "/fonduri-europene-pentru-firme", label: "Fonduri europene pentru firme", text: "Condiții și pregătire pentru investiții realizate de companii." },
       { href: "/fonduri-europene-pentru-ong", label: "Fonduri europene pentru ONG", text: "Proiecte cu obiective sociale, educaționale sau comunitare." },
-      { href: "/calculator-pret-consultanta", label: "Calculator preț consultanță", text: "Estimează orientativ complexitatea și intervalul comercial." }
+      { href: "/calculator-pret-consultanta", label: "Estimator de consultanță", text: "Calculează orientativ complexitatea și intervalul de preț." }
     ]
   },
   companies: {
     path: "/fonduri-europene-pentru-firme",
     title: "Fonduri europene pentru firme",
-    metaDescription: "Fonduri europene pentru firme din România: analiză eligibilitate, investiții, digitalizare, producție și sprijin pentru cererea de finanțare.",
+    metaDescription: "Fonduri europene pentru firme: verificarea eligibilității, bugetului și investiției, pregătirea cererii și sprijin în implementare.",
     eyebrow: "Finanțare pentru companii",
-    h1: "Fonduri europene pentru firme care pregătesc investiții sustenabile",
-    intro: "Evaluăm potrivirea dintre companie, investiție și programul de finanțare, apoi structurăm proiectul astfel încât să poată fi susținut și implementat.",
+    h1: "Fonduri europene pentru firme cu un plan concret de investiții",
+    intro: "Verificăm potrivirea dintre firmă, investiție și program, inclusiv cofinanțarea și obligațiile care continuă după aprobare.",
     category: "funding",
     parent: { label: "Fonduri europene", href: "/fonduri-europene" },
     contactService: "fonduri-europene",
@@ -83,13 +83,13 @@ export const seoServicePages = {
       "Capacitatea de cofinanțare și susținerea fluxului de numerar.",
       "Încadrarea echipamentelor, lucrărilor și serviciilor în cheltuieli eligibile."
     ],
-    benefitsTitle: "Pregătire orientată spre implementare",
+    benefitsTitle: "O investiție pregătită pentru evaluare și implementare",
     benefits: [
       { title: "Buget realist", text: "Separăm cheltuielile eligibile de costurile care trebuie susținute din surse proprii." },
       { title: "Obiective măsurabile", text: "Legăm investiția de indicatori, rezultate și capacitatea operațională a firmei." },
       { title: "Documente urmărite", text: "Construim o listă clară de documente, termene și responsabilități." }
     ],
-    processTitle: "De la investiție la cerere",
+    processTitle: "De la planul firmei la cererea de finanțare",
     steps: [
       { title: "Profilul firmei", text: "Verificăm datele juridice, financiare și activitățile eligibile." },
       { title: "Structura investiției", text: "Definim echipamentele, lucrările, serviciile și sursele de finanțare." },
@@ -102,7 +102,7 @@ export const seoServicePages = {
       ["Pot cumpăra orice echipament?", "Doar cheltuielile prevăzute de program și justificate prin proiect pot fi eligibile."]
     ],
     related: [
-      { href: "/consultanta-fonduri-europene", label: "Consultanță completă", text: "Vezi toate etapele serviciului de consultanță." },
+      { href: "/consultanta-fonduri-europene", label: "Procesul de consultanță", text: "Vezi etapele de la eligibilitate la implementare." },
       { href: "/fonduri-europene-pentru-startup", label: "Fonduri pentru startup", text: "Cerințe specifice afacerilor aflate la început." },
       { href: "/calculator-pret-consultanta", label: "Estimator consultanță", text: "Evaluează orientativ complexitatea proiectului." }
     ]
@@ -112,13 +112,13 @@ export const seoServicePages = {
     title: "Fonduri europene pentru ONG",
     metaDescription: "Consultanță pentru ONG-uri care pregătesc proiecte europene sociale, educaționale sau comunitare: eligibilitate, buget, parteneriate și implementare.",
     eyebrow: "Finanțare pentru sectorul nonprofit",
-    h1: "Fonduri europene pentru ONG-uri și proiecte cu impact măsurabil",
-    intro: "Punem în legătură nevoia comunității, obiectivele organizației și cerințele programului, fără a transforma proiectul într-o listă de activități greu de urmărit.",
+    h1: "Fonduri europene pentru ONG-uri și proiecte cu rezultate măsurabile",
+    intro: "Corelăm nevoia documentată, beneficiarii, activitățile și bugetul cu cerințele programului și capacitatea organizației de a implementa.",
     category: "funding",
     parent: { label: "Fonduri europene", href: "/fonduri-europene" },
     contactService: "fonduri-europene",
     serviceType: ["Fonduri europene pentru ONG", "Proiecte sociale", "Proiecte educaționale"],
-    audienceTitle: "Elemente importante pentru ONG-uri",
+    audienceTitle: "Ce trebuie demonstrat într-un proiect pentru ONG",
     audienceIntro: "Proiectele nonprofit trebuie să demonstreze nevoia, capacitatea organizației și legătura dintre activități, beneficiari și rezultate.",
     audience: [
       "Grupul țintă și problema documentată pe care proiectul o adresează.",
@@ -126,13 +126,13 @@ export const seoServicePages = {
       "Parteneriatele necesare și distribuirea responsabilităților.",
       "Indicatorii de rezultat și continuitatea intervenției după finanțare."
     ],
-    benefitsTitle: "Un proiect ușor de urmărit",
+    benefitsTitle: "O logică de proiect ușor de evaluat",
     benefits: [
       { title: "Logică de intervenție", text: "Legăm problema, obiectivele, activitățile și rezultatele într-o structură coerentă." },
       { title: "Buget justificat", text: "Fiecare cost este asociat unei activități și unei nevoi reale din proiect." },
       { title: "Responsabilități clare", text: "Definim rolurile solicitantului, partenerilor și furnizorilor." }
     ],
-    processTitle: "Pregătirea proiectului ONG",
+    processTitle: "Cum pregătim proiectul unui ONG",
     steps: [
       { title: "Clarificarea nevoii", text: "Documentăm problema și beneficiarii vizați." },
       { title: "Verificarea apelului", text: "Analizăm eligibilitatea organizației, activităților și partenerilor." },
@@ -153,10 +153,10 @@ export const seoServicePages = {
   startup: {
     path: "/fonduri-europene-pentru-startup",
     title: "Fonduri europene pentru startup",
-    metaDescription: "Fonduri europene pentru startup-uri: verificarea programelor, planului de afaceri, bugetului, cofinanțării și condițiilor de sustenabilitate.",
+    metaDescription: "Fonduri europene pentru startup-uri: eligibilitate, plan de afaceri, buget, cofinanțare și obligațiile unei afaceri finanțate.",
     eyebrow: "Finanțare pentru afaceri noi",
-    h1: "Fonduri europene pentru startup-uri pregătite să valideze o afacere",
-    intro: "O finanțare nu înlocuiește modelul de afaceri. Verificăm mai întâi dacă ideea, echipa, bugetul și piața pot susține obligațiile programului.",
+    h1: "Fonduri europene pentru startup-uri cu un model de afaceri verificabil",
+    intro: "Finanțarea nu înlocuiește cererea din piață. Verificăm dacă ideea, echipa, bugetul și calendarul pot susține obligațiile programului.",
     category: "funding",
     parent: { label: "Fonduri europene", href: "/fonduri-europene" },
     contactService: "fonduri-europene",
@@ -169,13 +169,13 @@ export const seoServicePages = {
       "Investiția minimă necesară pentru funcționarea afacerii.",
       "Obligațiile privind locurile de muncă, veniturile sau perioada de sustenabilitate."
     ],
-    benefitsTitle: "Mai mult decât un plan pe hârtie",
+    benefitsTitle: "Un plan de afaceri bazat pe ipoteze explicite",
     benefits: [
       { title: "Ipoteze verificate", text: "Separăm estimările comerciale de informațiile care pot fi documentate." },
       { title: "Investiție etapizată", text: "Prioritizăm costurile esențiale și evităm un buget construit doar pentru punctaj." },
       { title: "Obligații înțelese", text: "Explicăm ce trebuie menținut după finanțare și ce riscuri apar." }
     ],
-    processTitle: "Pregătirea unui startup",
+    processTitle: "De la idee la un proiect care poate fi analizat",
     steps: [
       { title: "Validarea ideii", text: "Clarificăm clientul, problema, oferta și modul de vânzare." },
       { title: "Alegerea programului", text: "Verificăm solicitantul, activitatea, regiunea și calendarul." },
@@ -196,10 +196,10 @@ export const seoServicePages = {
   secretariat: {
     path: "/servicii-administrative/secretariat",
     title: "Servicii de secretariat externalizat",
-    metaDescription: "Servicii de secretariat externalizat pentru firme: corespondență, programări, evidențe, solicitări și fluxuri administrative organizate.",
+    metaDescription: "Secretariat externalizat pentru firme: gestionarea corespondenței, programărilor, solicitărilor și termenelor după reguli convenite.",
     eyebrow: "Secretariat externalizat",
-    h1: "Servicii de secretariat pentru firme care au nevoie de continuitate",
-    intro: "Preluăm activități recurente de comunicare și organizare într-un flux cu reguli, termene și responsabilități cunoscute.",
+    h1: "Secretariat externalizat pentru solicitări și termene bine urmărite",
+    intro: "Preluăm activități recurente de comunicare și organizare într-un flux cu aprobări, termene și responsabilități stabilite.",
     category: "admin",
     parent: { label: "Servicii administrative", href: "/servicii-administrative" },
     contactService: "secretariat",
@@ -212,13 +212,13 @@ export const seoServicePages = {
       "Pregătirea răspunsurilor standard și urmărirea termenelor.",
       "Centralizarea informațiilor necesare echipei sau managementului."
     ],
-    benefitsTitle: "Un punct administrativ predictibil",
+    benefitsTitle: "Un punct administrativ ușor de controlat",
     benefits: [
       { title: "Continuitate", text: "Solicitările sunt urmărite chiar și atunci când echipa internă este ocupată." },
       { title: "Reguli de escaladare", text: "Situațiile importante ajung rapid la persoana care poate decide." },
       { title: "Evidență clară", text: "Păstrăm istoricul solicitărilor, termenelor și răspunsurilor." }
     ],
-    processTitle: "Pornire fără blocaje",
+    processTitle: "Cum preluăm fluxul de secretariat",
     steps: [
       { title: "Inventariem solicitările", text: "Stabilim canalele, tipurile de cereri și volumul estimat." },
       { title: "Definim regulile", text: "Clarificăm răspunsurile standard, aprobările și escaladările." },
@@ -239,10 +239,10 @@ export const seoServicePages = {
   documents: {
     path: "/servicii-administrative/administrare-documente",
     title: "Administrare documente pentru firme",
-    metaDescription: "Administrare documente pentru firme: clasificare, evidență, verificare, arhivare operațională și urmărirea termenelor într-un flux clar.",
+    metaDescription: "Administrare documente pentru firme: înregistrare, verificare, clasificare, evidență și urmărirea termenelor într-un flux controlat.",
     eyebrow: "Organizarea documentelor",
-    h1: "Administrare documente pentru procese ușor de verificat",
-    intro: "Transformăm documentele dispersate într-un circuit clar: primire, verificare, clasificare, predare și evidență.",
+    h1: "Administrare documente într-un circuit clar și verificabil",
+    intro: "Organizăm primirea, verificarea, clasificarea, predarea și evidența documentelor după reguli convenite cu echipa ta.",
     category: "admin",
     parent: { label: "Servicii administrative", href: "/servicii-administrative" },
     contactService: "documente",
@@ -255,13 +255,13 @@ export const seoServicePages = {
       "Clasificarea în foldere și nomenclatoare convenite cu clientul.",
       "Urmărirea documentelor care necesită aprobare, răspuns sau completare."
     ],
-    benefitsTitle: "Control fără căutări inutile",
+    benefitsTitle: "Mai multă trasabilitate, mai puține căutări",
     benefits: [
       { title: "Trasabilitate", text: "Este clar când a intrat documentul, unde se află și cine trebuie să acționeze." },
       { title: "Mai puține omisiuni", text: "Listele de verificare reduc documentele incomplete și termenele ratate." },
       { title: "Predare simplă", text: "Structura poate fi înțeleasă și continuată de membrii echipei." }
     ],
-    processTitle: "Construirea circuitului",
+    processTitle: "Cum construim circuitul documentelor",
     steps: [
       { title: "Inventar", text: "Identificăm tipurile de documente și sursele lor." },
       { title: "Reguli de clasificare", text: "Stabilim denumiri, foldere, responsabilități și termene." },
@@ -282,10 +282,10 @@ export const seoServicePages = {
   companySetup: {
     path: "/servicii-administrative/infiintare-firma",
     title: "Înființare firmă și sprijin administrativ",
-    metaDescription: "Sprijin administrativ pentru înființare firmă: clarificarea pașilor, pregătirea informațiilor și organizarea documentelor necesare.",
+    metaDescription: "Sprijin administrativ pentru înființarea firmei: pași, informații, documente și organizare inițială, fără a înlocui consultanța autorizată.",
     eyebrow: "Pornirea unei societăți",
-    h1: "Înființare firmă cu pași administrativi explicați clar",
-    intro: "Te ajutăm să organizezi informațiile și documentele necesare pentru pornirea firmei, fără promisiuni privind termenele sau deciziile instituțiilor.",
+    h1: "Înființare firmă cu documente și pași administrativi organizați",
+    intro: "Centralizăm informațiile și documentele necesare și semnalăm deciziile care trebuie validate de un profesionist autorizat.",
     category: "admin",
     parent: { label: "Servicii administrative", href: "/servicii-administrative" },
     contactService: "infiintare-firma",
@@ -298,13 +298,13 @@ export const seoServicePages = {
       "Documentele care trebuie obținute, semnate sau transmise.",
       "Pașii administrativi de după înființare și organizarea inițială a firmei."
     ],
-    benefitsTitle: "Mai puțină confuzie la început",
+    benefitsTitle: "Un început administrativ mai ușor de urmărit",
     benefits: [
       { title: "Listă de pași", text: "Primești o succesiune clară a informațiilor și documentelor care trebuie pregătite." },
       { title: "Dosar organizat", text: "Verificăm dacă informațiile sunt coerente înainte de transmitere." },
       { title: "Continuitate administrativă", text: "Poți continua cu servicii de documente, secretariat și back-office." }
     ],
-    processTitle: "Cum pregătim pornirea",
+    processTitle: "Cum organizăm pregătirea firmei",
     steps: [
       { title: "Discuția inițială", text: "Clarificăm activitatea, asociații și nevoile administrative." },
       { title: "Colectarea informațiilor", text: "Organizăm datele și documentele necesare situației concrete." },
@@ -323,4 +323,3 @@ export const seoServicePages = {
     ]
   }
 } satisfies Record<string, SeoServicePageConfig>;
-

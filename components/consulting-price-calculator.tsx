@@ -19,9 +19,9 @@ const applicantOptions: SelectOption[] = [
 const projectOptions: SelectOption[] = [
   { value: "equipment", label: "Echipamente sau extindere", factor: 1 },
   { value: "digital", label: "Digitalizare", factor: .9 },
-  { value: "construction", label: "Lucrări și investiție complexă", factor: 1.3 },
+  { value: "construction", label: "Lucrări sau investiție complexă", factor: 1.3 },
   { value: "social", label: "Proiect social sau educațional", factor: 1.25 },
-  { value: "unknown", label: "Nu am stabilit încă", factor: .85 }
+  { value: "unknown", label: "Investiția nu este încă definită", factor: .85 }
 ];
 
 const valueOptions: SelectOption[] = [
@@ -33,14 +33,14 @@ const valueOptions: SelectOption[] = [
 
 const documentOptions: SelectOption[] = [
   { value: "ready", label: "Documentele principale sunt pregătite", factor: .9 },
-  { value: "partial", label: "Avem doar o parte din informații", factor: 1 },
-  { value: "early", label: "Suntem la început", factor: 1.2 }
+  { value: "partial", label: "Există doar o parte dintre informații", factor: 1 },
+  { value: "early", label: "Proiectul este la început", factor: 1.2 }
 ];
 
 const urgencyOptions: SelectOption[] = [
-  { value: "normal", label: "Calendar normal", factor: 1 },
-  { value: "short", label: "Termen scurt", factor: 1.15 },
-  { value: "urgent", label: "Urgență ridicată", factor: 1.3 }
+  { value: "normal", label: "Peste 8 săptămâni", factor: 1 },
+  { value: "short", label: "Între 4 și 8 săptămâni", factor: 1.15 },
+  { value: "urgent", label: "Sub 4 săptămâni", factor: 1.3 }
 ];
 
 function optionFactor(options: SelectOption[], value: string) {
@@ -91,9 +91,9 @@ export function ConsultingPriceCalculator({ basePriceRon }: { basePriceRon: numb
     <div className="price-calculator">
       <div className="calculator-fields">
         <div className="calculator-form-heading">
-          <span>5 factori analizați</span>
-          <h2>Configurează proiectul</h2>
-          <p>Modifică răspunsurile, iar estimarea se actualizează imediat.</p>
+          <span>Estimare în 5 pași</span>
+          <h2>Descrie pe scurt proiectul</h2>
+          <p>Selectează situația cea mai apropiată. Rezultatul se actualizează automat.</p>
         </div>
         <fieldset className="calculator-applicant">
           <legend>Tip solicitant</legend>
@@ -113,7 +113,7 @@ export function ConsultingPriceCalculator({ basePriceRon }: { basePriceRon: numb
           </div>
         </fieldset>
         <label>
-          <span>Tipul investiției</span>
+          <span>Obiectul principal al proiectului</span>
           <select value={project} onChange={(event) => setProject(event.target.value)}>
             {projectOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
           </select>
@@ -131,20 +131,20 @@ export function ConsultingPriceCalculator({ basePriceRon }: { basePriceRon: numb
           </select>
         </label>
         <label>
-          <span>Urgența termenului</span>
+          <span>Timp disponibil până la depunere</span>
           <select value={urgency} onChange={(event) => setUrgency(event.target.value)}>
             {urgencyOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
           </select>
         </label>
         <button className="calculator-reset" type="button" onClick={reset}>
-          <RotateCcw aria-hidden="true" /> Resetează răspunsurile
+          <RotateCcw aria-hidden="true" /> Revino la valorile inițiale
         </button>
       </div>
 
       <aside className="calculator-result" aria-live="polite">
         <div className="calculator-result-header">
           <span className="calculator-result-icon"><Calculator aria-hidden="true" /></span>
-          <span className="calculator-estimate-label">Estimare orientativă</span>
+          <span className="calculator-estimate-label">Rezultat orientativ</span>
         </div>
         <div className="calculator-complexity">
           <p>Complexitatea proiectului</p>
@@ -152,24 +152,24 @@ export function ConsultingPriceCalculator({ basePriceRon }: { basePriceRon: numb
         </div>
         {hasCommercialBase ? (
           <div className="calculator-price-range">
-            <p>Interval orientativ pentru consultanță</p>
+            <p>Interval estimativ pentru serviciul de consultanță</p>
             <h2>{formatRon(estimate.lower)} - {formatRon(estimate.upper)}</h2>
-            <small>Calculat din baza comercială aprobată și factorii selectați.</small>
+            <small>Calculat pe baza valorii configurate și a opțiunilor selectate.</small>
           </div>
         ) : (
           <div className="calculator-pending-price">
             <Info aria-hidden="true" />
-            <p>Intervalul financiar se confirmă după validarea datelor comerciale. Estimarea de complexitate rămâne disponibilă.</p>
+            <p>Intervalul de preț va fi afișat după configurarea bazei comerciale. Complexitatea orientativă rămâne disponibilă.</p>
           </div>
         )}
         <ul>
-          <li><CircleCheckBig aria-hidden="true" /> Rezultat orientativ, fără obligație contractuală</li>
-          <li><CircleCheckBig aria-hidden="true" /> Oferta finală urmează după analiza apelului și a documentelor</li>
+          <li><CircleCheckBig aria-hidden="true" /> Estimare orientativă, nu ofertă comercială finală</li>
+          <li><CircleCheckBig aria-hidden="true" /> Prețul final depinde de apel, livrabile și documentele disponibile</li>
         </ul>
         <Link className="primary-button yellow-button" href="/contact?service=consultanta">
-          Cere evaluarea exactă <ArrowRight aria-hidden="true" />
+          Solicită o ofertă pentru proiect <ArrowRight aria-hidden="true" />
         </Link>
-        <p className="calculator-disclaimer">Rezultatul nu reprezintă ofertă contractuală și nu garantează eligibilitatea sau aprobarea finanțării.</p>
+        <p className="calculator-disclaimer">Rezultatul este informativ. Nu reprezintă o ofertă comercială, nu confirmă eligibilitatea și nu garantează aprobarea finanțării.</p>
       </aside>
     </div>
   );

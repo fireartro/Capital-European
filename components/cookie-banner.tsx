@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { BarChart3, Check, LockKeyhole, Megaphone, Settings2, X } from "lucide-react";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import {
   COOKIE_CONSENT_EVENT,
@@ -162,6 +163,7 @@ export function CookieBanner({
   googleTagManagerId?: string;
   clarityProjectId?: string;
 }) {
+  const pathname = usePathname();
   const [consent, setConsent] = useState<CookieConsent | null>(null);
   const [view, setView] = useState<BannerView>("loading");
   const [analyticsDraft, setAnalyticsDraft] = useState(false);
@@ -250,7 +252,7 @@ export function CookieBanner({
         consent={consent}
       />
 
-      {view === "hidden" && (
+      {view === "hidden" && pathname !== "/" && (
         <button
           type="button"
           className="cookie-settings-floating"
@@ -261,7 +263,7 @@ export function CookieBanner({
           }}
         >
           <Settings2 aria-hidden="true" />
-          Setări cookies
+          Preferințe cookies
         </button>
       )}
 
@@ -276,10 +278,10 @@ export function CookieBanner({
           <div className="cookie-banner-copy">
             <span className="cookie-banner-icon" aria-hidden="true"><LockKeyhole /></span>
             <div>
-              <strong id="cookie-banner-title">Confidențialitatea ta contează</strong>
+              <strong id="cookie-banner-title">Alege cum putem folosi cookie-urile</strong>
               <p id="cookie-banner-description">
-                Folosim stocare strict necesară pentru alegerea ta. Analiza și marketingul rămân oprite până când le accepți.
-                Poți modifica opțiunea oricând din „Setări cookies”.
+                Folosim numai stocarea necesară pentru funcționare și memorarea alegerii tale.
+                Analiza și marketingul rămân dezactivate până când le accepți.
               </p>
               <div className="cookie-banner-links">
                 <Link href="/cookies">Politica de cookies</Link>
@@ -289,10 +291,10 @@ export function CookieBanner({
           </div>
           <div className="cookie-banner-actions">
             <button type="button" className="cookie-button cookie-button-secondary" onClick={() => applyConsent(false, false)}>
-              Respinge opționale
+              Refuză opționale
             </button>
             <button type="button" className="cookie-button cookie-button-secondary" onClick={() => setView("settings")}>
-              <Settings2 aria-hidden="true" /> Setări
+              <Settings2 aria-hidden="true" /> Alege preferințele
             </button>
             <button type="button" className="cookie-button cookie-button-primary" onClick={() => applyConsent(true, true)}>
               Acceptă toate
@@ -313,8 +315,8 @@ export function CookieBanner({
           >
             <header className="cookie-preferences-header">
               <div>
-                <span className="cookie-preferences-kicker">Controlul datelor</span>
-                <h2 id="cookie-preferences-title">Setări cookies</h2>
+                <span className="cookie-preferences-kicker">Controlul consimțământului</span>
+                <h2 id="cookie-preferences-title">Preferințe pentru cookies</h2>
               </div>
               <button
                 type="button"
@@ -327,14 +329,14 @@ export function CookieBanner({
             </header>
 
             <p className="cookie-preferences-intro">
-              Cookie-urile opționale rămân dezactivate până când alegi explicit activarea lor.
+              Categoriile opționale sunt dezactivate implicit. Le poți activa separat și poți reveni oricând asupra alegerii.
             </p>
 
             <div className="cookie-category">
               <div className="cookie-category-icon"><LockKeyhole aria-hidden="true" /></div>
               <div>
                 <h3>Strict necesare</h3>
-                <p>Păstrează alegerea de consimțământ și funcțiile de bază ale site-ului. Nu pot fi dezactivate.</p>
+                <p>Memorează alegerea ta și permite funcțiile de bază ale site-ului. Nu poate fi dezactivată.</p>
               </div>
               <span className="cookie-category-required"><Check aria-hidden="true" /> Mereu active</span>
             </div>
@@ -344,8 +346,7 @@ export function CookieBanner({
               <span>
                 <strong>Analiză audiență</strong>
                 <small>
-                  Permite Google Analytics, dacă este configurat, pentru statistici agregate despre utilizarea site-ului.
-                  Microsoft Clarity poate fi folosit pentru hărți de interacțiune și înregistrări mascate.
+                  Permite Google Analytics și Microsoft Clarity, dacă sunt configurate, pentru statistici și analizarea interacțiunilor mascate.
                 </small>
               </span>
               <input
@@ -361,7 +362,7 @@ export function CookieBanner({
               <span>
                 <strong>Marketing și etichete</strong>
                 <small>
-                  Permite încărcarea containerului Google Tag Manager. Etichetele publicate în GTM trebuie configurate să respecte consimțământul.
+                  Permite încărcarea Google Tag Manager. Etichetele publicate trebuie configurate să respecte preferințele salvate aici.
                 </small>
               </span>
               <input
@@ -378,7 +379,7 @@ export function CookieBanner({
 
             <div className="cookie-preferences-actions">
               <button type="button" className="cookie-button cookie-button-secondary" onClick={() => applyConsent(false, false)}>
-                Respinge opționale
+                Refuză opționale
               </button>
               <button type="button" className="cookie-button cookie-button-primary" onClick={() => applyConsent(analyticsDraft, marketingDraft)}>
                 Salvează preferințele

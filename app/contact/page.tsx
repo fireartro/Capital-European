@@ -4,8 +4,8 @@ import { createPageMetadata } from "@/lib/metadata";
 import { breadcrumbSchema, JsonLd } from "@/lib/structured-data";
 
 export const metadata = createPageMetadata({
-  title: "Contact — Solicită o analiză inițială",
-  description: "Contactează Capital European pentru o analiză inițială de eligibilitate pentru fonduri europene sau o ofertă pentru servicii administrative externalizate.",
+  title: "Contact Capital European | Trimite o solicitare",
+  description: "Descrie proiectul de fonduri europene sau activitatea administrativă pe care vrei să o delegi. Revenim cu întrebările și pașii necesari.",
   path: "/contact"
 });
 

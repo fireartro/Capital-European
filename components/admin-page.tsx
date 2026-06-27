@@ -18,11 +18,11 @@ import { ScrollStarOrbit } from "@/components/scroll-star-orbit";
 import { administrativeFaq } from "@/lib/service-content";
 
 const services = [
-  { icon: FilePenLine, title: "Redactare și procesare documente", text: "Redactare, formatare și prelucrare profesională pentru documente clare și consecvente.", benefits: ["Documente editabile", "Formatare unitară", "Revizii controlate"] },
-  { icon: FolderKanban, title: "Administrare documente", text: "Organizare, indexare, digitalizare și arhivare într-un sistem clar și ușor de urmărit.", benefits: ["Arhivă coerentă", "Acces rapid", "Trasabilitate"] },
-  { icon: Headphones, title: "Secretariat", text: "Gestionăm agenda, comunicarea și solicitările recurente cu atenție și profesionalism.", benefits: ["Continuitate", "Imagine profesionistă", "Zero solicitări pierdute"] },
-  { icon: BriefcaseBusiness, title: "Asistență administrativă", text: "Suport flexibil pentru furnizori, programări, centralizări și activitatea de back-office.", benefits: ["Cost controlat", "Suport scalabil", "Raportare clară"] },
-  { icon: Network, title: "Consultanță operațională", text: "Analizăm fluxurile interne și propunem procese mai simple, clare și ușor de delegat.", benefits: ["Procese eficiente", "Roluri clare", "Plan personalizat"] }
+  { icon: FilePenLine, title: "Redactare și procesare documente", text: "Redactăm, formatăm și actualizăm documente după structura și regulile convenite.", benefits: ["Fișiere editabile", "Format consecvent", "Versiuni urmărite"] },
+  { icon: FolderKanban, title: "Administrare documente", text: "Clasificăm, înregistrăm și urmărim documentele într-un circuit ușor de verificat.", benefits: ["Structură coerentă", "Acces controlat", "Trasabilitate"] },
+  { icon: Headphones, title: "Secretariat externalizat", text: "Urmărim corespondența, programările și solicitările recurente după reguli stabilite.", benefits: ["Continuitate", "Escaladare clară", "Evidență centralizată"] },
+  { icon: BriefcaseBusiness, title: "Asistență administrativă", text: "Preluăm centralizări, programări, evidențe și activități recurente de back-office.", benefits: ["Volum ajustabil", "Responsabilități clare", "Raportare periodică"] },
+  { icon: Network, title: "Organizare operațională", text: "Cartografiem fluxurile și stabilim pași, roluri și puncte de verificare ușor de delegat.", benefits: ["Fluxuri documentate", "Roluri definite", "Plan de lucru"] }
 ];
 
 const companySteps = [
@@ -34,7 +34,7 @@ const companySteps = [
 
 const adminStats = [
   ["5", "direcții administrative", "documente, arhivă, secretariat, back-office și procese"],
-  ["4", "pași pentru firmă", "orientare, documente, depunere și predare organizată"],
+  ["4", "pași pentru firmă", "clarificare, documente, transmitere și predare organizată"],
   ["1", "flux delegat", "responsabilități, termene și verificări într-un loc clar"],
   ["3", "puncte urmărite", "documente, termene și comunicare centralizate consecvent"]
 ] as const;
@@ -65,8 +65,8 @@ export function AdminPage() {
       <section className="inner-hero admin-hero" id="admin-hero" aria-labelledby="admin-hero-title" aria-describedby="admin-hero-description">
         <div className="section-container inner-hero-content">
           <p className="eyebrow eyebrow-light"><Files /> Servicii administrative externalizate</p>
-          <h1 id="admin-hero-title">Ordine în documente.<br />Mai mult timp pentru <em>afacere.</em></h1>
-          <p id="admin-hero-description">Preluăm activitățile administrative recurente și le transformăm în procese clare, predictibile și ușor de urmărit pentru antreprenori, IMM-uri și ONG-uri.</p>
+          <h1 id="admin-hero-title">Servicii administrative pentru<br />procese mai ușor de <em>urmărit.</em></h1>
+          <p id="admin-hero-description">Preluăm documente, secretariat și activități de back-office în limite, termene și responsabilități stabilite împreună.</p>
           <div className="inner-hero-actions">
             <a className="primary-button yellow-button" href="/contact?service=servicii-administrative" aria-label="Solicită o ofertă pentru servicii administrative externalizate" title="Solicită ofertă pentru servicii administrative">Solicită o ofertă <ArrowRight aria-hidden="true" /></a>
             <a className="secondary-link" href="#servicii-administrative" aria-label="Vezi serviciile administrative externalizate Capital European" title="Vezi serviciile administrative">Vezi serviciile</a>
@@ -84,16 +84,16 @@ export function AdminPage() {
           <header className="section-title-row">
             <div>
               <p className="eyebrow"><Files /> Servicii administrative</p>
-              <h2 id="admin-services-title">Servicii administrative externalizate pentru companii organizate.</h2>
+              <h2 id="admin-services-title">Alege activitățile administrative pe care vrei să le delegi</h2>
             </div>
-            <p id="admin-services-description">Alegi exact activitățile pe care vrei să le delegi, iar volumul poate fi ajustat pe măsură ce compania evoluează.</p>
+            <p id="admin-services-description">Poți începe cu un singur flux. Stabilim ce intră în serviciu, cine aprobă și cum se face predarea.</p>
           </header>
 
           <section className="visual-story visual-story-admin" id="repere-administrative" aria-labelledby="admin-story-title" aria-describedby="admin-story-description">
             <div className="visual-story-copy">
               <p className="eyebrow"><FileCheck2 /> Back-office organizat</p>
-              <h3 id="admin-story-title">Un birou administrativ care se simte prezent, chiar dacă este externalizat.</h3>
-              <p id="admin-story-description">Colaborarea urmărește documentele, solicitările și responsabilitățile într-un flux ușor de predat, verificat și ajustat pe măsură ce compania crește.</p>
+              <h3 id="admin-story-title">Back-office externalizat, cu reguli vizibile</h3>
+              <p id="admin-story-description">Documentele și solicitările sunt urmărite într-un flux cu intrări, aprobări, termene și livrabile convenite.</p>
               <div className="service-metrics">
                 {adminStats.map(([value, label, detail]) => (
                   <article key={label}>
@@ -114,8 +114,8 @@ export function AdminPage() {
                 sizes="(max-width: 960px) 100vw, 48vw"
               />
               <figcaption>
-                <strong>Documente la zi</strong>
-                <span>Procese urmărite, arhivă coerentă și comunicare mai ușor de delegat.</span>
+                <strong>Documente organizate</strong>
+                <span>Structură, responsabilități și termene ușor de verificat.</span>
               </figcaption>
             </figure>
           </section>
@@ -136,13 +136,13 @@ export function AdminPage() {
 
             <article className="company-card" id="infiintare-firma" aria-labelledby="company-setup-title" aria-describedby="company-setup-description">
               <div className="company-card-copy">
-                <span className="company-label"><Building2 /> Serviciu nou</span>
+                <span className="company-label"><Building2 /> Pornire organizată</span>
                 <h3 id="company-setup-title">Înființare firmă</h3>
-                <p id="company-setup-description">Te ajutăm să pornești corect, cu documentele pregătite și pașii administrativi explicați clar.</p>
+                <p id="company-setup-description">Organizăm informațiile, documentele și pașii administrativi necesari, fără a înlocui consultanța juridică sau fiscală.</p>
                 <ul>
-                  <li><Check /> Orientare pentru alegerea formei juridice</li>
+                  <li><Check /> Clarificarea informațiilor despre forma juridică</li>
                   <li><Check /> Pregătirea documentelor necesare</li>
-                  <li><Check /> Asistență pentru depunerea dosarului</li>
+                  <li><Check /> Sprijin administrativ pentru transmiterea dosarului</li>
                   <li><Check /> Suport administrativ după înființare</li>
                 </ul>
                 <a className="primary-button yellow-button" href="/contact?service=infiintare-firma" title="Discută despre înființarea firmei">Discută despre firma ta <ArrowRight aria-hidden="true" /></a>
@@ -156,7 +156,7 @@ export function AdminPage() {
           <section className="operations-board" aria-labelledby="operations-title" aria-describedby="operations-description">
             <div className="operations-copy">
               <p className="eyebrow"><FolderKanban /> Flux operațional</p>
-              <h3 id="operations-title">Activitățile sunt grupate pe fluxuri, nu lăsate ca sarcini izolate.</h3>
+              <h3 id="operations-title">Activități grupate în fluxuri verificabile</h3>
               <p id="operations-description">O colaborare bună trebuie să fie ușor de urmărit: ce intră, cine aprobă, ce se predă și când se verifică.</p>
             </div>
             <div className="operations-lanes">
@@ -174,8 +174,8 @@ export function AdminPage() {
           <section className="conversion-panel admin-conversion-panel" aria-labelledby="admin-conversion-title" aria-describedby="admin-conversion-description">
             <div className="conversion-copy">
               <p className="eyebrow"><FileCheck2 /> Delegare controlată</p>
-              <h3 id="admin-conversion-title">Nu trebuie să externalizezi tot biroul din prima.</h3>
-              <p id="admin-conversion-description">Începem cu un proces concret, îl facem ușor de verificat și apoi decizi dacă extinzi colaborarea.</p>
+              <h3 id="admin-conversion-title">Începe cu procesul care consumă cel mai mult timp</h3>
+              <p id="admin-conversion-description">Definim un flux restrâns, îl testăm și îl extindem numai după ce regulile de lucru sunt clare.</p>
               <a className="primary-button blue-button" href="/contact?service=servicii-administrative" title="Discută despre servicii administrative">Discută despre un flux <ArrowRight aria-hidden="true" /></a>
             </div>
             <div className="conversion-steps" aria-label="Pașii pentru delegarea unui flux administrativ">
@@ -192,7 +192,7 @@ export function AdminPage() {
           <section className="semantic-content" id="externalizare-administrativa" aria-labelledby="administrative-content-title">
             <div className="semantic-content-intro">
               <p className="eyebrow"><FileCheck2 aria-hidden="true" /> Externalizare administrativă</p>
-              <h2 id="administrative-content-title">Servicii administrative pentru procese de business mai eficiente.</h2>
+              <h2 id="administrative-content-title">Cum funcționează externalizarea administrativă</h2>
               <p>
                 Activitățile de back-office consumă timp și atenție, chiar dacă nu fac parte din obiectivul principal al companiei.
                 Prin externalizare, documentele, centralizările și solicitările recurente sunt gestionate într-un flux clar, cu
@@ -224,7 +224,7 @@ export function AdminPage() {
 
           <section className="seo-related-section" aria-labelledby="admin-guides-title">
             <p className="eyebrow">Servicii detaliate</p>
-            <h2 id="admin-guides-title">Alege fluxul administrativ pe care vrei să îl delegi.</h2>
+            <h2 id="admin-guides-title">Vezi în detaliu serviciul de care ai nevoie</h2>
             <div className="seo-related-links">
               <Link href="/servicii-administrative/secretariat"><span><strong>Secretariat externalizat</strong><small>Corespondență, programări și solicitări urmărite.</small></span><ArrowRight aria-hidden="true" /></Link>
               <Link href="/servicii-administrative/administrare-documente"><span><strong>Administrare documente</strong><small>Clasificare, evidență și responsabilități clare.</small></span><ArrowRight aria-hidden="true" /></Link>
@@ -233,7 +233,7 @@ export function AdminPage() {
           </section>
 
           <section className="section-cta admin-cta" aria-labelledby="admin-cta-title">
-            <div><p>Vrei să scapi de munca administrativă repetitivă?</p><h3 id="admin-cta-title">Trimite-ne ce proces vrei să delegi și îți spunem cum poate fi organizat.</h3></div>
+            <div><p>Ai un proces administrativ care consumă prea mult timp?</p><h3 id="admin-cta-title">Descrie activitatea, volumul și termenul. Îți spunem ce poate fi preluat.</h3></div>
             <a className="primary-button yellow-button" href="/contact?service=servicii-administrative" aria-label="Solicită o ofertă pentru servicii administrative" title="Solicită ofertă servicii administrative">Solicită o ofertă <ArrowRight aria-hidden="true" /></a>
           </section>
         </div>

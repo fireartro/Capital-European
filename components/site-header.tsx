@@ -268,11 +268,11 @@ export function SiteHeader({ navigationContext }: { navigationContext?: "funding
   const supportContent = (
     <>
       <div className="sidebar-contact">
-        <span>Ai o întrebare?</span>
+        <span>Ai o situație de analizat?</span>
         {siteConfig.phoneHref && <a href={`tel:${siteConfig.phoneHref}`} onClick={closeMenu} aria-label={`Sună ${siteConfig.name}`} title={`Sună ${siteConfig.name}`}><Phone aria-hidden="true" /> {siteConfig.phoneDisplay}</a>}
         <a href={`mailto:${siteConfig.email}`} onClick={closeMenu} title={`Trimite email către ${siteConfig.name}`}><Mail aria-hidden="true" /> {siteConfig.email}</a>
         <Link className="sidebar-cta" href={context.contactHref} onClick={closeMenu} aria-label={`Solicită o discuție cu ${siteConfig.name}`} title={`Solicită o discuție cu ${siteConfig.name}`}>
-          Solicită o discuție
+          Trimite o solicitare
         </Link>
       </div>
       <div className="sidebar-legal">

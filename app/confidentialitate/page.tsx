@@ -5,7 +5,7 @@ import { breadcrumbSchema, JsonLd } from "@/lib/structured-data";
 
 export const metadata = createPageMetadata({
   title: "Politica de confidențialitate și protecția datelor",
-  description: `Informații complete despre modul în care ${siteConfig.name} colectează, utilizează, păstrează și protejează datele cu caracter personal.`,
+  description: `Află ce date poate prelucra ${siteConfig.name}, în ce scop, cât timp sunt păstrate și cum îți poți exercita drepturile.`,
   path: "/confidentialitate"
 });
 
@@ -22,11 +22,11 @@ export default function PrivacyPage() {
         eyebrow="GDPR · Regulamentul (UE) 2016/679"
         title="Politica de confidențialitate"
         updated="27 iunie 2026"
-        intro="Prezenta politică descrie prelucrările de date realizate prin website, formularul de contact și comunicările ulterioare. Este aplicabilă vizitatorilor, persoanelor care solicită o ofertă și reprezentanților potențialilor clienți."
+        intro="Această politică explică ce date putem prelucra prin website, formular și comunicările ulterioare, de ce sunt necesare și ce drepturi ai. Se aplică vizitatorilor și persoanelor care contactează sau reprezintă un potențial client."
         notice={!legal.isComplete ? (
           <>
             <strong>Date juridice obligatorii necompletate</strong>
-            Denumirea juridică, numărul de înregistrare, codul fiscal și sediul operatorului trebuie configurate înainte de publicarea comercială. Nu au fost inventate date în locul celor reale.
+            TODO: completează denumirea juridică, numărul de înregistrare, codul fiscal și sediul operatorului înainte de publicarea comercială.
           </>
         ) : undefined}
         sections={[

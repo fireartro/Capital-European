@@ -32,7 +32,7 @@ export function SiteShell({
           title={`Sună ${siteConfig.name}`}
         >
           <Phone />
-          <span className="phone-label"><small>Sună</small><b>{siteConfig.phoneDisplay || "Rapid"}</b></span>
+          <span className="phone-label"><small>Telefon</small><b>{siteConfig.phoneDisplay || "Contact"}</b></span>
         </a>
       )}
       {showWhatsApp && siteConfig.whatsappNumber && (
@@ -46,7 +46,7 @@ export function SiteShell({
         >
           <span className="whatsapp-pulse" aria-hidden="true" />
           <MessageCircle />
-          <span className="whatsapp-label"><small>Răspundem rapid</small><b>Scrie-ne pe WhatsApp</b></span>
+          <span className="whatsapp-label"><small>Contact direct</small><b>Scrie-ne pe WhatsApp</b></span>
         </a>
       )}
     </div>

@@ -7,7 +7,7 @@ import { breadcrumbSchema, faqSchema, JsonLd } from "@/lib/structured-data";
 
 export const metadata = createPageMetadata({
   title: "Întrebări frecvente",
-  description: "Răspunsuri despre fonduri europene, servicii administrative, documente, colaborare și confidențialitate.",
+  description: "Întrebări și răspunsuri despre eligibilitate, consultanță pentru fonduri europene, servicii administrative, documente și colaborare.",
   path: "/intrebari"
 });
 
@@ -25,8 +25,8 @@ export default function Page() {
         <section className="inner-hero faq-hero" aria-labelledby="faq-page-title" aria-describedby="faq-page-description">
           <div className="section-container inner-hero-content">
             <p className="eyebrow eyebrow-light"><CircleHelp /> Întrebări frecvente</p>
-            <h1 id="faq-page-title">Informații clare înainte<br />de orice <em>decizie.</em></h1>
-            <p id="faq-page-description">Am adunat răspunsurile la cele mai frecvente întrebări despre servicii și procesul de colaborare.</p>
+            <h1 id="faq-page-title">Întrebări despre servicii,<br />răspunsuri <em>directe.</em></h1>
+            <p id="faq-page-description">Află ce poate include colaborarea, ce informații sunt necesare și ce limite trebuie cunoscute înainte de ofertă.</p>
           </div>
         </section>
         <FaqSection />

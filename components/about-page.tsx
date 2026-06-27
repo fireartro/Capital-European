@@ -4,14 +4,14 @@ import { SiteShell } from "@/components/site-shell";
 
 const principles = [
   [ShieldCheck, "Confidențialitate", "Datele și documentele sunt tratate cu discreție și acces controlat."],
-  [Zap, "Rapiditate", "Termene clare, răspuns prompt și vizibilitate asupra fiecărei etape."],
-  [BadgeCheck, "Rigoare", "Verificări, responsabilități definite și documentație atent pregătită."],
-  [Users, "Parteneriat", "Comunicare umană și soluții adaptate contextului real al clientului."]
+  [Zap, "Claritate", "Stabilim termene, responsabilități și puncte de verificare înainte de lucru."],
+  [BadgeCheck, "Rigoare", "Verificăm informațiile și păstrăm documentele într-un circuit ușor de urmărit."],
+  [Users, "Colaborare", "Adaptăm serviciul la context, volum și deciziile care rămân la client."]
 ] as const;
 
 const aboutStats = [
   ["2", "direcții de servicii", "fonduri europene și administrare externalizată"],
-  ["4", "principii de lucru", "confidențialitate, rapiditate, rigoare și parteneriat"],
+  ["4", "principii de lucru", "confidențialitate, claritate, rigoare și colaborare"],
   ["1", "punct de coordonare", "mai puține fire pierdute între documente și decizii"]
 ] as const;
 
@@ -28,8 +28,8 @@ export function AboutPage() {
       <section className="inner-hero about-hero" aria-labelledby="about-hero-title" aria-describedby="about-hero-description">
         <div className="section-container inner-hero-content">
           <p className="eyebrow eyebrow-light"><BookOpenCheck /> Despre noi</p>
-          <h1 id="about-hero-title">Organizare care dă<br />încredere <em>deciziilor.</em></h1>
-          <p id="about-hero-description">Suntem partenerul care aduce structură în activitatea administrativă și rigoare în proiectele de finanțare.</p>
+          <h1 id="about-hero-title">Consultanță și suport administrativ,<br />într-un proces <em>clar.</em></h1>
+          <p id="about-hero-description">Organizăm informațiile, responsabilitățile și documentele necesare pentru proiecte de finanțare și activități administrative.</p>
         </div>
       </section>
 
@@ -38,9 +38,9 @@ export function AboutPage() {
           <div className="about-panel">
             <span className="about-mark"><BookOpenCheck /></span>
             <p className="eyebrow eyebrow-light">Abordarea noastră</p>
-            <h2 id="about-approach-title">Complexitatea devine un proces clar.</h2>
-            <p>Combinăm disciplina administrativă cu o abordare consultativă. Fiecare colaborare are pași clari, responsabilități definite și comunicare transparentă.</p>
-            <a href="/contact" aria-label="Cunoaște echipa Capital European printr-o discuție" title="Cunoaște echipa Capital European">Cunoaște echipa printr-o discuție <ArrowRight aria-hidden="true" /></a>
+            <h2 id="about-approach-title">Mai întâi clarificăm. Apoi stabilim ce preluăm.</h2>
+            <p>Fiecare colaborare începe cu situația reală a clientului: obiectiv, documente, termene și persoane responsabile. Din aceste informații construim un mod de lucru verificabil.</p>
+            <a href="/contact" aria-label="Discută cu Capital European despre nevoia ta" title="Discută cu Capital European">Discută despre nevoia ta <ArrowRight aria-hidden="true" /></a>
           </div>
           <div className="principles-grid">
             {principles.map(([Icon, title, text], index) => (
@@ -69,11 +69,11 @@ export function AboutPage() {
           <div className="story-grid">
             <div>
               <p className="eyebrow">Pentru cine lucrăm</p>
-              <h2 id="about-audience-title">Suport potrivit pentru companii care vor să crească organizat.</h2>
+              <h2 id="about-audience-title">Pentru organizații care au nevoie de structură, nu de o soluție generică.</h2>
             </div>
             <div className="story-copy">
-              <p>Lucrăm cu antreprenori, IMM-uri, ONG-uri și echipe care au nevoie fie de un proiect bine pregătit, fie de o administrare mai eficientă.</p>
-              <p>Nu aplicăm o rețetă universală. Înțelegem situația, stabilim obiectivele și construim o soluție proporțională cu nevoia reală.</p>
+              <p>Serviciile se adresează antreprenorilor, IMM-urilor, ONG-urilor și echipelor care pregătesc un proiect sau vor să organizeze mai bine activitatea administrativă.</p>
+              <p>Volumul, livrabilele și responsabilitățile se stabilesc după o discuție inițială. Nu recomandăm mai mult decât este necesar pentru situația analizată.</p>
             </div>
           </div>
 

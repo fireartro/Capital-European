@@ -3,8 +3,8 @@ import { createPageMetadata } from "@/lib/metadata";
 import { breadcrumbSchema, JsonLd } from "@/lib/structured-data";
 
 export const metadata = createPageMetadata({
-  title: "Despre Capital European — Abordare, Valori & Metodologie",
-  description: "Află cum abordăm proiectele de fonduri europene și serviciile administrative: cu rigoare, transparență și soluții personalizate pentru fiecare client.",
+  title: "Despre Capital European | Abordare și mod de lucru",
+  description: "Află cum organizăm proiectele de fonduri europene și serviciile administrative: analiză inițială, responsabilități clare și documente verificabile.",
   path: "/despre"
 });
 

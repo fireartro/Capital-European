@@ -11,7 +11,7 @@ export function CookieSettingsButton({ compact = false }: { compact?: boolean })
       onClick={openCookieSettings}
     >
       <Settings2 aria-hidden="true" />
-      Setări cookies
+      Preferințe cookies
     </button>
   );
 }

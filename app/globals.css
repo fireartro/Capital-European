@@ -158,7 +158,7 @@ h2 em { color: var(--eu-blue); font-style: normal; }
 .split-landing::before { content: ""; position: absolute; inset: 0; opacity: .08; pointer-events: none; background-image: linear-gradient(rgba(255,255,255,.7) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.7) 1px, transparent 1px); background-size: 72px 72px; mask-image: linear-gradient(to bottom, #000, transparent 80%); }
 .landing-intro { position: relative; z-index: 2; max-width: 980px; margin: 0 auto 20px; text-align: center; }
 .landing-intro .eyebrow { justify-content: center; color: var(--eu-yellow); }
-.landing-intro h1 { max-width: 920px; margin: 0 auto; font: 780 clamp(2.1rem, 3.85vw, 3.55rem)/1.12 var(--font-display); letter-spacing: 0; text-wrap: balance; }
+.landing-intro h1 { max-width: 920px; margin: 0 auto; font: 780 clamp(2.1rem, 3.6vw, 3.35rem)/1.12 var(--font-display); letter-spacing: 0; text-wrap: balance; }
 .landing-intro-copy { max-width: 760px; margin: 13px auto 0; color: rgba(255,255,255,.84); font-size: .9rem; line-height: 1.58; }
 .split-grid { position: relative; z-index: 2; width: min(1180px, 100%); display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-inline: auto; }
 .choice-card { position: relative; min-height: 370px; display: grid; grid-template-columns: 1.25fr .75fr; align-items: stretch; gap: 20px; padding: 32px 38px; overflow: hidden; border-radius: 23px; transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease; }
@@ -292,7 +292,7 @@ h2 em { color: var(--eu-blue); font-style: normal; }
 .about-hero { background: linear-gradient(140deg, #08162f, #003399); }
 .faq-hero { min-height: 410px; background: linear-gradient(140deg, #06142f, #0b397e); }
 .inner-hero-content { position: relative; z-index: 2; padding-block: 95px 75px; }
-.inner-hero h1 { max-width: 900px; margin: 0; color: #fff; font: 780 4.8rem/1 var(--font-display); letter-spacing: 0; text-shadow: 0 2px 12px rgba(0, 20, 60, .42); }
+.inner-hero h1 { max-width: 900px; margin: 0; color: #fff; font: 780 clamp(3rem, 5.2vw, 4.3rem)/1.06 var(--font-display); letter-spacing: 0; text-wrap: balance; text-shadow: 0 2px 12px rgba(0, 20, 60, .42); }
 .funding-hero .section-container.inner-hero-content h1 { font-size: clamp(1.8rem, 5vw, 2.54rem); line-height: 1.05; }
 .inner-hero h1 em { color: var(--eu-yellow); font-style: normal; }
 .inner-hero-content > p:not(.eyebrow) { max-width: 690px; margin: 25px 0 0; color: rgba(255,255,255,.84); font-size: 1rem; line-height: 1.75; }
@@ -550,7 +550,8 @@ h2 em { color: var(--eu-blue); font-style: normal; }
 .contact-section { color: #fff; background: var(--eu-blue-deep); }
 .contact-page { min-height: 100vh; display: flex; align-items: center; padding: 80px 0; color: #fff; background: radial-gradient(circle at 85% 20%, rgba(0,51,153,.45), transparent 30%), var(--eu-blue-deep); }
 .contact-layout { display: grid; grid-template-columns: .82fr 1.18fr; gap: 70px; align-items: center; }
-.contact-copy h1 { max-width: 600px; margin: 0; font: 780 4.6rem/1 var(--font-display); letter-spacing: 0; }
+.contact-copy h1 { max-width: 620px; margin: 0; font: 780 clamp(3rem, 5vw, 4.15rem)/1.06 var(--font-display); letter-spacing: 0; text-wrap: balance; }
+.contact-copy h1 em { color: var(--eu-yellow); font-style: normal; }
 .contact-copy h2 { color: #fff; }
 .contact-copy > p:not(.eyebrow) { max-width: 520px; margin: 22px 0 34px; color: rgba(255,255,255,.82); line-height: 1.72; }
 .contact-primary-link { min-height: 48px; display: inline-flex; align-items: center; justify-content: center; gap: 9px; margin: -8px 0 26px; padding: 0 18px; border-radius: 10px; color: var(--eu-blue-dark); background: var(--eu-yellow); font-size: .82rem; font-weight: 850; box-shadow: 0 14px 35px rgba(255,204,0,.2); }
@@ -630,7 +631,7 @@ h2 em { color: var(--eu-blue); font-style: normal; }
 .cookie-settings-floating:hover { background: var(--eu-blue); }
 body:has(.app-layout:not(.no-navigation)) .cookie-settings-floating,
 body:has(.legal-page) .cookie-settings-floating { display: none; }
-body:has(.split-landing) .cookie-settings-floating,
+body:has(.split-landing) .cookie-settings-floating { display: none; }
 body:has(.not-found-page) .cookie-settings-floating { inset: 14px 14px auto auto; }
 .legal-page { min-height: 100vh; background: var(--paper); }
 .legal-header { color: #fff; background: var(--eu-blue-dark); }
@@ -640,7 +641,7 @@ body:has(.not-found-page) .cookie-settings-floating { inset: 14px 14px auto auto
 .legal-nav .cookie-settings-button { color: rgba(255,255,255,.86); }
 .legal-back { display: inline-flex; align-items: center; gap: 8px; color: rgba(255,255,255,.86); font-size: .78rem; font-weight: 700; }
 .legal-content { width: min(820px, calc(100% - 40px)); padding-block: 95px; }
-.legal-content h1 { margin: 0; font: 760 4.2rem/1.05 var(--font-display); letter-spacing: 0; }
+.legal-content h1 { margin: 0; font: 760 clamp(2.8rem, 5vw, 3.8rem)/1.08 var(--font-display); letter-spacing: 0; text-wrap: balance; }
 .legal-updated { margin: 18px 0 20px; color: var(--muted); font-size: .75rem; }
 .legal-intro { margin: 0 0 28px; color: #41566d; font-size: 1rem; line-height: 1.75; }
 .legal-compliance-notice { margin: 0 0 28px; padding: 18px 20px; border-left: 4px solid #d69b00; color: #5e4b24; background: #fff8e7; font-size: .8rem; line-height: 1.65; }
@@ -676,7 +677,7 @@ body:has(.not-found-page) .cookie-settings-floating { inset: 14px 14px auto auto
 .service-breadcrumbs a:hover { color: var(--eu-yellow); }
 .service-breadcrumbs svg { width: 14px; height: 14px; }
 .service-breadcrumbs span { color: #fff; }
-.seo-service-hero h1, .calculator-heading h1 { max-width: 920px; margin: 18px 0 22px; font: 760 clamp(2.45rem, 5.4vw, 5rem)/1.06 var(--font-display); letter-spacing: 0; }
+.seo-service-hero h1, .calculator-heading h1 { max-width: 920px; margin: 18px 0 22px; font: 760 clamp(2.45rem, 5vw, 4.5rem)/1.08 var(--font-display); letter-spacing: 0; text-wrap: balance; }
 .seo-service-hero .section-container > p:not(.eyebrow), .calculator-heading > p:not(.eyebrow) { max-width: 760px; color: rgba(255,255,255,.78); font-size: 1rem; line-height: 1.75; }
 .seo-service-actions { display: flex; align-items: center; gap: 24px; margin-top: 30px; }
 .seo-service-actions > a:last-child { color: #fff; font-size: .8rem; font-weight: 800; text-decoration: underline; text-underline-offset: 5px; }
@@ -785,7 +786,7 @@ body:has(.not-found-page) .cookie-settings-floating { inset: 14px 14px auto auto
   .split-brand { top: 34px; }
   .landing-intro { margin-bottom: 14px; }
   .landing-intro h1 { font-size: 3.1rem; }
-  .landing-intro-copy { display: none; }
+  .landing-intro-copy { display: block; margin-top: 8px; font-size: .73rem; line-height: 1.45; }
   .choice-card { min-height: 350px; padding-block: 30px; }
   .choice-copy { min-height: 290px; }
   .choice-icon { margin-bottom: 14px; }
@@ -877,7 +878,7 @@ body:has(.not-found-page) .cookie-settings-floating { inset: 14px 14px auto auto
   h2 { font-size: 1.75rem; line-height: 1.13; }
   .primary-button, .choice-button, .button { min-height: 44px; font-size: .78rem; }
   .landing-intro h1 { font-size: 1.72rem; line-height: 1.14; }
-  .landing-intro-copy { display: none; }
+  .landing-intro-copy { display: block; margin-top: 8px; font-size: .72rem; line-height: 1.45; }
   .split-grid { gap: 12px; }
   .choice-card { min-height: 0; grid-template-columns: 1fr; gap: 0; padding: 15px; border-radius: 14px; }
   .choice-copy { min-height: 174px; }
@@ -965,9 +966,11 @@ body:has(.not-found-page) .cookie-settings-floating { inset: 14px 14px auto auto
   .legal-back svg { font-size: 1.2rem; }
   .legal-nav-actions { gap: 8px; }
   .legal-nav .cookie-settings-button { width: 44px; padding: 0; font-size: 0; }
-  .whatsapp-float { right: 14px; bottom: 14px; width: 56px; height: 56px; min-height: 56px; justify-content: center; padding: 0; }
-  .whatsapp-float > svg { width: 40px; height: 40px; }
-  .whatsapp-label { display: none; }
+  .phone-float, .whatsapp-float { right: 14px; width: 56px; height: 56px; min-height: 56px; justify-content: center; padding: 0; }
+  .phone-float { display: none; }
+  .whatsapp-float { bottom: 14px; }
+  .phone-float > svg, .whatsapp-float > svg { width: 40px; height: 40px; }
+  .phone-label, .whatsapp-label { display: none; }
   .whatsapp-pulse { left: 8px; }
   .seo-service-hero, .calculator-page { padding: 44px 0 58px; }
   .service-breadcrumbs { margin-bottom: 25px; font-size: .68rem; }

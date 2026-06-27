@@ -5,7 +5,7 @@ import { SiteShell } from "@/components/site-shell";
 import { createPageMetadata } from "@/lib/metadata";
 import { breadcrumbSchema, JsonLd, serviceSchema } from "@/lib/structured-data";
 
-const description = "Calculator orientativ pentru complexitatea și prețul consultanței pentru fonduri europene. Estimarea nu înlocuiește analiza programului și oferta comercială.";
+const description = "Estimează orientativ complexitatea și intervalul de preț pentru consultanță în fonduri europene. Rezultatul nu înlocuiește analiza și oferta finală.";
 
 export const metadata = createPageMetadata({
   title: "Calculator preț consultanță fonduri europene",
@@ -40,15 +40,15 @@ export default function Page() {
               <span aria-current="page">Calculator</span>
             </nav>
             <div className="calculator-heading">
-              <p className="eyebrow eyebrow-light"><Calculator aria-hidden="true" /> Estimare transparentă</p>
-              <h1 id="calculator-title">Calculator preț consultanță fonduri europene</h1>
-              <p>Primești rapid o estimare de complexitate și, când baza comercială este configurată, un interval orientativ. Oferta finală se stabilește numai după verificarea apelului și a documentelor.</p>
+              <p className="eyebrow eyebrow-light"><Calculator aria-hidden="true" /> Estimare orientativă</p>
+              <h1 id="calculator-title">Calculator orientativ pentru prețul consultanței</h1>
+              <p>Descrie proiectul în câteva selecții. Primești nivelul estimat de complexitate și, dacă baza comercială este configurată, un interval de preț. Oferta finală se stabilește după analiza apelului și a documentelor.</p>
               <div className="calculator-signals" aria-label="Caracteristicile estimării">
-                <span>Actualizare instant</span>
+                <span>Rezultat imediat</span>
                 <span>Fără date personale</span>
                 <span>Fără obligație contractuală</span>
               </div>
-              <Link href="/consultanta-fonduri-europene">Vezi procesul complet de consultanță <ArrowRight aria-hidden="true" /></Link>
+              <Link href="/consultanta-fonduri-europene">Vezi ce include consultanța <ArrowRight aria-hidden="true" /></Link>
             </div>
             <ConsultingPriceCalculator basePriceRon={basePriceRon} />
           </div>

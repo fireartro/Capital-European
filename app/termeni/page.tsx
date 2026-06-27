@@ -5,7 +5,7 @@ import { breadcrumbSchema, JsonLd } from "@/lib/structured-data";
 
 export const metadata = createPageMetadata({
   title: "Termeni și condiții de utilizare și colaborare",
-  description: `Regulile de utilizare a website-ului ${siteConfig.name}, limitele informațiilor publicate și cadrul general aplicabil solicitărilor și serviciilor.`,
+  description: `Condițiile de utilizare a website-ului ${siteConfig.name}, limitele informațiilor publicate și cadrul general al solicitărilor și serviciilor.`,
   path: "/termeni"
 });
 
@@ -26,7 +26,7 @@ export default function TermsPage() {
         notice={!legal.isComplete ? (
           <>
             <strong>Publicarea comercială necesită datele juridice reale</strong>
-            Legea nr. 365/2002 impune afișarea permanentă a denumirii juridice, sediului, datelor de contact, numărului de înregistrare și codului fiscal. Câmpurile sunt pregătite în configurație, dar nu au fost completate cu date inventate.
+            TODO: configurează denumirea juridică, sediul, datele de contact, numărul de înregistrare și codul fiscal înainte de lansarea comercială.
           </>
         ) : undefined}
         sections={[

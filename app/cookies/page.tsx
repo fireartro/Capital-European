@@ -6,7 +6,7 @@ import { breadcrumbSchema, JsonLd } from "@/lib/structured-data";
 
 export const metadata = createPageMetadata({
   title: "Politica de cookies și setări de consimțământ",
-  description: `Categorii, scopuri, durate și opțiuni de control pentru cookie-urile utilizate pe website-ul ${siteConfig.name}.`,
+  description: `Află ce cookie-uri poate folosi ${siteConfig.name}, care sunt opționale și cum poți accepta, refuza sau retrage consimțământul.`,
   path: "/cookies"
 });
 
@@ -21,7 +21,7 @@ export default function CookiesPage() {
         eyebrow="Legea nr. 506/2004 · Directiva ePrivacy"
         title="Politica de cookies"
         updated="27 iunie 2026"
-        intro="Această politică explică exact ce informații pot fi stocate pe dispozitivul tău, când cerem consimțământul și cum poți refuza sau retrage o alegere fără a pierde accesul la conținutul site-ului."
+        intro="Această politică explică ce informații pot fi stocate pe dispozitiv, când cerem consimțământul și cum poți accepta, refuza sau modifica preferințele fără să pierzi accesul la conținut."
         actions={<CookieSettingsButton />}
         sections={[
           {
@@ -70,8 +70,8 @@ export default function CookiesPage() {
           {
             title: "6. Cum alegi, refuzi sau retragi consimțământul",
             content: [
-              "La prima vizită poți accepta toate cookie-urile, respinge direct toate opțiunile neesențiale sau deschide setările detaliate. Butoanele de acceptare și respingere sunt disponibile în același nivel al interfeței.",
-              "Poți reveni oricând asupra alegerii folosind butonul «Setări cookies» din footer sau butonul de mai sus. Retragerea este aplicată imediat pentru încărcările viitoare și încercăm să eliminăm cookie-urile first-party de analiză deja create.",
+              "La prima vizită poți accepta toate categoriile, refuza opțiunile neesențiale sau alege separat fiecare categorie. Refuzul nu limitează accesul la conținut.",
+              "Poți modifica oricând alegerea folosind «Preferințe cookies» din footer sau butonul de mai sus. Modificarea se aplică încărcărilor viitoare și încercăm să eliminăm cookie-urile first-party de analiză deja create.",
               "Retragerea consimțământului nu afectează legalitatea prelucrărilor efectuate anterior retragerii."
             ]
           },
