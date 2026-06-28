@@ -25,7 +25,7 @@ const landingProof = [
   [Scale, "Recomandări responsabile", "Semnalăm ce poate fi continuat, ce trebuie verificat și unde există riscuri."]
 ] as const;
 
-const calculatorHref = "/calculator-pret-consultanta?mode=estimare";
+const calculatorHref = "/calculator-pret-consultanta";
 
 export function HomePage() {
   return (

@@ -44,128 +44,6 @@
 body:has(.cookie-banner) .quick-contact-float,
 body:has(.cookie-preferences-backdrop) .quick-contact-float { display: none; }
 
-body:has(.app-layout:not(.no-navigation)) .cookie-settings-floating,
-body:has(.legal-page) .cookie-settings-floating { display: inline-flex; }
-
-.cookie-settings-floating {
-  z-index: 1180;
-  max-width: calc(100vw - 28px);
-}
-
-body:has(.cookie-banner) .cookie-settings-floating,
-body:has(.cookie-preferences-backdrop) .cookie-settings-floating { display: none; }
-
-.split-landing {
-  display: grid;
-  grid-template-rows: auto auto auto auto;
-  align-content: center;
-  row-gap: clamp(9px, 1.35vh, 16px);
-  min-height: 100svh;
-  min-height: 100dvh;
-  padding-top: clamp(34px, 5.2vh, 46px);
-  padding-bottom: clamp(14px, 2.5vh, 24px);
-}
-
-.split-brand {
-  top: clamp(20px, 3.4vh, 44px);
-}
-
-.split-brand .brand-logo-frame {
-  width: clamp(144px, 10.6vw, 180px);
-}
-
-.landing-intro {
-  margin-bottom: 0;
-}
-
-.landing-intro .eyebrow {
-  margin-bottom: clamp(8px, 1.1vh, 16px);
-}
-
-.landing-intro h1 {
-  font-size: clamp(2rem, 3.25vw, 3.2rem);
-  line-height: 1.08;
-}
-
-.landing-intro-copy {
-  margin-top: clamp(8px, 1.15vh, 13px);
-  line-height: 1.5;
-}
-
-.split-grid {
-  gap: clamp(12px, 1.35vw, 18px);
-}
-
-.choice-card {
-  min-height: clamp(300px, 39vh, 370px);
-  padding-block: clamp(24px, 3vh, 32px);
-}
-
-.choice-copy {
-  min-height: clamp(230px, 30vh, 292px);
-}
-
-.choice-index {
-  margin-bottom: clamp(12px, 1.8vh, 20px);
-}
-
-.choice-icon {
-  margin-bottom: clamp(10px, 1.6vh, 16px);
-}
-
-.choice-card h2 {
-  font-size: clamp(2rem, 2.55vw, 2.42rem);
-}
-
-.choice-card p {
-  margin-block: clamp(10px, 1.4vh, 15px) clamp(14px, 1.9vh, 22px);
-}
-
-.eu-emblem {
-  width: clamp(142px, 18vh, 176px);
-  height: clamp(142px, 18vh, 176px);
-}
-
-.admin-visual {
-  width: clamp(128px, 16vh, 158px);
-  height: clamp(154px, 20vh, 190px);
-}
-
-.landing-proof-grid,
-.landing-trust {
-  margin-top: 0;
-}
-
-.landing-proof-grid article {
-  min-height: clamp(64px, 8.2vh, 78px);
-  padding: clamp(10px, 1.3vh, 13px);
-}
-
-@media (max-height: 820px) and (min-width: 821px) {
-  .split-landing {
-    row-gap: 10px;
-    padding-top: 34px;
-    padding-bottom: 16px;
-  }
-
-  .landing-intro h1 { font-size: clamp(1.9rem, 3vw, 2.85rem); }
-  .landing-intro-copy { font-size: .82rem; }
-  .choice-card { min-height: clamp(278px, 37vh, 326px); }
-  .choice-copy { min-height: 220px; }
-  .choice-card h2 { font-size: clamp(1.85rem, 2.35vw, 2.15rem); }
-  .choice-card p { font-size: .78rem; line-height: 1.52; }
-  .landing-proof-grid article { min-height: 62px; }
-  .landing-proof-grid p { font-size: .64rem; line-height: 1.34; }
-  .landing-trust span,
-  .landing-trust a { min-height: 30px; }
-}
-
-@media (max-height: 690px) and (min-width: 821px) {
-  .landing-intro-copy { display: none; }
-  .landing-proof-grid p { display: none; }
-  .landing-proof-grid article { min-height: auto; align-items: center; }
-}
-
 .contact-layout-simplified { align-items: center; }
 .contact-layout-simplified .contact-copy { max-width: 560px; }
 .contact-layout-simplified .contact-primary-link { margin-bottom: 18px; }
@@ -267,46 +145,19 @@ body:has(.cookie-preferences-backdrop) .cookie-settings-floating { display: none
   .form-wrap { max-width: 100%; justify-self: stretch; }
   .seo-cta-actions { justify-content: stretch; }
   .seo-cta-actions .primary-button { width: 100%; }
-
-  .split-landing {
-    align-content: start;
-    row-gap: 10px;
-    padding-top: calc(58px + env(safe-area-inset-top));
-    padding-inline: 12px;
-    padding-bottom: calc(12px + env(safe-area-inset-bottom));
-  }
-
-  .split-brand .brand-logo-frame { width: 118px; }
-  .landing-intro h1 { font-size: clamp(1.45rem, 5.2vw, 2.1rem); }
-  .landing-intro-copy { font-size: .72rem; }
-  .split-grid { width: 100%; grid-template-columns: 1fr; gap: 8px; }
-  .choice-card { min-height: 0; grid-template-columns: 1fr; gap: 0; padding: 14px 16px; border-radius: 14px; }
-  .choice-copy { min-height: 142px; }
-  .choice-index { margin-bottom: 8px; font-size: .64rem; }
-  .choice-icon { width: 30px; height: 30px; margin-bottom: 8px; }
-  .choice-card h2 { font-size: clamp(1.24rem, 5.6vw, 1.55rem); }
-  .choice-card p { margin: 6px 0 9px; font-size: .68rem; line-height: 1.36; }
-  .choice-card > div:last-child { display: none; }
-  .choice-button { min-height: 40px; }
-  .landing-proof-grid { width: 100%; grid-template-columns: 1fr; gap: 7px; margin-top: 0; }
-  .landing-proof-grid article { min-height: auto; padding: 9px 11px; }
-  .landing-proof-grid p { display: none; }
-  .landing-trust { width: 100%; max-height: 72px; overflow: hidden; justify-content: center; font-size: .68rem; }
-  .landing-trust span,
-  .landing-trust a { min-height: 27px; padding-inline: 8px; }
 }
 
 @media (max-width: 640px) {
   .quick-contact-float {
     right: 14px;
-    bottom: max(116px, calc(env(safe-area-inset-bottom) + 106px));
+    bottom: max(18px, calc(env(safe-area-inset-bottom) + 14px));
     gap: 8px;
   }
 
-  .phone-float,
+  .phone-float { display: none !important; }
   .whatsapp-float { width: 50px; height: 50px; min-height: 50px; }
-  .phone-float > svg { width: 25px; height: 25px; }
   .whatsapp-float > svg { width: 32px; height: 32px; }
+  body:has(.split-landing) .quick-contact-float { display: none; }
 
   .contact-layout-simplified .contact-copy { max-width: none; }
   .contact-layout-simplified .contact-steps { margin-top: 4px; }
@@ -323,31 +174,11 @@ body:has(.cookie-preferences-backdrop) .cookie-settings-floating { display: none
   .choice-secondary-link {
     width: 100%;
     justify-content: center;
-    min-height: 34px;
-    margin: 0 0 8px;
-    font-size: .66rem;
+    min-height: 38px;
+    margin: 0 0 10px;
+    font-size: .75rem;
   }
-
-  .split-landing { row-gap: 8px; }
-  .landing-intro .eyebrow { margin-bottom: 6px; font-size: .62rem; }
-  .landing-intro h1 { font-size: clamp(1.28rem, 6vw, 1.62rem); }
-  .landing-intro-copy { display: none; }
-  .choice-card { padding-block: 12px; }
-  .choice-copy { min-height: 128px; }
-  .choice-card p { font-size: .64rem; }
-  .landing-trust { display: none; }
 
   .calculator-entry { margin-top: 20px; }
   .site-footer { padding-bottom: 86px; }
-}
-
-@media (max-width: 390px), (max-height: 700px) {
-  .split-landing { padding-top: calc(50px + env(safe-area-inset-top)); row-gap: 7px; }
-  .split-brand .brand-logo-frame { width: 104px; }
-  .landing-intro .eyebrow { display: none; }
-  .choice-icon { display: none; }
-  .choice-copy { min-height: 116px; }
-  .choice-card h2 { font-size: 1.22rem; }
-  .choice-card p { margin-block: 5px 7px; }
-  .choice-button { min-height: 38px; }
 }

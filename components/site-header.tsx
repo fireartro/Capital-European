@@ -29,7 +29,7 @@ type NavigationItem = {
   icon: typeof Home;
 };
 
-const calculatorHref = "/calculator-pret-consultanta?mode=estimare";
+const calculatorHref = "/calculator-pret-consultanta";
 
 const fundingNavigation: NavigationItem[] = [
   { label: "Prezentare", href: "/fonduri-europene", icon: Landmark },

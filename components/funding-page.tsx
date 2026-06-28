@@ -67,7 +67,7 @@ export function FundingPage() {
         "servicii-fonduri",
         "repere-fonduri",
         "beneficii-fonduri",
-        "calculator-eligibilitate",
+        "calculator-estimare",
         "proces-fonduri",
         "evaluare-fonduri",
         "intrebari-fonduri"
@@ -202,14 +202,14 @@ export function FundingPage() {
             </div>
           </section>
 
-          <section className="calculator-entry" id="calculator-eligibilitate" aria-labelledby="funding-calculator-title">
+          <section className="calculator-entry" id="calculator-estimare" aria-labelledby="funding-calculator-title">
             <span className="calculator-entry-icon"><Calculator aria-hidden="true" /></span>
             <div>
-              <p className="eyebrow">Calculator unic</p>
-              <h3 id="funding-calculator-title">Verifică preliminar eligibilitatea proiectului</h3>
-              <p>Bifează criteriile de bază în calculatorul central și află ce informații trebuie clarificate înainte de analiza programului.</p>
+              <p className="eyebrow">Estimare orientativă</p>
+              <h3 id="funding-calculator-title">Estimează complexitatea consultanței</h3>
+              <p>Descrie pe scurt proiectul, valoarea și stadiul documentelor pentru o estimare orientativă a complexității serviciului.</p>
             </div>
-            <Link className="primary-button blue-button" href="/calculator-pret-consultanta?mode=eligibilitate">
+            <Link className="primary-button blue-button" href="/calculator-pret-consultanta">
               Deschide calculatorul <ArrowRight aria-hidden="true" />
             </Link>
           </section>
@@ -285,7 +285,7 @@ export function FundingPage() {
               <Link href="/fonduri-europene-pentru-firme"><span><strong>Fonduri europene pentru firme</strong><small>Criterii și pregătire pentru investițiile companiilor.</small></span><ArrowRight aria-hidden="true" /></Link>
               <Link href="/fonduri-europene-pentru-ong"><span><strong>Fonduri europene pentru ONG</strong><small>Proiecte sociale, educaționale și comunitare.</small></span><ArrowRight aria-hidden="true" /></Link>
               <Link href="/fonduri-europene-pentru-startup"><span><strong>Fonduri europene pentru startup</strong><small>Condiții și obligații pentru afaceri aflate la început.</small></span><ArrowRight aria-hidden="true" /></Link>
-              <Link href="/calculator-pret-consultanta?mode=eligibilitate"><span><strong>Calculator fonduri și servicii</strong><small>Verifică eligibilitatea sau estimează complexitatea unui serviciu.</small></span><ArrowRight aria-hidden="true" /></Link>
+              <Link href="/calculator-pret-consultanta"><span><strong>Calculator orientativ</strong><small>Estimează complexitatea consultanței sau a unui serviciu administrativ.</small></span><ArrowRight aria-hidden="true" /></Link>
             </div>
           </section>
 

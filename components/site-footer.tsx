@@ -16,7 +16,7 @@ export function SiteFooter() {
           <Link href="/consultanta-fonduri-europene">Consultanță fonduri europene</Link>
           <Link href="/fonduri-europene-pentru-firme">Fonduri pentru firme</Link>
           <Link href="/fonduri-europene-pentru-ong">Fonduri pentru ONG-uri</Link>
-          <Link href="/calculator-pret-consultanta">Calculator fonduri și servicii</Link>
+          <Link href="/calculator-pret-consultanta">Calculator orientativ</Link>
         </div>
         <div>
           <h3>Servicii administrative</h3>

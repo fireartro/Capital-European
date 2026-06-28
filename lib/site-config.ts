@@ -16,14 +16,32 @@ function publicValue(value?: string) {
   return value?.trim() || "";
 }
 
+function normalizeRomanianPhone(value: string) {
+  const digits = value.replace(/\D/g, "");
+  const normalizedDigits = digits.startsWith("0") ? `40${digits.slice(1)}` : digits;
+
+  return normalizedDigits.startsWith("40") ? normalizedDigits : "";
+}
+
+function formatRomanianPhone(digits: string) {
+  if (digits.length !== 11 || !digits.startsWith("40")) return "";
+  return `+40 ${digits.slice(2, 5)} ${digits.slice(5, 8)} ${digits.slice(8)}`;
+}
+
 const legalEntityName = publicValue(process.env.NEXT_PUBLIC_LEGAL_ENTITY_NAME);
 const registrationNumber = publicValue(process.env.NEXT_PUBLIC_REGISTRATION_NUMBER);
 const taxId = publicValue(process.env.NEXT_PUBLIC_TAX_ID);
 const registeredOffice = publicValue(process.env.NEXT_PUBLIC_REGISTERED_OFFICE);
 const contactEmail = publicValue(process.env.NEXT_PUBLIC_CONTACT_EMAIL) || "contact@capitaleuropean.ro";
-const phoneDisplay = publicValue(process.env.NEXT_PUBLIC_PHONE_DISPLAY) || "+40 753 527 110";
-const phoneHref = publicValue(process.env.NEXT_PUBLIC_PHONE_HREF) || "+40753527110";
-const whatsappNumber = (publicValue(process.env.NEXT_PUBLIC_WHATSAPP_NUMBER) || "+40753527110").replace(/\D/g, "");
+const phoneDigits =
+  normalizeRomanianPhone(publicValue(process.env.NEXT_PUBLIC_PHONE_HREF)) ||
+  normalizeRomanianPhone(publicValue(process.env.NEXT_PUBLIC_PHONE_DISPLAY)) ||
+  "40753527110";
+const phoneDisplay = formatRomanianPhone(phoneDigits) || "+40 753 527 110";
+const phoneHref = `+${phoneDigits}`;
+const whatsappNumber =
+  normalizeRomanianPhone(publicValue(process.env.NEXT_PUBLIC_WHATSAPP_NUMBER)) ||
+  phoneDigits;
 const businessAddress = publicValue(process.env.NEXT_PUBLIC_BUSINESS_ADDRESS);
 const businessSchedule = publicValue(process.env.NEXT_PUBLIC_BUSINESS_SCHEDULE) || "L-V · 10:00-18:00";
 const socialProfiles = [

@@ -31,7 +31,7 @@ export default function Page() {
           serviceType: ["Estimare orientativă consultanță", "Estimare orientativă servicii administrative"]
         })
       ]} />
-      <SiteShell navigationContext="funding">
+      <SiteShell navigationContext="general">
         <section className="calculator-page" aria-labelledby="calculator-title">
           <div className="section-container">
             <nav className="service-breadcrumbs" aria-label="Navigare ierarhică">
