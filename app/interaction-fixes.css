@@ -272,15 +272,15 @@ body:has(.cookie-preferences-backdrop) .cookie-settings-floating { display: none
     align-content: start;
     row-gap: 10px;
     padding-top: calc(58px + env(safe-area-inset-top));
+    padding-inline: 12px;
     padding-bottom: calc(12px + env(safe-area-inset-bottom));
   }
 
   .split-brand .brand-logo-frame { width: 118px; }
-  .landing-intro { padding-inline: 12px; }
   .landing-intro h1 { font-size: clamp(1.45rem, 5.2vw, 2.1rem); }
   .landing-intro-copy { font-size: .72rem; }
   .split-grid { width: 100%; grid-template-columns: 1fr; gap: 8px; }
-  .choice-card { min-height: 0; grid-template-columns: 1fr; gap: 0; padding: 14px 16px; border-radius: 0; border-inline: 0; }
+  .choice-card { min-height: 0; grid-template-columns: 1fr; gap: 0; padding: 14px 16px; border-radius: 14px; }
   .choice-copy { min-height: 142px; }
   .choice-index { margin-bottom: 8px; font-size: .64rem; }
   .choice-icon { width: 30px; height: 30px; margin-bottom: 8px; }
@@ -288,10 +288,10 @@ body:has(.cookie-preferences-backdrop) .cookie-settings-floating { display: none
   .choice-card p { margin: 6px 0 9px; font-size: .68rem; line-height: 1.36; }
   .choice-card > div:last-child { display: none; }
   .choice-button { min-height: 40px; }
-  .landing-proof-grid { width: calc(100% - 24px); grid-template-columns: 1fr; gap: 7px; margin-top: 0; }
+  .landing-proof-grid { width: 100%; grid-template-columns: 1fr; gap: 7px; margin-top: 0; }
   .landing-proof-grid article { min-height: auto; padding: 9px 11px; }
   .landing-proof-grid p { display: none; }
-  .landing-trust { width: calc(100% - 24px); max-height: 72px; overflow: hidden; justify-content: center; font-size: .68rem; }
+  .landing-trust { width: 100%; max-height: 72px; overflow: hidden; justify-content: center; font-size: .68rem; }
   .landing-trust span,
   .landing-trust a { min-height: 27px; padding-inline: 8px; }
 }
