@@ -37,10 +37,6 @@
 .phone-float > svg { width: 27px; height: 27px; padding: 0; background: transparent; }
 .whatsapp-float > svg { width: 34px; height: 34px; padding: 0; background: transparent; }
 
-.phone-label,
-.whatsapp-label,
-.whatsapp-pulse { display: none !important; }
-
 body:has(.cookie-banner) .quick-contact-float,
 body:has(.cookie-preferences-backdrop) .quick-contact-float { display: none; }
 
@@ -90,7 +86,6 @@ body:has(.cookie-preferences-backdrop) .quick-contact-float { display: none; }
 
 .choice-secondary-link svg { width: 15px; height: 15px; }
 
-.calculator-mode-switch { max-width: 920px; }
 .calculator-heading { margin-bottom: 32px; }
 .calculator-entry { margin-top: 28px; }
 .price-calculator { border-radius: 12px; }

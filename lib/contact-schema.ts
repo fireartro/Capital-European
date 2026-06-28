@@ -51,4 +51,3 @@ export const contactSchema = z.object({
 }));
 
 export type ContactInput = z.input<typeof contactSchema>;
-export type ContactData = z.output<typeof contactSchema>;

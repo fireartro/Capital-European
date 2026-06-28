@@ -1,5 +1,5 @@
-export const COOKIE_CONSENT_VERSION = 3;
-export const COOKIE_CONSENT_KEY = "ce_cookie_consent_v3";
+const COOKIE_CONSENT_VERSION = 3;
+const COOKIE_CONSENT_KEY = "ce_cookie_consent_v3";
 export const COOKIE_SETTINGS_EVENT = "capital-european:open-cookie-settings";
 export const COOKIE_CONSENT_EVENT = "capital-european:cookie-consent";
 
