@@ -122,19 +122,6 @@ export function AdminPage() {
           </section>
 
           <div className="admin-service-grid" aria-describedby="admin-services-description">
-            {services.map((service, index) => {
-              const Icon = service.icon;
-              return (
-                <article className="admin-service-card" key={service.title} aria-labelledby={`admin-service-${index + 1}-title`} aria-describedby={`admin-service-${index + 1}-description`}>
-                  <span className="admin-card-icon"><Icon /></span>
-                  <h3 id={`admin-service-${index + 1}-title`}>{service.title}</h3>
-                  <p id={`admin-service-${index + 1}-description`}>{service.text}</p>
-                  <ul>{service.benefits.map((benefit) => <li key={benefit}><Check /> {benefit}</li>)}</ul>
-                  <a href="/contact?service=servicii-administrative" aria-label={`Solicită detalii despre ${service.title}`} title={`Solicită detalii despre ${service.title}`}>Solicită detalii <ArrowRight aria-hidden="true" /></a>
-                </article>
-              );
-            })}
-
             <article className="company-card" id="infiintare-firma" aria-labelledby="company-setup-title" aria-describedby="company-setup-description">
               <div className="company-card-copy">
                 <span className="company-label"><Building2 /> Pornire organizată</span>
@@ -152,6 +139,19 @@ export function AdminPage() {
                 {companySteps.map(([number, label]) => <li key={number}><span>{number}</span><p>{label}</p></li>)}
               </ol>
             </article>
+
+            {services.map((service, index) => {
+              const Icon = service.icon;
+              return (
+                <article className="admin-service-card" key={service.title} aria-labelledby={`admin-service-${index + 1}-title`} aria-describedby={`admin-service-${index + 1}-description`}>
+                  <span className="admin-card-icon"><Icon /></span>
+                  <h3 id={`admin-service-${index + 1}-title`}>{service.title}</h3>
+                  <p id={`admin-service-${index + 1}-description`}>{service.text}</p>
+                  <ul>{service.benefits.map((benefit) => <li key={benefit}><Check /> {benefit}</li>)}</ul>
+                  <a href="/contact?service=servicii-administrative" aria-label={`Solicită detalii despre ${service.title}`} title={`Solicită detalii despre ${service.title}`}>Solicită detalii <ArrowRight aria-hidden="true" /></a>
+                </article>
+              );
+            })}
           </div>
 
           <section className="operations-board" aria-labelledby="operations-title" aria-describedby="operations-description">
@@ -227,9 +227,9 @@ export function AdminPage() {
             <p className="eyebrow">Servicii detaliate</p>
             <h2 id="admin-guides-title">Vezi în detaliu serviciul de care ai nevoie</h2>
             <div className="seo-related-links">
+              <Link href="/servicii-administrative/infiintare-firma"><span><strong>Înființare firmă</strong><small>Pașii și documentele pentru pornirea societății.</small></span><ArrowRight aria-hidden="true" /></Link>
               <Link href="/servicii-administrative/secretariat"><span><strong>Secretariat externalizat</strong><small>Corespondență, programări și solicitări urmărite.</small></span><ArrowRight aria-hidden="true" /></Link>
               <Link href="/servicii-administrative/administrare-documente"><span><strong>Administrare documente</strong><small>Clasificare, evidență și responsabilități clare.</small></span><ArrowRight aria-hidden="true" /></Link>
-              <Link href="/servicii-administrative/infiintare-firma"><span><strong>Înființare firmă</strong><small>Pașii și documentele pentru pornirea societății.</small></span><ArrowRight aria-hidden="true" /></Link>
               <Link href="/calculator-pret-consultanta"><span><strong>Calculator orientativ</strong><small>Estimează complexitatea unui flux administrativ.</small></span><Calculator aria-hidden="true" /></Link>
             </div>
           </section>

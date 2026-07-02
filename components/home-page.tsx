@@ -9,7 +9,6 @@ import {
   LockKeyhole,
   MessageSquareText,
   Scale,
-  Sparkles,
   Star,
   Users,
   Zap
@@ -26,6 +25,7 @@ const landingProof = [
 ] as const;
 
 const calculatorHref = "/calculator-pret-consultanta";
+const eligibilityHref = "/fonduri-europene#verificare-eligibilitate";
 
 export function HomePage() {
   return (
@@ -36,8 +36,7 @@ export function HomePage() {
           {Array.from({ length: 12 }, (_, index) => <span className={`eu-star star-${index + 1}`} key={index}>★</span>)}
         </div>
         <div className="landing-intro">
-          <p className="eyebrow"><Sparkles /> Două servicii. Un proces clar de la prima discuție.</p>
-          <h1 id="split-title">Consultanță fonduri europene și servicii administrative în România</h1>
+          <h1 id="split-title">Consultanță fonduri europene și servicii administrative</h1>
           <p className="landing-intro-copy" id="split-description">Alege direcția potrivită pentru proiectul sau activitatea ta. Clarificăm situația, documentele necesare și pașii următori, fără promisiuni nerealiste.</p>
         </div>
 
@@ -45,23 +44,22 @@ export function HomePage() {
           <h2 className="visually-hidden" id="split-services-title">Alege categoria de servicii Capital European</h2>
           <article className="choice-card choice-funding" aria-labelledby="choice-funding-title" aria-describedby="choice-funding-description">
             <div className="choice-copy">
-              <span className="choice-index">01 / Finanțare</span>
               <span className="choice-icon"><Landmark aria-hidden="true" /></span>
               <h2 id="choice-funding-title">Consultanță<br />Fonduri Europene</h2>
-              <p id="choice-funding-description">Verificarea eligibilității, pregătirea documentației, depunere și sprijin opțional în implementare.</p>
+              <p id="choice-funding-description">Verificarea eligibilității, pregătirea documentației, depunere și sprijin în implementare.</p>
               <Link
                 className="choice-secondary-link"
-                href={calculatorHref}
-                title="Estimare orientativă consultanță fonduri europene"
+                href={eligibilityHref}
+                title="Verificare orientativă a eligibilității și punctajului"
               >
-                <Calculator aria-hidden="true" /> Estimează complexitatea consultanței
+                <ClipboardCheck aria-hidden="true" /> Verificare eligibilitate și punctaj
               </Link>
               <a
                 className="choice-button"
-                href="/fonduri-europene"
-                title="Consultanță fonduri europene Capital European"
+                href="/fonduri-europene#programe-finantare"
+                title="Vezi programele de finanțare urmărite"
               >
-                Evaluează proiectul <ArrowRight aria-hidden="true" />
+                Programe de finanțare <ArrowRight aria-hidden="true" />
               </a>
             </div>
             <div className="eu-emblem" aria-hidden="true">
@@ -79,7 +77,6 @@ export function HomePage() {
 
           <article className="choice-card choice-admin" aria-labelledby="choice-admin-title" aria-describedby="choice-admin-description">
             <div className="choice-copy">
-              <span className="choice-index">02 / Administrativ</span>
               <span className="choice-icon"><Files aria-hidden="true" /></span>
               <h2 id="choice-admin-title">Servicii<br />Administrative</h2>
               <p id="choice-admin-description">Documente, secretariat, back-office și sprijin administrativ pentru înființarea firmei.</p>

@@ -33,6 +33,7 @@ export const contactSchema = z.object({
     "infiintare-firma",
     "fonduri-europene"
   ]),
+  fundingProgram: z.string().trim().max(180).optional().default(""),
   message: cleanText(2000).refine((value) => value.length >= 20, "Mesajul trebuie să aibă minimum 20 de caractere."),
   consent: z.boolean().refine((value) => value, "Confirmarea este obligatorie."),
   // Honeypot values must reach the API so bots receive a neutral success response.

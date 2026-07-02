@@ -1,9 +1,9 @@
 import {
   ArrowRight,
   BarChart3,
-  Calculator,
   Check,
   ClipboardCheck,
+  ExternalLink,
   FilePenLine,
   Landmark,
   SearchCheck,
@@ -11,9 +11,11 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { FundingEligibilityChecker } from "@/components/funding-eligibility-checker";
 import { ServiceFaq } from "@/components/service-faq";
 import { SiteShell } from "@/components/site-shell";
 import { ScrollStarOrbit } from "@/components/scroll-star-orbit";
+import { fundingPrograms } from "@/lib/funding-programs";
 import { fundingFaq } from "@/lib/service-content";
 import { siteConfig } from "@/lib/site-config";
 
@@ -21,14 +23,14 @@ const services = [
   { icon: SearchCheck, title: "Analiză de eligibilitate", text: "Comparăm solicitantul și investiția cu regulile programului înainte de pregătirea dosarului." },
   { icon: FilePenLine, title: "Cerere și documentație", text: "Corelăm obiectivele, activitățile, bugetul și anexele într-o documentație consecventă." },
   { icon: ClipboardCheck, title: "Depunere și clarificări", text: "Organizăm transmiterea proiectului și răspunsurile cerute în etapa de evaluare." },
-  { icon: BarChart3, title: "Sprijin în implementare", text: "În funcție de contract, urmărim indicatorii, achizițiile, documentele și raportarea." }
+  { icon: BarChart3, title: "Sprijin în implementare", text: "Urmărim indicatorii, achizițiile, documentele și raportarea pe parcursul implementării." }
 ];
 
 const steps = [
   ["01", "Analiză inițială", "Verificăm solicitantul, investiția și condițiile programului."],
   ["02", "Plan de lucru", "Stabilim documentele, responsabilitățile și calendarul."],
   ["03", "Pregătire și depunere", "Construim documentația și gestionăm clarificările incluse în serviciu."],
-  ["04", "Implementare", "Dacă este contractată, urmărim obligațiile și documentele proiectului."]
+  ["04", "Implementare", "Urmărim obligațiile, termenele și documentele proiectului aprobat."]
 ] as const;
 
 const fundingStats = [
@@ -59,6 +61,13 @@ const fundingConversionSteps = [
   ["3", "Decizi informat", "Primești următorii pași, riscurile principale și documentele care merită pregătite."]
 ] as const;
 
+const differentiators = [
+  ["Analiză înainte de recomandare", "Nu recomandăm pregătirea dosarului înainte de verificarea solicitantului, programului și investiției."],
+  ["Punctaj explicat", "Separăm criteriile confirmate de condițiile care trebuie documentate în grila oficială."],
+  ["Responsabilități vizibile", "Stabilim de la început documentele, termenele, aprobările și informațiile necesare din partea clientului."],
+  ["Continuitate în implementare", "Păstrăm legătura dintre cererea aprobată, indicatori, achiziții, raportare și obligațiile contractuale."]
+] as const;
+
 export function FundingPage() {
   return (
     <SiteShell navigationContext="funding">
@@ -66,8 +75,10 @@ export function FundingPage() {
         "funding-hero",
         "servicii-fonduri",
         "repere-fonduri",
+        "programe-finantare",
         "beneficii-fonduri",
-        "calculator-estimare",
+        "verificare-eligibilitate",
+        "ce-ne-deosebeste",
         "proces-fonduri",
         "evaluare-fonduri",
         "intrebari-fonduri"
@@ -84,7 +95,7 @@ export function FundingPage() {
           <div className="hero-proof">
             <span><ShieldCheck /> Fără promisiuni nerealiste</span>
             <span><Check /> Pași și responsabilități clare</span>
-            <span><Check /> Sprijin în implementare, la cerere</span>
+            <span><Check /> Sprijin în implementare</span>
           </div>
         </div>
       </section>
@@ -144,6 +155,39 @@ export function FundingPage() {
             </div>
           </section>
 
+          <section className="funding-programs-section" id="programe-finantare" aria-labelledby="funding-programs-title" aria-describedby="funding-programs-description">
+            <header className="funding-programs-header">
+              <div>
+                <p className="eyebrow"><Landmark aria-hidden="true" /> Oportunități urmărite</p>
+                <h2 id="funding-programs-title">Programe de finanțare</h2>
+              </div>
+              <p id="funding-programs-description">Lista include numai programe verificate în surse oficiale. Statutul și condițiile se reconfirmă înainte de orice evaluare.</p>
+            </header>
+            <div className="funding-program-list">
+              {fundingPrograms.map((program) => (
+                <article className="funding-program-card" key={program.id}>
+                  <div className="funding-program-meta">
+                    <span>{program.status}</span>
+                    <small>Verificat: {program.lastVerified}</small>
+                  </div>
+                  <p>{program.program}</p>
+                  <h3>{program.code}</h3>
+                  <h4>{program.title}</h4>
+                  <p>{program.summary}</p>
+                  <strong>{program.audience}</strong>
+                  <div className="funding-program-actions">
+                    <Link href={`/contact?service=fonduri-europene&program=${program.id}`}>Solicită verificarea <ArrowRight aria-hidden="true" /></Link>
+                    <a href={program.sourceUrl} target="_blank" rel="noopener noreferrer">Sursa oficială <ExternalLink aria-hidden="true" /></a>
+                  </div>
+                </article>
+              ))}
+            </div>
+            <div className="funding-programs-note">
+              <p>Nu regăsești programul urmărit? Trimite denumirea sau ghidul, iar noi îl adăugăm în evaluare după verificarea sursei oficiale.</p>
+              <Link className="primary-button blue-button" href="/contact?service=fonduri-europene&program=program-nespecificat">Solicită identificarea programului <ArrowRight aria-hidden="true" /></Link>
+            </div>
+          </section>
+
           <section className="fit-panel funding-fit-panel" aria-labelledby="funding-fit-title" aria-describedby="funding-fit-description">
             <div className="fit-panel-copy">
               <p className="eyebrow"><ShieldCheck /> Potrivire realistă</p>
@@ -170,7 +214,7 @@ export function FundingPage() {
               <li><Check /> Program ales pe criterii reale</li>
               <li><Check /> Buget și calendar construite coerent</li>
               <li><Check /> Documente verificate înainte de depunere</li>
-              <li><Check /> Opțiune de sprijin după aprobare</li>
+              <li><Check /> Sprijin în implementare după aprobare</li>
             </ul>
           </section>
 
@@ -202,16 +246,23 @@ export function FundingPage() {
             </div>
           </section>
 
-          <section className="calculator-entry" id="calculator-estimare" aria-labelledby="funding-calculator-title">
-            <span className="calculator-entry-icon"><Calculator aria-hidden="true" /></span>
-            <div>
-              <p className="eyebrow">Estimare orientativă</p>
-              <h3 id="funding-calculator-title">Estimează complexitatea consultanței</h3>
-              <p>Descrie pe scurt proiectul, valoarea și stadiul documentelor pentru o estimare orientativă a complexității serviciului.</p>
+          <FundingEligibilityChecker />
+
+          <section className="differentiators-section" id="ce-ne-deosebeste" aria-labelledby="differentiators-title">
+            <header>
+              <p className="eyebrow"><ShieldCheck aria-hidden="true" /> Mod de lucru</p>
+              <h2 id="differentiators-title">Ce ne deosebește</h2>
+              <p>Un proces construit în jurul verificării, trasabilității și deciziilor explicate, fără promisiuni de aprobare.</p>
+            </header>
+            <div className="differentiators-grid">
+              {differentiators.map(([title, text], index) => (
+                <article key={title}>
+                  <span>0{index + 1}</span>
+                  <h3>{title}</h3>
+                  <p>{text}</p>
+                </article>
+              ))}
             </div>
-            <Link className="primary-button blue-button" href="/calculator-pret-consultanta">
-              Deschide calculatorul <ArrowRight aria-hidden="true" />
-            </Link>
           </section>
 
           <section className="process-block" id="proces-fonduri" aria-labelledby="funding-process-title">
@@ -285,7 +336,7 @@ export function FundingPage() {
               <Link href="/fonduri-europene-pentru-firme"><span><strong>Fonduri europene pentru firme</strong><small>Criterii și pregătire pentru investițiile companiilor.</small></span><ArrowRight aria-hidden="true" /></Link>
               <Link href="/fonduri-europene-pentru-ong"><span><strong>Fonduri europene pentru ONG</strong><small>Proiecte sociale, educaționale și comunitare.</small></span><ArrowRight aria-hidden="true" /></Link>
               <Link href="/fonduri-europene-pentru-startup"><span><strong>Fonduri europene pentru startup</strong><small>Condiții și obligații pentru afaceri aflate la început.</small></span><ArrowRight aria-hidden="true" /></Link>
-              <Link href="/calculator-pret-consultanta"><span><strong>Calculator orientativ</strong><small>Estimează complexitatea consultanței sau a unui serviciu administrativ.</small></span><ArrowRight aria-hidden="true" /></Link>
+              <Link href="/fonduri-europene#verificare-eligibilitate"><span><strong>Verificare eligibilitate și punctaj</strong><small>Alege programul și pregătește datele pentru o evaluare detaliată.</small></span><ArrowRight aria-hidden="true" /></Link>
             </div>
           </section>
 

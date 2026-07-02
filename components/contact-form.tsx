@@ -5,6 +5,7 @@ import { Check, LoaderCircle, Send } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { contactCategoryForService, contactSchema, type ContactCategory, type ContactInput } from "@/lib/contact-schema";
+import { fundingProgramOptions } from "@/lib/funding-programs";
 import { siteConfig } from "@/lib/site-config";
 
 const servicesByCategory = {
@@ -27,7 +28,15 @@ const formTrust = [
   "Solicitarea este verificată înainte de ofertare."
 ] as const;
 
-export function ContactForm({ defaultService = "fonduri-europene" }: { defaultService?: ContactInput["service"] }) {
+export function ContactForm({
+  defaultService = "fonduri-europene",
+  defaultFundingProgram = "",
+  defaultMessage = ""
+}: {
+  defaultService?: ContactInput["service"];
+  defaultFundingProgram?: string;
+  defaultMessage?: string;
+}) {
   const defaultCategory = contactCategoryForService(defaultService);
   const [serverMessage, setServerMessage] = useState("");
   const [sent, setSent] = useState(false);
@@ -41,7 +50,14 @@ export function ContactForm({ defaultService = "fonduri-europene" }: { defaultSe
     formState: { errors, isSubmitting }
   } = useForm<ContactInput>({
     resolver: zodResolver(contactSchema),
-    defaultValues: { category: defaultCategory, service: defaultService, consent: false, website: "" }
+    defaultValues: {
+      category: defaultCategory,
+      service: defaultService,
+      fundingProgram: defaultFundingProgram,
+      message: defaultMessage,
+      consent: false,
+      website: ""
+    }
   });
   const category = (useWatch({ control, name: "category" }) ?? defaultCategory) as ContactCategory;
   const selectedService = useWatch({ control, name: "service" });
@@ -53,6 +69,12 @@ export function ContactForm({ defaultService = "fonduri-europene" }: { defaultSe
       setValue("service", availableServices[0][0], { shouldValidate: true });
     }
   }, [availableServices, selectedService, setValue]);
+
+  useEffect(() => {
+    if (category !== "fonduri-europene") {
+      setValue("fundingProgram", "");
+    }
+  }, [category, setValue]);
 
   const submit = async (data: ContactInput) => {
     setServerMessage("");
@@ -67,7 +89,14 @@ export function ContactForm({ defaultService = "fonduri-europene" }: { defaultSe
       if (!response.ok) throw new Error(result.message || "Solicitarea nu a putut fi trimisă.");
       setDemoMode(Boolean(result.demo));
       setSent(true);
-      reset({ category: defaultCategory, service: defaultService, consent: false, website: "" });
+      reset({
+        category: defaultCategory,
+        service: defaultService,
+        fundingProgram: defaultFundingProgram,
+        message: defaultMessage,
+        consent: false,
+        website: ""
+      });
     } catch (error) {
       setServerMessage(error instanceof Error ? error.message : "A apărut o eroare. Încearcă din nou.");
     }
@@ -112,6 +141,17 @@ export function ContactForm({ defaultService = "fonduri-europene" }: { defaultSe
           </select>
           {errors.service && <small id="service-error">{errors.service.message}</small>}
         </label>
+        {category === "fonduri-europene" && (
+          <label className="funding-program-field">
+            <span>Linia de finanțare</span>
+            <select {...register("fundingProgram")}>
+              <option value="">Selectează linia de finanțare</option>
+              {fundingProgramOptions.map((option) => (
+                <option key={option.value} value={option.value}>{option.label}</option>
+              ))}
+            </select>
+          </label>
+        )}
       </div>
       <div className="form-grid">
         <label>

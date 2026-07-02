@@ -16,7 +16,15 @@ const contactAssurances = [
   "Datele rămân folosite strict pentru solicitarea transmisă."
 ] as const;
 
-export function ContactPage({ defaultService }: { defaultService?: ContactInput["service"] }) {
+export function ContactPage({
+  defaultService,
+  defaultFundingProgram = "",
+  defaultMessage = ""
+}: {
+  defaultService?: ContactInput["service"];
+  defaultFundingProgram?: string;
+  defaultMessage?: string;
+}) {
   const navigationContext = defaultService === "fonduri-europene" || defaultService === "consultanta"
     ? "funding"
     : defaultService
@@ -49,7 +57,13 @@ export function ContactPage({ defaultService }: { defaultService?: ContactInput[
               {contactAssurances.map((item) => <li key={item}><ShieldCheck aria-hidden="true" /> {item}</li>)}
             </ul>
           </div>
-          <div className="form-wrap" id="formular-contact"><ContactForm defaultService={defaultService} /></div>
+          <div className="form-wrap" id="formular-contact">
+            <ContactForm
+              defaultService={defaultService}
+              defaultFundingProgram={defaultFundingProgram}
+              defaultMessage={defaultMessage}
+            />
+          </div>
         </div>
       </section>
     </SiteShell>

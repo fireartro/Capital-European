@@ -89,13 +89,15 @@ const stagePath = [
   { x: -12, y: 66, scale: .64, turn: -5 },
   { x: 4, y: 48, scale: .68, turn: 6 },
   { x: 8, y: 38, scale: .66, turn: -4 },
-  { x: 6, y: 56, scale: .66, turn: 3 }
+  { x: 6, y: 56, scale: .66, turn: 3 },
+  { x: -8, y: 60, scale: .64, turn: -6 },
+  { x: 4, y: 44, scale: .68, turn: 5 }
 ] as const;
 
 function getFormation(sectionId: string | undefined, index: number) {
   if (sectionId?.includes("intrebari")) return questionFormation;
   if (sectionId?.includes("proces")) return processFormation;
-  if (sectionId?.includes("calculator")) return checkFormation;
+  if (sectionId?.includes("calculator") || sectionId?.includes("eligibilitate")) return checkFormation;
   if (sectionId?.includes("evaluare") || sectionId?.includes("externalizare")) return documentFormation;
   return formations[Math.min(index, formations.length - 1)];
 }

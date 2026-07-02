@@ -1,5 +1,6 @@
 import { ContactPage } from "@/components/contact-page";
 import type { ContactInput } from "@/lib/contact-schema";
+import { fundingProgramOptions, getFundingProgramLabel } from "@/lib/funding-programs";
 import { createPageMetadata } from "@/lib/metadata";
 import { breadcrumbSchema, JsonLd } from "@/lib/structured-data";
 
@@ -13,12 +14,20 @@ const allowedServices = new Set<ContactInput["service"]>([
   "servicii-administrative", "documente", "secretariat", "administrativ", "consultanta", "infiintare-firma", "fonduri-europene"
 ]);
 
-export default async function Page({ searchParams }: { searchParams: Promise<{ service?: string }> }) {
-  const { service } = await searchParams;
+export default async function Page({ searchParams }: { searchParams: Promise<{ service?: string; program?: string; score?: string }> }) {
+  const { service, program, score } = await searchParams;
   const normalizedService = service === "birotica" ? "servicii-administrative" : service;
   const defaultService = normalizedService && allowedServices.has(normalizedService as ContactInput["service"])
     ? normalizedService as ContactInput["service"]
     : undefined;
+  const defaultFundingProgram = program && fundingProgramOptions.some((option) => option.value === program)
+    ? program
+    : "";
+  const parsedScore = score && /^\d{1,3}$/.test(score) ? Number(score) : undefined;
+  const validScore = parsedScore !== undefined && parsedScore >= 0 && parsedScore <= 100 ? parsedScore : undefined;
+  const defaultMessage = defaultService === "fonduri-europene" && defaultFundingProgram
+    ? `Solicit evaluarea eligibilității și a punctajului pentru ${getFundingProgramLabel(defaultFundingProgram)}.${validScore !== undefined ? ` Punctaj orientativ de pregătire calculat pe site: ${validScore}/100.` : ""} Doresc verificarea criteriilor și a grilei oficiale.`
+    : "";
 
   return (
     <>
@@ -26,7 +35,11 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ s
         { name: "Acasă", path: "/" },
         { name: "Contact", path: "/contact" }
       ])} />
-      <ContactPage defaultService={defaultService} />
+      <ContactPage
+        defaultService={defaultService}
+        defaultFundingProgram={defaultFundingProgram}
+        defaultMessage={defaultMessage}
+      />
     </>
   );
 }
