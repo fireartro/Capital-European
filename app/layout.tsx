@@ -6,7 +6,7 @@ import { CookieBanner } from "@/components/cookie-banner";
 import { siteConfig } from "@/lib/site-config";
 import { JsonLd, organizationSchema, webSiteSchema } from "@/lib/structured-data";
 
-const googleAnalyticsId = process.env.NEXT_PUBLIC_GA_ID;
+const googleAnalyticsId = process.env.NEXT_PUBLIC_GA_ID || "G-JJDLTV4VX9";
 const googleTagManagerId = process.env.NEXT_PUBLIC_GTM_ID;
 const clarityProjectId = process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID;
 

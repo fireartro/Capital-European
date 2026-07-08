@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 
 const isDevelopment = process.env.NODE_ENV === "development";
-const hasGoogleAnalytics = Boolean(process.env.NEXT_PUBLIC_GA_ID);
+const googleAnalyticsId = process.env.NEXT_PUBLIC_GA_ID || "G-JJDLTV4VX9";
+const hasGoogleAnalytics = Boolean(googleAnalyticsId);
 const hasGoogleTagManager = Boolean(process.env.NEXT_PUBLIC_GTM_ID);
 const hasClarity = Boolean(process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID);
 const hasGoogleTracking = hasGoogleAnalytics || hasGoogleTagManager;

@@ -5,9 +5,9 @@
 Configurează în Vercel pentru mediul `Production`, apoi redeploy:
 
 ```env
-NEXT_PUBLIC_SITE_URL=https://domeniul-real.ro
+NEXT_PUBLIC_SITE_URL=https://capitaleuropean.ro
 CONTACT_WEBHOOK_URL=https://endpoint-ul-real-pentru-contact
-NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
+NEXT_PUBLIC_GA_ID=G-JJDLTV4VX9
 NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX
 NEXT_PUBLIC_CLARITY_PROJECT_ID=xxxxxxxxxx
 NEXT_PUBLIC_CONTACT_EMAIL=contact@domeniul-real.ro
@@ -34,7 +34,7 @@ Webhook-ul primește JSON validat cu: `name`, `email`, `phone`, `service`, `mess
 
 ## 3. Indexare
 
-- Google Search Console: adaugă proprietatea pentru `NEXT_PUBLIC_SITE_URL`, apoi trimite `https://domeniul-real.ro/sitemap.xml`.
+- Google Search Console: adaugă proprietatea pentru `NEXT_PUBLIC_SITE_URL`, apoi trimite `https://capitaleuropean.ro/sitemap.xml`.
 - Bing Webmaster Tools: adaugă același domeniu și același sitemap.
 - Verifică `https://domeniul-real.ro/robots.txt` și `https://domeniul-real.ro/sitemap.xml` după deploy.
 - Testează paginile importante în Rich Results Test și PageSpeed Insights.
