@@ -52,3 +52,4 @@ export const contactSchema = z.object({
 }));
 
 export type ContactInput = z.input<typeof contactSchema>;
+export type ContactSubmission = z.output<typeof contactSchema>;

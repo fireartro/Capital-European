@@ -6,7 +6,10 @@ Configurează în Vercel pentru mediul `Production`, apoi redeploy:
 
 ```env
 NEXT_PUBLIC_SITE_URL=https://capitaleuropean.ro
-CONTACT_WEBHOOK_URL=https://endpoint-ul-real-pentru-contact
+CONTACT_WEBHOOK_URL=
+RESEND_API_KEY=re_xxxxxxxxx
+CONTACT_FROM_EMAIL=Capital European <noreply@capitaleuropean.ro>
+CONTACT_TO_EMAIL=contact@capitaleuropean.ro
 NEXT_PUBLIC_GA_ID=G-JJDLTV4VX9
 NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX
 NEXT_PUBLIC_CLARITY_PROJECT_ID=xxxxxxxxxx
@@ -26,11 +29,13 @@ NEXT_PUBLIC_REGISTERED_OFFICE=sediul real
 NEXT_PUBLIC_ESTIMATOR_BASE_PRICE_RON=prețul de bază aprobat
 ```
 
-Nu publica date juridice, numere de contact sau prețuri aproximative fără confirmarea companiei. `CONTACT_WEBHOOK_URL` este secret server-side și trebuie să fie HTTPS.
+Nu publica date juridice, numere de contact sau prețuri aproximative fără confirmarea companiei. `CONTACT_WEBHOOK_URL` este opțional, secret server-side și trebuie să fie HTTPS dacă este folosit. Pentru trimitere directă prin email, setează `RESEND_API_KEY`, `CONTACT_FROM_EMAIL` și `CONTACT_TO_EMAIL`.
 
 ## 2. Contact
 
-Webhook-ul primește JSON validat cu: `name`, `email`, `phone`, `service`, `message` și `consent`. Câmpul honeypot nu este transmis. Endpoint-ul trebuie să răspundă cu status `2xx` în maximum 8 secunde.
+Formularul poate livra mesajele prin `CONTACT_WEBHOOK_URL`, dacă ai un endpoint HTTPS extern, sau direct prin Resend, dacă setezi `RESEND_API_KEY`, `CONTACT_FROM_EMAIL` și `CONTACT_TO_EMAIL`.
+
+Webhook-ul primește JSON validat cu: `name`, `email`, `phone`, `category`, `service`, `fundingProgram`, `message` și `consent`. Câmpul honeypot nu este transmis. Endpoint-ul trebuie să răspundă cu status `2xx` în maximum 8 secunde.
 
 ## 3. Indexare
 

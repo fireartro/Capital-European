@@ -35,7 +35,9 @@ Copiaza `.env.example` in `.env.local` pentru local sau seteaza aceleasi valori 
 
 ```bash
 NEXT_PUBLIC_SITE_URL=https://capitaleuropean.ro
-CONTACT_WEBHOOK_URL=https://...
+RESEND_API_KEY=re_xxxxxxxxx
+CONTACT_FROM_EMAIL=Capital European <noreply@capitaleuropean.ro>
+CONTACT_TO_EMAIL=contact@capitaleuropean.ro
 NEXT_PUBLIC_CONTACT_EMAIL=contact@capitaleuropean.ro
 NEXT_PUBLIC_PHONE_DISPLAY=0753 527 110
 NEXT_PUBLIC_PHONE_HREF=+40753527110
@@ -64,12 +66,13 @@ Nu publica site-ul comercial final fara date legale reale si verificate.
 
 ## Contact form
 
-Formularul trimite solicitari catre `CONTACT_WEBHOOK_URL`.
+Formularul trimite solicitari prin Resend cand sunt setate `RESEND_API_KEY`, `CONTACT_FROM_EMAIL` si `CONTACT_TO_EMAIL`. Daca setezi `CONTACT_WEBHOOK_URL`, webhook-ul extern are prioritate.
 
 Reguli importante:
 
-- webhook-ul trebuie sa fie HTTPS;
-- fara webhook in productie, API-ul afiseaza fallback catre email;
+- webhook-ul, daca este folosit, trebuie sa fie HTTPS;
+- fara webhook sau Resend in productie, API-ul afiseaza fallback catre email;
+- `CONTACT_FROM_EMAIL` trebuie sa foloseasca un domeniu verificat in Resend;
 - campul `website` este honeypot si nu trebuie afisat utilizatorilor;
 - validarea este in `lib/contact-schema.ts`;
 - endpoint-ul este in `app/api/contact/route.ts`.
@@ -114,7 +117,7 @@ vercel deploy --prod
 - [ ] Domeniul `capitaleuropean.ro` este conectat corect in Vercel.
 - [ ] DNS root `@` si `www` sunt verificate.
 - [ ] `NEXT_PUBLIC_SITE_URL` este domeniul final, fara slash la final.
-- [ ] `CONTACT_WEBHOOK_URL` este configurat si testat.
+- [ ] Resend este configurat si formularul de contact este testat.
 - [ ] Emailul `contact@capitaleuropean.ro` functioneaza.
 - [ ] Telefonul si WhatsApp-ul deschid corect aplicatiile.
 - [ ] Datele legale sunt completate cu informatii reale.

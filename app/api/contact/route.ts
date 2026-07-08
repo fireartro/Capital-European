@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { contactSchema } from "@/lib/contact-schema";
+import { contactSchema, type ContactSubmission } from "@/lib/contact-schema";
 import { siteConfig } from "@/lib/site-config";
 
 export const runtime = "nodejs";
@@ -7,7 +7,9 @@ export const runtime = "nodejs";
 const WINDOW_MS = 10 * 60 * 1000;
 const MAX_REQUESTS = 5;
 const MAX_BODY_LENGTH = 12_000;
+const RESEND_EMAIL_ENDPOINT = "https://api.resend.com/emails";
 const attempts = new Map<string, { count: number; resetAt: number }>();
+type ContactDeliveryData = Omit<ContactSubmission, "website">;
 
 function getClientIp(request: Request) {
   const forwarded = request.headers.get("x-forwarded-for");
@@ -78,6 +80,114 @@ function jsonResponse(body: unknown, init?: ResponseInit) {
   return NextResponse.json(body, { ...init, headers });
 }
 
+function publicContactData(data: ContactSubmission): ContactDeliveryData {
+  return {
+    name: data.name,
+    email: data.email,
+    phone: data.phone,
+    category: data.category,
+    service: data.service,
+    fundingProgram: data.fundingProgram,
+    message: data.message,
+    consent: data.consent
+  };
+}
+
+function escapeHtml(value: string) {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function serviceLabel(service: ContactDeliveryData["service"]) {
+  const labels: Record<ContactDeliveryData["service"], string> = {
+    "servicii-administrative": "Servicii administrative",
+    documente: "Administrare documente",
+    secretariat: "Secretariat",
+    administrativ: "Asistenta administrativa",
+    consultanta: "Consultanta fonduri europene",
+    "infiintare-firma": "Infiintare firma",
+    "fonduri-europene": "Fonduri europene"
+  };
+
+  return labels[service] ?? service;
+}
+
+function contactEmailHtml(data: ContactDeliveryData) {
+  const escapedMessage = escapeHtml(data.message).replace(/\r?\n/g, "<br />");
+  const fundingProgram = data.fundingProgram
+    ? `<p><strong>Linie de finantare:</strong> ${escapeHtml(data.fundingProgram)}</p>`
+    : "";
+
+  return `
+    <div style="font-family:Arial,sans-serif;line-height:1.55;color:#0b1730">
+      <h2>Solicitare noua de pe site</h2>
+      <p><strong>Nume:</strong> ${escapeHtml(data.name)}</p>
+      <p><strong>Email:</strong> ${escapeHtml(data.email)}</p>
+      <p><strong>Telefon:</strong> ${escapeHtml(data.phone)}</p>
+      <p><strong>Categorie:</strong> ${escapeHtml(data.category)}</p>
+      <p><strong>Serviciu:</strong> ${escapeHtml(serviceLabel(data.service))}</p>
+      ${fundingProgram}
+      <hr style="border:none;border-top:1px solid #dbe5f4;margin:20px 0" />
+      <p><strong>Mesaj:</strong></p>
+      <p>${escapedMessage}</p>
+      <hr style="border:none;border-top:1px solid #dbe5f4;margin:20px 0" />
+      <p style="color:#52677c;font-size:13px">Mesaj trimis prin formularul ${escapeHtml(siteConfig.name)}.</p>
+    </div>
+  `;
+}
+
+function contactEmailText(data: ContactDeliveryData) {
+  return [
+    "Solicitare noua de pe site",
+    "",
+    `Nume: ${data.name}`,
+    `Email: ${data.email}`,
+    `Telefon: ${data.phone}`,
+    `Categorie: ${data.category}`,
+    `Serviciu: ${serviceLabel(data.service)}`,
+    data.fundingProgram ? `Linie de finantare: ${data.fundingProgram}` : "",
+    "",
+    "Mesaj:",
+    data.message
+  ].filter(Boolean).join("\n");
+}
+
+async function sendResendEmail(data: ContactDeliveryData) {
+  const apiKey = process.env.RESEND_API_KEY?.trim();
+  const from = process.env.CONTACT_FROM_EMAIL?.trim();
+  const recipients = (process.env.CONTACT_TO_EMAIL || siteConfig.email)
+    .split(",")
+    .map((email) => email.trim())
+    .filter(Boolean);
+
+  if (!apiKey || !from || recipients.length === 0) return "not-configured" as const;
+
+  const response = await fetch(RESEND_EMAIL_ENDPOINT, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      from,
+      to: recipients,
+      reply_to: data.email,
+      subject: `[${siteConfig.name}] Solicitare - ${serviceLabel(data.service)}`,
+      html: contactEmailHtml(data),
+      text: contactEmailText(data)
+    }),
+    redirect: "error",
+    signal: AbortSignal.timeout(8_000)
+  });
+
+  if (!response.ok) throw new Error("Resend delivery failed");
+  return "sent" as const;
+}
+
 export async function POST(request: Request) {
   if (!request.headers.get("content-type")?.startsWith("application/json")) {
     return jsonResponse({ message: "Tip de conținut invalid." }, { status: 415 });
@@ -123,7 +233,10 @@ export async function POST(request: Request) {
     return jsonResponse({ success: true }, { status: 202 });
   }
 
+  const contactData = publicContactData(result.data);
   const webhook = process.env.CONTACT_WEBHOOK_URL;
+  let delivered = false;
+
   if (webhook) {
     let target: URL;
     try {
@@ -137,7 +250,6 @@ export async function POST(request: Request) {
     }
 
     try {
-      const contactData = { ...result.data, website: undefined };
       const response = await fetch(target, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -149,12 +261,30 @@ export async function POST(request: Request) {
       if (!response.ok) {
         return jsonResponse({ message: "Mesajul nu a putut fi trimis momentan." }, { status: 502 });
       }
+      delivered = true;
     } catch {
       return jsonResponse({ message: "Mesajul nu a putut fi trimis momentan." }, { status: 502 });
     }
-  } else if (new URL(request.url).hostname === "127.0.0.1" || new URL(request.url).hostname === "localhost") {
+  } else {
+    try {
+      const emailResult = await sendResendEmail(contactData);
+      if (emailResult === "sent") {
+        delivered = true;
+      }
+    } catch {
+      return jsonResponse({ message: "Mesajul nu a putut fi trimis momentan." }, { status: 502 });
+    }
+  }
+
+  if (delivered) {
+    return jsonResponse({ success: true }, { status: 201 });
+  }
+
+  if (new URL(request.url).hostname === "127.0.0.1" || new URL(request.url).hostname === "localhost") {
     return jsonResponse({ success: true, demo: true }, { status: 201 });
-  } else if (process.env.NODE_ENV === "production") {
+  }
+
+  if (process.env.NODE_ENV === "production") {
     return jsonResponse(
       { message: `Formularul online este temporar indisponibil. Scrie-ne direct la ${siteConfig.email}.` },
       { status: 503 }
