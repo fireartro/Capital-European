@@ -11,7 +11,7 @@ import {
   readCookieConsent,
   saveCookieConsent
 } from "@/lib/cookie-consent";
-import { setAnalyticsReady, trackAnalyticsEvent } from "@/lib/analytics";
+import { setAnalyticsReady } from "@/lib/analytics";
 
 type BannerView = "loading" | "banner" | "settings" | "hidden";
 
@@ -86,9 +86,23 @@ function TrackingController({
     const windowFlags = window as unknown as Record<string, unknown>;
 
     window.dataLayer ??= [];
-    window.gtag ??= (...args: unknown[]) => {
-      window.dataLayer?.push(args);
+    window.gtag ??= function gtag(...args: unknown[]) {
+      void args;
+      // Google Tag consumes the native arguments object from its official bootstrap snippet.
+      // eslint-disable-next-line prefer-rest-params
+      window.dataLayer?.push(arguments);
     };
+
+    // Google must see a default before the dynamic tag loads; the saved choice then updates it.
+    if (!windowFlags.__ceConsentDefault) {
+      window.gtag("consent", "default", {
+        analytics_storage: "denied",
+        ad_storage: "denied",
+        ad_user_data: "denied",
+        ad_personalization: "denied"
+      });
+      windowFlags.__ceConsentDefault = true;
+    }
 
     window.gtag("consent", "update", {
       analytics_storage: analyticsState,
@@ -103,29 +117,28 @@ function TrackingController({
       if (consent.analytics) {
         const pagePath = `${pathname || "/"}${window.location.search}`;
         setAnalyticsReady(false);
+        if (!windowFlags.__ceGaInitialized) {
+          window.gtag?.("js", new Date());
+          windowFlags.__ceGaInitialized = true;
+        }
+        window.gtag?.("config", googleAnalyticsId, {
+          page_path: pagePath,
+          send_page_view: false,
+          anonymize_ip: true,
+          allow_google_signals: false,
+          allow_ad_personalization_signals: false
+        });
+        window.gtag?.("event", "page_view", {
+          send_to: googleAnalyticsId,
+          page_title: document.title,
+          page_location: window.location.href,
+          page_path: pagePath
+        });
         appendTrackingScript(
           `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(googleAnalyticsId)}`,
           "data-ce-ga",
           () => {
-            if (disposed || !consent.analytics) return;
-            if (!windowFlags.__ceGaInitialized) {
-              window.gtag?.("js", new Date());
-              windowFlags.__ceGaInitialized = true;
-            }
-            window.gtag?.("config", googleAnalyticsId, {
-              page_path: pagePath,
-              send_page_view: false,
-              anonymize_ip: true,
-              allow_google_signals: false,
-              allow_ad_personalization_signals: false
-            });
-            setAnalyticsReady(true);
-            trackAnalyticsEvent("page_view", {
-              send_to: googleAnalyticsId,
-              page_title: document.title,
-              page_location: window.location.href,
-              page_path: pagePath
-            });
+            if (!disposed && consent.analytics) setAnalyticsReady(true);
           },
           () => setAnalyticsReady(false)
         );
