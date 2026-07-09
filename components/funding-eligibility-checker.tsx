@@ -4,6 +4,7 @@ import { ArrowRight, CheckCircle2, ClipboardCheck, Info } from "lucide-react";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { fundingProgramOptions, getFundingProgramLabel, UNKNOWN_FUNDING_PROGRAM } from "@/lib/funding-programs";
+import { trackAnalyticsEvent } from "@/lib/analytics";
 
 const readinessCriteria = [
   "Solicitantul este înregistrat și activ în România",
@@ -89,7 +90,14 @@ export function FundingEligibilityChecker() {
           <h3>{result.title}</h3>
           <p>{result.text}</p>
           <small><Info aria-hidden="true" /> Program selectat: {getFundingProgramLabel(programId)}</small>
-          <Link className="primary-button yellow-button" href={contactHref}>
+          <Link
+            className="primary-button yellow-button"
+            href={contactHref}
+            onClick={() => trackAnalyticsEvent("eligibility_check_to_contact", {
+              funding_program: programId,
+              preparation_score: score
+            })}
+          >
             Solicită evaluarea punctajului <ArrowRight aria-hidden="true" />
           </Link>
           <em>Evaluarea finală se face exclusiv pe baza ghidului și grilei oficiale în vigoare.</em>

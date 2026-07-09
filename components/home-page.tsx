@@ -17,6 +17,7 @@ import Link from "next/link";
 import { Brand } from "@/components/brand";
 import { SiteShell } from "@/components/site-shell";
 import { siteConfig } from "@/lib/site-config";
+import { AnalyticsLink } from "@/components/analytics-link";
 
 const landingProof = [
   [ClipboardCheck, "Evaluare înainte de ofertă", "Clarificăm obiectivul, informațiile disponibile și serviciul de care ai nevoie."],
@@ -54,13 +55,15 @@ export function HomePage() {
               >
                 <ClipboardCheck aria-hidden="true" /> Verificare eligibilitate și punctaj
               </Link>
-              <a
+              <AnalyticsLink
                 className="choice-button"
                 href="/fonduri-europene#programe-finantare"
+                eventName="select_service"
+                eventParameters={{ service_area: "fonduri_europene", destination: "programe_finantare" }}
                 title="Vezi programele de finanțare urmărite"
               >
                 Programe de finanțare <ArrowRight aria-hidden="true" />
-              </a>
+              </AnalyticsLink>
             </div>
             <div className="eu-emblem" aria-hidden="true">
               <span className="star-orbit">
@@ -87,13 +90,15 @@ export function HomePage() {
               >
                 <Calculator aria-hidden="true" /> Estimează complexitatea serviciului
               </Link>
-              <a
+              <AnalyticsLink
                 className="choice-button"
                 href="/servicii-administrative"
+                eventName="select_service"
+                eventParameters={{ service_area: "servicii_administrative", destination: "servicii_administrative" }}
                 title="Servicii administrative externalizate Capital European"
               >
                 Vezi serviciile administrative <ArrowRight aria-hidden="true" />
-              </a>
+              </AnalyticsLink>
             </div>
             <div className="admin-visual" aria-hidden="true">
               <span className="admin-sheet sheet-back" />

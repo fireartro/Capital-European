@@ -7,6 +7,7 @@ import { useForm, useWatch } from "react-hook-form";
 import { contactCategoryForService, contactSchema, type ContactCategory, type ContactInput } from "@/lib/contact-schema";
 import { fundingProgramOptions } from "@/lib/funding-programs";
 import { siteConfig } from "@/lib/site-config";
+import { trackAnalyticsEvent } from "@/lib/analytics";
 
 const servicesByCategory = {
   "fonduri-europene": [
@@ -88,6 +89,12 @@ export function ContactForm({
       const result = (isJson ? await response.json().catch(() => ({})) : {}) as { success?: boolean; demo?: boolean; message?: string };
       if (!response.ok) throw new Error(result.message || "Solicitarea nu a putut fi trimisă.");
       setDemoMode(Boolean(result.demo));
+      trackAnalyticsEvent("generate_lead", {
+        lead_source: "contact_form",
+        service_category: data.category,
+        service: data.service,
+        funding_program: data.fundingProgram || undefined
+      });
       setSent(true);
       reset({
         category: defaultCategory,

@@ -30,7 +30,9 @@ export function SiteFooter() {
           {siteConfig.phoneHref && <a href={`tel:${siteConfig.phoneHref}`} aria-label={`Sună ${siteConfig.name}`} title={`Sună ${siteConfig.name}`}>{siteConfig.phoneDisplay}</a>}
           <a href={`mailto:${siteConfig.email}`} title={`Trimite email către ${siteConfig.name}`}>{siteConfig.email}</a>
           {siteConfig.schedule && <span>Program: {siteConfig.schedule}</span>}
-          {siteConfig.address && <span>{siteConfig.address}</span>}
+          {siteConfig.locations.map((location) => (
+            <span key={location.label}>{location.label}: {location.address}</span>
+          ))}
           {siteConfig.legal.entityName && <span>Operator: {siteConfig.legal.entityName}</span>}
           {siteConfig.legal.registrationNumber && <span>Registrul comerțului: {siteConfig.legal.registrationNumber}</span>}
           {siteConfig.legal.taxId && <span>CUI: {siteConfig.legal.taxId}</span>}
@@ -43,6 +45,7 @@ export function SiteFooter() {
           <Link href="/confidentialitate" title="Politica de confidențialitate">Confidențialitate</Link>
           <Link href="/termeni" aria-label="Termeni și condiții" title="Termeni și condiții">Termeni</Link>
           <Link href="/cookies" aria-label="Politica de cookies" title="Politica de cookies">Cookies</Link>
+          <a href="https://anpc.ro/sal/" target="_blank" rel="noopener noreferrer" title="Soluționarea alternativă a litigiilor prin ANPC">SAL ANPC</a>
           <CookieSettingsButton compact />
         </div>
       </div>

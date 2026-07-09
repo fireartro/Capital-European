@@ -6,6 +6,33 @@ function absoluteUrl(path = "/") {
   return new URL(path, siteConfig.url).toString();
 }
 
+function postalAddress(address: string): JsonObject {
+  const parts = address.split(",").map((part) => part.trim()).filter(Boolean);
+
+  if (parts.length < 2) {
+    return {
+      "@type": "PostalAddress",
+      streetAddress: address,
+      addressCountry: "RO"
+    };
+  }
+
+  return {
+    "@type": "PostalAddress",
+    streetAddress: parts.slice(1).join(", "),
+    addressLocality: parts[0],
+    addressCountry: "RO"
+  };
+}
+
+function locationSchema() {
+  return siteConfig.locations.map((location) => ({
+    "@type": "Place",
+    name: `${siteConfig.name} - ${location.label}`,
+    address: postalAddress(location.address)
+  }));
+}
+
 function sanitizeJsonLd(data: JsonObject | JsonObject[]) {
   return JSON.stringify(data).replace(/</g, "\\u003c");
 }
@@ -43,13 +70,8 @@ export function organizationSchema(): JsonObject {
           ...(siteConfig.phoneHref ? { telephone: siteConfig.phoneHref } : {}),
           availableLanguage: ["ro"]
         },
-        ...(siteConfig.address ? {
-          address: {
-            "@type": "PostalAddress",
-            streetAddress: siteConfig.address,
-            addressCountry: "RO"
-          }
-        } : {}),
+        ...(siteConfig.address ? { address: postalAddress(siteConfig.address) } : {}),
+        ...(siteConfig.locations.length > 0 ? { location: locationSchema() } : {}),
         sameAs: siteConfig.sameAs.length > 0 ? [...siteConfig.sameAs] : undefined,
         knowsAbout: [
           "Fonduri europene",
@@ -69,13 +91,7 @@ export function organizationSchema(): JsonObject {
         image: absoluteUrl(siteConfig.defaultOgImage),
         email: siteConfig.email,
         ...(siteConfig.phoneHref ? { telephone: siteConfig.phoneHref } : {}),
-        ...(siteConfig.address ? {
-          address: {
-            "@type": "PostalAddress",
-            streetAddress: siteConfig.address,
-            addressCountry: "RO"
-          }
-        } : {}),
+        ...(siteConfig.address ? { address: postalAddress(siteConfig.address) } : {}),
         areaServed: [
           { "@type": "Country", name: "România" }
         ],
@@ -186,13 +202,7 @@ export function professionalServiceSchema({
     description,
     image: absoluteUrl(siteConfig.defaultOgImage),
     email: siteConfig.email,
-    ...(siteConfig.address ? {
-      address: {
-        "@type": "PostalAddress",
-        streetAddress: siteConfig.address,
-        addressCountry: "RO"
-      }
-    } : {}),
+    ...(siteConfig.address ? { address: postalAddress(siteConfig.address) } : {}),
     areaServed: {
       "@type": "Country",
       name: "România"

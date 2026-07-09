@@ -11,13 +11,12 @@ import {
   readCookieConsent,
   saveCookieConsent
 } from "@/lib/cookie-consent";
+import { setAnalyticsReady, trackAnalyticsEvent } from "@/lib/analytics";
 
 type BannerView = "loading" | "banner" | "settings" | "hidden";
 
 declare global {
   interface Window {
-    dataLayer?: unknown[];
-    gtag?: (...args: unknown[]) => void;
     clarity?: ((...args: unknown[]) => void) & { q?: unknown[][] };
   }
 }
@@ -38,11 +37,14 @@ function deleteTrackingCookies(prefixes: readonly string[]) {
   });
 }
 
-function appendTrackingScript(src: string, marker: string, onLoad?: () => void) {
+function appendTrackingScript(src: string, marker: string, onLoad?: () => void, onError?: () => void) {
   const existing = document.querySelector<HTMLScriptElement>(`script[${marker}]`);
   if (existing) {
     if (existing.dataset.loaded === "true") onLoad?.();
-    else if (onLoad) existing.addEventListener("load", onLoad, { once: true });
+    else {
+      if (onLoad) existing.addEventListener("load", onLoad, { once: true });
+      if (onError) existing.addEventListener("error", onError, { once: true });
+    }
     return;
   }
 
@@ -54,6 +56,7 @@ function appendTrackingScript(src: string, marker: string, onLoad?: () => void) 
     script.dataset.loaded = "true";
     onLoad?.();
   }, { once: true });
+  if (onError) script.addEventListener("error", onError, { once: true });
   document.head.appendChild(script);
 }
 
@@ -77,6 +80,7 @@ function TrackingController({
   useEffect(() => {
     if (!consent) return;
 
+    let disposed = false;
     const analyticsState = consent.analytics ? "granted" : "denied";
     const marketingState = consent.marketing ? "granted" : "denied";
     const windowFlags = window as unknown as Record<string, unknown>;
@@ -98,26 +102,36 @@ function TrackingController({
 
       if (consent.analytics) {
         const pagePath = `${pathname || "/"}${window.location.search}`;
-        appendTrackingScript(`https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(googleAnalyticsId)}`, "data-ce-ga");
-        if (!windowFlags.__ceGaInitialized) {
-          window.gtag("js", new Date());
-          windowFlags.__ceGaInitialized = true;
-        }
-        window.gtag("config", googleAnalyticsId, {
-          page_path: pagePath,
-          send_page_view: false,
-          anonymize_ip: true,
-          allow_google_signals: false,
-          allow_ad_personalization_signals: false
-        });
-        window.gtag("event", "page_view", {
-          send_to: googleAnalyticsId,
-          page_title: document.title,
-          page_location: window.location.href,
-          page_path: pagePath
-        });
+        setAnalyticsReady(false);
+        appendTrackingScript(
+          `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(googleAnalyticsId)}`,
+          "data-ce-ga",
+          () => {
+            if (disposed || !consent.analytics) return;
+            if (!windowFlags.__ceGaInitialized) {
+              window.gtag?.("js", new Date());
+              windowFlags.__ceGaInitialized = true;
+            }
+            window.gtag?.("config", googleAnalyticsId, {
+              page_path: pagePath,
+              send_page_view: false,
+              anonymize_ip: true,
+              allow_google_signals: false,
+              allow_ad_personalization_signals: false
+            });
+            setAnalyticsReady(true);
+            trackAnalyticsEvent("page_view", {
+              send_to: googleAnalyticsId,
+              page_title: document.title,
+              page_location: window.location.href,
+              page_path: pagePath
+            });
+          },
+          () => setAnalyticsReady(false)
+        );
       } else {
         windowFlags.__ceGaInitialized = false;
+        setAnalyticsReady(false);
         removeTrackingScript("data-ce-ga");
       }
     }
@@ -159,6 +173,10 @@ function TrackingController({
 
     if (!consent.analytics) deleteTrackingCookies(["_ga", "_gid", "_gat", "_cl", "CLID", "ANONCHK", "MR", "MUID", "SM"]);
     if (!consent.marketing) deleteTrackingCookies(["_gcl"]);
+
+    return () => {
+      disposed = true;
+    };
   }, [clarityProjectId, consent, googleAnalyticsId, googleTagManagerId, pathname]);
 
   return null;

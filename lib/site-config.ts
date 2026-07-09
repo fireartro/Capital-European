@@ -32,6 +32,8 @@ const legalEntityName = publicValue(process.env.NEXT_PUBLIC_LEGAL_ENTITY_NAME);
 const registrationNumber = publicValue(process.env.NEXT_PUBLIC_REGISTRATION_NUMBER);
 const taxId = publicValue(process.env.NEXT_PUBLIC_TAX_ID);
 const registeredOffice = publicValue(process.env.NEXT_PUBLIC_REGISTERED_OFFICE);
+const workingOffice = publicValue(process.env.NEXT_PUBLIC_WORKING_OFFICE);
+const secondaryOffice = publicValue(process.env.NEXT_PUBLIC_SECONDARY_OFFICE);
 const contactEmail = publicValue(process.env.NEXT_PUBLIC_CONTACT_EMAIL) || "contact@capitaleuropean.ro";
 const phoneDigits =
   normalizeRomanianPhone(publicValue(process.env.NEXT_PUBLIC_PHONE_HREF)) ||
@@ -43,6 +45,12 @@ const whatsappNumber =
   normalizeRomanianPhone(publicValue(process.env.NEXT_PUBLIC_WHATSAPP_NUMBER)) ||
   phoneDigits;
 const businessAddress = publicValue(process.env.NEXT_PUBLIC_BUSINESS_ADDRESS);
+const primaryOffice = registeredOffice || businessAddress;
+const locations = [
+  { label: "Sediu social", address: primaryOffice },
+  { label: "Punct de lucru", address: workingOffice },
+  { label: "Locație administrativă, Cluj-Napoca", address: secondaryOffice }
+].filter((location): location is { label: string; address: string } => Boolean(location.address));
 const businessSchedule = publicValue(process.env.NEXT_PUBLIC_BUSINESS_SCHEDULE) || "L-V · 10:00-18:00";
 const socialProfiles = [
   publicValue(process.env.NEXT_PUBLIC_FACEBOOK_URL),
@@ -63,18 +71,21 @@ export const siteConfig = {
     fonduriUe: "https://www.fonduri-ue.ro/",
     pnrr: "https://pnrr.gov.ro/"
   },
-  lastUpdated: "2026-06-27",
+  lastUpdated: "2026-07-10",
   email: contactEmail,
   phoneDisplay,
   phoneHref,
   whatsappNumber,
-  address: businessAddress,
+  address: primaryOffice,
+  locations,
   schedule: businessSchedule,
   legal: {
     entityName: legalEntityName,
     registrationNumber,
     taxId,
     registeredOffice,
+    workingOffice,
+    secondaryOffice,
     isComplete: Boolean(legalEntityName && registrationNumber && taxId && registeredOffice)
   },
   navigation: [

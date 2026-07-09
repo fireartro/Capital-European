@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { ArrowRight, Calculator, CircleCheckBig, Info, RotateCcw } from "lucide-react";
 import { useMemo, useState } from "react";
+import { trackAnalyticsEvent } from "@/lib/analytics";
 
 type SelectOption = {
   value: string;
@@ -237,7 +238,15 @@ export function ConsultingPriceCalculator({
           <li><CircleCheckBig aria-hidden="true" /> Estimare orientativă, nu ofertă comercială finală</li>
           <li><CircleCheckBig aria-hidden="true" /> Prețul final depinde de volum, livrabile și informațiile disponibile</li>
         </ul>
-        <Link className="primary-button yellow-button" href={`/contact?service=${serviceArea === "consulting" ? "consultanta" : "servicii-administrative"}`}>
+        <Link
+          className="primary-button yellow-button"
+          href={`/contact?service=${serviceArea === "consulting" ? "consultanta" : "servicii-administrative"}`}
+          onClick={() => trackAnalyticsEvent("calculator_to_contact", {
+            service_area: serviceArea,
+            estimate_complexity: estimate.complexity,
+            has_price_range: hasCommercialBase
+          })}
+        >
           Solicită o ofertă personalizată <ArrowRight aria-hidden="true" />
         </Link>
         <p className="calculator-disclaimer">
