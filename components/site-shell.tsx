@@ -1,5 +1,6 @@
 import { PhoneCall } from "lucide-react";
 import { SiteFooter } from "@/components/site-footer";
+import { GoogleReviewsSection } from "@/components/google-reviews-section";
 import { SiteHeader } from "@/components/site-header";
 import { getWhatsAppUrl, siteConfig } from "@/lib/site-config";
 import { WhatsAppIcon } from "@/components/whatsapp-icon";
@@ -25,6 +26,7 @@ export function SiteShell({
       {showNavigation && <SiteHeader navigationContext={navigationContext} />}
       <main className="site-content" id="continut">
         {children}
+        {showFooter && <GoogleReviewsSection />}
         {showFooter && <SiteFooter />}
       </main>
       {showQuickContact && (

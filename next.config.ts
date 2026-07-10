@@ -25,7 +25,7 @@ const securityHeaders = [
       "frame-ancestors 'none'",
       "object-src 'none'",
       "frame-src 'none'",
-      `img-src 'self' data: blob:${hasGoogleTracking ? " https://www.google-analytics.com https://www.googletagmanager.com" : ""}${hasClarity ? " https://www.clarity.ms https://*.clarity.ms https://c.bing.com" : ""}`,
+      `img-src 'self' data: blob: https://lh3.googleusercontent.com${hasGoogleTracking ? " https://www.google-analytics.com https://www.googletagmanager.com" : ""}${hasClarity ? " https://www.clarity.ms https://*.clarity.ms https://c.bing.com" : ""}`,
       "font-src 'self' data:",
       "style-src 'self' 'unsafe-inline'",
       `script-src 'self' 'unsafe-inline'${hasGoogleTracking ? " https://www.googletagmanager.com" : ""}${hasClarity ? " https://www.clarity.ms" : ""}`,
@@ -44,6 +44,9 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   compress: true,
   reactStrictMode: true,
+  images: {
+    remotePatterns: [{ protocol: "https", hostname: "lh3.googleusercontent.com" }]
+  },
   async headers() {
     return [
       { source: "/(.*)", headers: securityHeaders },

@@ -11,6 +11,9 @@ RESEND_API_KEY=re_xxxxxxxxx
 CONTACT_FROM_EMAIL=Capital European <contact@capitaleuropean.ro>
 CONTACT_TO_EMAIL=capitaleuropean.ro@gmail.com
 NEXT_PUBLIC_GA_ID=G-JJDLTV4VX9
+NEXT_PUBLIC_GOOGLE_BUSINESS_URL=https://www.google.com/maps?cid=14253260384950460462
+GOOGLE_PLACES_API_KEY=cheie-server-only-restrictionata-la-Places-API-New
+GOOGLE_PLACE_ID=place-id-ul-profilului-Google
 NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX
 NEXT_PUBLIC_CLARITY_PROJECT_ID=xxxxxxxxxx
 NEXT_PUBLIC_CONTACT_EMAIL=contact@domeniul-real.ro

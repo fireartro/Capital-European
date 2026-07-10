@@ -45,6 +45,9 @@ const whatsappNumber =
   normalizeRomanianPhone(publicValue(process.env.NEXT_PUBLIC_WHATSAPP_NUMBER)) ||
   phoneDigits;
 const businessAddress = publicValue(process.env.NEXT_PUBLIC_BUSINESS_ADDRESS);
+const googleBusinessUrl =
+  publicValue(process.env.NEXT_PUBLIC_GOOGLE_BUSINESS_URL) ||
+  "https://www.google.com/maps?cid=14253260384950460462";
 const primaryOffice = registeredOffice || businessAddress;
 const locations = [
   { label: "Sediu social", address: primaryOffice },
@@ -79,6 +82,9 @@ export const siteConfig = {
   address: primaryOffice,
   locations,
   schedule: businessSchedule,
+  googleBusiness: {
+    url: googleBusinessUrl
+  },
   legal: {
     entityName: legalEntityName,
     registrationNumber,
@@ -96,7 +102,7 @@ export const siteConfig = {
     { label: "Întrebări", href: "/intrebari" },
     { label: "Contact", href: "/contact" }
   ],
-  sameAs: socialProfiles
+  sameAs: [...socialProfiles, googleBusinessUrl]
 } as const;
 
 export function getWhatsAppUrl(message = "Bună ziua! Aș dori să discut despre serviciile Capital European.") {
