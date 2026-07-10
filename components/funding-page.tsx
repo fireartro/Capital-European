@@ -86,7 +86,7 @@ export function FundingPage() {
       <section className="inner-hero funding-hero" id="funding-hero" aria-labelledby="funding-hero-title" aria-describedby="funding-hero-description">
         <div className="section-container inner-hero-content">
           <p className="eyebrow eyebrow-light"><Landmark /> Consultanță fonduri europene</p>
-          <h1 id="funding-hero-title">Consultanță pentru fonduri europene,<br />de la eligibilitate la <em>implementare.</em></h1>
+          <h1 id="funding-hero-title">Consultanță pentru fonduri europene,{" "}<br />de la eligibilitate la <em>implementare.</em></h1>
           <p id="funding-hero-description">Verificăm programul, pregătim documentația și stabilim responsabilitățile înainte de fiecare etapă.</p>
           <div className="inner-hero-actions">
             <a className="primary-button yellow-button" href="/contact?service=fonduri-europene" aria-label="Solicită analiza inițială pentru fonduri europene" title="Solicită analiza inițială pentru fonduri europene">Solicită analiza inițială <ArrowRight aria-hidden="true" /></a>

@@ -37,7 +37,7 @@ export function ContactPage({
         <div className="section-container contact-layout contact-layout-simplified">
           <div className="contact-copy">
             <p className="eyebrow eyebrow-light">Prima discuție</p>
-            <h1 id="contact-page-title">Descrie situația.<br />Clarificăm <em>următorul pas.</em></h1>
+            <h1 id="contact-page-title">Descrie situația.{" "}<br />Clarificăm <em>următorul pas.</em></h1>
             <p id="contact-page-description">Poți începe cu informațiile pe care le ai. Analizăm solicitarea și revenim cu întrebările necesare înainte de ofertă.</p>
             <ContactFormAnchor />
             <div className="contact-steps" aria-labelledby="contact-steps-title">

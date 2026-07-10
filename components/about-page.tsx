@@ -28,7 +28,7 @@ export function AboutPage() {
       <section className="inner-hero about-hero" aria-labelledby="about-hero-title" aria-describedby="about-hero-description">
         <div className="section-container inner-hero-content">
           <p className="eyebrow eyebrow-light"><BookOpenCheck /> Despre noi</p>
-          <h1 id="about-hero-title">Consultanță și suport administrativ,<br />într-un proces <em>clar.</em></h1>
+          <h1 id="about-hero-title">Consultanță și suport administrativ,{" "}<br />într-un proces <em>clar.</em></h1>
           <p id="about-hero-description">Organizăm informațiile, responsabilitățile și documentele necesare pentru proiecte de finanțare și activități administrative.</p>
         </div>
       </section>

@@ -25,7 +25,7 @@ export default function Page() {
         <section className="inner-hero faq-hero" aria-labelledby="faq-page-title" aria-describedby="faq-page-description">
           <div className="section-container inner-hero-content">
             <p className="eyebrow eyebrow-light"><CircleHelp /> Întrebări frecvente</p>
-            <h1 id="faq-page-title">Întrebări despre servicii,<br />răspunsuri <em>directe.</em></h1>
+            <h1 id="faq-page-title">Întrebări despre servicii,{" "}<br />răspunsuri <em>directe.</em></h1>
             <p id="faq-page-description">Află ce poate include colaborarea, ce informații sunt necesare și ce limite trebuie cunoscute înainte de ofertă.</p>
           </div>
         </section>
