@@ -2,7 +2,6 @@ import {
   ArrowRight,
   BriefcaseBusiness,
   Building2,
-  Calculator,
   Check,
   FileCheck2,
   FilePenLine,
@@ -230,7 +229,7 @@ export function AdminPage() {
               <Link href="/servicii-administrative/infiintare-firma"><span><strong>Înființare firmă</strong><small>Pașii și documentele pentru pornirea societății.</small></span><ArrowRight aria-hidden="true" /></Link>
               <Link href="/servicii-administrative/secretariat"><span><strong>Secretariat externalizat</strong><small>Corespondență, programări și solicitări urmărite.</small></span><ArrowRight aria-hidden="true" /></Link>
               <Link href="/servicii-administrative/administrare-documente"><span><strong>Administrare documente</strong><small>Clasificare, evidență și responsabilități clare.</small></span><ArrowRight aria-hidden="true" /></Link>
-              <Link href="/calculator-pret-consultanta"><span><strong>Calculator orientativ</strong><small>Estimează complexitatea unui flux administrativ.</small></span><Calculator aria-hidden="true" /></Link>
+              <Link href="/contact?service=servicii-administrative"><span><strong>Discută un flux administrativ</strong><small>Descrie activitatea, volumul și termenul urmărit.</small></span><ArrowRight aria-hidden="true" /></Link>
             </div>
           </section>
 

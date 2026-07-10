@@ -24,7 +24,7 @@ const securityHeaders = [
       "form-action 'self'",
       "frame-ancestors 'none'",
       "object-src 'none'",
-      "frame-src 'none'",
+      "frame-src https://www.google.com https://maps.google.com",
       `img-src 'self' data: blob: https://lh3.googleusercontent.com${hasGoogleTracking ? " https://www.google-analytics.com https://www.googletagmanager.com" : ""}${hasClarity ? " https://www.clarity.ms https://*.clarity.ms https://c.bing.com" : ""}`,
       "font-src 'self' data:",
       "style-src 'self' 'unsafe-inline'",

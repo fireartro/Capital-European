@@ -11,7 +11,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "", changeFrequency: "monthly", priority: 1 },
     { path: "/fonduri-europene", changeFrequency: "monthly", priority: 0.9 },
     { path: "/consultanta-fonduri-europene", changeFrequency: "monthly", priority: 0.9 },
-    { path: "/calculator-pret-consultanta", changeFrequency: "monthly", priority: 0.8 },
     { path: "/fonduri-europene-pentru-firme", changeFrequency: "monthly", priority: 0.8 },
     { path: "/fonduri-europene-pentru-ong", changeFrequency: "monthly", priority: 0.8 },
     { path: "/fonduri-europene-pentru-startup", changeFrequency: "monthly", priority: 0.8 },

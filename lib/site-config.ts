@@ -31,9 +31,9 @@ function formatRomanianPhone(digits: string) {
 const legalEntityName = publicValue(process.env.NEXT_PUBLIC_LEGAL_ENTITY_NAME);
 const registrationNumber = publicValue(process.env.NEXT_PUBLIC_REGISTRATION_NUMBER);
 const taxId = publicValue(process.env.NEXT_PUBLIC_TAX_ID);
-const registeredOffice = publicValue(process.env.NEXT_PUBLIC_REGISTERED_OFFICE);
-const workingOffice = publicValue(process.env.NEXT_PUBLIC_WORKING_OFFICE);
-const secondaryOffice = publicValue(process.env.NEXT_PUBLIC_SECONDARY_OFFICE);
+const registeredOffice = publicValue(process.env.NEXT_PUBLIC_REGISTERED_OFFICE) || "Satu Mare, Piața Soarelui, Bl. UU6, Ap. 9";
+const workingOffice = publicValue(process.env.NEXT_PUBLIC_WORKING_OFFICE) || "Seini, Piața Unirii nr. 2";
+const secondaryOffice = publicValue(process.env.NEXT_PUBLIC_SECONDARY_OFFICE) || "Cluj-Napoca, Strada Oltului nr. 1";
 const contactEmail = publicValue(process.env.NEXT_PUBLIC_CONTACT_EMAIL) || "contact@capitaleuropean.ro";
 const phoneDigits =
   normalizeRomanianPhone(publicValue(process.env.NEXT_PUBLIC_PHONE_HREF)) ||
@@ -49,11 +49,19 @@ const googleBusinessUrl =
   publicValue(process.env.NEXT_PUBLIC_GOOGLE_BUSINESS_URL) ||
   "https://www.google.com/maps?cid=14253260384950460462";
 const primaryOffice = registeredOffice || businessAddress;
+
+function googleMapsSearchUrl(address: string) {
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
+}
+
 const locations = [
-  { label: "Sediu social", address: primaryOffice },
-  { label: "Punct de lucru", address: workingOffice },
-  { label: "Locație administrativă, Cluj-Napoca", address: secondaryOffice }
-].filter((location): location is { label: string; address: string } => Boolean(location.address));
+  { label: "Sediu social", address: primaryOffice, mapsUrl: googleBusinessUrl },
+  { label: "Punct de lucru", address: workingOffice, mapsUrl: googleMapsSearchUrl(workingOffice) },
+  { label: "Locație administrativă", address: secondaryOffice, mapsUrl: googleMapsSearchUrl(secondaryOffice) }
+].filter((location): location is { label: string; address: string; mapsUrl: string } => Boolean(location.address));
+const mapEmbedUrl = primaryOffice
+  ? `https://www.google.com/maps?q=${encodeURIComponent(primaryOffice)}&output=embed`
+  : "";
 const businessSchedule = publicValue(process.env.NEXT_PUBLIC_BUSINESS_SCHEDULE) || "L-V · 10:00-18:00";
 const socialProfiles = [
   publicValue(process.env.NEXT_PUBLIC_FACEBOOK_URL),
@@ -74,7 +82,7 @@ export const siteConfig = {
     fonduriUe: "https://www.fonduri-ue.ro/",
     pnrr: "https://pnrr.gov.ro/"
   },
-  lastUpdated: "2026-07-10",
+  lastUpdated: "2026-07-11",
   email: contactEmail,
   phoneDisplay,
   phoneHref,
@@ -83,7 +91,8 @@ export const siteConfig = {
   locations,
   schedule: businessSchedule,
   googleBusiness: {
-    url: googleBusinessUrl
+    url: googleBusinessUrl,
+    mapEmbedUrl
   },
   legal: {
     entityName: legalEntityName,

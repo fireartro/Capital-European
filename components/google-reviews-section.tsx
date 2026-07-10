@@ -1,6 +1,7 @@
 import { ExternalLink, MessageCircleHeart, Star } from "lucide-react";
 import Image from "next/image";
 import { getGoogleBusinessReviews } from "@/lib/google-business-reviews";
+import { siteConfig } from "@/lib/site-config";
 
 function formatRating(value: number) {
   return new Intl.NumberFormat("ro-RO", { minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(value);
@@ -10,12 +11,30 @@ function reviewLabel(count: number) {
   return `${count} ${count === 1 ? "recenzie" : "recenzii"}`;
 }
 
-export async function GoogleReviewsSection() {
+export async function GoogleReviewsSection({ variant = "default" }: { variant?: "default" | "split" }) {
   const data = await getGoogleBusinessReviews();
-  if (!data) return null;
+  if (!data && variant !== "split") return null;
+
+  if (!data) {
+    return (
+      <section className="google-reviews-section google-reviews-section-split" aria-labelledby="google-reviews-title">
+        <div className="section-container google-review-live-fallback">
+          <div>
+            <p className="eyebrow"><MessageCircleHeart aria-hidden="true" /> Recenzii Google</p>
+            <h2 id="google-reviews-title">Feedback public, verificabil în profilul nostru Google</h2>
+            <p>Recenziile sunt afișate direct din Google imediat ce serviciul de sincronizare este disponibil. Până atunci, le poți consulta în sursa originală.</p>
+          </div>
+          <a href={siteConfig.googleBusiness.url} target="_blank" rel="noopener noreferrer" title="Vezi recenziile Capital European pe Google">
+            <Image src="/images/google-maps-attribution.svg" alt="Google Maps" width={98} height={18} />
+            Vezi recenziile publice <ExternalLink aria-hidden="true" />
+          </a>
+        </div>
+      </section>
+    );
+  }
 
   return (
-    <section className="google-reviews-section" aria-labelledby="google-reviews-title">
+    <section className={`google-reviews-section${variant === "split" ? " google-reviews-section-split" : ""}`} aria-labelledby="google-reviews-title">
       <div className="section-container google-reviews-layout">
         <header className="google-reviews-intro">
           <p className="eyebrow"><MessageCircleHeart aria-hidden="true" /> Recenzii Google</p>

@@ -61,7 +61,7 @@ export const seoServicePages = {
     related: [
       { href: "/fonduri-europene-pentru-firme", label: "Fonduri europene pentru firme", text: "Condiții și pregătire pentru investiții realizate de companii." },
       { href: "/fonduri-europene-pentru-ong", label: "Fonduri europene pentru ONG", text: "Proiecte cu obiective sociale, educaționale sau comunitare." },
-      { href: "/calculator-pret-consultanta", label: "Estimator de consultanță", text: "Calculează orientativ complexitatea și intervalul de preț." }
+      { href: "/fonduri-europene#fonduri-active", label: "Oportunități de finanțare", text: "Vezi tipurile de apeluri pe care le urmărim și cum poți cere o verificare." }
     ]
   },
   companies: {
@@ -104,7 +104,7 @@ export const seoServicePages = {
     related: [
       { href: "/consultanta-fonduri-europene", label: "Procesul de consultanță", text: "Vezi etapele de la eligibilitate la implementare." },
       { href: "/fonduri-europene-pentru-startup", label: "Fonduri pentru startup", text: "Cerințe specifice afacerilor aflate la început." },
-      { href: "/calculator-pret-consultanta", label: "Estimator consultanță", text: "Evaluează orientativ complexitatea proiectului." }
+      { href: "/contact?service=fonduri-europene", label: "Solicită verificarea proiectului", text: "Trimite investiția, locația și programul care te interesează." }
     ]
   },
   ngo: {
@@ -190,7 +190,7 @@ export const seoServicePages = {
     related: [
       { href: "/servicii-administrative/infiintare-firma", label: "Înființare firmă", text: "Pașii administrativi pentru pornirea societății." },
       { href: "/fonduri-europene-pentru-firme", label: "Fonduri pentru firme", text: "Pregătirea investițiilor realizate de companii." },
-      { href: "/calculator-pret-consultanta", label: "Calculator consultanță", text: "Evaluează orientativ complexitatea proiectului." }
+      { href: "/contact?service=fonduri-europene", label: "Verifică ideea de proiect", text: "Spune-ne ce vrei să finanțezi și în ce stadiu te afli." }
     ]
   },
   secretariat: {

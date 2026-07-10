@@ -5,7 +5,7 @@ import { breadcrumbSchema, faqSchema, JsonLd, professionalServiceSchema, service
 
 export const metadata = createPageMetadata({
   title: "Consultanță fonduri europene pentru firme și ONG-uri",
-  description: "Consultanță pentru fonduri europene: analiză de eligibilitate, documentație, depunere și sprijin în implementare pentru firme și ONG-uri.",
+  description: "Consultanță fonduri europene pentru firme și ONG-uri: oportunități urmărite, eligibilitate, punctaj, documentație și sprijin în implementare.",
   path: "/fonduri-europene"
 });
 

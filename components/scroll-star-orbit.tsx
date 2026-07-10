@@ -97,7 +97,7 @@ const stagePath = [
 function getFormation(sectionId: string | undefined, index: number) {
   if (sectionId?.includes("intrebari")) return questionFormation;
   if (sectionId?.includes("proces")) return processFormation;
-  if (sectionId?.includes("calculator") || sectionId?.includes("eligibilitate")) return checkFormation;
+  if (sectionId?.includes("eligibilitate")) return checkFormation;
   if (sectionId?.includes("evaluare") || sectionId?.includes("externalizare")) return documentFormation;
   return formations[Math.min(index, formations.length - 1)];
 }

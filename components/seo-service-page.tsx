@@ -1,14 +1,10 @@
 import Link from "next/link";
-import { ArrowRight, Calculator, Check, ChevronRight, ClipboardCheck, Landmark, Files } from "lucide-react";
+import { ArrowRight, Check, ChevronRight, ClipboardCheck, Landmark, Files } from "lucide-react";
 import { SiteShell } from "@/components/site-shell";
 import type { SeoServicePageConfig } from "@/lib/seo-service-pages";
 
 export function SeoServicePage({ page }: { page: SeoServicePageConfig }) {
   const CategoryIcon = page.category === "funding" ? Landmark : Files;
-  const calculatorHref = "/calculator-pret-consultanta";
-  const calculatorLabel = page.category === "funding"
-    ? "Estimează complexitatea consultanței"
-    : "Estimează complexitatea serviciului";
 
   return (
     <SiteShell navigationContext={page.category}>
@@ -25,9 +21,6 @@ export function SeoServicePage({ page }: { page: SeoServicePageConfig }) {
           <div className="seo-service-actions">
             <Link className="primary-button yellow-button" href={`/contact?service=${page.contactService}`}>
               Solicită evaluarea inițială <ArrowRight aria-hidden="true" />
-            </Link>
-            <Link className="primary-button blue-button seo-calculator-button" href={calculatorHref}>
-              <Calculator aria-hidden="true" /> {calculatorLabel}
             </Link>
             <div className="seo-service-secondary-actions">
               <Link href={page.parent.href}>Vezi serviciul principal</Link>
@@ -115,13 +108,10 @@ export function SeoServicePage({ page }: { page: SeoServicePageConfig }) {
 
       <section className="seo-service-cta" aria-labelledby="seo-cta-title">
         <div className="section-container">
-          <div><p>Ai o situație concretă?</p><h2 id="seo-cta-title">Trimite informațiile disponibile sau începe cu o estimare orientativă.</h2></div>
+          <div><p>Ai o situație concretă?</p><h2 id="seo-cta-title">Trimite informațiile disponibile. Îți răspundem cu pașii care merită urmați.</h2></div>
           <div className="seo-cta-actions">
             <Link className="primary-button yellow-button" href={`/contact?service=${page.contactService}`}>
               Trimite solicitarea <ArrowRight aria-hidden="true" />
-            </Link>
-            <Link className="primary-button blue-button" href={calculatorHref}>
-              <Calculator aria-hidden="true" /> Deschide calculatorul
             </Link>
           </div>
         </div>

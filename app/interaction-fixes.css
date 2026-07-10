@@ -51,8 +51,7 @@ body:has(.cookie-preferences-backdrop) .quick-contact-float { display: none; }
 .section-title-row > p,
 .visual-story-copy > p:not(.eyebrow),
 .inner-hero-content > p:not(.eyebrow),
-.seo-service-hero .section-container > p:not(.eyebrow),
-.calculator-heading > p:not(.eyebrow) { line-height: 1.72; }
+.seo-service-hero .section-container > p:not(.eyebrow) { line-height: 1.72; }
 
 .funding-service-card,
 .admin-service-card,
@@ -86,18 +85,12 @@ body:has(.cookie-preferences-backdrop) .quick-contact-float { display: none; }
 
 .choice-secondary-link svg { width: 15px; height: 15px; }
 
-.calculator-heading { margin-bottom: 32px; }
-.calculator-entry { margin-top: 28px; }
-.price-calculator { border-radius: 12px; }
-
-.seo-calculator-button,
 .seo-cta-actions .blue-button {
   border: 1px solid rgba(255, 255, 255, .18);
   background: rgba(255, 255, 255, .1);
   box-shadow: none;
 }
 
-.seo-calculator-button:hover,
 .seo-cta-actions .blue-button:hover {
   background: rgba(255, 255, 255, .17);
 }
@@ -109,7 +102,6 @@ body:has(.cookie-preferences-backdrop) .quick-contact-float { display: none; }
   gap: 10px;
 }
 
-.calculator-result .primary-button,
 .seo-service-actions .primary-button,
 .seo-service-cta .primary-button { box-shadow: 0 16px 38px rgba(255, 204, 0, .2); }
 
@@ -124,8 +116,7 @@ body:has(.cookie-preferences-backdrop) .quick-contact-float { display: none; }
 
   .inner-hero h1,
   .contact-copy h1,
-  .seo-service-hero h1,
-  .calculator-heading h1 { letter-spacing: -.02em; }
+  .seo-service-hero h1 { letter-spacing: 0; }
 
   .section-title-row { margin-bottom: 30px; }
 
@@ -163,8 +154,7 @@ body:has(.cookie-preferences-backdrop) .quick-contact-float { display: none; }
   .section-title-row > p,
   .visual-story-copy > p:not(.eyebrow),
   .inner-hero-content > p:not(.eyebrow),
-  .seo-service-hero .section-container > p:not(.eyebrow),
-  .calculator-heading > p:not(.eyebrow) { line-height: 1.62; }
+  .seo-service-hero .section-container > p:not(.eyebrow) { line-height: 1.62; }
 
   .choice-secondary-link {
     width: 100%;
@@ -174,6 +164,5 @@ body:has(.cookie-preferences-backdrop) .quick-contact-float { display: none; }
     font-size: .75rem;
   }
 
-  .calculator-entry { margin-top: 20px; }
   .site-footer { padding-bottom: 86px; }
 }

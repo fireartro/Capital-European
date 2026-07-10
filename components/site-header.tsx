@@ -4,7 +4,6 @@ import {
   ArrowLeft,
   BookOpenCheck,
   Building2,
-  Calculator,
   CircleHelp,
   ClipboardList,
   FileText,
@@ -13,6 +12,7 @@ import {
   Mail,
   Menu,
   Phone,
+  ShieldCheck,
   Sparkles,
   X
 } from "lucide-react";
@@ -29,15 +29,14 @@ type NavigationItem = {
   icon: typeof Home;
 };
 
-const calculatorHref = "/calculator-pret-consultanta";
-
 const fundingNavigation: NavigationItem[] = [
   { label: "Prezentare", href: "/fonduri-europene", icon: Landmark },
   { label: "Servicii", href: "/fonduri-europene#servicii-fonduri", icon: FileText },
+  { label: "Oportunități", href: "/fonduri-europene#fonduri-active", icon: BookOpenCheck },
+  { label: "Ce ne deosebește", href: "/fonduri-europene#ce-ne-deosebeste", icon: ShieldCheck },
   { label: "Proces", href: "/fonduri-europene#proces-fonduri", icon: ClipboardList },
   { label: "Întrebări", href: "/fonduri-europene#intrebari-fonduri", icon: CircleHelp },
-  { label: "Contact", href: "/contact?service=fonduri-europene", icon: Mail },
-  { label: "Calculator", href: calculatorHref, icon: Calculator }
+  { label: "Contact", href: "/contact?service=fonduri-europene", icon: Mail }
 ];
 
 const adminNavigation: NavigationItem[] = [
@@ -45,8 +44,7 @@ const adminNavigation: NavigationItem[] = [
   { label: "Servicii", href: "/servicii-administrative#servicii-administrative", icon: ClipboardList },
   { label: "Înființare firmă", href: "/servicii-administrative#infiintare-firma", icon: Building2 },
   { label: "Întrebări", href: "/servicii-administrative#intrebari-administrative", icon: CircleHelp },
-  { label: "Contact", href: "/contact?service=servicii-administrative", icon: Mail },
-  { label: "Calculator", href: calculatorHref, icon: Calculator }
+  { label: "Contact", href: "/contact?service=servicii-administrative", icon: Mail }
 ];
 
 const generalNavigation: NavigationItem[] = [
@@ -55,8 +53,7 @@ const generalNavigation: NavigationItem[] = [
   { label: "Servicii administrative", href: "/servicii-administrative", icon: FileText },
   { label: "Despre", href: "/despre", icon: BookOpenCheck },
   { label: "Întrebări", href: "/intrebari", icon: CircleHelp },
-  { label: "Contact", href: "/contact", icon: Mail },
-  { label: "Calculator", href: calculatorHref, icon: Calculator }
+  { label: "Contact", href: "/contact", icon: Mail }
 ];
 
 function normalizePath(path: string) {

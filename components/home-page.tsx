@@ -1,6 +1,5 @@
 import {
   ArrowRight,
-  Calculator,
   Check,
   ClipboardCheck,
   FileCheck2,
@@ -15,6 +14,8 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { Brand } from "@/components/brand";
+import { GoogleReviewsSection } from "@/components/google-reviews-section";
+import { SiteFooter } from "@/components/site-footer";
 import { SiteShell } from "@/components/site-shell";
 import { siteConfig } from "@/lib/site-config";
 import { AnalyticsLink } from "@/components/analytics-link";
@@ -25,7 +26,6 @@ const landingProof = [
   [Scale, "Recomandări responsabile", "Semnalăm ce poate fi continuat, ce trebuie verificat și unde există riscuri."]
 ] as const;
 
-const calculatorHref = "/calculator-pret-consultanta";
 const eligibilityHref = "/fonduri-europene#verificare-eligibilitate";
 
 export function HomePage() {
@@ -57,12 +57,12 @@ export function HomePage() {
               </Link>
               <AnalyticsLink
                 className="choice-button"
-                href="/fonduri-europene#programe-finantare"
+                href="/fonduri-europene#fonduri-active"
                 eventName="select_service"
-                eventParameters={{ service_area: "fonduri_europene", destination: "programe_finantare" }}
-                title="Vezi programele de finanțare urmărite"
+                eventParameters={{ service_area: "fonduri_europene", destination: "fonduri_active" }}
+                title="Vezi oportunitățile de finanțare urmărite"
               >
-                Programe de finanțare <ArrowRight aria-hidden="true" />
+                Vezi oportunitățile <ArrowRight aria-hidden="true" />
               </AnalyticsLink>
             </div>
             <div className="eu-emblem" aria-hidden="true">
@@ -85,10 +85,10 @@ export function HomePage() {
               <p id="choice-admin-description">Documente, secretariat, back-office și sprijin administrativ pentru înființarea firmei.</p>
               <Link
                 className="choice-secondary-link"
-                href={calculatorHref}
-                title="Estimare orientativă servicii administrative"
+                href="/contact?service=servicii-administrative"
+                title="Descrie activitatea administrativă pe care vrei să o delegi"
               >
-                <Calculator aria-hidden="true" /> Estimează complexitatea serviciului
+                <MessageSquareText aria-hidden="true" /> Discută un flux administrativ
               </Link>
               <AnalyticsLink
                 className="choice-button"
@@ -130,9 +130,11 @@ export function HomePage() {
           <span><Zap /> Pași bine definiți</span>
           <span><Scale /> Evaluare responsabilă</span>
           <span><Users /> Comunicare directă</span>
-          <Link href={calculatorHref} title="Calculator pentru consultanță și servicii administrative"><Calculator /> Calculator orientativ</Link>
+          <Link href="/contact" title="Discută direct cu echipa Capital European"><MessageSquareText /> Discuție inițială</Link>
         </footer>
+        <GoogleReviewsSection variant="split" />
       </section>
+      <SiteFooter />
     </SiteShell>
   );
 }
