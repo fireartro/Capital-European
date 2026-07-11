@@ -17,7 +17,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/servicii-administrative", changeFrequency: "monthly", priority: 0.9 },
     { path: "/servicii-administrative/secretariat", changeFrequency: "monthly", priority: 0.8 },
     { path: "/servicii-administrative/administrare-documente", changeFrequency: "monthly", priority: 0.8 },
-    { path: "/servicii-administrative/infiintare-firma", changeFrequency: "monthly", priority: 0.8 },
+    { path: "/servicii-administrative/infiintare-pfa-srl", changeFrequency: "monthly", priority: 0.9 },
     { path: "/contact", changeFrequency: "monthly", priority: 0.8 },
     { path: "/despre", changeFrequency: "yearly", priority: 0.6 },
     { path: "/intrebari", changeFrequency: "yearly", priority: 0.6 },

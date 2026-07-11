@@ -8,8 +8,6 @@ function normalizeSiteUrl(value?: string) {
 
 const resolvedSiteUrl =
   normalizeSiteUrl(process.env.NEXT_PUBLIC_SITE_URL) ||
-  normalizeSiteUrl(process.env.VERCEL_PROJECT_PRODUCTION_URL) ||
-  normalizeSiteUrl(process.env.VERCEL_URL) ||
   "https://capitaleuropean.ro";
 
 function publicValue(value?: string) {
@@ -74,7 +72,7 @@ export const siteConfig = {
   namePrefix: "Capital ",
   nameAccent: "European",
   tagline: "Consultanță și administrare, cu pași clari",
-  description: "Capital European oferă consultanță pentru fonduri europene și servicii administrative externalizate pentru firme și ONG-uri din România: eligibilitate, documentație, implementare, secretariat și back-office.",
+  description: "Capital European oferă consultanță pentru fonduri europene și servicii administrative pentru firme și ONG-uri: eligibilitate, documentație, implementare, secretariat, back-office și înființare PFA sau SRL.",
   url: resolvedSiteUrl,
   defaultOgImage: "/opengraph-image",
   officialResources: {

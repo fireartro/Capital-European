@@ -20,7 +20,7 @@ export function SeoServicePage({ page }: { page: SeoServicePageConfig }) {
           <p>{page.intro}</p>
           <div className="seo-service-actions">
             <Link className="primary-button yellow-button" href={`/contact?service=${page.contactService}`}>
-              Solicită evaluarea inițială <ArrowRight aria-hidden="true" />
+              {page.contactService === "infiintare-firma" ? "Solicită sprijin pentru PFA / SRL" : "Solicită evaluarea inițială"} <ArrowRight aria-hidden="true" />
             </Link>
             <div className="seo-service-secondary-actions">
               <Link href={page.parent.href}>Vezi serviciul principal</Link>
@@ -108,10 +108,13 @@ export function SeoServicePage({ page }: { page: SeoServicePageConfig }) {
 
       <section className="seo-service-cta" aria-labelledby="seo-cta-title">
         <div className="section-container">
-          <div><p>Ai o situație concretă?</p><h2 id="seo-cta-title">Trimite informațiile disponibile. Îți răspundem cu pașii care merită urmați.</h2></div>
+          <div>
+            <p>{page.contactService === "infiintare-firma" ? "Vrei să începi un PFA sau SRL?" : "Ai o situație concretă?"}</p>
+            <h2 id="seo-cta-title">{page.contactService === "infiintare-firma" ? "Spune-ne activitatea și forma avută în vedere. Îți răspundem cu următorii pași administrativi." : "Trimite informațiile disponibile. Îți răspundem cu pașii care merită urmați."}</h2>
+          </div>
           <div className="seo-cta-actions">
             <Link className="primary-button yellow-button" href={`/contact?service=${page.contactService}`}>
-              Trimite solicitarea <ArrowRight aria-hidden="true" />
+              {page.contactService === "infiintare-firma" ? "Discută despre PFA / SRL" : "Trimite solicitarea"} <ArrowRight aria-hidden="true" />
             </Link>
           </div>
         </div>

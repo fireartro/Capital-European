@@ -49,12 +49,14 @@ function hasValidOrigin(request: Request) {
     const originUrl = new URL(origin);
     const requestUrl = new URL(request.url);
     const publicUrl = new URL(siteConfig.url);
-    const localHosts = new Set(["127.0.0.1", "localhost", "::1"]);
-    const isLocalRequest = localHosts.has(requestUrl.hostname);
+    const localHosts = new Set(["127.0.0.1", "localhost", "0.0.0.0", "::1"]);
+    const requestHost = request.headers.get("host")?.toLowerCase();
+    const requestHostUrl = requestHost ? new URL(`http://${requestHost}`) : null;
+    const isLocalRequest = localHosts.has(requestUrl.hostname) || Boolean(requestHostUrl && localHosts.has(requestHostUrl.hostname));
     if (
       isLocalRequest &&
       localHosts.has(originUrl.hostname) &&
-      originUrl.port === requestUrl.port &&
+      (originUrl.host === requestHost || originUrl.port === requestUrl.port) &&
       ["http:", "https:"].includes(originUrl.protocol)
     ) {
       return true;
@@ -109,7 +111,7 @@ function serviceLabel(service: ContactDeliveryData["service"]) {
     secretariat: "Secretariat",
     administrativ: "Asistenta administrativa",
     consultanta: "Consultanta fonduri europene",
-    "infiintare-firma": "Infiintare firma",
+    "infiintare-firma": "Infiintare PFA / SRL",
     "fonduri-europene": "Fonduri europene"
   };
 

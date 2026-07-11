@@ -64,7 +64,8 @@ export function FundingHeroCarousel() {
               alt={slide.alt}
               fill
               priority={index === 0}
-              sizes="(max-width: 1100px) 100vw, calc(100vw - 288px)"
+              fetchPriority={index === 0 ? "high" : "auto"}
+              sizes="(max-width: 640px) 200vw, (max-width: 1100px) 100vw, calc(100vw - 288px)"
             />
           </div>
         ))}

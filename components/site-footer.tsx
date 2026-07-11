@@ -25,18 +25,18 @@ export function SiteFooter() {
           <Link href="/servicii-administrative">Servicii administrative</Link>
           <Link href="/servicii-administrative/secretariat">Secretariat externalizat</Link>
           <Link href="/servicii-administrative/administrare-documente">Administrare documente</Link>
-          <Link href="/servicii-administrative/infiintare-firma">Înființare firmă</Link>
+          <Link href="/servicii-administrative/infiintare-pfa-srl">Înființare PFA / SRL</Link>
         </div>
         <div>
           <h3>Contact</h3>
-          {siteConfig.phoneHref && <a href={`tel:${siteConfig.phoneHref}`} aria-label={`Sună ${siteConfig.name}`} title={`Sună ${siteConfig.name}`}>{siteConfig.phoneDisplay}</a>}
+          {siteConfig.phoneHref && <a href={`tel:${siteConfig.phoneHref}`} title={`Sună ${siteConfig.name}`}>{siteConfig.phoneDisplay}</a>}
           <a href={`mailto:${siteConfig.email}`} title={`Trimite email către ${siteConfig.name}`}>{siteConfig.email}</a>
           <a href={siteConfig.googleBusiness.url} target="_blank" rel="noopener noreferrer" title="Vezi profilul Capital European pe Google">Profil Google Business</a>
           {siteConfig.schedule && <span>Program: {siteConfig.schedule}</span>}
           {siteConfig.legal.entityName && <span>Operator: {siteConfig.legal.entityName}</span>}
           {siteConfig.legal.registrationNumber && <span>Registrul comerțului: {siteConfig.legal.registrationNumber}</span>}
           {siteConfig.legal.taxId && <span>CUI: {siteConfig.legal.taxId}</span>}
-          <Link className="footer-cta-link" href="/contact" aria-label="Trimite o solicitare către Capital European" title="Trimite solicitarea">Descrie situația ta</Link>
+          <Link className="footer-cta-link" href="/contact" title="Trimite solicitarea">Descrie situația ta</Link>
         </div>
       </div>
       {siteConfig.locations.length > 0 && (
@@ -52,7 +52,7 @@ export function SiteFooter() {
                   key={location.label}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={`Deschide în Google Maps: ${location.label}, ${location.address}`}
+                  aria-label={`${location.label}, ${location.address}. Deschide în Google Maps.`}
                   title={`Deschide ${location.address} în Google Maps`}
                 >
                   <MapPin aria-hidden="true" />
@@ -71,8 +71,8 @@ export function SiteFooter() {
         <span>© {new Date().getFullYear()} {siteConfig.name}. Toate drepturile rezervate.</span>
         <div>
           <Link href="/confidentialitate" title="Politica de confidențialitate">Confidențialitate</Link>
-          <Link href="/termeni" aria-label="Termeni și condiții" title="Termeni și condiții">Termeni</Link>
-          <Link href="/cookies" aria-label="Politica de cookies" title="Politica de cookies">Cookies</Link>
+          <Link href="/termeni" title="Termeni și condiții">Termeni</Link>
+          <Link href="/cookies" title="Politica de cookies">Cookies</Link>
           <a href="https://anpc.ro/sal/" target="_blank" rel="noopener noreferrer" title="Soluționarea alternativă a litigiilor prin ANPC">SAL ANPC</a>
           <CookieSettingsButton compact />
         </div>

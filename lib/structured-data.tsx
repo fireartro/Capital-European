@@ -75,11 +75,20 @@ export function organizationSchema(): JsonObject {
         sameAs: siteConfig.sameAs.length > 0 ? [...siteConfig.sameAs] : undefined,
         knowsAbout: [
           "Fonduri europene",
+          "Consultanță fonduri europene",
+          "Fonduri nerambursabile pentru firme",
+          "Fonduri europene pentru IMM-uri",
+          "Fonduri europene pentru ONG-uri",
+          "Fonduri europene pentru startup-uri",
+          "Verificare eligibilitate și punctaj",
           "Consultanță PNRR",
           "Cereri de finanțare nerambursabilă",
           "Servicii administrative externalizate",
           "Secretariat externalizat",
-          "Înființare firme",
+          "Administrare documente",
+          "Înființare firmă",
+          "Înființare PFA",
+          "Înființare SRL",
           "Back-office externalizat"
         ]
       },
@@ -113,8 +122,26 @@ export function organizationSchema(): JsonObject {
               itemOffered: {
                 "@type": "Service",
                 name: "Servicii administrative externalizate",
-                description: "Secretariat extern, procesare documente, back-office, organizare operațională și înființare firmă.",
+                description: "Secretariat extern, procesare documente, back-office, organizare operațională și sprijin pentru înființare PFA sau SRL.",
                 url: absoluteUrl("/servicii-administrative")
+              }
+            },
+            {
+              "@type": "Offer",
+              itemOffered: {
+                "@type": "Service",
+                name: "Înființare PFA",
+                description: "Sprijin administrativ pentru informațiile, actele și pașii necesari înființării unui PFA.",
+                url: absoluteUrl("/servicii-administrative/infiintare-pfa-srl")
+              }
+            },
+            {
+              "@type": "Offer",
+              itemOffered: {
+                "@type": "Service",
+                name: "Înființare SRL",
+                description: "Sprijin administrativ pentru informațiile, actele și pașii necesari înființării unui SRL.",
+                url: absoluteUrl("/servicii-administrative/infiintare-pfa-srl")
               }
             }
           ]

@@ -73,7 +73,7 @@ body:has(.cookie-preferences-backdrop) .quick-contact-float { display: none; }
   border-radius: 999px;
   color: var(--eu-yellow);
   background: rgba(255, 204, 0, .08);
-  font-size: .72rem;
+  font-size: .75rem;
   font-weight: 850;
 }
 
@@ -133,6 +133,10 @@ body:has(.cookie-preferences-backdrop) .quick-contact-float { display: none; }
   .seo-cta-actions .primary-button { width: 100%; }
 }
 
+@media (max-width: 1100px) {
+  body:has(.split-landing) .quick-contact-float { display: none; }
+}
+
 @media (max-width: 640px) {
   .quick-contact-float {
     right: 14px;
@@ -149,7 +153,142 @@ body:has(.cookie-preferences-backdrop) .quick-contact-float { display: none; }
   .contact-layout-simplified .contact-steps { margin-top: 4px; }
 
   .content-section,
-  .faq { padding-block: 52px; }
+  .faq { padding-block: 46px; }
+
+  h2 { font-size: 1.58rem; line-height: 1.16; }
+  .section-title-row { margin-bottom: 26px; }
+  .section-title-row h2,
+  .funding-programs-header h2,
+  .eligibility-heading h2,
+  .differentiators-section > header h2,
+  .service-faq-heading h2,
+  .faq-intro h2,
+  .semantic-content-intro h2 { font-size: 1.58rem; line-height: 1.16; }
+
+  .inner-hero { min-height: 0; }
+  .inner-hero-content { padding-block: 42px 34px; }
+  .inner-hero h1 { font-size: clamp(1.78rem, 8vw, 1.95rem); line-height: 1.07; }
+  .inner-hero-content > p:not(.eyebrow) { margin-top: 14px; font-size: .8rem; }
+  .inner-hero-actions { gap: 12px; margin-top: 22px; }
+  .hero-proof { gap: 8px; margin-top: 22px; font-size: .75rem; }
+
+  .funding-photo-hero {
+    min-height: clamp(560px, calc(100svh - 64px), 650px);
+  }
+  .funding-photo-hero-content { padding-block: 40px 28px; }
+  .funding-photo-hero-content h1 { font-size: clamp(1.78rem, 8.3vw, 2rem); line-height: 1.06; }
+  .funding-hero-active-copy { margin-top: 18px; }
+  .funding-hero-active-copy h2 { font-size: 1.12rem; line-height: 1.2; }
+  .funding-hero-active-copy p { margin-top: 9px; font-size: .76rem; line-height: 1.52; }
+  .funding-hero-actions { margin-top: 18px; }
+  .funding-hero-controls { margin-top: 18px; }
+  .funding-hero-shade {
+    background: linear-gradient(90deg, rgba(2,13,35,.94), rgba(2,20,54,.7) 68%, rgba(2,20,54,.5)), linear-gradient(0deg, rgba(2,13,35,.83), transparent 55%);
+  }
+
+  .funding-service-card { padding: 19px 18px; }
+  .service-round-icon { margin: 18px 0 14px; }
+  .funding-programs-section,
+  .funding-eligibility { margin-top: 38px; padding: 20px 14px; }
+  .funding-program-list:not([data-expanded="true"]) .funding-program-card:nth-child(n+3) { display: none; }
+  .funding-program-body { padding: 17px 15px; }
+  .funding-program-meta { margin-bottom: 13px; }
+  .funding-program-body h3 { margin-bottom: 9px; font-size: 1rem; }
+  .funding-program-facts { gap: 5px; margin-top: 14px; }
+  .funding-program-facts div { grid-template-columns: 76px minmax(0, 1fr); gap: 7px; padding-top: 7px; }
+  .funding-program-actions { align-items: center; justify-content: space-between; flex-direction: row; gap: 8px; padding-top: 15px; }
+  .funding-program-actions a { min-height: 44px; justify-content: center; }
+  .funding-programs-note { padding: 17px 15px; }
+
+  .visual-story { gap: 20px; margin-top: 24px; }
+  .visual-story-copy h3 { font-size: 1.38rem; }
+  .visual-story-media figcaption span { display: none; }
+  .service-metrics { gap: 8px; }
+  .service-metrics article { min-height: 0; display: grid; grid-template-columns: 58px minmax(0, 1fr); column-gap: 11px; padding: 14px; }
+  .service-metrics strong { grid-row: 1 / 3; align-self: center; font-size: 1.55rem; }
+  .service-metrics span { margin-top: 0; }
+  .service-metrics p { margin-top: 4px; }
+
+  .fit-panel,
+  .compact-check-panel,
+  .conversion-panel,
+  .operations-board { padding: 17px; }
+  .fit-panel-copy { padding: 18px; }
+  .fit-grid article,
+  .conversion-steps article,
+  .operations-lanes article { padding: 15px; }
+  .funding-benefits { gap: 20px; padding: 22px 18px; }
+  .differentiators-grid h3 { margin-top: 20px; }
+  .process-steps article { min-height: 0; padding: 18px; }
+  .semantic-content,
+  .service-faq { gap: 28px; margin-top: 58px; padding-top: 44px; }
+  .semantic-content-intro > p:not(.eyebrow) { margin-top: 17px; font-size: .82rem; line-height: 1.68; }
+  .semantic-content-grid article { padding-block: 21px; }
+  .service-faq-heading > p:last-child { margin-top: 14px; font-size: .8rem; }
+  .service-faq-list summary { padding-block: 18px; font-size: .86rem; }
+
+  .admin-service-card { padding: 20px 18px; }
+  .admin-service-card h3 { margin-top: 22px; }
+  .admin-service-card ul { margin-block: 16px; }
+  .company-card { padding: 24px 18px; }
+  .company-card h3 { font-size: 1.82rem; }
+  .company-card-copy > p { font-size: .8rem; line-height: 1.62; }
+  .company-card ul { margin-block: 17px; }
+  .company-card-actions { margin-top: 20px; }
+  .company-form-options { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .company-form-options article { padding: 12px; }
+  .company-form-options p { display: none; }
+  .company-steps > li { padding: 11px; }
+
+  .about-panel { padding: 25px 19px; }
+  .about-mark { margin-bottom: 26px; }
+  .about-panel h2 { font-size: 2rem; line-height: 1.08; }
+  .about-panel > p:not(.eyebrow) { margin-block: 17px; font-size: .8rem; }
+  .principles-grid article { min-height: 0; padding: 20px; }
+  .principles-grid article > svg { margin-top: 22px; }
+  .about-rhythm article { padding: 16px; }
+  .story-grid { gap: 24px; }
+  .story-grid h2 { font-size: 2rem; line-height: 1.08; }
+  .story-copy { padding-top: 24px; }
+  .story-copy p { margin-bottom: 15px; font-size: .82rem; line-height: 1.68; }
+  .about-media-panel { gap: 18px; }
+  .about-stat-grid article { padding: 15px; }
+
+  .contact-copy h1 { font-size: clamp(1.85rem, 8.2vw, 2rem); line-height: 1.07; }
+  .contact-copy > p:not(.eyebrow) { font-size: .8rem; line-height: 1.58; }
+  .contact-primary-link { margin-bottom: 20px; }
+  .contact-steps article { padding: 10px; }
+  .contact-form { padding: 20px 15px; }
+  .form-heading h2 { font-size: 1.22rem; }
+  .legal-content h1 { font-size: 1.9rem; line-height: 1.08; }
+
+  .seo-service-hero { padding: 36px 0 44px; }
+  .service-breadcrumbs { margin-bottom: 19px; }
+  .service-breadcrumbs span[aria-current="page"],
+  .service-breadcrumbs svg:last-of-type { display: none; }
+  .seo-service-hero h1 { font-size: clamp(1.78rem, 8vw, 1.9rem); line-height: 1.07; }
+  .seo-service-band { padding-block: 44px; }
+  .seo-service-band h2 { font-size: 1.55rem; line-height: 1.14; }
+  .seo-service-band p { font-size: .82rem; line-height: 1.64; }
+  .seo-check-list li { min-height: 52px; padding: 12px 13px; font-size: .8rem; }
+  .seo-benefit-grid,
+  .seo-process-grid,
+  .seo-related-links { gap: 9px; margin-top: 25px; }
+  .seo-benefit-grid article { padding: 18px; }
+  .seo-benefit-grid h3 { margin-top: 20px; }
+  .seo-process-grid article { gap: 10px; padding: 17px; }
+  .seo-service-faq details { padding: 16px; }
+  .seo-related-links a { min-height: 102px; padding: 18px; }
+  .seo-service-cta { padding-block: 44px; }
+  .seo-service-cta h2 { font-size: 1.55rem; line-height: 1.14; }
+
+  .google-reviews-section { padding-block: 46px; }
+  .site-footer { padding-top: 50px; }
+  .footer-main { gap: 28px; padding-bottom: 34px; }
+  .footer-locations { padding-block: 26px; }
+  .footer-locations h2 { font-size: 1.36rem; }
+  .footer-map-frame,
+  .footer-map-frame iframe { min-height: 220px; }
 
   .section-title-row > p,
   .visual-story-copy > p:not(.eyebrow),
@@ -165,4 +304,22 @@ body:has(.cookie-preferences-backdrop) .quick-contact-float { display: none; }
   }
 
   .site-footer { padding-bottom: 86px; }
+}
+
+@media (max-width: 360px) {
+  .funding-hero-active-copy p { display: none; }
+  .funding-photo-hero { min-height: 540px; }
+  .funding-photo-hero-content { padding-block: 30px 22px; }
+  .funding-hero-controls { margin-top: 12px; }
+  .hero-proof span:nth-child(n+3) { display: none; }
+  .company-form-options { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 1100px) and (orientation: landscape) and (max-height: 520px) {
+  .about-panel { min-height: 0; padding: 24px; }
+  .about-mark { margin-bottom: 24px; }
+  .about-panel h2,
+  .story-grid h2 { font-size: 2rem; line-height: 1.08; }
+  .about-panel > p:not(.eyebrow),
+  .story-copy p { font-size: .8rem; line-height: 1.6; }
 }

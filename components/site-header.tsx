@@ -42,7 +42,7 @@ const fundingNavigation: NavigationItem[] = [
 const adminNavigation: NavigationItem[] = [
   { label: "Prezentare", href: "/servicii-administrative", icon: FileText },
   { label: "Servicii", href: "/servicii-administrative#servicii-administrative", icon: ClipboardList },
-  { label: "Înființare firmă", href: "/servicii-administrative#infiintare-firma", icon: Building2 },
+  { label: "PFA / SRL", href: "/servicii-administrative#infiintare-firma", icon: Building2 },
   { label: "Întrebări", href: "/servicii-administrative#intrebari-administrative", icon: CircleHelp },
   { label: "Contact", href: "/contact?service=servicii-administrative", icon: Mail }
 ];
@@ -98,7 +98,7 @@ export function SiteHeader({ navigationContext }: { navigationContext?: "funding
       };
     }
     return {
-      label: siteConfig.tagline,
+      label: siteConfig.name,
       navigation: generalNavigation,
       contactHref: "/contact"
     };
@@ -287,7 +287,7 @@ export function SiteHeader({ navigationContext }: { navigationContext?: "funding
       <aside className="sidebar">
         <header className="sidebar-header">
           <Link className="sidebar-brand" href="/" aria-label={`${siteConfig.name}, pagina de alegere`} title={`${siteConfig.name}, pagina de alegere`}>
-            <Brand priority />
+            <Brand />
             <small>{context.label}</small>
           </Link>
           {navigationContent}
@@ -296,7 +296,7 @@ export function SiteHeader({ navigationContext }: { navigationContext?: "funding
       </aside>
 
       <header className="mobile-header">
-        <Link href="/" aria-label={`${siteConfig.name}, pagina de alegere`} title={`${siteConfig.name}, pagina de alegere`}><Brand compact priority /></Link>
+        <Link href="/" aria-label={`${siteConfig.name}, pagina de alegere`} title={`${siteConfig.name}, pagina de alegere`}><Brand compact /></Link>
         <span className="mobile-context">{context.label}</span>
         <button
           type="button"

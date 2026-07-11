@@ -19,7 +19,7 @@ const servicesByCategory = {
     ["documente", "Administrare documente"],
     ["secretariat", "Secretariat externalizat"],
     ["administrativ", "Asistență administrativă"],
-    ["infiintare-firma", "Sprijin pentru înființare firmă"]
+    ["infiintare-firma", "Înființare PFA / SRL"]
   ]
 } as const;
 

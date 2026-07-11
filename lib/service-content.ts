@@ -50,8 +50,8 @@ export const administrativeFaq = [
     "Pentru antreprenori, firme și ONG-uri care au activități recurente, dar nu au nevoie sau nu doresc să le gestioneze integral intern."
   ],
   [
-    "Oferiți și asistență pentru înființarea unei firme?",
-    "Da. Putem explica pașii administrativi, pregăti documentele necesare și oferi suport pentru organizarea activității după înființare. Situațiile care necesită consultanță juridică sau fiscală specializată sunt direcționate către profesioniști autorizați."
+    "Oferiți sprijin pentru înființarea unui PFA sau SRL?",
+    "Da. Organizăm informațiile, lista documentelor și pașii administrativi pentru PFA sau SRL și putem continua cu suport după înregistrare. Deciziile juridice, contabile sau fiscale care cer autorizare se validează cu profesionistul competent."
   ]
 ] as const;
 

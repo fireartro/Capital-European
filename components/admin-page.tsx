@@ -26,15 +26,15 @@ const services = [
 ];
 
 const companySteps = [
-  ["1", "Alegerea formei juridice"],
-  ["2", "Pregătirea documentelor"],
-  ["3", "Depunerea dosarului"],
-  ["4", "Predarea documentelor firmei"]
+  ["1", "Clarificarea opțiunii PFA sau SRL"],
+  ["2", "Centralizarea datelor și documentelor"],
+  ["3", "Verificarea și transmiterea dosarului"],
+  ["4", "Predarea documentelor și pașii următori"]
 ] as const;
 
 const adminStats = [
-  ["5", "direcții administrative", "documente, arhivă, secretariat, back-office și procese"],
-  ["4", "pași pentru firmă", "clarificare, documente, transmitere și predare organizată"],
+  ["6", "direcții administrative", "PFA/SRL, documente, secretariat, back-office, evidență și procese"],
+  ["4", "pași pentru PFA / SRL", "clarificare, documente, transmitere și predare organizată"],
   ["1", "flux delegat", "responsabilități, termene și verificări într-un loc clar"],
   ["3", "puncte urmărite", "documente, termene și comunicare centralizate consecvent"]
 ] as const;
@@ -65,14 +65,14 @@ export function AdminPage() {
       <section className="inner-hero admin-hero" id="admin-hero" aria-labelledby="admin-hero-title" aria-describedby="admin-hero-description">
         <div className="section-container inner-hero-content">
           <p className="eyebrow eyebrow-light"><Files /> Servicii administrative externalizate</p>
-          <h1 id="admin-hero-title">Servicii administrative pentru<br />procese mai ușor de <em>urmărit.</em></h1>
-          <p id="admin-hero-description">Preluăm documente, secretariat și activități de back-office în limite, termene și responsabilități stabilite împreună.</p>
+          <h1 id="admin-hero-title">Servicii administrative și sprijin pentru <em>PFA / SRL.</em></h1>
+          <p id="admin-hero-description">Te ajutăm cu înființarea unui PFA sau SRL și preluăm documente, secretariat ori activități de back-office în limite și termene stabilite clar.</p>
           <div className="inner-hero-actions">
             <a className="primary-button yellow-button" href="/contact?service=servicii-administrative" aria-label="Solicită o ofertă pentru servicii administrative externalizate" title="Solicită ofertă pentru servicii administrative">Solicită o ofertă <ArrowRight aria-hidden="true" /></a>
-            <a className="secondary-link" href="#servicii-administrative" aria-label="Vezi serviciile administrative externalizate Capital European" title="Vezi serviciile administrative">Vezi serviciile</a>
+            <a className="secondary-link" href="#infiintare-firma" aria-label="Vezi serviciul de înființare PFA sau SRL" title="Vezi înființare PFA sau SRL">Vezi PFA / SRL</a>
           </div>
           <div className="hero-proof">
-            <span><Check /> Poți începe cu un singur flux</span>
+            <span><Check /> Sprijin pentru PFA sau SRL</span>
             <span><Check /> Documente și termene urmărite</span>
             <span><Check /> Reguli clare de predare</span>
           </div>
@@ -123,20 +123,29 @@ export function AdminPage() {
           <div className="admin-service-grid" aria-describedby="admin-services-description">
             <article className="company-card" id="infiintare-firma" aria-labelledby="company-setup-title" aria-describedby="company-setup-description">
               <div className="company-card-copy">
-                <span className="company-label"><Building2 /> Pornire organizată</span>
-                <h3 id="company-setup-title">Înființare firmă</h3>
-                <p id="company-setup-description">Organizăm informațiile, documentele și pașii administrativi necesari, fără a înlocui consultanța juridică sau fiscală.</p>
+                <span className="company-label"><Building2 /> PFA sau SRL</span>
+                <h3 id="company-setup-title">Înființare PFA / SRL</h3>
+                <p id="company-setup-description">Organizăm datele, documentele și pașii administrativi pentru forma aleasă. Atunci când decizia cere analiză juridică, contabilă sau fiscală, indicăm clar ce trebuie validat cu un profesionist autorizat.</p>
                 <ul>
-                  <li><Check /> Clarificarea informațiilor despre forma juridică</li>
-                  <li><Check /> Pregătirea documentelor necesare</li>
-                  <li><Check /> Sprijin administrativ pentru transmiterea dosarului</li>
-                  <li><Check /> Suport administrativ după înființare</li>
+                  <li><Check /> Listă de informații și documente pentru PFA sau SRL</li>
+                  <li><Check /> Verificarea administrativă a dosarului înainte de transmitere</li>
+                  <li><Check /> Urmărirea completărilor și a etapelor comunicate</li>
+                  <li><Check /> Organizarea documentelor după înființare</li>
                 </ul>
-                <a className="primary-button yellow-button" href="/contact?service=infiintare-firma" title="Discută despre înființarea firmei">Discută despre firma ta <ArrowRight aria-hidden="true" /></a>
+                <div className="company-card-actions">
+                  <Link className="primary-button yellow-button" href="/contact?service=infiintare-firma" title="Solicită sprijin pentru înființarea unui PFA sau SRL">Solicită sprijin <ArrowRight aria-hidden="true" /></Link>
+                  <Link className="company-card-secondary" href="/servicii-administrative/infiintare-pfa-srl">Vezi pașii PFA / SRL</Link>
+                </div>
               </div>
-              <ol className="company-steps" aria-label="Pașii pentru înființarea firmei">
-                {companySteps.map(([number, label]) => <li key={number}><span>{number}</span><p>{label}</p></li>)}
-              </ol>
+              <div className="company-setup-guide">
+                <div className="company-form-options" aria-label="Forme de organizare pentru care oferim sprijin administrativ">
+                  <article><strong>PFA</strong><p>Pentru activitate independentă, cu un traseu administrativ adaptat situației tale.</p></article>
+                  <article><strong>SRL</strong><p>Pentru o societate, cu datele asociaților, sediul și documentele organizate coerent.</p></article>
+                </div>
+                <ol className="company-steps" aria-label="Pașii pentru înființarea unui PFA sau SRL">
+                  {companySteps.map(([number, label]) => <li key={number}><span>{number}</span><p>{label}</p></li>)}
+                </ol>
+              </div>
             </article>
 
             {services.map((service, index) => {
@@ -226,7 +235,7 @@ export function AdminPage() {
             <p className="eyebrow">Servicii detaliate</p>
             <h2 id="admin-guides-title">Vezi în detaliu serviciul de care ai nevoie</h2>
             <div className="seo-related-links">
-              <Link href="/servicii-administrative/infiintare-firma"><span><strong>Înființare firmă</strong><small>Pașii și documentele pentru pornirea societății.</small></span><ArrowRight aria-hidden="true" /></Link>
+              <Link href="/servicii-administrative/infiintare-pfa-srl"><span><strong>Înființare PFA / SRL</strong><small>Pașii, documentele și sprijinul administrativ pentru forma aleasă.</small></span><ArrowRight aria-hidden="true" /></Link>
               <Link href="/servicii-administrative/secretariat"><span><strong>Secretariat externalizat</strong><small>Corespondență, programări și solicitări urmărite.</small></span><ArrowRight aria-hidden="true" /></Link>
               <Link href="/servicii-administrative/administrare-documente"><span><strong>Administrare documente</strong><small>Clasificare, evidență și responsabilități clare.</small></span><ArrowRight aria-hidden="true" /></Link>
               <Link href="/contact?service=servicii-administrative"><span><strong>Discută un flux administrativ</strong><small>Descrie activitatea, volumul și termenul urmărit.</small></span><ArrowRight aria-hidden="true" /></Link>
@@ -235,7 +244,10 @@ export function AdminPage() {
 
           <section className="section-cta admin-cta" aria-labelledby="admin-cta-title">
             <div><p>Ai un proces administrativ care consumă prea mult timp?</p><h3 id="admin-cta-title">Descrie activitatea, volumul și termenul. Îți spunem ce poate fi preluat.</h3></div>
-            <a className="primary-button yellow-button" href="/contact?service=servicii-administrative" aria-label="Solicită o ofertă pentru servicii administrative" title="Solicită ofertă servicii administrative">Solicită o ofertă <ArrowRight aria-hidden="true" /></a>
+            <div className="section-cta-actions">
+              <Link className="primary-button yellow-button" href="/contact?service=servicii-administrative" aria-label="Solicită o ofertă pentru servicii administrative" title="Solicită ofertă servicii administrative">Solicită o ofertă <ArrowRight aria-hidden="true" /></Link>
+              <Link className="section-cta-secondary" href="/servicii-administrative/infiintare-pfa-srl">Vezi înființare PFA / SRL</Link>
+            </div>
           </section>
         </div>
       </section>

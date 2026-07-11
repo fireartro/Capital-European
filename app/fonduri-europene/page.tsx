@@ -4,7 +4,7 @@ import { fundingFaq } from "@/lib/service-content";
 import { breadcrumbSchema, faqSchema, JsonLd, professionalServiceSchema, serviceSchema } from "@/lib/structured-data";
 
 export const metadata = createPageMetadata({
-  title: "Consultanță fonduri europene pentru firme și ONG-uri",
+  title: "Fonduri europene pentru firme și ONG-uri",
   description: "Consultanță fonduri europene pentru firme și ONG-uri: oportunități urmărite, eligibilitate, punctaj, documentație și sprijin în implementare.",
   path: "/fonduri-europene"
 });

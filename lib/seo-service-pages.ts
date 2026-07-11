@@ -188,7 +188,7 @@ export const seoServicePages = {
       ["Un plan de afaceri garantează finanțarea?", "Nu. Planul trebuie să respecte criteriile apelului, iar decizia aparține evaluatorului și autorității competente."]
     ],
     related: [
-      { href: "/servicii-administrative/infiintare-firma", label: "Înființare firmă", text: "Pașii administrativi pentru pornirea societății." },
+      { href: "/servicii-administrative/infiintare-pfa-srl", label: "Înființare PFA / SRL", text: "Pașii administrativi pentru forma de organizare aleasă." },
       { href: "/fonduri-europene-pentru-firme", label: "Fonduri pentru firme", text: "Pregătirea investițiilor realizate de companii." },
       { href: "/contact?service=fonduri-europene", label: "Verifică ideea de proiect", text: "Spune-ne ce vrei să finanțezi și în ce stadiu te afli." }
     ]
@@ -232,7 +232,7 @@ export const seoServicePages = {
     ],
     related: [
       { href: "/servicii-administrative/administrare-documente", label: "Administrare documente", text: "Organizare, evidență și urmărirea documentelor." },
-      { href: "/servicii-administrative/infiintare-firma", label: "Înființare firmă", text: "Sprijin administrativ pentru o societate nouă." },
+      { href: "/servicii-administrative/infiintare-pfa-srl", label: "Înființare PFA / SRL", text: "Sprijin administrativ pentru o activitate sau societate nouă." },
       { href: "/contact?service=secretariat", label: "Cere o ofertă", text: "Descrie volumul și activitățile pe care vrei să le delegi." }
     ]
   },
@@ -280,46 +280,48 @@ export const seoServicePages = {
     ]
   },
   companySetup: {
-    path: "/servicii-administrative/infiintare-firma",
-    title: "Înființare firmă și sprijin administrativ",
-    metaDescription: "Sprijin administrativ pentru înființarea firmei: pași, informații, documente și organizare inițială, fără a înlocui consultanța autorizată.",
-    eyebrow: "Pornirea unei societăți",
-    h1: "Înființare firmă cu documente și pași administrativi organizați",
-    intro: "Centralizăm informațiile și documentele necesare și semnalăm deciziile care trebuie validate de un profesionist autorizat.",
+    path: "/servicii-administrative/infiintare-pfa-srl",
+    title: "Înființare firmă: PFA sau SRL",
+    metaDescription: "Sprijin administrativ pentru înființarea unei firme, PFA sau SRL: pași clari, organizarea actelor, verificarea dosarului și suport după înregistrare.",
+    eyebrow: "Înființare firmă · PFA / SRL",
+    h1: "Înființare firmă: PFA sau SRL, cu pașii administrativi organizați",
+    intro: "Îți spunem ce informații sunt necesare, organizăm documentele și urmărim etapele administrative. Nu înlocuim consultanța juridică, contabilă sau fiscală atunci când aceasta este necesară.",
     category: "admin",
     parent: { label: "Servicii administrative", href: "/servicii-administrative" },
     contactService: "infiintare-firma",
-    serviceType: ["Înființare firmă", "Asistență administrativă startup", "Pregătire documente firmă"],
-    audienceTitle: "Ce clarificăm de la început",
-    audienceIntro: "Forma juridică și obligațiile trebuie discutate cu profesioniștii autorizați relevanți atunci când situația o cere.",
+    serviceType: ["Înființare firmă", "Înființare PFA", "Înființare SRL", "Acte înființare PFA", "Acte înființare SRL", "Asistență administrativă startup"],
+    audienceTitle: "Ce trebuie clarificat înainte de pregătirea dosarului",
+    audienceIntro: "PFA și SRL au structuri și obligații diferite. Pornim de la activitatea propusă și separăm pașii administrativi de deciziile care trebuie validate de un profesionist autorizat.",
     audience: [
-      "Datele asociaților, administratorilor și structura de bază a societății.",
-      "Denumirea, sediul, obiectul de activitate și informațiile necesare dosarului.",
-      "Documentele care trebuie obținute, semnate sau transmise.",
-      "Pașii administrativi de după înființare și organizarea inițială a firmei."
+      "Dacă activitatea va fi desfășurată independent sau printr-o societate.",
+      "Activitățile urmărite, sediul și persoanele implicate în PFA sau SRL.",
+      "Documentele care trebuie obținute, completate, semnate sau transmise.",
+      "Pașii administrativi de după înregistrare și modul de organizare a documentelor."
     ],
-    benefitsTitle: "Un început administrativ mai ușor de urmărit",
+    benefitsTitle: "Ce primești pentru pregătirea PFA-ului sau SRL-ului",
     benefits: [
-      { title: "Listă de pași", text: "Primești o succesiune clară a informațiilor și documentelor care trebuie pregătite." },
-      { title: "Dosar organizat", text: "Verificăm dacă informațiile sunt coerente înainte de transmitere." },
-      { title: "Continuitate administrativă", text: "Poți continua cu servicii de documente, secretariat și back-office." }
+      { title: "Listă adaptată formei alese", text: "Primești o succesiune clară de informații, documente și decizii pentru PFA sau SRL." },
+      { title: "Dosar verificat administrativ", text: "Semnalăm lipsurile și neconcordanțele vizibile înainte ca documentele să fie transmise." },
+      { title: "Sprijin după înregistrare", text: "Putem continua cu organizarea documentelor, secretariat și activități recurente de back-office." }
     ],
-    processTitle: "Cum organizăm pregătirea firmei",
+    processTitle: "Cum pregătim înființarea unui PFA sau SRL",
     steps: [
-      { title: "Discuția inițială", text: "Clarificăm activitatea, asociații și nevoile administrative." },
-      { title: "Colectarea informațiilor", text: "Organizăm datele și documentele necesare situației concrete." },
-      { title: "Verificarea dosarului", text: "Semnalăm lipsurile și pașii care necesită decizia clientului." },
-      { title: "Predare și continuare", text: "Centralizăm documentele finale și activitățile administrative următoare." }
+      { title: "Clarificăm situația", text: "Discutăm activitatea, forma avută în vedere, sediul și persoanele implicate." },
+      { title: "Pregătim lista", text: "Stabilim datele, documentele și semnăturile necesare pentru situația concretă." },
+      { title: "Organizăm dosarul", text: "Centralizăm documentele și semnalăm informațiile care lipsesc sau trebuie confirmate." },
+      { title: "Urmărim pașii", text: "Ținem evidența transmiterii, completărilor și documentelor primite la final." }
     ],
     faq: [
-      ["Oferiți consultanță juridică sau fiscală?", "Nu înlocuim avocatul, notarul, contabilul sau consultantul fiscal. Pentru decizii care cer autorizare, recomandăm implicarea profesionistului competent."],
-      ["Puteți garanta termenul de înființare?", "Nu. Termenele depind de documente, instituții și eventualele solicitări de completare."],
-      ["Pot continua cu servicii administrative după înființare?", "Da. Putem organiza documentele, secretariatul și alte activități administrative recurente."]
+      ["Este mai potrivit un PFA sau un SRL?", "Nu există o alegere universală. Activitatea, modul de lucru și implicațiile juridice sau fiscale trebuie analizate pentru situația ta; decizia finală se validează, când este necesar, cu un profesionist autorizat."],
+      ["Ce documente sunt necesare pentru înființare?", "Lista diferă între PFA și SRL și depinde de activitate, sediu și persoanele implicate. După discuția inițială îți trimitem lista administrativă potrivită situației descrise."],
+      ["Oferiți consultanță juridică, fiscală sau contabilă?", "Serviciul nostru este administrativ. Nu înlocuim avocatul, notarul, contabilul sau consultantul fiscal și indicăm separat deciziile care trebuie validate de aceștia."],
+      ["Puteți garanta termenul de înființare?", "Nu. Durata depinde de pregătirea documentelor, verificările instituției și eventualele solicitări de completare. Urmărim însă fiecare etapă și comunicăm blocajele observate."],
+      ["Pot continua cu servicii administrative după înființare?", "Da. Putem organiza documentele, secretariatul, evidențele și alte activități recurente de back-office." ]
     ],
     related: [
       { href: "/fonduri-europene-pentru-startup", label: "Fonduri pentru startup", text: "Pregătirea unei afaceri noi pentru o posibilă finanțare." },
       { href: "/servicii-administrative/secretariat", label: "Secretariat externalizat", text: "Continuitate pentru comunicarea și solicitările firmei." },
-      { href: "/contact?service=infiintare-firma", label: "Solicită sprijin", text: "Trimite-ne contextul și stadiul în care te afli." }
+      { href: "/contact?service=infiintare-firma", label: "Solicită sprijin pentru PFA / SRL", text: "Spune-ne activitatea, forma avută în vedere și stadiul în care te afli." }
     ]
   }
 } satisfies Record<string, SeoServicePageConfig>;

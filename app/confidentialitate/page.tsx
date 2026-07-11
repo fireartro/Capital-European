@@ -4,7 +4,7 @@ import { siteConfig } from "@/lib/site-config";
 import { breadcrumbSchema, JsonLd } from "@/lib/structured-data";
 
 export const metadata = createPageMetadata({
-  title: "Politica de confidențialitate și protecția datelor",
+  title: "Confidențialitate și protecția datelor",
   description: `Află ce date poate prelucra ${siteConfig.name}, în ce scop, cât timp sunt păstrate și cum îți poți exercita drepturile.`,
   path: "/confidentialitate"
 });

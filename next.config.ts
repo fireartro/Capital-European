@@ -16,26 +16,28 @@ const securityHeaders = [
   { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
   { key: "Cross-Origin-Resource-Policy", value: "same-origin" },
   { key: "X-Permitted-Cross-Domain-Policies", value: "none" },
-  ...(!isDevelopment ? [{
-    key: "Content-Security-Policy",
-    value: [
-      "default-src 'self'",
-      "base-uri 'self'",
-      "form-action 'self'",
-      "frame-ancestors 'none'",
-      "object-src 'none'",
-      "frame-src https://www.google.com https://maps.google.com",
-      `img-src 'self' data: blob: https://lh3.googleusercontent.com${hasGoogleTracking ? " https://www.google-analytics.com https://www.googletagmanager.com" : ""}${hasClarity ? " https://www.clarity.ms https://*.clarity.ms https://c.bing.com" : ""}`,
-      "font-src 'self' data:",
-      "style-src 'self' 'unsafe-inline'",
-      `script-src 'self' 'unsafe-inline'${hasGoogleTracking ? " https://www.googletagmanager.com" : ""}${hasClarity ? " https://www.clarity.ms" : ""}`,
-      `connect-src 'self'${hasGoogleTracking ? " https://www.google-analytics.com https://region1.google-analytics.com https://www.googletagmanager.com" : ""}${hasClarity ? " https://www.clarity.ms https://*.clarity.ms https://c.bing.com" : ""}`,
-      "manifest-src 'self'",
-      "media-src 'self'",
-      "worker-src 'self' blob:",
-      "upgrade-insecure-requests"
-    ].join("; ")
-  }] : [])
+  ...(!isDevelopment ? [
+    { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains; preload" },
+    {
+      key: "Content-Security-Policy",
+      value: [
+        "default-src 'self'",
+        "base-uri 'self'",
+        "form-action 'self'",
+        "frame-ancestors 'none'",
+        "object-src 'none'",
+        "frame-src https://www.google.com https://maps.google.com",
+        `img-src 'self' data: blob: https://lh3.googleusercontent.com${hasGoogleTracking ? " https://www.google-analytics.com https://www.googletagmanager.com" : ""}${hasClarity ? " https://www.clarity.ms https://*.clarity.ms https://c.bing.com" : ""}`,
+        "font-src 'self' data:",
+        "style-src 'self' 'unsafe-inline'",
+        `script-src 'self' 'unsafe-inline'${hasGoogleTracking ? " https://www.googletagmanager.com" : ""}${hasClarity ? " https://www.clarity.ms" : ""}`,
+        `connect-src 'self'${hasGoogleTracking ? " https://www.google-analytics.com https://region1.google-analytics.com https://www.googletagmanager.com" : ""}${hasClarity ? " https://www.clarity.ms https://*.clarity.ms https://c.bing.com" : ""}`,
+        "manifest-src 'self'",
+        "media-src 'self'",
+        "worker-src 'self' blob:"
+      ].join("; ")
+    }
+  ] : [])
 ];
 
 const nextConfig: NextConfig = {
@@ -63,6 +65,26 @@ const nextConfig: NextConfig = {
       {
         source: "/birotica",
         destination: "/servicii-administrative",
+        permanent: true
+      },
+      {
+        source: "/servicii-administrative/infiintare-firma",
+        destination: "/servicii-administrative/infiintare-pfa-srl",
+        permanent: true
+      },
+      {
+        source: "/infiintare-firma",
+        destination: "/servicii-administrative/infiintare-pfa-srl",
+        permanent: true
+      },
+      {
+        source: "/infiintare-pfa",
+        destination: "/servicii-administrative/infiintare-pfa-srl",
+        permanent: true
+      },
+      {
+        source: "/infiintare-srl",
+        destination: "/servicii-administrative/infiintare-pfa-srl",
         permanent: true
       }
     ];

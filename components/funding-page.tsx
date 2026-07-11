@@ -3,7 +3,6 @@ import {
   BarChart3,
   Check,
   ClipboardCheck,
-  ExternalLink,
   FilePenLine,
   Landmark,
   SearchCheck,
@@ -13,10 +12,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { FundingEligibilityChecker } from "@/components/funding-eligibility-checker";
 import { FundingHeroCarousel } from "@/components/funding-hero-carousel";
+import { FundingProgramList } from "@/components/funding-program-list";
 import { ServiceFaq } from "@/components/service-faq";
 import { SiteShell } from "@/components/site-shell";
 import { ScrollStarOrbit } from "@/components/scroll-star-orbit";
-import { fundingPrograms } from "@/lib/funding-programs";
 import { fundingFaq } from "@/lib/service-content";
 import { siteConfig } from "@/lib/site-config";
 
@@ -165,34 +164,7 @@ export function FundingPage() {
               </div>
               <p id="funding-programs-description">Structura este pregătită pentru actualizări. Până la publicarea și verificarea ghidurilor, cardurile de mai jos sunt categorii orientative, nu apeluri active confirmate.</p>
             </header>
-            <div className="funding-program-list">
-              {fundingPrograms.map((program) => (
-                <article className="funding-program-card" key={program.id}>
-                  <figure className="funding-program-image">
-                    <Image src={program.image} alt={program.imageAlt} fill sizes="(max-width: 640px) 100vw, (max-width: 1100px) 50vw, 33vw" />
-                  </figure>
-                  <div className="funding-program-body">
-                  <div className="funding-program-meta">
-                    <span>{program.status}</span>
-                    <small>{program.lastVerified}</small>
-                  </div>
-                  <p>{program.program}</p>
-                  <h3>{program.title}</h3>
-                  <p>{program.summary}</p>
-                  <dl className="funding-program-facts">
-                    <div><dt>Beneficiari</dt><dd>{program.audience}</dd></div>
-                    <div><dt>Valoare</dt><dd>{program.value}</dd></div>
-                    <div><dt>Cofinanțare</dt><dd>{program.cofinancing}</dd></div>
-                    <div><dt>Arie</dt><dd>{program.region}</dd></div>
-                  </dl>
-                  <div className="funding-program-actions">
-                    <Link href={`/contact?service=fonduri-europene&program=${program.id}`}>Sunt interesat <ArrowRight aria-hidden="true" /></Link>
-                    <a href={program.sourceUrl} target="_blank" rel="noopener noreferrer">Portal oficial <ExternalLink aria-hidden="true" /></a>
-                  </div>
-                  </div>
-                </article>
-              ))}
-            </div>
+            <FundingProgramList />
             <div className="funding-programs-note">
               <p>Ai găsit un apel care nu apare aici? Trimite denumirea sau ghidul. Îl verificăm în sursa oficială înainte să îți spunem dacă merită analizat.</p>
               <Link className="primary-button blue-button" href="/contact?service=fonduri-europene&program=program-nespecificat">Solicită identificarea programului <ArrowRight aria-hidden="true" /></Link>

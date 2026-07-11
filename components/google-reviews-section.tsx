@@ -22,7 +22,7 @@ export async function GoogleReviewsSection({ variant = "default" }: { variant?: 
           <div>
             <p className="eyebrow"><MessageCircleHeart aria-hidden="true" /> Recenzii Google</p>
             <h2 id="google-reviews-title">Feedback public, verificabil în profilul nostru Google</h2>
-            <p>Recenziile sunt afișate direct din Google imediat ce serviciul de sincronizare este disponibil. Până atunci, le poți consulta în sursa originală.</p>
+            <p>Consultă recenziile publice direct în profilul nostru Google Business. Feedbackul rămâne în sursa originală, unde poate fi verificat și actualizat.</p>
           </div>
           <a href={siteConfig.googleBusiness.url} target="_blank" rel="noopener noreferrer" title="Vezi recenziile Capital European pe Google">
             <Image src="/images/google-maps-attribution.svg" alt="Google Maps" width={98} height={18} />
