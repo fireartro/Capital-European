@@ -126,6 +126,11 @@ export async function POST(request: NextRequest) {
       "</div>"
     ].join("");
     const textIntro = `Mesaj primit prin contact@capitaleuropean.ro\nDe la: ${email.from}\nCătre: ${recipientLabel}\nRăspunde direct acestui mesaj pentru a contacta expeditorul.\n\n`;
+    const originalHtml =
+      email.html ||
+      (email.text
+        ? `<div style="white-space:pre-wrap;color:#10213a;font:14px/1.6 Arial,sans-serif">${escapeHtml(email.text)}</div>`
+        : "");
 
     const { data: forwarded, error: forwardError } = await resend.emails.send(
       {
@@ -133,7 +138,7 @@ export async function POST(request: NextRequest) {
         to: forwardTo,
         replyTo,
         subject,
-        html: `${htmlIntro}${email.html || ""}`,
+        html: `${htmlIntro}${originalHtml}`,
         text: `${textIntro}${email.text || ""}`,
         attachments,
         headers: {
