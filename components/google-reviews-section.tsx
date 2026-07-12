@@ -68,7 +68,11 @@ export async function GoogleReviewsSection({ variant = "default" }: { variant?: 
                   <blockquote>{review.text}</blockquote>
                   <footer>
                     <a className="google-review-author" href={review.authorUrl} target="_blank" rel="noopener noreferrer" title={`Vezi profilul Google al autorului ${review.author}`}>
-                      <Image src={review.avatarUrl} alt="" width={40} height={40} />
+                      {review.avatarUrl ? (
+                        <Image src={review.avatarUrl} alt="" width={40} height={40} />
+                      ) : (
+                        <span className="google-review-avatar-fallback" aria-hidden="true">{review.author.slice(0, 1).toUpperCase()}</span>
+                      )}
                       <span>
                         <strong>{review.author}</strong>
                         {review.publishedLabel && <small>{review.publishedLabel}</small>}

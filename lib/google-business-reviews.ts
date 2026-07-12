@@ -62,12 +62,15 @@ function parseReview(value: unknown): GoogleBusinessReview | null {
 
   const attribution = isRecord(value.authorAttribution) ? value.authorAttribution : {};
   const author = getText(attribution.displayName);
-  const authorUrl = getHttpsUrl(attribution.uri, "");
+  const authorUrl = getHttpsUrl(attribution.uri, siteConfig.googleBusiness.url);
   const avatarUrl = getGoogleAvatarUrl(attribution.photoUri);
-  const reviewUrl = getHttpsUrl(value.googleMapsUri, "");
+  const reviewUrl = getHttpsUrl(value.googleMapsUri, siteConfig.googleBusiness.url);
   const rating = Math.max(1, Math.min(5, getNumber(value.rating)));
 
-  if (!author || !authorUrl || !avatarUrl || !reviewUrl) return null;
+  // Google can omit a contributor avatar or a per-review profile URL while
+  // still returning a public review. Keep the review and link to the public
+  // business profile rather than discarding verified API content.
+  if (!author) return null;
 
   return {
     author,

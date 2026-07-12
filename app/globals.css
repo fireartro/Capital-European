@@ -722,6 +722,7 @@ body:has(.funding-photo-hero) .scroll-star-orbit.section-0 { right: -150px; opac
 .google-review-card footer { display: grid; gap: 10px; margin-top: auto; color: var(--muted); font-size: .75rem; }
 .google-review-author { min-width: 0; display: flex; align-items: center; gap: 10px; }
 .google-review-author > img { width: 40px; height: 40px; flex: 0 0 auto; border-radius: 50%; object-fit: cover; }
+.google-review-avatar-fallback { width: 40px; height: 40px; flex: 0 0 auto; display: grid; place-items: center; border-radius: 50%; color: var(--eu-blue); background: var(--eu-blue-light); font-size: .82rem; font-weight: 820; }
 .google-review-author > span { min-width: 0; display: grid; gap: 3px; }
 .google-review-author strong { overflow: hidden; color: var(--ink); font-size: .76rem; text-overflow: ellipsis; white-space: nowrap; }
 .google-review-author small { color: var(--muted); font-size: .75rem; }
