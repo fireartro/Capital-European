@@ -114,7 +114,7 @@ export function organizationSchema(): JsonObject {
                 "@type": "Service",
                 name: "Consultanță fonduri europene",
                 description: "Analiză de eligibilitate, pregătire documentație, depunere cereri de finanțare și implementare proiecte cu fonduri europene.",
-                url: absoluteUrl("/fonduri-europene")
+                url: absoluteUrl("/consultanta-fonduri-europene")
               }
             },
             {
@@ -132,7 +132,7 @@ export function organizationSchema(): JsonObject {
                 "@type": "Service",
                 name: "Înființare PFA",
                 description: "Sprijin administrativ pentru informațiile, actele și pașii necesari înființării unui PFA.",
-                url: absoluteUrl("/servicii-administrative/infiintare-pfa-srl")
+                url: absoluteUrl("/servicii-administrative/infiintare-pfa")
               }
             },
             {
@@ -141,7 +141,7 @@ export function organizationSchema(): JsonObject {
                 "@type": "Service",
                 name: "Înființare SRL",
                 description: "Sprijin administrativ pentru informațiile, actele și pașii necesari înființării unui SRL.",
-                url: absoluteUrl("/servicii-administrative/infiintare-pfa-srl")
+                url: absoluteUrl("/servicii-administrative/infiintare-srl")
               }
             }
           ]

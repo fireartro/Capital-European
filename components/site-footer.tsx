@@ -5,7 +5,7 @@ import { siteConfig } from "@/lib/site-config";
 import { ExternalLink, MapPin } from "lucide-react";
 import Link from "next/link";
 
-export function SiteFooter() {
+export function SiteFooter({ showCookieSettings = true }: { showCookieSettings?: boolean }) {
   return (
     <footer className="site-footer" id="site-footer">
       <div className="section-container footer-main">
@@ -15,6 +15,7 @@ export function SiteFooter() {
         </div>
         <div>
           <h3>Fonduri europene</h3>
+          <Link href="/fonduri-europene">Programe și eligibilitate</Link>
           <Link href="/consultanta-fonduri-europene">Consultanță fonduri europene</Link>
           <Link href="/fonduri-europene-pentru-firme">Fonduri pentru firme</Link>
           <Link href="/fonduri-europene-pentru-ong">Fonduri pentru ONG-uri</Link>
@@ -26,6 +27,8 @@ export function SiteFooter() {
           <Link href="/servicii-administrative/secretariat">Secretariat externalizat</Link>
           <Link href="/servicii-administrative/administrare-documente">Administrare documente</Link>
           <Link href="/servicii-administrative/infiintare-pfa-srl">Înființare PFA / SRL</Link>
+          <Link href="/servicii-administrative/infiintare-pfa">Înființare PFA</Link>
+          <Link href="/servicii-administrative/infiintare-srl">Înființare SRL</Link>
         </div>
         <div>
           <h3>Contact</h3>
@@ -74,7 +77,7 @@ export function SiteFooter() {
           <Link href="/termeni" title="Termeni și condiții">Termeni</Link>
           <Link href="/cookies" title="Politica de cookies">Cookies</Link>
           <a href="https://anpc.ro/sal/" target="_blank" rel="noopener noreferrer" title="Soluționarea alternativă a litigiilor prin ANPC">SAL ANPC</a>
-          <CookieSettingsButton compact />
+          {showCookieSettings && <CookieSettingsButton compact />}
         </div>
       </div>
     </footer>

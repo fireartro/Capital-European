@@ -139,8 +139,16 @@ export function AdminPage() {
               </div>
               <div className="company-setup-guide">
                 <div className="company-form-options" aria-label="Forme de organizare pentru care oferim sprijin administrativ">
-                  <article><strong>PFA</strong><p>Pentru activitate independentă, cu un traseu administrativ adaptat situației tale.</p></article>
-                  <article><strong>SRL</strong><p>Pentru o societate, cu datele asociaților, sediul și documentele organizate coerent.</p></article>
+                  <article>
+                    <strong>PFA</strong>
+                    <p>Pentru activitate independentă, cu un traseu administrativ adaptat situației tale.</p>
+                    <Link href="/servicii-administrative/infiintare-pfa">Vezi pașii pentru PFA <ArrowRight aria-hidden="true" /></Link>
+                  </article>
+                  <article>
+                    <strong>SRL</strong>
+                    <p>Pentru o societate, cu datele asociaților, sediul și documentele organizate coerent.</p>
+                    <Link href="/servicii-administrative/infiintare-srl">Vezi pașii pentru SRL <ArrowRight aria-hidden="true" /></Link>
+                  </article>
                 </div>
                 <ol className="company-steps" aria-label="Pașii pentru înființarea unui PFA sau SRL">
                   {companySteps.map(([number, label]) => <li key={number}><span>{number}</span><p>{label}</p></li>)}

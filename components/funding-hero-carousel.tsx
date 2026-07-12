@@ -72,8 +72,8 @@ export function FundingHeroCarousel() {
       </div>
       <div className="funding-hero-shade" aria-hidden="true" />
       <div className="section-container funding-photo-hero-content">
-        <p className="eyebrow eyebrow-light"><Landmark aria-hidden="true" /> Consultanță fonduri europene</p>
-        <h1 id="funding-hero-title">Consultanță pentru fonduri europene și investiții bine pregătite</h1>
+        <p className="eyebrow eyebrow-light"><Landmark aria-hidden="true" /> Programe și oportunități de finanțare</p>
+        <h1 id="funding-hero-title">Fonduri europene pentru firme, ONG-uri și startup-uri</h1>
         <div className="funding-hero-active-copy">
           <span>{slides[activeIndex].label}</span>
           <h2>{slides[activeIndex].title}</h2>
@@ -81,7 +81,7 @@ export function FundingHeroCarousel() {
         </div>
         <div className="funding-hero-actions">
           <Link className="primary-button yellow-button" href="#fonduri-active">Vezi oportunitățile urmărite <ArrowRight aria-hidden="true" /></Link>
-          <Link className="funding-hero-contact" href="/contact?service=fonduri-europene">Solicită verificarea proiectului</Link>
+          <Link className="funding-hero-contact" href="/consultanta-fonduri-europene">Vezi serviciul de consultanță</Link>
         </div>
         <div className="funding-hero-controls">
           <button type="button" onClick={() => selectSlide(activeIndex - 1)} aria-label="Imaginea anterioară"><ChevronLeft aria-hidden="true" /></button>

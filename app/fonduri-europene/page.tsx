@@ -1,11 +1,11 @@
 import { FundingPage } from "@/components/funding-page";
 import { createPageMetadata } from "@/lib/metadata";
 import { fundingFaq } from "@/lib/service-content";
-import { breadcrumbSchema, faqSchema, JsonLd, professionalServiceSchema, serviceSchema } from "@/lib/structured-data";
+import { breadcrumbSchema, faqSchema, JsonLd } from "@/lib/structured-data";
 
 export const metadata = createPageMetadata({
-  title: "Fonduri europene pentru firme și ONG-uri",
-  description: "Consultanță fonduri europene pentru firme și ONG-uri: oportunități urmărite, eligibilitate, punctaj, documentație și sprijin în implementare.",
+  title: "Fonduri europene pentru firme, ONG-uri și startup-uri",
+  description: "Fonduri europene pentru firme, ONG-uri și startup-uri: oportunități urmărite, criterii de eligibilitate, punctaj, surse oficiale și pașii de accesare.",
   path: "/fonduri-europene"
 });
 
@@ -15,19 +15,8 @@ export default function Page() {
       <JsonLd data={[
         breadcrumbSchema([
           { name: "Acasă", path: "/" },
-          { name: "Consultanță fonduri europene", path: "/fonduri-europene" }
+          { name: "Fonduri europene", path: "/fonduri-europene" }
         ]),
-        professionalServiceSchema({
-          path: "/fonduri-europene",
-          serviceName: "Consultanță fonduri europene",
-          description: "Capital European oferă analiză de eligibilitate, pregătirea documentației, depunere și sprijin în implementarea proiectelor cu fonduri europene."
-        }),
-        serviceSchema({
-          name: "Consultanță fonduri europene",
-          description: "Analiză de eligibilitate, documentație, depunere și sprijin pentru implementarea proiectelor cu fonduri europene.",
-          path: "/fonduri-europene",
-          serviceType: ["Consultanță fonduri europene", "Cereri de finanțare", "Management proiecte finanțate"]
-        }),
         faqSchema(fundingFaq)
       ]} />
       <FundingPage />

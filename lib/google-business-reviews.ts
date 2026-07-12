@@ -82,7 +82,7 @@ function parseReview(value: unknown): GoogleBusinessReview | null {
 
 /**
  * Loads public profile data through the official Places API. The browser never
- * receives the API key, and the result is cached for one hour.
+ * receives the API key, and the result is revalidated every five minutes.
  */
 export async function getGoogleBusinessReviews(): Promise<GoogleBusinessReviews | null> {
   const apiKey = process.env.GOOGLE_PLACES_API_KEY?.trim();
@@ -110,7 +110,7 @@ export async function getGoogleBusinessReviews(): Promise<GoogleBusinessReviews 
           "reviews.authorAttribution.photoUri"
         ].join(",")
       },
-      next: { revalidate: 3600, tags: ["google-business-reviews"] }
+      next: { revalidate: 300, tags: ["google-business-reviews"] }
     });
 
     if (!response.ok) return null;

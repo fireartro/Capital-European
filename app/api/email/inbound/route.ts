@@ -6,6 +6,18 @@ export const runtime = "nodejs";
 export const maxDuration = 60;
 
 const MAX_WEBHOOK_BODY_BYTES = 128_000;
+const MAX_FORWARDED_TEXT_BYTES = 256_000;
+const MAX_ATTACHMENT_COUNT = 8;
+const MAX_ATTACHMENT_BYTES = 8 * 1024 * 1024;
+const MAX_TOTAL_ATTACHMENT_BYTES = 20 * 1024 * 1024;
+
+function byteLength(value: string | null | undefined) {
+  return Buffer.byteLength(value || "", "utf8");
+}
+
+function isAttachmentSizeAllowed(value: number) {
+  return Number.isFinite(value) && value >= 0 && value <= MAX_ATTACHMENT_BYTES;
+}
 
 function jsonResponse(body: unknown, init?: ResponseInit) {
   const headers = new Headers(init?.headers);
@@ -95,14 +107,35 @@ export async function POST(request: NextRequest) {
       return jsonResponse({ message: "Mesajul primit nu a putut fi preluat." }, { status: 502 });
     }
 
+    if (
+      byteLength(email.html) > MAX_FORWARDED_TEXT_BYTES
+      || byteLength(email.text) > MAX_FORWARDED_TEXT_BYTES
+      || email.attachments.length > MAX_ATTACHMENT_COUNT
+    ) {
+      return jsonResponse({ message: "Mesajul depășește limita de redirecționare." }, { status: 413 });
+    }
+
     const attachments: Attachment[] = [];
+    let totalAttachmentBytes = 0;
     for (const attachment of email.attachments) {
+      if (!isAttachmentSizeAllowed(attachment.size)) {
+        return jsonResponse({ message: "Un atașament depășește limita permisă." }, { status: 413 });
+      }
+
+      totalAttachmentBytes += attachment.size;
+      if (totalAttachmentBytes > MAX_TOTAL_ATTACHMENT_BYTES) {
+        return jsonResponse({ message: "Atașamentele depășesc limita totală permisă." }, { status: 413 });
+      }
+
       const { data, error } = await resend.emails.receiving.attachments.get({
         emailId: email.id,
         id: attachment.id
       });
       if (error || !data) {
         return jsonResponse({ message: "Un atașament nu a putut fi preluat." }, { status: 502 });
+      }
+      if (!isAttachmentSizeAllowed(data.size) || data.size > attachment.size) {
+        return jsonResponse({ message: "Un atașament depășește limita permisă." }, { status: 413 });
       }
       attachments.push({
         filename: data.filename || attachment.filename || "atasament",

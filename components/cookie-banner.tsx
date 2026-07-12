@@ -284,11 +284,20 @@ export function CookieBanner({
   }, [consent, view]);
 
   const applyConsent = (analytics: boolean, marketing: boolean) => {
+    const reloadAfterMarketingWithdrawal = Boolean(
+      consent?.marketing
+      && !marketing
+      && document.querySelector("script[data-ce-gtm]")
+    );
     const nextConsent = saveCookieConsent({ analytics, marketing });
     setConsent(nextConsent);
     setAnalyticsDraft(analytics);
     setMarketingDraft(marketing);
     setView("hidden");
+
+    // A loaded GTM container can retain third-party state. Reload after an
+    // explicit withdrawal so the next document starts without that container.
+    if (reloadAfterMarketingWithdrawal) window.setTimeout(() => window.location.reload(), 0);
   };
 
   return (

@@ -44,17 +44,43 @@ function parseConsent(value: string | null) {
   }
 }
 
+function hasCurrentTimestamp(consent: CookieConsent) {
+  const updatedAt = Date.parse(consent.updatedAt);
+  if (!Number.isFinite(updatedAt)) return false;
+
+  const now = Date.now();
+  const maxFutureSkew = 5 * 60 * 1000;
+  return updatedAt <= now + maxFutureSkew && now - updatedAt <= CONSENT_MAX_AGE * 1000;
+}
+
+function clearStoredConsent() {
+  try {
+    window.localStorage.removeItem(COOKIE_CONSENT_KEY);
+  } catch {
+    // Storage can be unavailable in privacy-restricted browsers.
+  }
+}
+
+function clearConsentCookie() {
+  const secure = window.location.protocol === "https:" ? "; Secure" : "";
+  document.cookie = `${COOKIE_CONSENT_KEY}=; Path=/; Max-Age=0; SameSite=Lax${secure}`;
+}
+
 export function readCookieConsent() {
   if (typeof window === "undefined") return null;
 
   try {
     const stored = parseConsent(window.localStorage.getItem(COOKIE_CONSENT_KEY));
-    if (stored) return stored;
+    if (stored && hasCurrentTimestamp(stored)) return stored;
+    if (stored) clearStoredConsent();
   } catch {
     // The cookie fallback remains available when storage is blocked.
   }
 
-  return parseConsent(readCookie(COOKIE_CONSENT_KEY));
+  const cookieConsent = parseConsent(readCookie(COOKIE_CONSENT_KEY));
+  if (cookieConsent && hasCurrentTimestamp(cookieConsent)) return cookieConsent;
+  if (cookieConsent) clearConsentCookie();
+  return null;
 }
 
 export function saveCookieConsent(preferences: CookiePreferences) {

@@ -3,7 +3,7 @@ import { createPageMetadata } from "@/lib/metadata";
 import { seoServicePages } from "@/lib/seo-service-pages";
 import { breadcrumbSchema, faqSchema, JsonLd, serviceSchema } from "@/lib/structured-data";
 
-const page = seoServicePages.companySetup;
+const page = seoServicePages.pfaSetup;
 
 export const metadata = createPageMetadata({
   title: page.title,
@@ -17,6 +17,7 @@ export default function Page() {
       <JsonLd data={[
         breadcrumbSchema([
           { name: "Acasă", path: "/" },
+          { name: "Servicii administrative", path: "/servicii-administrative" },
           { name: page.parent.label, path: page.parent.href },
           { name: page.title, path: page.path }
         ]),

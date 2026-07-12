@@ -3,32 +3,28 @@ import { siteConfig } from "@/lib/site-config";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date(siteConfig.lastUpdated);
-  const routes: Array<{
-    path: string;
-    changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"];
-    priority: number;
-  }> = [
-    { path: "", changeFrequency: "monthly", priority: 1 },
-    { path: "/fonduri-europene", changeFrequency: "monthly", priority: 0.9 },
-    { path: "/consultanta-fonduri-europene", changeFrequency: "monthly", priority: 0.9 },
-    { path: "/fonduri-europene-pentru-firme", changeFrequency: "monthly", priority: 0.8 },
-    { path: "/fonduri-europene-pentru-ong", changeFrequency: "monthly", priority: 0.8 },
-    { path: "/fonduri-europene-pentru-startup", changeFrequency: "monthly", priority: 0.8 },
-    { path: "/servicii-administrative", changeFrequency: "monthly", priority: 0.9 },
-    { path: "/servicii-administrative/secretariat", changeFrequency: "monthly", priority: 0.8 },
-    { path: "/servicii-administrative/administrare-documente", changeFrequency: "monthly", priority: 0.8 },
-    { path: "/servicii-administrative/infiintare-pfa-srl", changeFrequency: "monthly", priority: 0.9 },
-    { path: "/contact", changeFrequency: "monthly", priority: 0.8 },
-    { path: "/despre", changeFrequency: "yearly", priority: 0.6 },
-    { path: "/intrebari", changeFrequency: "yearly", priority: 0.6 },
-    { path: "/confidentialitate", changeFrequency: "yearly", priority: 0.2 },
-    { path: "/termeni", changeFrequency: "yearly", priority: 0.2 },
-    { path: "/cookies", changeFrequency: "yearly", priority: 0.2 }
+  const routes = [
+    "",
+    "/fonduri-europene",
+    "/consultanta-fonduri-europene",
+    "/fonduri-europene-pentru-firme",
+    "/fonduri-europene-pentru-ong",
+    "/fonduri-europene-pentru-startup",
+    "/servicii-administrative",
+    "/servicii-administrative/secretariat",
+    "/servicii-administrative/administrare-documente",
+    "/servicii-administrative/infiintare-pfa-srl",
+    "/servicii-administrative/infiintare-pfa",
+    "/servicii-administrative/infiintare-srl",
+    "/contact",
+    "/despre",
+    "/intrebari",
+    "/confidentialitate",
+    "/termeni",
+    "/cookies"
   ];
-  return routes.map((route) => ({
-    url: `${siteConfig.url}${route.path}`,
-    lastModified,
-    changeFrequency: route.changeFrequency,
-    priority: route.priority
+  return routes.map((path) => ({
+    url: `${siteConfig.url}${path}`,
+    lastModified
   }));
 }

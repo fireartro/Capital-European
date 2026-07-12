@@ -537,6 +537,8 @@ body:has(.funding-photo-hero) .scroll-star-orbit.section-0 { right: -150px; opac
 .company-form-options article { min-width: 0; padding: 16px; border: 1px solid rgba(255,204,0,.24); border-radius: 11px; background: rgba(255,204,0,.07); }
 .company-form-options strong { display: block; margin-bottom: 7px; color: var(--eu-yellow); font: 850 1rem var(--font-display); }
 .company-form-options p { margin: 0; color: rgba(255,255,255,.78); font-size: .75rem; line-height: 1.55; }
+.company-form-options a { display: inline-flex; align-items: center; gap: 7px; margin-top: 12px; color: #fff; font-size: .75rem; font-weight: 800; text-decoration: underline; text-underline-offset: 4px; }
+.company-form-options a svg { width: 15px; height: 15px; }
 .company-steps { display: grid; align-content: center; gap: 10px; margin: 0; padding: 0; list-style: none; }
 .company-steps > li { display: grid; grid-template-columns: 42px 1fr; align-items: center; gap: 13px; padding: 14px; border: 1px solid rgba(255,255,255,.12); border-radius: 11px; background: rgba(255,255,255,.06); }
 .company-steps span { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 9px; color: var(--eu-blue-dark); background: var(--eu-yellow); font-weight: 850; }

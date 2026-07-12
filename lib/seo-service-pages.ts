@@ -319,9 +319,97 @@ export const seoServicePages = {
       ["Pot continua cu servicii administrative după înființare?", "Da. Putem organiza documentele, secretariatul, evidențele și alte activități recurente de back-office." ]
     ],
     related: [
-      { href: "/fonduri-europene-pentru-startup", label: "Fonduri pentru startup", text: "Pregătirea unei afaceri noi pentru o posibilă finanțare." },
-      { href: "/servicii-administrative/secretariat", label: "Secretariat externalizat", text: "Continuitate pentru comunicarea și solicitările firmei." },
+      { href: "/servicii-administrative/infiintare-pfa", label: "Înființare PFA", text: "Acte și pași administrativi pentru activitatea independentă." },
+      { href: "/servicii-administrative/infiintare-srl", label: "Înființare SRL", text: "Date, documente și etape pentru înregistrarea societății." },
       { href: "/contact?service=infiintare-firma", label: "Solicită sprijin pentru PFA / SRL", text: "Spune-ne activitatea, forma avută în vedere și stadiul în care te afli." }
+    ]
+  },
+  pfaSetup: {
+    path: "/servicii-administrative/infiintare-pfa",
+    title: "Înființare PFA: acte și pași administrativi",
+    metaDescription: "Sprijin administrativ pentru înființarea unui PFA: activitate, coduri CAEN, sediu, documente, verificarea dosarului și urmărirea înregistrării.",
+    eyebrow: "Înființare PFA",
+    h1: "Înființare PFA, cu actele și pașii administrativi bine organizați",
+    intro: "Clarificăm activitatea pe care vrei să o desfășori, informațiile necesare și documentele care trebuie pregătite. Serviciul este administrativ și nu înlocuiește analiza juridică, fiscală sau contabilă.",
+    category: "admin",
+    parent: { label: "Înființare PFA / SRL", href: "/servicii-administrative/infiintare-pfa-srl" },
+    contactService: "infiintare-firma",
+    serviceType: ["Înființare PFA", "Acte PFA", "Deschidere PFA", "Înregistrare PFA", "Cod CAEN PFA"],
+    audienceTitle: "Ce clarificăm înainte de pregătirea unui PFA",
+    audienceIntro: "Lista exactă depinde de activitate, sediu și cerințele aplicabile profesiei. Pornim de la situația concretă, nu de la un formular generic.",
+    audience: [
+      "Activitatea principală și activitățile secundare pe care vrei să le autorizezi.",
+      "Documentele care pot demonstra pregătirea sau experiența, dacă domeniul le solicită.",
+      "Sediul profesional și dreptul de folosință asupra spațiului declarat.",
+      "Informațiile care trebuie confirmate separat cu un contabil sau alt profesionist autorizat."
+    ],
+    benefitsTitle: "Un dosar PFA pregătit pe situația ta",
+    benefits: [
+      { title: "Listă de acte adaptată", text: "Primești informațiile și documentele de pregătit pentru activitatea și sediul descrise." },
+      { title: "Verificare administrativă", text: "Semnalăm datele lipsă, documentele neclare și neconcordanțele vizibile înainte de transmitere." },
+      { title: "Pași urmăriți până la final", text: "Ținem evidența depunerii, completărilor și documentelor emise după înregistrare." }
+    ],
+    processTitle: "Pașii administrativi pentru înființarea PFA-ului",
+    steps: [
+      { title: "Definim activitatea", text: "Clarificăm serviciile oferite, codurile CAEN avute în vedere și eventualele condiții profesionale." },
+      { title: "Verificăm sediul și actele", text: "Stabilim informațiile despre sediu și documentele care trebuie obținute sau semnate." },
+      { title: "Organizăm dosarul", text: "Centralizăm datele și verificăm administrativ documentele înainte de transmitere." },
+      { title: "Urmărim înregistrarea", text: "Ținem evidența solicitărilor de completare și a documentelor primite la final." }
+    ],
+    faq: [
+      ["Ce acte sunt necesare pentru înființarea unui PFA?", "Lista depinde de activitate, sediu și cerințele profesiei. După discuția inițială îți comunicăm documentele administrative relevante situației descrise."],
+      ["Este necesară o diplomă sau experiență profesională?", "Pentru anumite activități pot exista cerințe privind pregătirea sau experiența. Acestea se verifică raportat la activitatea concretă și la regulile în vigoare."],
+      ["Cât durează înființarea unui PFA?", "Durata depinde de pregătirea documentelor și de eventualele solicitări de completare ale instituției. Nu promitem un termen pe care nu îl putem controla."],
+      ["Mă ajutați să aleg între PFA și SRL?", "Putem explica diferențele administrative și informațiile necesare. Implicațiile juridice, fiscale și contabile trebuie validate cu profesioniști autorizați."]
+    ],
+    related: [
+      { href: "/servicii-administrative/infiintare-pfa-srl", label: "PFA sau SRL", text: "Compară traseele administrative înainte să alegi forma." },
+      { href: "/servicii-administrative/infiintare-srl", label: "Înființare SRL", text: "Vezi documentele și etapele specifice unei societăți." },
+      { href: "/contact?service=infiintare-firma", label: "Solicită lista pentru PFA", text: "Descrie activitatea și sediul avut în vedere." }
+    ]
+  },
+  srlSetup: {
+    path: "/servicii-administrative/infiintare-srl",
+    title: "Înființare SRL: acte și pași administrativi",
+    metaDescription: "Sprijin administrativ pentru înființarea unui SRL: denumire, sediu, asociați, administrator, coduri CAEN, documente și urmărirea înregistrării.",
+    eyebrow: "Înființare SRL",
+    h1: "Înființare SRL, cu datele și documentele pregătite coerent",
+    intro: "Organizăm informațiile despre societate, asociați, administrator, sediu și activități, apoi urmărim pașii administrativi ai dosarului. Deciziile juridice, fiscale și contabile se validează separat atunci când este necesar.",
+    category: "admin",
+    parent: { label: "Înființare PFA / SRL", href: "/servicii-administrative/infiintare-pfa-srl" },
+    contactService: "infiintare-firma",
+    serviceType: ["Înființare SRL", "Acte SRL", "Deschidere firmă", "Înregistrare SRL", "Cod CAEN SRL"],
+    audienceTitle: "Ce trebuie stabilit înainte de pregătirea SRL-ului",
+    audienceIntro: "Un dosar coerent începe cu decizii clare despre persoanele implicate, sediu și activități. Separăm informațiile administrative de aspectele care cer consultanță de specialitate.",
+    audience: [
+      "Denumirea avută în vedere și activitățile pentru care va funcționa societatea.",
+      "Asociații, administratorul și modul în care sunt distribuite responsabilitățile declarate.",
+      "Sediul social și documentele care justifică folosirea spațiului.",
+      "Datele și declarațiile care trebuie completate, semnate sau confirmate înainte de transmitere."
+    ],
+    benefitsTitle: "O înființare de SRL fără documente împrăștiate",
+    benefits: [
+      { title: "Date centralizate", text: "Organizăm într-un singur flux informațiile despre societate, persoane, sediu și activități." },
+      { title: "Dosar verificat administrativ", text: "Semnalăm câmpurile incomplete și diferențele dintre documente înainte de transmitere." },
+      { title: "Continuitate după înregistrare", text: "Putem continua cu organizarea documentelor, secretariat și alte activități recurente de back-office." }
+    ],
+    processTitle: "Pașii administrativi pentru înființarea SRL-ului",
+    steps: [
+      { title: "Clarificăm structura", text: "Centralizăm denumirea, asociații, administratorul, sediul și activitățile urmărite." },
+      { title: "Pregătim informațiile", text: "Stabilim documentele, declarațiile și semnăturile necesare situației descrise." },
+      { title: "Verificăm dosarul", text: "Comparăm datele dintre documente și semnalăm elementele lipsă sau neclare." },
+      { title: "Urmărim soluționarea", text: "Ținem evidența transmiterii, completărilor și documentelor eliberate la final." }
+    ],
+    faq: [
+      ["Ce acte sunt necesare pentru înființarea unui SRL?", "Documentele depind de asociați, administrator, sediu și activități. După clarificarea situației primești lista administrativă potrivită."],
+      ["Pot înființa un SRL cu asociat unic?", "Există situații în care societatea poate avea asociat unic, însă structura și documentele trebuie verificate pentru cazul concret și regulile în vigoare."],
+      ["Cât durează înregistrarea SRL-ului?", "Durata este influențată de pregătirea documentelor, verificările instituției și eventualele completări. Urmărim etapele, fără să garantăm un termen extern."],
+      ["Serviciul include contabilitate sau consultanță juridică?", "Nu. Organizăm administrativ înființarea. Pentru decizii juridice, fiscale sau contabile indicăm aspectele care trebuie validate cu un profesionist autorizat."]
+    ],
+    related: [
+      { href: "/servicii-administrative/infiintare-pfa-srl", label: "PFA sau SRL", text: "Vezi diferențele administrative dintre cele două trasee." },
+      { href: "/servicii-administrative/infiintare-pfa", label: "Înființare PFA", text: "Pașii pentru o activitate desfășurată independent." },
+      { href: "/contact?service=infiintare-firma", label: "Solicită lista pentru SRL", text: "Trimite informațiile despre activitate, persoane și sediu." }
     ]
   }
 } satisfies Record<string, SeoServicePageConfig>;

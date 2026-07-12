@@ -134,7 +134,7 @@ export function HomePage() {
         </footer>
         <GoogleReviewsSection variant="split" />
       </section>
-      <SiteFooter />
+      <SiteFooter showCookieSettings={false} />
     </SiteShell>
   );
 }

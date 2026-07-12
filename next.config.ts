@@ -63,6 +63,12 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
+        source: "/:path*",
+        has: [{ type: "host", value: "www.capitaleuropean.ro" }],
+        destination: "https://capitaleuropean.ro/:path*",
+        permanent: true
+      },
+      {
         source: "/birotica",
         destination: "/servicii-administrative",
         permanent: true
@@ -79,12 +85,12 @@ const nextConfig: NextConfig = {
       },
       {
         source: "/infiintare-pfa",
-        destination: "/servicii-administrative/infiintare-pfa-srl",
+        destination: "/servicii-administrative/infiintare-pfa",
         permanent: true
       },
       {
         source: "/infiintare-srl",
-        destination: "/servicii-administrative/infiintare-pfa-srl",
+        destination: "/servicii-administrative/infiintare-srl",
         permanent: true
       }
     ];

@@ -105,10 +105,10 @@ export function FundingPage() {
         <div className="section-container">
           <header className="section-title-row">
             <div>
-              <p className="eyebrow"><Landmark /> Servicii de consultanță</p>
-              <h2 id="funding-services-title">Ce putem prelua în pregătirea și gestionarea <em>proiectului.</em></h2>
+              <p className="eyebrow"><Landmark /> Etapele unui proiect</p>
+              <h2 id="funding-services-title">Ce presupune pregătirea și gestionarea <em>finanțării.</em></h2>
             </div>
-            <p id="funding-services-description">Conținutul serviciului se stabilește după analiza solicitantului, a apelului și a stadiului documentelor.</p>
+            <p id="funding-services-description">Procesul diferă în funcție de solicitant și apel. Pentru responsabilități și livrabile, vezi pagina de <Link href="/consultanta-fonduri-europene">consultanță fonduri europene</Link>.</p>
           </header>
 
           <div className="funding-service-grid" aria-describedby="funding-services-description">
