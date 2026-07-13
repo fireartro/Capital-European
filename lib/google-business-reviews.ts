@@ -88,7 +88,9 @@ function parseReview(value: unknown): GoogleBusinessReview | null {
  * Loads public profile data through the official Places API. The browser never
  * receives the API key, and the result is revalidated every five minutes.
  */
-export async function getGoogleBusinessReviews(): Promise<GoogleBusinessReviews | null> {
+export async function getGoogleBusinessReviews(
+  options: { cache?: "default" | "no-store" } = {}
+): Promise<GoogleBusinessReviews | null> {
   const apiKey = process.env.GOOGLE_PLACES_API_KEY?.trim();
   const placeId = process.env.GOOGLE_PLACE_ID?.trim().replace(/^places\//, "");
 
@@ -97,12 +99,22 @@ export async function getGoogleBusinessReviews(): Promise<GoogleBusinessReviews 
   try {
     const fields = ["displayName", "rating", "userRatingCount", "googleMapsUri", "reviews"].join(",");
     const query = new URLSearchParams({ $fields: fields, languageCode: "ro", regionCode: "RO" });
-    const response = await fetch(`https://places.googleapis.com/v1/places/${encodeURIComponent(placeId)}?${query}`, {
+    const requestOptions: RequestInit & { next?: { revalidate: number; tags: string[] } } = {
       headers: {
         "X-Goog-Api-Key": apiKey
-      },
-      next: { revalidate: 300, tags: ["google-business-reviews"] }
-    });
+      }
+    };
+
+    if (options.cache === "no-store") {
+      requestOptions.cache = "no-store";
+    } else {
+      requestOptions.next = { revalidate: 300, tags: ["google-business-reviews"] };
+    }
+
+    const response = await fetch(
+      `https://places.googleapis.com/v1/places/${encodeURIComponent(placeId)}?${query}`,
+      requestOptions
+    );
 
     if (!response.ok) return null;
 
