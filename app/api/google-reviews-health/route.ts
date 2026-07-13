@@ -12,6 +12,7 @@ function fingerprint(value: string) {
 }
 
 export const dynamic = "force-dynamic";
+export const preferredRegion = "fra1";
 
 export async function GET() {
   const apiKey = process.env.GOOGLE_PLACES_API_KEY?.trim() ?? "";
