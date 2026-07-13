@@ -32,22 +32,24 @@ type NavigationItem = {
 };
 
 const fundingNavigation: NavigationItem[] = [
-  { label: "Prezentare", href: "/fonduri-europene", icon: Landmark },
+  { label: "Prezentare", href: "/fonduri-europene#funding-hero", icon: Landmark },
   { label: "Servicii", href: "/fonduri-europene#servicii-fonduri", icon: FileText },
   { label: "Oportunități", href: "/fonduri-europene#fonduri-active", icon: BookOpenCheck },
-  { label: "Anunțuri", href: "/anunturi", icon: Newspaper },
   { label: "Ce ne deosebește", href: "/fonduri-europene#ce-ne-deosebeste", icon: ShieldCheck },
-  { label: "Proces", href: "/fonduri-europene#proces-fonduri", icon: ClipboardList },
   { label: "Întrebări", href: "/fonduri-europene#intrebari-fonduri", icon: CircleHelp },
+  { label: "Despre", href: "/despre", icon: BookOpenCheck },
+  { label: "Anunțuri", href: "/anunturi", icon: Newspaper },
   { label: "Contact", href: "/contact?service=fonduri-europene", icon: Mail }
 ];
 
 const adminNavigation: NavigationItem[] = [
-  { label: "Prezentare", href: "/servicii-administrative", icon: FileText },
+  { label: "Prezentare", href: "/servicii-administrative#admin-hero", icon: FileText },
   { label: "Servicii", href: "/servicii-administrative#servicii-administrative", icon: ClipboardList },
   { label: "Înființare PFA", href: "/servicii-administrative/infiintare-pfa", icon: BriefcaseBusiness },
   { label: "Înființare SRL", href: "/servicii-administrative/infiintare-srl", icon: Building2 },
   { label: "Întrebări", href: "/servicii-administrative#intrebari-administrative", icon: CircleHelp },
+  { label: "Despre", href: "/despre", icon: BookOpenCheck },
+  { label: "Anunțuri", href: "/anunturi", icon: Newspaper },
   { label: "Contact", href: "/contact?service=servicii-administrative", icon: Mail }
 ];
 
@@ -55,9 +57,9 @@ const generalNavigation: NavigationItem[] = [
   { label: "Alegere servicii", href: "/", icon: Home },
   { label: "Fonduri europene", href: "/fonduri-europene", icon: Landmark },
   { label: "Servicii administrative", href: "/servicii-administrative", icon: FileText },
-  { label: "Anunțuri", href: "/anunturi", icon: Newspaper },
   { label: "Despre", href: "/despre", icon: BookOpenCheck },
   { label: "Întrebări", href: "/intrebari", icon: CircleHelp },
+  { label: "Anunțuri", href: "/anunturi", icon: Newspaper },
   { label: "Contact", href: "/contact", icon: Mail }
 ];
 

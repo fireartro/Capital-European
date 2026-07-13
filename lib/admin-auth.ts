@@ -1,10 +1,32 @@
 import "server-only";
 
 import { cookies } from "next/headers";
-import { createHmac, randomUUID, timingSafeEqual } from "node:crypto";
+import { createHmac, randomBytes, timingSafeEqual } from "node:crypto";
+import { isAdminMfaConfigured, isAdminMfaRequired } from "@/lib/admin-mfa";
+import {
+  createAdminSessionRecord,
+  hasPersistentAdminSessionStorage,
+  revokeAdminSessionRecord,
+  verifyAdminSessionRecord
+} from "@/lib/admin-session-store";
 
 export const ADMIN_COOKIE_NAME = "capital_admin_session";
-const SESSION_DURATION_SECONDS = 8 * 60 * 60;
+export const ADMIN_MFA_CHALLENGE_COOKIE_NAME = "capital_admin_mfa_challenge";
+const MFA_CHALLENGE_DURATION_SECONDS = 10 * 60;
+
+function boundedMinutes(value: string | undefined, fallback: number, minimum: number, maximum: number) {
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? Math.min(maximum, Math.max(minimum, Math.round(parsed))) : fallback;
+}
+
+export function adminSessionPolicy() {
+  const durationMinutes = boundedMinutes(process.env.ADMIN_SESSION_DURATION_MINUTES, 60, 15, 240);
+  const idleMinutes = boundedMinutes(process.env.ADMIN_IDLE_TIMEOUT_MINUTES, 15, 5, durationMinutes);
+  return {
+    durationSeconds: durationMinutes * 60,
+    idleTimeoutSeconds: idleMinutes * 60
+  };
+}
 
 function adminPassword() {
   return process.env.ADMIN_PASSWORD?.trim() || "";
@@ -19,7 +41,10 @@ function sessionSecret() {
 }
 
 export function isAdminConfigured() {
-  return adminUsername().length >= 3 && adminPassword().length >= 12 && sessionSecret().length >= 32;
+  const baseConfigured = adminUsername().length >= 3 && adminPassword().length >= 12 && sessionSecret().length >= 32;
+  const storageConfigured = process.env.NODE_ENV !== "production" || hasPersistentAdminSessionStorage();
+  const mfaConfigured = !isAdminMfaRequired() || isAdminMfaConfigured();
+  return baseConfigured && storageConfigured && mfaConfigured;
 }
 
 function signature(payload: string) {
@@ -38,45 +63,89 @@ export function verifyAdminCredentials(username: string, password: string) {
     && safeEqual(password, adminPassword());
 }
 
-export function createAdminSessionToken() {
-  const issuedAt = Math.floor(Date.now() / 1000);
-  const expiresAt = issuedAt + SESSION_DURATION_SECONDS;
-  const payload = `${issuedAt}.${expiresAt}.${randomUUID()}`;
-  return `${payload}.${signature(payload)}`;
+export async function createAdminSession() {
+  return createAdminSessionRecord(adminSessionPolicy().durationSeconds);
 }
 
-export function verifyAdminSessionToken(token: string | undefined) {
-  if (!token || !isAdminConfigured()) return false;
-  const segments = token.split(".");
-  if (segments.length !== 4) return false;
-  const [issuedAt, expiresAt, nonce, receivedSignature] = segments;
-  if (!/^\d+$/.test(issuedAt) || !/^\d+$/.test(expiresAt) || !nonce || !receivedSignature) return false;
-  const payload = `${issuedAt}.${expiresAt}.${nonce}`;
-  const expectedSignature = signature(payload);
-  if (!safeEqual(receivedSignature, expectedSignature)) return false;
-
-  const now = Math.floor(Date.now() / 1000);
-  return Number(issuedAt) <= now + 60 && Number(expiresAt) > now;
+export async function getAdminSession() {
+  const cookieStore = await cookies();
+  return verifyAdminSessionRecord(
+    cookieStore.get(ADMIN_COOKIE_NAME)?.value,
+    adminSessionPolicy().idleTimeoutSeconds
+  );
 }
 
 export async function isAdminAuthenticated() {
+  return Boolean(await getAdminSession());
+}
+
+export async function revokeCurrentAdminSession() {
   const cookieStore = await cookies();
-  return verifyAdminSessionToken(cookieStore.get(ADMIN_COOKIE_NAME)?.value);
+  await revokeAdminSessionRecord(cookieStore.get(ADMIN_COOKIE_NAME)?.value);
+}
+
+type MfaChallengePayload = {
+  issuedAt: number;
+  expiresAt: number;
+  nonce: string;
+};
+
+export function createAdminMfaChallengeToken() {
+  const issuedAt = Math.floor(Date.now() / 1000);
+  const payload: MfaChallengePayload = {
+    issuedAt,
+    expiresAt: issuedAt + MFA_CHALLENGE_DURATION_SECONDS,
+    nonce: randomBytes(18).toString("base64url")
+  };
+  const encoded = Buffer.from(JSON.stringify(payload)).toString("base64url");
+  return `${encoded}.${signature(encoded)}`;
+}
+
+export function verifyAdminMfaChallengeToken(token: string | undefined) {
+  if (!token || token.length > 600) return false;
+  const [encoded, receivedSignature, ...extra] = token.split(".");
+  if (!encoded || !receivedSignature || extra.length || !safeEqual(signature(encoded), receivedSignature)) return false;
+
+  try {
+    const payload = JSON.parse(Buffer.from(encoded, "base64url").toString("utf8")) as Partial<MfaChallengePayload>;
+    const now = Math.floor(Date.now() / 1000);
+    return Number.isInteger(payload.issuedAt)
+      && Number.isInteger(payload.expiresAt)
+      && typeof payload.nonce === "string"
+      && payload.nonce.length >= 20
+      && Number(payload.issuedAt) <= now + 60
+      && Number(payload.expiresAt) > now;
+  } catch {
+    return false;
+  }
 }
 
 function isLoopbackHostname(hostname: string) {
   return hostname === "localhost" || hostname === "127.0.0.1" || hostname === "::1";
 }
 
-export function adminCookieOptions(request?: Request) {
+function cookieSecurity(request?: Request) {
   const requestIsLoopback = request ? isLoopbackHostname(new URL(request.url).hostname) : false;
   return {
     httpOnly: true,
     sameSite: "strict" as const,
     secure: process.env.NODE_ENV === "production" && !requestIsLoopback,
-    path: "/",
-    maxAge: SESSION_DURATION_SECONDS
+    path: "/"
   };
+}
+
+export function adminCookieOptions(request?: Request) {
+  return { ...cookieSecurity(request), maxAge: adminSessionPolicy().durationSeconds };
+}
+
+export function adminMfaChallengeCookieOptions(request?: Request) {
+  return { ...cookieSecurity(request), maxAge: MFA_CHALLENGE_DURATION_SECONDS };
+}
+
+export function adminLoginAttemptKey(request: Request) {
+  const forwardedIp = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
+  const clientIp = forwardedIp || request.headers.get("x-real-ip")?.trim() || "unknown";
+  return createHmac("sha256", sessionSecret()).update(clientIp).digest("base64url");
 }
 
 export function hasValidAdminOrigin(request: Request) {

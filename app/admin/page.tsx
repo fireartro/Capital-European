@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { ContentAdminConsole } from "@/components/content-admin-console";
-import { isAdminAuthenticated, isAdminConfigured } from "@/lib/admin-auth";
+import { adminSessionPolicy, isAdminAuthenticated, isAdminConfigured } from "@/lib/admin-auth";
 import { getManagedContentSnapshot } from "@/lib/content-store";
 
 export const dynamic = "force-dynamic";
@@ -21,6 +21,7 @@ export default async function AdminPage() {
       initialAuthenticated={authenticated}
       initialContent={snapshot?.content ?? null}
       initialStorage={snapshot?.storage ?? null}
+      initialSessionPolicy={adminSessionPolicy()}
     />
   );
 }

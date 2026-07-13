@@ -80,7 +80,7 @@ h2 em { color: var(--eu-blue); font-style: normal; }
 .brand-compact .brand-logo-frame { width: 106px; }
 .sidebar-brand .brand-logo-frame { width: 154px; }
 .split-brand .brand-logo-frame { width: 180px; }
-.sidebar { position: fixed; z-index: 1000; inset: 0 auto 0 0; width: var(--sidebar-width); display: flex; flex-direction: column; overflow: hidden; padding: 22px 18px 16px; border-right: 1px solid var(--line); background: rgba(255, 255, 255, .97); backdrop-filter: blur(18px); }
+.sidebar { position: fixed; z-index: 1000; inset: 0 auto 0 0; width: var(--sidebar-width); display: flex; flex-direction: column; overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: none; padding: 22px 18px 16px; border-right: 1px solid var(--line); background: rgba(255, 255, 255, .97); backdrop-filter: blur(18px); }
 .sidebar::-webkit-scrollbar { display: none; }
 .sidebar-header { display: block; }
 .cookie-banner { position: fixed; z-index: 5000; left: 50%; bottom: 16px; transform: translateX(-50%); width: min(1120px, calc(100% - 32px)); display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 24px; align-items: center; padding: 20px 22px; border: 1px solid #d8e2f1; border-radius: 14px; color: var(--ink); background: #fff; box-shadow: 0 24px 70px rgba(2, 27, 82, .2); pointer-events: auto; }

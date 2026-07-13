@@ -105,9 +105,9 @@ export const siteConfig = {
     { label: "Acasă", href: "/" },
     { label: "Fonduri europene", href: "/fonduri-europene" },
     { label: "Servicii administrative", href: "/servicii-administrative" },
-    { label: "Anunțuri", href: "/anunturi" },
     { label: "Despre", href: "/despre" },
     { label: "Întrebări", href: "/intrebari" },
+    { label: "Anunțuri", href: "/anunturi" },
     { label: "Contact", href: "/contact" }
   ],
   sameAs: [...socialProfiles, googleBusinessUrl]

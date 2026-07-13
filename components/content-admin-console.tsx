@@ -16,7 +16,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { type FormEvent, useEffect, useMemo, useState } from "react";
+import { type FormEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { ContentStorage } from "@/lib/content-store";
 import type { FundingProgram } from "@/lib/funding-programs";
 import {
@@ -28,6 +28,7 @@ import {
 
 type AdminTab = "funding" | "announcements";
 type Notice = { type: "success" | "error"; text: string } | null;
+type SessionPolicy = { durationSeconds: number; idleTimeoutSeconds: number };
 
 const requestHeaders = {
   "Content-Type": "application/json",
@@ -91,12 +92,14 @@ export function ContentAdminConsole({
   configured,
   initialAuthenticated,
   initialContent,
-  initialStorage
+  initialStorage,
+  initialSessionPolicy
 }: {
   configured: boolean;
   initialAuthenticated: boolean;
   initialContent: ManagedContent | null;
   initialStorage: ContentStorage | null;
+  initialSessionPolicy: SessionPolicy;
 }) {
   const [authenticated, setAuthenticated] = useState(initialAuthenticated);
   const [content, setContent] = useState(initialContent);
@@ -106,6 +109,9 @@ export function ContentAdminConsole({
   const [dirty, setDirty] = useState(false);
   const [busy, setBusy] = useState(false);
   const [notice, setNotice] = useState<Notice>(null);
+  const [mfaDestination, setMfaDestination] = useState("");
+  const [sessionPolicy, setSessionPolicy] = useState(initialSessionPolicy);
+  const lastActivityRef = useRef(0);
 
   const currentProgram = useMemo(
     () => content?.fundingPrograms.find((program) => program.id === selectedId) ?? null,
@@ -133,33 +139,108 @@ export function ContentAdminConsole({
     setDirty(false);
   };
 
+  const logout = useCallback(async (message?: string) => {
+    await fetch("/api/admin/session", { method: "DELETE", headers: { "X-Requested-With": "XMLHttpRequest" } }).catch(() => undefined);
+    setAuthenticated(false);
+    setContent(null);
+    setStorage(null);
+    setDirty(false);
+    setMfaDestination("");
+    setNotice(message ? { type: "error", text: message } : null);
+  }, []);
+
   const login = async (username: string, password: string) => {
     setBusy(true);
     setNotice(null);
+    let sessionCreated = false;
     try {
       const response = await fetch("/api/admin/session", {
         method: "POST",
         headers: requestHeaders,
         body: JSON.stringify({ username, password })
       });
-      const result = await readJson(response) as { message?: string };
+      const result = await readJson(response) as { message?: string; mfaRequired?: boolean; destination?: string; sessionPolicy?: SessionPolicy };
       if (!response.ok) throw new Error(result.message || "Autentificarea a eșuat.");
-      setAuthenticated(true);
+      if (result.mfaRequired) {
+        setMfaDestination(result.destination || "numărul configurat");
+        return;
+      }
+      if (result.sessionPolicy) setSessionPolicy(result.sessionPolicy);
+      sessionCreated = true;
       await loadContent();
+      setAuthenticated(true);
     } catch (error) {
+      if (sessionCreated) await logout();
       setNotice({ type: "error", text: error instanceof Error ? error.message : "Autentificarea a eșuat." });
     } finally {
       setBusy(false);
     }
   };
 
-  const logout = async () => {
-    await fetch("/api/admin/session", { method: "DELETE", headers: { "X-Requested-With": "XMLHttpRequest" } });
-    setAuthenticated(false);
-    setContent(null);
-    setStorage(null);
-    setDirty(false);
+  const verifyMfa = async (code: string) => {
+    setBusy(true);
+    setNotice(null);
+    let sessionCreated = false;
+    try {
+      const response = await fetch("/api/admin/session", {
+        method: "PUT",
+        headers: requestHeaders,
+        body: JSON.stringify({ code })
+      });
+      const result = await readJson(response) as { message?: string; sessionPolicy?: SessionPolicy };
+      if (!response.ok) throw new Error(result.message || "Codul nu a putut fi verificat.");
+      if (result.sessionPolicy) setSessionPolicy(result.sessionPolicy);
+      setMfaDestination("");
+      sessionCreated = true;
+      await loadContent();
+      setAuthenticated(true);
+    } catch (error) {
+      if (sessionCreated) await logout();
+      setNotice({ type: "error", text: error instanceof Error ? error.message : "Codul nu a putut fi verificat." });
+    } finally {
+      setBusy(false);
+    }
   };
+
+  useEffect(() => {
+    if (!authenticated) return;
+
+    const timeoutMs = sessionPolicy.idleTimeoutSeconds * 1000;
+    const heartbeatMs = Math.min(4 * 60 * 1000, Math.max(60_000, Math.floor(timeoutMs / 3)));
+    let idleTimer = 0;
+
+    const expireSession = () => {
+      void logout("Sesiunea a expirat după o perioadă de inactivitate. Autentifică-te din nou.");
+    };
+    const markActivity = () => {
+      lastActivityRef.current = Date.now();
+      window.clearTimeout(idleTimer);
+      idleTimer = window.setTimeout(expireSession, timeoutMs);
+    };
+    const verifySession = async () => {
+      if (Date.now() - lastActivityRef.current >= timeoutMs) {
+        expireSession();
+        return;
+      }
+      const response = await fetch("/api/admin/session", { cache: "no-store" }).catch(() => null);
+      const status = response ? await readJson(response) as { authenticated?: boolean } : null;
+      if (response && (!response.ok || !status?.authenticated)) {
+        await logout("Sesiunea nu mai este validă. Autentifică-te din nou.");
+      }
+    };
+
+    lastActivityRef.current = Date.now();
+    markActivity();
+    const activityEvents: (keyof WindowEventMap)[] = ["pointerdown", "keydown", "input", "touchstart"];
+    activityEvents.forEach((eventName) => window.addEventListener(eventName, markActivity, { passive: true }));
+    const heartbeat = window.setInterval(() => { void verifySession(); }, heartbeatMs);
+
+    return () => {
+      window.clearTimeout(idleTimer);
+      window.clearInterval(heartbeat);
+      activityEvents.forEach((eventName) => window.removeEventListener(eventName, markActivity));
+    };
+  }, [authenticated, logout, sessionPolicy.idleTimeoutSeconds]);
 
   const save = async () => {
     if (!content) return;
@@ -172,6 +253,10 @@ export function ContentAdminConsole({
         body: JSON.stringify(content)
       });
       const result = await readJson(response) as { content?: ManagedContent; message?: string };
+      if (response.status === 401) {
+        await logout("Sesiunea a expirat. Autentifică-te din nou pentru a salva modificările.");
+        return;
+      }
       if (!response.ok || !result.content) throw new Error(result.message || "Modificările nu au putut fi salvate.");
       setContent(result.content);
       setDirty(false);
@@ -252,6 +337,10 @@ export function ContentAdminConsole({
         body: formData
       });
       const result = await readJson(response) as { url?: string; message?: string };
+      if (response.status === 401) {
+        await logout("Sesiunea a expirat. Autentifică-te din nou înainte de a încărca imaginea.");
+        return;
+      }
       if (!response.ok || !result.url) throw new Error(result.message || "Imaginea nu a putut fi încărcată.");
       updateProgram("image", result.url);
       setNotice({ type: "success", text: "Imagine încărcată. Salvează modificările pentru a o publica." });
@@ -263,7 +352,7 @@ export function ContentAdminConsole({
   };
 
   if (!configured) return <AdminSetup />;
-  if (!authenticated) return <AdminLogin onLogin={login} busy={busy} notice={notice} />;
+  if (!authenticated) return <AdminLogin onLogin={login} onVerifyMfa={verifyMfa} onResetMfa={() => { setMfaDestination(""); setNotice(null); }} mfaDestination={mfaDestination} busy={busy} notice={notice} />;
   if (!content) return <AdminLoading />;
 
   const items = tab === "funding" ? content.fundingPrograms : content.announcements;
@@ -277,7 +366,7 @@ export function ContentAdminConsole({
         </div>
         <div className="content-admin-actions">
           <span className="content-admin-storage" data-writable={storage?.writable}>{storage?.label || "Stocare necunoscută"}</span>
-          <button type="button" className="admin-icon-button" onClick={logout} title="Deconectare" aria-label="Deconectare"><LogOut aria-hidden="true" /></button>
+          <button type="button" className="admin-icon-button" onClick={() => { void logout(); }} title="Deconectare" aria-label="Deconectare"><LogOut aria-hidden="true" /></button>
         </div>
       </header>
 
@@ -335,23 +424,43 @@ export function ContentAdminConsole({
   );
 }
 
-function AdminLogin({ onLogin, busy, notice }: { onLogin: (username: string, password: string) => Promise<void>; busy: boolean; notice: Notice }) {
+function AdminLogin({
+  onLogin,
+  onVerifyMfa,
+  onResetMfa,
+  mfaDestination,
+  busy,
+  notice
+}: {
+  onLogin: (username: string, password: string) => Promise<void>;
+  onVerifyMfa: (code: string) => Promise<void>;
+  onResetMfa: () => void;
+  mfaDestination: string;
+  busy: boolean;
+  notice: Notice;
+}) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [code, setCode] = useState("");
   const submit = (event: FormEvent) => {
     event.preventDefault();
-    void onLogin(username, password);
+    if (mfaDestination) void onVerifyMfa(code);
+    else void onLogin(username, password);
   };
   return (
     <main className="admin-auth-page">
       <form className="admin-auth-panel" onSubmit={submit}>
         <p className="admin-auth-kicker"><Settings2 aria-hidden="true" /> Capital European</p>
-        <h1>Administrare conținut</h1>
-        <p>Acces protejat pentru actualizarea fondurilor și anunțurilor publice.</p>
-        <label><span>Utilizator</span><input type="text" name="username" autoComplete="username" value={username} onChange={(event) => setUsername(event.target.value)} required minLength={3} autoFocus /></label>
-        <label><span>Parolă</span><input type="password" autoComplete="current-password" value={password} onChange={(event) => setPassword(event.target.value)} required minLength={12} /></label>
+        <h1>{mfaDestination ? "Verificare în doi pași" : "Administrare conținut"}</h1>
+        <p>{mfaDestination ? `Introdu codul trimis prin SMS la ${mfaDestination}. Codul expiră în 10 minute.` : "Acces protejat pentru actualizarea fondurilor și anunțurilor publice."}</p>
+        {!mfaDestination && <>
+          <label><span>Utilizator</span><input type="text" name="username" autoComplete="username" value={username} onChange={(event) => setUsername(event.target.value)} required minLength={3} autoFocus /></label>
+          <label><span>Parolă</span><input type="password" autoComplete="current-password" value={password} onChange={(event) => setPassword(event.target.value)} required minLength={12} /></label>
+        </>}
+        {mfaDestination && <label><span>Cod SMS</span><input type="text" name="one-time-code" autoComplete="one-time-code" inputMode="numeric" pattern="[0-9]*" maxLength={10} value={code} onChange={(event) => setCode(event.target.value.replace(/\D/g, ""))} required autoFocus /></label>}
         {notice && <p className="admin-login-error" role="alert">{notice.text}</p>}
-        <button type="submit" disabled={busy || username.trim().length < 3 || password.length < 12}>{busy && <LoaderCircle className="spin" aria-hidden="true" />}{busy ? "Se verifică" : "Intră în panou"}</button>
+        <button type="submit" disabled={busy || (mfaDestination ? code.length < 4 : username.trim().length < 3 || password.length < 12)}>{busy && <LoaderCircle className="spin" aria-hidden="true" />}{busy ? "Se verifică" : mfaDestination ? "Verifică și continuă" : "Intră în panou"}</button>
+        {mfaDestination && <button className="admin-auth-secondary" type="button" onClick={() => { setCode(""); onResetMfa(); }} disabled={busy}>Reia autentificarea</button>}
         <Link href="/">Înapoi la site</Link>
       </form>
     </main>
@@ -364,8 +473,8 @@ function AdminSetup() {
       <section className="admin-auth-panel">
         <p className="admin-auth-kicker"><Settings2 aria-hidden="true" /> Configurare necesară</p>
         <h1>Activează panoul de administrare</h1>
-        <p>Adaugă în Vercel variabilele <code>ADMIN_USERNAME</code>, <code>ADMIN_PASSWORD</code> și <code>ADMIN_SESSION_SECRET</code>, apoi redeploy.</p>
-        <p>Secretul de sesiune trebuie să aibă cel puțin 32 de caractere, iar parola minimum 12.</p>
+        <p>Adaugă în Vercel variabilele <code>ADMIN_USERNAME</code>, <code>ADMIN_PASSWORD</code>, <code>ADMIN_SESSION_SECRET</code> și o conexiune <code>DATABASE_URL</code>, apoi redeploy.</p>
+        <p>Pentru cod SMS obligatoriu, configurează și variabilele Twilio Verify descrise în <code>.env.example</code>.</p>
         <Link href="/">Înapoi la site</Link>
       </section>
     </main>
