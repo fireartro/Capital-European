@@ -97,6 +97,23 @@ export async function GoogleReviewsSection({ variant = "default" }: { variant?: 
     );
   }
 
+  if (data.reviews.length === 0) {
+    return (
+      <section className={`google-reviews-section${variant === "split" ? " google-reviews-section-split" : ""}`} aria-labelledby="google-reviews-title">
+        <div className="section-container google-reviews-layout">
+          <header className="google-reviews-intro">
+            <p className="eyebrow"><MessageCircleHeart aria-hidden="true" /> Recenzii Google</p>
+            <h2 id="google-reviews-title">Ce spun clienții</h2>
+          </header>
+          <div className="google-reviews-rating-only">
+            <RatingItem rating={data.rating} reviewCount={data.reviewCount} />
+          </div>
+          <a className="google-reviews-all-link" href={data.mapsUrl} target="_blank" rel="noopener noreferrer">Citește recenzia pe Google</a>
+        </div>
+      </section>
+    );
+  }
+
   const baseItems: ReviewMarqueeItem[] = [
     ...data.reviews.map((review) => ({ kind: "review" as const, review })),
     { kind: "rating" }

@@ -28,13 +28,16 @@ export function SiteFooter({ showCookieSettings = true }: { showCookieSettings?:
           <Link href="/servicii-administrative/secretariat">Secretariat externalizat</Link>
         </div>
         <div>
-          <h3>Companie și contact</h3>
+          <h3>Informații</h3>
           <Link href="/despre">Despre Capital European</Link>
           <Link href="/intrebari">Întrebări frecvente</Link>
+          <a href={siteConfig.googleBusiness.url} target="_blank" rel="noopener noreferrer" title="Vezi profilul Capital European pe Google">Profil Google Business</a>
+        </div>
+        <div className="footer-contact-column">
+          <h3>Contact</h3>
           <Link href="/contact">Formular de contact</Link>
           {siteConfig.phoneHref && <a href={`tel:${siteConfig.phoneHref}`} title={`Sună ${siteConfig.name}`}>{siteConfig.phoneDisplay}</a>}
           <a href={`mailto:${siteConfig.email}`} title={`Trimite email către ${siteConfig.name}`}>{siteConfig.email}</a>
-          <a href={siteConfig.googleBusiness.url} target="_blank" rel="noopener noreferrer" title="Vezi profilul Capital European pe Google">Profil Google Business</a>
           {siteConfig.schedule && <span>Program: {siteConfig.schedule}</span>}
           {siteConfig.legal.entityName && <span>{siteConfig.legal.entityName}{siteConfig.legal.taxId ? ` · CUI ${siteConfig.legal.taxId}` : ""}</span>}
         </div>

@@ -99,18 +99,11 @@ export async function getGoogleBusinessReviews(): Promise<GoogleBusinessReviews 
       headers: {
         "X-Goog-Api-Key": apiKey,
         "X-Goog-FieldMask": [
-          "displayName",
-          "rating",
-          "userRatingCount",
-          "googleMapsUri",
-          "reviews.rating",
-          "reviews.relativePublishTimeDescription",
-          "reviews.originalText",
-          "reviews.text",
-          "reviews.googleMapsUri",
-          "reviews.authorAttribution.displayName",
-          "reviews.authorAttribution.uri",
-          "reviews.authorAttribution.photoUri"
+        "displayName",
+        "rating",
+        "userRatingCount",
+        "googleMapsUri",
+        "reviews"
         ].join(",")
       },
       next: { revalidate: 300, tags: ["google-business-reviews"] }

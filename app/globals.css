@@ -722,6 +722,8 @@ body:has(.funding-photo-hero) .scroll-star-orbit.section-0 { right: -150px; opac
 .google-rating-tile > p { margin: 8px 0 0; color: var(--muted); font-size: .75rem; }
 .google-reviews-all-link { width: fit-content; margin: -2px auto 0; padding: 7px 0; color: var(--muted); font-size: .75rem; font-weight: 700; text-decoration: underline; text-decoration-color: transparent; text-underline-offset: 4px; transition: color .2s, text-decoration-color .2s; }
 .google-reviews-all-link:hover { color: var(--eu-blue); text-decoration-color: currentColor; }
+.google-reviews-rating-only { display: grid; place-items: center; }
+.google-reviews-rating-only .google-rating-tile { width: min(300px, 100%); }
 @keyframes google-reviews-marquee { to { transform: translateX(-50%); } }
 .google-reviews-section-split { width: min(1180px, 100%); margin: 28px auto 0; padding: 34px 0 6px; border-top: 1px solid rgba(255,255,255,.13); background: transparent; }
 .google-reviews-section-split .section-container { width: min(1080px, 100%); }
@@ -750,11 +752,13 @@ body:has(.funding-photo-hero) .scroll-star-orbit.section-0 { right: -150px; opac
 }
 .site-footer .brand { color: #fff; }
 .site-footer .brand strong { color: var(--eu-yellow); }
-.footer-main { display: grid; grid-template-columns: 1.35fr .8fr .8fr 1fr; gap: 46px; padding-bottom: 45px; }
+.footer-main { display: grid; grid-template-columns: 1.2fr .82fr .9fr .68fr 1fr; gap: 30px; padding-bottom: 45px; }
 .footer-main > div { display: grid; align-content: start; gap: 10px; }
 .footer-main > div:first-child p { max-width: 410px; margin: 15px 0 0; font-size: .78rem; line-height: 1.7; }
 .footer-main h3 { margin: 0 0 9px; color: #fff; font: 800 .75rem var(--font-display); text-transform: uppercase; letter-spacing: 0; }
 .footer-main a, .footer-main span { font-size: .75rem; }
+.footer-contact-column { min-width: 0; }
+.footer-contact-column a, .footer-contact-column span { overflow-wrap: anywhere; }
 .footer-main a:hover { color: var(--eu-yellow); }
 .footer-cta-link { width: fit-content; margin-top: 6px; padding: 9px 12px; border-radius: 9px; color: var(--eu-blue-dark); background: var(--eu-yellow); font-weight: 850; }
 .footer-main .footer-cta-link:hover { color: var(--eu-blue-dark); background: #ffdc4d; }
@@ -772,8 +776,10 @@ body:has(.funding-photo-hero) .scroll-star-orbit.section-0 { right: -150px; opac
 .footer-location-links span { min-width: 0; display: grid; gap: 3px; }
 .footer-location-links strong { color: #fff; font-size: .76rem; }
 .footer-location-links small { color: rgba(255,255,255,.75); font-size: .75rem; line-height: 1.4; }
-.footer-map-frame { min-height: 330px; overflow: hidden; border: 1px solid rgba(255,255,255,.14); border-radius: 8px; background: #10213f; }
+.footer-map-frame { position: relative; min-height: 330px; overflow: hidden; border: 1px solid rgba(255,255,255,.14); border-radius: 8px; background: #10213f; }
 .footer-map-frame iframe { width: 100%; height: 100%; min-height: 330px; display: block; border: 0; filter: saturate(.82) contrast(1.02); }
+.footer-map-open { position: absolute; right: 12px; bottom: 12px; min-height: 40px; display: inline-flex; align-items: center; gap: 7px; padding: 0 12px; border-radius: 8px; color: var(--eu-blue-dark); background: var(--eu-yellow); box-shadow: 0 8px 24px rgba(0,0,0,.22); font-size: .75rem; font-weight: 820; }
+.footer-map-open svg { width: 14px; height: 14px; }
 .footer-map-placeholder { display: grid; place-items: center; align-content: center; gap: 16px; padding: 28px; text-align: center; background-image: linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px); background-size: 32px 32px; }
 .footer-map-placeholder > svg { width: 46px; height: 46px; padding: 10px; border-radius: 50%; color: var(--eu-yellow); background: rgba(255,204,0,.1); }
 .footer-map-placeholder strong { color: #fff; font: 780 1rem var(--font-display); }
@@ -1327,7 +1333,6 @@ body:has(.funding-photo-hero) .scroll-star-orbit.section-0 { right: -150px; opac
   .google-reviews-compact-layout { grid-template-columns: 1fr; gap: 18px; }
   .google-reviews-compact-layout blockquote { padding: 18px 0; border-inline: 0; border-block: 1px solid var(--line); }
   .google-reviews-compact-layout > a { grid-column: auto; white-space: normal; }
-  .footer-map-frame { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
