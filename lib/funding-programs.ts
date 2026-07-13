@@ -18,7 +18,7 @@ export type FundingProgram = {
 export const UNKNOWN_FUNDING_PROGRAM = "program-nespecificat";
 
 // Replace placeholders only after checking the final guide and the official source.
-export const fundingPrograms: readonly FundingProgram[] = [
+export const defaultFundingPrograms: readonly FundingProgram[] = [
   {
     id: "investitii-productive",
     code: "Codul apelului va fi completat",
@@ -101,26 +101,37 @@ export const fundingPrograms: readonly FundingProgram[] = [
   }
 ];
 
-export const fundingProgramOptions = [
-  {
-    value: UNKNOWN_FUNDING_PROGRAM,
-    label: "Nu știu încă / doresc identificarea programului"
-  },
-  ...fundingPrograms.map((program) => ({
-    value: program.id,
-    label: program.title
-  }))
-] as const;
+export const fundingPrograms = defaultFundingPrograms;
 
-export function getFundingProgram(programId: string | undefined) {
-  return fundingPrograms.find((program) => program.id === programId);
+export type FundingProgramOption = {
+  value: string;
+  label: string;
+};
+
+export function createFundingProgramOptions(programs: readonly FundingProgram[]): FundingProgramOption[] {
+  return [
+    {
+      value: UNKNOWN_FUNDING_PROGRAM,
+      label: "Nu știu încă / doresc identificarea programului"
+    },
+    ...programs.map((program) => ({
+      value: program.id,
+      label: program.title
+    }))
+  ];
 }
 
-export function getFundingProgramLabel(programId: string | undefined) {
+export const fundingProgramOptions = createFundingProgramOptions(defaultFundingPrograms);
+
+export function getFundingProgram(programId: string | undefined, programs: readonly FundingProgram[] = defaultFundingPrograms) {
+  return programs.find((program) => program.id === programId);
+}
+
+export function getFundingProgramLabel(programId: string | undefined, programs: readonly FundingProgram[] = defaultFundingPrograms) {
   if (!programId || programId === UNKNOWN_FUNDING_PROGRAM) {
     return "Program neidentificat încă";
   }
 
-  const program = getFundingProgram(programId);
+  const program = getFundingProgram(programId, programs);
   return program ? program.title : "Program indicat de solicitant";
 }

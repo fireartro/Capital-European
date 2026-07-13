@@ -1,7 +1,9 @@
 import type { MetadataRoute } from "next";
 import { siteConfig } from "@/lib/site-config";
+import { getManagedContent } from "@/lib/content-store";
+import { publishedAnnouncements } from "@/lib/managed-content";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const lastModified = new Date(siteConfig.lastUpdated);
   const routes = [
     "",
@@ -15,12 +17,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/servicii-administrative/administrare-documente",
     "/servicii-administrative/infiintare-pfa",
     "/servicii-administrative/infiintare-srl",
+    "/anunturi",
     "/contact",
     "/despre",
     "/intrebari"
   ];
-  return routes.map((path) => ({
+  const staticRoutes = routes.map((path) => ({
     url: `${siteConfig.url}${path}`,
     lastModified
   }));
+  const announcements = publishedAnnouncements(await getManagedContent()).map((announcement) => ({
+    url: `${siteConfig.url}/anunturi/${announcement.slug}`,
+    lastModified: new Date(announcement.updatedAt)
+  }));
+
+  return [...staticRoutes, ...announcements];
 }

@@ -5,7 +5,7 @@ import { BriefcaseBusiness, Check, Landmark, LoaderCircle, Send } from "lucide-r
 import { useEffect, useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { contactCategoryForService, contactSchema, type ContactCategory, type ContactInput } from "@/lib/contact-schema";
-import { fundingProgramOptions } from "@/lib/funding-programs";
+import type { FundingProgramOption } from "@/lib/funding-programs";
 import { siteConfig } from "@/lib/site-config";
 import { trackAnalyticsEvent } from "@/lib/analytics";
 
@@ -28,11 +28,13 @@ const administrativeServiceOptions: ReadonlyArray<[ContactInput["service"], stri
 export function ContactForm({
   defaultService = "fonduri-europene",
   defaultFundingProgram = "",
-  defaultMessage = ""
+  defaultMessage = "",
+  fundingProgramOptions = []
 }: {
   defaultService?: ContactInput["service"];
   defaultFundingProgram?: string;
   defaultMessage?: string;
+  fundingProgramOptions?: readonly FundingProgramOption[];
 }) {
   const requestedCategory = contactCategoryForService(defaultService);
   const initialCategory: FormCategory = requestedCategory === "servicii-administrative"

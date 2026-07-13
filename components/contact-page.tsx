@@ -1,15 +1,18 @@
 import { ContactForm } from "@/components/contact-form";
 import { SiteShell } from "@/components/site-shell";
 import type { ContactInput } from "@/lib/contact-schema";
+import type { FundingProgramOption } from "@/lib/funding-programs";
 
 export function ContactPage({
   defaultService,
   defaultFundingProgram = "",
-  defaultMessage = ""
+  defaultMessage = "",
+  fundingProgramOptions = []
 }: {
   defaultService?: ContactInput["service"];
   defaultFundingProgram?: string;
   defaultMessage?: string;
+  fundingProgramOptions?: readonly FundingProgramOption[];
 }) {
   const navigationContext = defaultService === "fonduri-europene" || defaultService === "consultanta"
     ? "funding"
@@ -36,6 +39,7 @@ export function ContactPage({
               defaultService={defaultService}
               defaultFundingProgram={defaultFundingProgram}
               defaultMessage={defaultMessage}
+              fundingProgramOptions={fundingProgramOptions}
             />
           </div>
         </div>

@@ -29,6 +29,7 @@ export function SiteFooter({ showCookieSettings = true }: { showCookieSettings?:
         </div>
         <div>
           <h3>Informații</h3>
+          <Link href="/anunturi">Anunțuri</Link>
           <Link href="/despre">Despre Capital European</Link>
           <Link href="/intrebari">Întrebări frecvente</Link>
           <a href={siteConfig.googleBusiness.url} target="_blank" rel="noopener noreferrer" title="Vezi profilul Capital European pe Google">Profil Google Business</a>

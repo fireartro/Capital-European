@@ -12,6 +12,7 @@ import {
   Landmark,
   Mail,
   Menu,
+  Newspaper,
   Phone,
   ShieldCheck,
   Sparkles,
@@ -34,6 +35,7 @@ const fundingNavigation: NavigationItem[] = [
   { label: "Prezentare", href: "/fonduri-europene", icon: Landmark },
   { label: "Servicii", href: "/fonduri-europene#servicii-fonduri", icon: FileText },
   { label: "Oportunități", href: "/fonduri-europene#fonduri-active", icon: BookOpenCheck },
+  { label: "Anunțuri", href: "/anunturi", icon: Newspaper },
   { label: "Ce ne deosebește", href: "/fonduri-europene#ce-ne-deosebeste", icon: ShieldCheck },
   { label: "Proces", href: "/fonduri-europene#proces-fonduri", icon: ClipboardList },
   { label: "Întrebări", href: "/fonduri-europene#intrebari-fonduri", icon: CircleHelp },
@@ -53,6 +55,7 @@ const generalNavigation: NavigationItem[] = [
   { label: "Alegere servicii", href: "/", icon: Home },
   { label: "Fonduri europene", href: "/fonduri-europene", icon: Landmark },
   { label: "Servicii administrative", href: "/servicii-administrative", icon: FileText },
+  { label: "Anunțuri", href: "/anunturi", icon: Newspaper },
   { label: "Despre", href: "/despre", icon: BookOpenCheck },
   { label: "Întrebări", href: "/intrebari", icon: CircleHelp },
   { label: "Contact", href: "/contact", icon: Mail }

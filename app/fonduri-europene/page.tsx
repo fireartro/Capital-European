@@ -2,6 +2,9 @@ import { FundingPage } from "@/components/funding-page";
 import { createPageMetadata } from "@/lib/metadata";
 import { fundingFaq } from "@/lib/service-content";
 import { breadcrumbSchema, faqSchema, JsonLd } from "@/lib/structured-data";
+import { getManagedContent } from "@/lib/content-store";
+
+export const dynamic = "force-dynamic";
 
 export const metadata = createPageMetadata({
   title: "Fonduri europene pentru firme, ONG-uri și startup-uri",
@@ -9,7 +12,8 @@ export const metadata = createPageMetadata({
   path: "/fonduri-europene"
 });
 
-export default function Page() {
+export default async function Page() {
+  const content = await getManagedContent();
   return (
     <>
       <JsonLd data={[
@@ -19,7 +23,7 @@ export default function Page() {
         ]),
         faqSchema(fundingFaq)
       ]} />
-      <FundingPage />
+      <FundingPage programs={content.fundingPrograms} />
     </>
   );
 }

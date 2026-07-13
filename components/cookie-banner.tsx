@@ -204,6 +204,7 @@ export function CookieBanner({
   googleTagManagerId?: string;
   clarityProjectId?: string;
 }) {
+  const pathname = usePathname();
   const [consent, setConsent] = useState<CookieConsent | null>(null);
   const [view, setView] = useState<BannerView>("loading");
   const [analyticsDraft, setAnalyticsDraft] = useState(false);
@@ -299,6 +300,8 @@ export function CookieBanner({
     // explicit withdrawal so the next document starts without that container.
     if (reloadAfterMarketingWithdrawal) window.setTimeout(() => window.location.reload(), 0);
   };
+
+  if (pathname.startsWith("/admin")) return null;
 
   return (
     <>

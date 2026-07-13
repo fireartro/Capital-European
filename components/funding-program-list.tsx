@@ -4,14 +4,14 @@ import { ArrowRight, ChevronDown, ChevronUp, ExternalLink } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { fundingPrograms } from "@/lib/funding-programs";
+import type { FundingProgram } from "@/lib/funding-programs";
 
 const INITIAL_PROGRAM_COUNT = 3;
 
-export function FundingProgramList() {
+export function FundingProgramList({ programs }: { programs: readonly FundingProgram[] }) {
   const [expanded, setExpanded] = useState(false);
-  const visiblePrograms = expanded ? fundingPrograms : fundingPrograms.slice(0, INITIAL_PROGRAM_COUNT);
-  const hasMorePrograms = fundingPrograms.length > INITIAL_PROGRAM_COUNT;
+  const visiblePrograms = expanded ? programs : programs.slice(0, INITIAL_PROGRAM_COUNT);
+  const hasMorePrograms = programs.length > INITIAL_PROGRAM_COUNT;
 
   return (
     <>
@@ -48,6 +48,13 @@ export function FundingProgramList() {
             </div>
           </article>
         ))}
+        {!programs.length && (
+          <div className="funding-program-empty">
+            <h3>Lista se actualizează</h3>
+            <p>Nu există momentan programe publicate. Poți trimite denumirea apelului pe care îl urmărești pentru verificare.</p>
+            <Link href="/contact?service=fonduri-europene&program=program-nespecificat">Solicită verificarea <ArrowRight aria-hidden="true" /></Link>
+          </div>
+        )}
       </div>
       {hasMorePrograms && (
         <button
@@ -57,7 +64,7 @@ export function FundingProgramList() {
           aria-controls="funding-program-list"
           aria-expanded={expanded}
         >
-          {expanded ? "Restrânge lista" : `Vezi toate cele ${fundingPrograms.length} categorii urmărite`}
+          {expanded ? "Restrânge lista" : `Vezi toate cele ${programs.length} categorii urmărite`}
           {expanded ? <ChevronUp aria-hidden="true" /> : <ChevronDown aria-hidden="true" />}
         </button>
       )}

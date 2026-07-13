@@ -107,6 +107,7 @@ export function HomePage() {
           <h2 id="landing-start-title">Cum începe colaborarea</h2>
           <ol>{collaborationStart.map((item) => <li key={item}>{item}</li>)}</ol>
           <nav aria-label="Informații despre Capital European">
+            <Link href="/anunturi">Anunțuri</Link>
             <Link href="/despre">Despre noi</Link>
             <Link href="/intrebari">Întrebări frecvente</Link>
             <Link href="/contact">Contact</Link>

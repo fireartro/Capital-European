@@ -1,6 +1,7 @@
 import { ContactPage } from "@/components/contact-page";
 import type { ContactInput } from "@/lib/contact-schema";
-import { fundingProgramOptions, getFundingProgramLabel } from "@/lib/funding-programs";
+import { createFundingProgramOptions, getFundingProgramLabel } from "@/lib/funding-programs";
+import { getManagedContent } from "@/lib/content-store";
 import { createPageMetadata } from "@/lib/metadata";
 import { breadcrumbSchema, JsonLd } from "@/lib/structured-data";
 
@@ -10,12 +11,16 @@ export const metadata = createPageMetadata({
   path: "/contact"
 });
 
+export const dynamic = "force-dynamic";
+
 const allowedServices = new Set<ContactInput["service"]>([
   "nesigur", "servicii-administrative", "documente", "secretariat", "administrativ", "consultanta",
   "infiintare-pfa", "infiintare-srl", "fonduri-europene"
 ]);
 
 export default async function Page({ searchParams }: { searchParams: Promise<{ service?: string; program?: string; score?: string }> }) {
+  const content = await getManagedContent();
+  const fundingProgramOptions = createFundingProgramOptions(content.fundingPrograms);
   const { service, program, score } = await searchParams;
   const normalizedService = service === "birotica" || service === "infiintare-firma"
     ? "servicii-administrative"
@@ -29,7 +34,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ s
   const parsedScore = score && /^\d{1,3}$/.test(score) ? Number(score) : undefined;
   const validScore = parsedScore !== undefined && parsedScore >= 0 && parsedScore <= 100 ? parsedScore : undefined;
   const defaultMessage = defaultService === "fonduri-europene" && defaultFundingProgram
-    ? `Solicit evaluarea eligibilității și a punctajului pentru ${getFundingProgramLabel(defaultFundingProgram)}.${validScore !== undefined ? ` Punctaj orientativ de pregătire calculat pe site: ${validScore}/100.` : ""} Doresc verificarea criteriilor și a grilei oficiale.`
+    ? `Solicit evaluarea eligibilității și a punctajului pentru ${getFundingProgramLabel(defaultFundingProgram, content.fundingPrograms)}.${validScore !== undefined ? ` Punctaj orientativ de pregătire calculat pe site: ${validScore}/100.` : ""} Doresc verificarea criteriilor și a grilei oficiale.`
     : "";
 
   return (
@@ -42,6 +47,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ s
         defaultService={defaultService}
         defaultFundingProgram={defaultFundingProgram}
         defaultMessage={defaultMessage}
+        fundingProgramOptions={fundingProgramOptions}
       />
     </>
   );

@@ -16,6 +16,7 @@ import { SiteShell } from "@/components/site-shell";
 import { ScrollStarOrbit } from "@/components/scroll-star-orbit";
 import { fundingFaq } from "@/lib/service-content";
 import { siteConfig } from "@/lib/site-config";
+import type { FundingProgram } from "@/lib/funding-programs";
 
 const services = [
   { icon: SearchCheck, title: "Eligibilitate și punctaj", text: "Verificăm solicitantul, investiția și criteriile care pot exclude sau limita proiectul." },
@@ -52,7 +53,7 @@ const steps = [
   ["Implementare", "Urmărim obligațiile și documentele proiectului aprobat, în limitele contractate."]
 ] as const;
 
-export function FundingPage() {
+export function FundingPage({ programs }: { programs: readonly FundingProgram[] }) {
   return (
     <SiteShell navigationContext="funding">
       <ScrollStarOrbit sectionIds={[
@@ -96,7 +97,7 @@ export function FundingPage() {
               </div>
               <p id="funding-programs-description">Statutul și condițiile se reconfirmă în sursa oficială înainte de evaluare. Verifică și portalurile <a href={siteConfig.officialResources.mipe} target="_blank" rel="noopener noreferrer">MIPE</a> și <a href={siteConfig.officialResources.fonduriUe} target="_blank" rel="noopener noreferrer">fonduri-ue.ro</a>.</p>
             </header>
-            <FundingProgramList />
+            <FundingProgramList programs={programs} />
             <div className="funding-programs-note">
               <p>Nu găsești programul? Trimite denumirea sau ghidul și îl verificăm înainte de recomandare.</p>
               <Link className="primary-button blue-button" href="/contact?service=fonduri-europene&program=program-nespecificat">Trimite programul <ArrowRight aria-hidden="true" /></Link>
