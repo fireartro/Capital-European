@@ -11,12 +11,15 @@ export const metadata = createPageMetadata({
 });
 
 const allowedServices = new Set<ContactInput["service"]>([
-  "servicii-administrative", "documente", "secretariat", "administrativ", "consultanta", "infiintare-firma", "fonduri-europene"
+  "nesigur", "servicii-administrative", "documente", "secretariat", "administrativ", "consultanta",
+  "infiintare-pfa", "infiintare-srl", "fonduri-europene"
 ]);
 
 export default async function Page({ searchParams }: { searchParams: Promise<{ service?: string; program?: string; score?: string }> }) {
   const { service, program, score } = await searchParams;
-  const normalizedService = service === "birotica" ? "servicii-administrative" : service;
+  const normalizedService = service === "birotica" || service === "infiintare-firma"
+    ? "servicii-administrative"
+    : service;
   const defaultService = normalizedService && allowedServices.has(normalizedService as ContactInput["service"])
     ? normalizedService as ContactInput["service"]
     : undefined;

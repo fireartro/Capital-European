@@ -5,12 +5,7 @@ import {
   FileCheck2,
   Files,
   Landmark,
-  LockKeyhole,
-  MessageSquareText,
-  Scale,
-  Star,
-  Users,
-  Zap
+  Star
 } from "lucide-react";
 import Link from "next/link";
 import { Brand } from "@/components/brand";
@@ -20,13 +15,13 @@ import { SiteShell } from "@/components/site-shell";
 import { siteConfig } from "@/lib/site-config";
 import { AnalyticsLink } from "@/components/analytics-link";
 
-const landingProof = [
-  [ClipboardCheck, "Evaluare înainte de ofertă", "Clarificăm obiectivul, informațiile disponibile și serviciul de care ai nevoie."],
-  [MessageSquareText, "Răspuns ușor de urmărit", "Primești întrebări concrete, responsabilități și următorii pași."],
-  [Scale, "Recomandări responsabile", "Semnalăm ce poate fi continuat, ce trebuie verificat și unde există riscuri."]
+const collaborationStart = [
+  "Alegi direcția de serviciu",
+  "Descrii pe scurt situația",
+  "Primești întrebările necesare înainte de ofertă"
 ] as const;
 
-const eligibilityHref = "/fonduri-europene#verificare-eligibilitate";
+const fundingProgramsHref = "/fonduri-europene#fonduri-active";
 
 export function HomePage() {
   return (
@@ -38,7 +33,7 @@ export function HomePage() {
         </div>
         <div className="landing-intro">
           <h1 id="split-title">Consultanță fonduri europene și servicii administrative</h1>
-          <p className="landing-intro-copy" id="split-description">Alege direcția potrivită pentru proiectul sau activitatea ta. Clarificăm situația, documentele necesare și pașii următori, fără promisiuni nerealiste.</p>
+          <p className="landing-intro-copy" id="split-description">Capital European oferă consultanță pentru proiecte cu finanțare europeană și servicii administrative pentru firme sau activități independente.</p>
         </div>
 
         <nav className="split-grid" aria-labelledby="split-services-title">
@@ -50,19 +45,19 @@ export function HomePage() {
               <p id="choice-funding-description">Verificarea eligibilității, pregătirea documentației, depunere și sprijin în implementare.</p>
               <Link
                 className="choice-secondary-link"
-                href={eligibilityHref}
-                title="Verificare orientativă a eligibilității și punctajului"
+                href={fundingProgramsHref}
+                title="Vezi programele și oportunitățile de finanțare urmărite"
               >
-                <ClipboardCheck aria-hidden="true" /> Verificare eligibilitate și punctaj
+                <ClipboardCheck aria-hidden="true" /> Programe de finanțare
               </Link>
               <AnalyticsLink
                 className="choice-button"
-                href="/fonduri-europene#fonduri-active"
+                href="/fonduri-europene"
                 eventName="select_service"
-                eventParameters={{ service_area: "fonduri_europene", destination: "fonduri_active" }}
-                title="Vezi oportunitățile de finanțare urmărite"
+                eventParameters={{ service_area: "fonduri_europene", destination: "fonduri_prezentare" }}
+                title="Vezi prezentarea serviciilor pentru fonduri europene"
               >
-                Vezi oportunitățile <ArrowRight aria-hidden="true" />
+                Vezi consultanța <ArrowRight aria-hidden="true" />
               </AnalyticsLink>
             </div>
             <div className="eu-emblem" aria-hidden="true">
@@ -83,12 +78,8 @@ export function HomePage() {
               <span className="choice-icon"><Files aria-hidden="true" /></span>
               <h2 id="choice-admin-title">Servicii<br />Administrative</h2>
               <p id="choice-admin-description">Documente, secretariat, back-office și sprijin administrativ pentru înființarea firmei.</p>
-              <Link
-                className="choice-secondary-link"
-                href="/contact?service=servicii-administrative"
-                title="Descrie activitatea administrativă pe care vrei să o delegi"
-              >
-                <MessageSquareText aria-hidden="true" /> Discută un flux administrativ
+              <Link className="choice-secondary-link" href="/servicii-administrative#servicii-administrative" title="Vezi separat serviciile pentru PFA și SRL">
+                <ClipboardCheck aria-hidden="true" /> PFA și SRL, separat
               </Link>
               <AnalyticsLink
                 className="choice-button"
@@ -112,26 +103,15 @@ export function HomePage() {
           </article>
         </nav>
 
-        <section className="landing-proof-grid" aria-labelledby="landing-proof-title">
-          <h2 className="visually-hidden" id="landing-proof-title">Cum începe colaborarea cu Capital European</h2>
-          {landingProof.map(([Icon, title, text]) => (
-            <article key={title}>
-              <Icon aria-hidden="true" />
-              <div>
-                <h3>{title}</h3>
-                <p>{text}</p>
-              </div>
-            </article>
-          ))}
+        <section className="landing-start" aria-labelledby="landing-start-title">
+          <h2 id="landing-start-title">Cum începe colaborarea</h2>
+          <ol>{collaborationStart.map((item) => <li key={item}>{item}</li>)}</ol>
+          <nav aria-label="Informații despre Capital European">
+            <Link href="/despre">Despre noi</Link>
+            <Link href="/intrebari">Întrebări frecvente</Link>
+            <Link href="/contact">Contact</Link>
+          </nav>
         </section>
-
-        <footer className="landing-trust" aria-label="Avantajele colaborării">
-          <span><LockKeyhole /> Confidențialitate</span>
-          <span><Zap /> Pași bine definiți</span>
-          <span><Scale /> Evaluare responsabilă</span>
-          <span><Users /> Comunicare directă</span>
-          <Link href="/contact" title="Discută direct cu echipa Capital European"><MessageSquareText /> Discuție inițială</Link>
-        </footer>
         <GoogleReviewsSection variant="split" />
       </section>
       <SiteFooter showCookieSettings={false} />

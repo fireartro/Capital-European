@@ -4,7 +4,8 @@ import type { Metadata } from "next";
 import { Brand } from "@/components/brand";
 
 export const metadata: Metadata = {
-  title: "Pagina nu a fost găsită"
+  title: "Pagina nu a fost găsită",
+  robots: { index: false, follow: true }
 };
 
 export default function NotFound() {

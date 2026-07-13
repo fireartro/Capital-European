@@ -75,12 +75,12 @@ const nextConfig: NextConfig = {
       },
       {
         source: "/servicii-administrative/infiintare-firma",
-        destination: "/servicii-administrative/infiintare-pfa-srl",
+        destination: "/servicii-administrative",
         permanent: true
       },
       {
         source: "/infiintare-firma",
-        destination: "/servicii-administrative/infiintare-pfa-srl",
+        destination: "/servicii-administrative",
         permanent: true
       },
       {

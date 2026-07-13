@@ -6,7 +6,8 @@ import { breadcrumbSchema, JsonLd } from "@/lib/structured-data";
 export const metadata = createPageMetadata({
   title: "Confidențialitate și protecția datelor",
   description: `Află ce date poate prelucra ${siteConfig.name}, în ce scop, cât timp sunt păstrate și cum îți poți exercita drepturile.`,
-  path: "/confidentialitate"
+  path: "/confidentialitate",
+  index: false
 });
 
 export default function PrivacyPage() {
@@ -21,12 +22,12 @@ export default function PrivacyPage() {
       <LegalPage
         eyebrow="GDPR · Regulamentul (UE) 2016/679"
         title="Politica de confidențialitate"
-        updated="27 iunie 2026"
+        updated="13 iulie 2026"
         intro="Această politică explică ce date putem prelucra prin website, formular și comunicările ulterioare, de ce sunt necesare și ce drepturi ai. Se aplică vizitatorilor și persoanelor care contactează sau reprezintă un potențial client."
         notice={!legal.isComplete ? (
           <>
-            <strong>Date juridice obligatorii necompletate</strong>
-            TODO: completează denumirea juridică, numărul de înregistrare, codul fiscal și sediul operatorului înainte de publicarea comercială.
+            <strong>NECESITĂ CONFIRMARE din partea proprietarului</strong>
+            Lipsesc denumirea juridică, numărul de înregistrare și codul fiscal ale operatorului. Aceste date trebuie publicate după confirmare.
           </>
         ) : undefined}
         sections={[
@@ -35,14 +36,14 @@ export default function PrivacyPage() {
             content: [
               legal.isComplete
                 ? `Operatorul este ${legal.entityName}, înregistrat sub nr. ${legal.registrationNumber}, CUI ${legal.taxId}, cu sediul în ${legal.registeredOffice}.`
-                : `Website-ul este prezentat sub denumirea comercială ${siteConfig.name}. Datele juridice complete ale operatorului sunt în curs de configurare.`,
+                : `Website-ul este prezentat sub denumirea comercială ${siteConfig.name}. Identitatea juridică completă a operatorului necesită confirmarea proprietarului.`,
               `Pentru solicitări privind protecția datelor ne poți contacta la ${siteConfig.email}. Dacă va fi desemnat un responsabil cu protecția datelor, datele acestuia vor fi publicate aici.`
             ]
           },
           {
             title: "2. Datele pe care le putem colecta",
             content: [
-              "Prin formularul de contact colectăm numele, adresa de email, numărul de telefon, serviciul selectat, mesajul transmis și confirmarea acceptării politicii. Câmpul anti-spam ascuns este folosit exclusiv pentru detectarea solicitărilor automate.",
+              "Prin formularul de contact colectăm numele, adresa de email, serviciul selectat, mesajul, acordul privind politica și, numai dacă alegi să îl completezi, numărul de telefon. Câmpul anti-spam ascuns este folosit exclusiv pentru detectarea solicitărilor automate.",
               "În comunicările ulterioare putem prelucra date de identificare și contact, funcția și organizația reprezentată, documente furnizate voluntar, istoricul comunicărilor și informațiile necesare pentru evaluarea sau executarea serviciului.",
               "Serverul și furnizorii tehnici pot prelucra temporar adresa IP, data și ora accesului, ruta solicitată, tipul browserului și evenimente de securitate. Preferința pentru cookie-uri este stocată local conform Politicii de cookies."
             ]
@@ -66,7 +67,7 @@ export default function PrivacyPage() {
           {
             title: "5. Caracterul obligatoriu al datelor",
             content: [
-              "Câmpurile marcate obligatoriu sunt necesare pentru identificarea solicitării și pentru a putea răspunde. Dacă nu le furnizezi, formularul nu poate fi transmis.",
+              "Câmpurile marcate obligatoriu sunt necesare pentru identificarea solicitării și pentru a putea răspunde. Numărul de telefon este opțional.",
               "Transmiterea formularului nu obligă părțile să încheie un contract și nu garantează eligibilitatea, finanțarea sau acceptarea unei solicitări."
             ]
           },

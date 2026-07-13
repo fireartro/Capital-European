@@ -7,7 +7,8 @@ import { breadcrumbSchema, JsonLd } from "@/lib/structured-data";
 export const metadata = createPageMetadata({
   title: "Politica de cookies și setări de consimțământ",
   description: `Află ce cookie-uri poate folosi ${siteConfig.name}, care sunt opționale și cum poți accepta, refuza sau retrage consimțământul.`,
-  path: "/cookies"
+  path: "/cookies",
+  index: false
 });
 
 export default function CookiesPage() {
@@ -20,7 +21,7 @@ export default function CookiesPage() {
       <LegalPage
         eyebrow="Legea nr. 506/2004 · Directiva ePrivacy"
         title="Politica de cookies"
-        updated="27 iunie 2026"
+        updated="13 iulie 2026"
         intro="Această politică explică ce informații pot fi stocate pe dispozitiv, când cerem consimțământul și cum poți accepta, refuza sau modifica preferințele fără să pierzi accesul la conținut."
         actions={<CookieSettingsButton />}
         sections={[

@@ -4,8 +4,8 @@ import { administrativeFaq } from "@/lib/service-content";
 import { breadcrumbSchema, faqSchema, JsonLd, serviceSchema } from "@/lib/structured-data";
 
 export const metadata = createPageMetadata({
-  title: "Servicii administrative și PFA / SRL",
-  description: "Servicii administrative externalizate și sprijin pentru înființare PFA sau SRL: documente, secretariat, back-office și fluxuri operaționale clare.",
+  title: "Servicii administrative, înființare PFA și SRL",
+  description: "Servicii administrative pentru firme și activități independente: înființare PFA, înființare SRL, documente, secretariat și back-office.",
   path: "/servicii-administrative"
 });
 
@@ -19,7 +19,7 @@ export default function Page() {
         ]),
         serviceSchema({
           name: "Servicii administrative externalizate",
-          description: "Servicii administrative pentru firme: înființare PFA sau SRL, documente, secretariat, back-office și organizare operațională.",
+          description: "Servicii administrative pentru firme: înființare PFA, înființare SRL, documente, secretariat și activități de back-office.",
           path: "/servicii-administrative",
           serviceType: ["Servicii administrative", "Înființare PFA", "Înființare SRL", "Secretariat", "Administrare documente", "Back-office"]
         }),

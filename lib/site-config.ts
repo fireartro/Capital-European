@@ -71,8 +71,8 @@ export const siteConfig = {
   name: "Capital European",
   namePrefix: "Capital ",
   nameAccent: "European",
-  tagline: "Consultanță și administrare, cu pași clari",
-  description: "Capital European oferă consultanță pentru fonduri europene și servicii administrative pentru firme și ONG-uri: eligibilitate, documentație, implementare, secretariat, back-office și înființare PFA sau SRL.",
+  tagline: "Fonduri europene și servicii administrative",
+  description: "Capital European oferă două direcții distincte: consultanță pentru fonduri europene și servicii administrative pentru documente, secretariat, back-office și înființare PFA sau SRL.",
   url: resolvedSiteUrl,
   defaultOgImage: "/opengraph-image",
   officialResources: {
@@ -80,7 +80,7 @@ export const siteConfig = {
     fonduriUe: "https://www.fonduri-ue.ro/",
     pnrr: "https://pnrr.gov.ro/"
   },
-  lastUpdated: "2026-07-12",
+  lastUpdated: "2026-07-13",
   email: contactEmail,
   phoneDisplay,
   phoneHref,

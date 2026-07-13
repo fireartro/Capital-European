@@ -13,15 +13,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/servicii-administrative",
     "/servicii-administrative/secretariat",
     "/servicii-administrative/administrare-documente",
-    "/servicii-administrative/infiintare-pfa-srl",
     "/servicii-administrative/infiintare-pfa",
     "/servicii-administrative/infiintare-srl",
     "/contact",
     "/despre",
-    "/intrebari",
-    "/confidentialitate",
-    "/termeni",
-    "/cookies"
+    "/intrebari"
   ];
   return routes.map((path) => ({
     url: `${siteConfig.url}${path}`,

@@ -3,6 +3,7 @@
 import {
   ArrowLeft,
   BookOpenCheck,
+  BriefcaseBusiness,
   Building2,
   CircleHelp,
   ClipboardList,
@@ -42,7 +43,8 @@ const fundingNavigation: NavigationItem[] = [
 const adminNavigation: NavigationItem[] = [
   { label: "Prezentare", href: "/servicii-administrative", icon: FileText },
   { label: "Servicii", href: "/servicii-administrative#servicii-administrative", icon: ClipboardList },
-  { label: "PFA / SRL", href: "/servicii-administrative#infiintare-firma", icon: Building2 },
+  { label: "Înființare PFA", href: "/servicii-administrative/infiintare-pfa", icon: BriefcaseBusiness },
+  { label: "Înființare SRL", href: "/servicii-administrative/infiintare-srl", icon: Building2 },
   { label: "Întrebări", href: "/servicii-administrative#intrebari-administrative", icon: CircleHelp },
   { label: "Contact", href: "/contact?service=servicii-administrative", icon: Mail }
 ];

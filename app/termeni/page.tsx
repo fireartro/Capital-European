@@ -6,7 +6,8 @@ import { breadcrumbSchema, JsonLd } from "@/lib/structured-data";
 export const metadata = createPageMetadata({
   title: "Termeni și condiții de utilizare și colaborare",
   description: `Condițiile de utilizare a website-ului ${siteConfig.name}, limitele informațiilor publicate și cadrul general al solicitărilor și serviciilor.`,
-  path: "/termeni"
+  path: "/termeni",
+  index: false
 });
 
 export default function TermsPage() {
@@ -21,12 +22,12 @@ export default function TermsPage() {
       <LegalPage
         eyebrow="Informații contractuale și reguli de utilizare"
         title="Termeni și condiții"
-        updated="27 iunie 2026"
+        updated="13 iulie 2026"
         intro="Acești termeni reglementează utilizarea website-ului și transmiterea solicitărilor. Prestarea efectivă a serviciilor este guvernată de oferta și contractul încheiat separat, care prevalează în cazul oricărei neconcordanțe."
         notice={!legal.isComplete ? (
           <>
-            <strong>Publicarea comercială necesită datele juridice reale</strong>
-            TODO: configurează denumirea juridică, sediul, datele de contact, numărul de înregistrare și codul fiscal înainte de lansarea comercială.
+            <strong>NECESITĂ CONFIRMARE din partea proprietarului</strong>
+            Lipsesc denumirea juridică, numărul de înregistrare și codul fiscal. Aceste informații trebuie confirmate înaintea contractării comerciale.
           </>
         ) : undefined}
         sections={[
@@ -35,7 +36,7 @@ export default function TermsPage() {
             content: [
               legal.isComplete
                 ? `Website-ul este operat de ${legal.entityName}, nr. de înregistrare ${legal.registrationNumber}, CUI ${legal.taxId}, sediul ${legal.registeredOffice}.`
-                : `Website-ul este prezentat sub denumirea comercială ${siteConfig.name}. Datele juridice complete ale operatorului trebuie configurate înainte de lansarea comercială.`,
+                : `Website-ul este prezentat sub denumirea comercială ${siteConfig.name}. Identitatea juridică completă a operatorului necesită confirmarea proprietarului înaintea contractării.`,
               `Contact general: ${siteConfig.email}.${siteConfig.schedule ? ` Program orientativ de comunicare: ${siteConfig.schedule}.` : ""}`
             ],
             links: [

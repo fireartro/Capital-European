@@ -21,37 +21,10 @@ const splitCriticalCss = `
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: `${siteConfig.name} | Fonduri europene & servicii administrative`,
+    default: `Consultanță fonduri europene și servicii administrative | ${siteConfig.name}`,
     template: `%s | ${siteConfig.name}`
   },
   description: siteConfig.description,
-  keywords: [
-    "consultanță fonduri europene",
-    "consultant fonduri europene",
-    "consultanță fonduri nerambursabile",
-    "consultanță proiecte europene",
-    "fonduri europene pentru firme",
-    "fonduri europene pentru IMM-uri",
-    "fonduri europene pentru ONG-uri",
-    "fonduri europene pentru startup-uri",
-    "verificare eligibilitate fonduri europene",
-    "evaluare punctaj fonduri europene",
-    "pregătire proiecte fonduri europene",
-    "implementare proiecte fonduri europene",
-    "consultanță PNRR",
-    "servicii administrative",
-    "servicii administrative externalizate",
-    "externalizare back-office",
-    "secretariat externalizat",
-    "administrare documente firme",
-    "înființare firmă",
-    "înființare PFA",
-    "înființare SRL",
-    "acte înființare PFA",
-    "acte înființare SRL",
-    "consultanță fonduri europene Satu Mare",
-    "consultanță fonduri europene Cluj-Napoca"
-  ],
   authors: [{ name: siteConfig.name }],
   creator: siteConfig.name,
   applicationName: siteConfig.name,
@@ -61,20 +34,20 @@ export const metadata: Metadata = {
     locale: "ro_RO",
     siteName: siteConfig.name,
     url: siteConfig.url,
-    title: `${siteConfig.name} | Fonduri europene & servicii administrative`,
+    title: `Consultanță fonduri europene și servicii administrative | ${siteConfig.name}`,
     description: siteConfig.description,
     images: [
       {
         url: siteConfig.defaultOgImage,
         width: 1200,
         height: 630,
-        alt: `${siteConfig.name} - consultanță fonduri europene și servicii administrative externalizate`
+        alt: `${siteConfig.name} - consultanță fonduri europene și servicii administrative`
       }
     ]
   },
   twitter: {
     card: "summary_large_image",
-    title: `${siteConfig.name} | Fonduri europene & servicii administrative`,
+    title: `Consultanță fonduri europene și servicii administrative | ${siteConfig.name}`,
     description: siteConfig.description,
     images: [siteConfig.defaultOgImage]
   },

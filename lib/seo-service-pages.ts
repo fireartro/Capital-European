@@ -188,7 +188,8 @@ export const seoServicePages = {
       ["Un plan de afaceri garantează finanțarea?", "Nu. Planul trebuie să respecte criteriile apelului, iar decizia aparține evaluatorului și autorității competente."]
     ],
     related: [
-      { href: "/servicii-administrative/infiintare-pfa-srl", label: "Înființare PFA / SRL", text: "Pașii administrativi pentru forma de organizare aleasă." },
+      { href: "/servicii-administrative/infiintare-pfa", label: "Înființare PFA", text: "Pașii administrativi pentru activitatea independentă." },
+      { href: "/servicii-administrative/infiintare-srl", label: "Înființare SRL", text: "Pașii administrativi pentru înregistrarea societății." },
       { href: "/fonduri-europene-pentru-firme", label: "Fonduri pentru firme", text: "Pregătirea investițiilor realizate de companii." },
       { href: "/contact?service=fonduri-europene", label: "Verifică ideea de proiect", text: "Spune-ne ce vrei să finanțezi și în ce stadiu te afli." }
     ]
@@ -232,7 +233,8 @@ export const seoServicePages = {
     ],
     related: [
       { href: "/servicii-administrative/administrare-documente", label: "Administrare documente", text: "Organizare, evidență și urmărirea documentelor." },
-      { href: "/servicii-administrative/infiintare-pfa-srl", label: "Înființare PFA / SRL", text: "Sprijin administrativ pentru o activitate sau societate nouă." },
+      { href: "/servicii-administrative/infiintare-pfa", label: "Înființare PFA", text: "Sprijin administrativ pentru o activitate independentă." },
+      { href: "/servicii-administrative/infiintare-srl", label: "Înființare SRL", text: "Sprijin administrativ pentru o societate nouă." },
       { href: "/contact?service=secretariat", label: "Cere o ofertă", text: "Descrie volumul și activitățile pe care vrei să le delegi." }
     ]
   },
@@ -279,51 +281,6 @@ export const seoServicePages = {
       { href: "/contact?service=documente", label: "Solicită o evaluare", text: "Descrie documentele și volumul lunar estimat." }
     ]
   },
-  companySetup: {
-    path: "/servicii-administrative/infiintare-pfa-srl",
-    title: "Înființare firmă: PFA sau SRL",
-    metaDescription: "Sprijin administrativ pentru înființarea unei firme, PFA sau SRL: pași clari, organizarea actelor, verificarea dosarului și suport după înregistrare.",
-    eyebrow: "Înființare firmă · PFA / SRL",
-    h1: "Înființare firmă: PFA sau SRL, cu pașii administrativi organizați",
-    intro: "Îți spunem ce informații sunt necesare, organizăm documentele și urmărim etapele administrative. Nu înlocuim consultanța juridică, contabilă sau fiscală atunci când aceasta este necesară.",
-    category: "admin",
-    parent: { label: "Servicii administrative", href: "/servicii-administrative" },
-    contactService: "infiintare-firma",
-    serviceType: ["Înființare firmă", "Înființare PFA", "Înființare SRL", "Acte înființare PFA", "Acte înființare SRL", "Asistență administrativă startup"],
-    audienceTitle: "Ce trebuie clarificat înainte de pregătirea dosarului",
-    audienceIntro: "PFA și SRL au structuri și obligații diferite. Pornim de la activitatea propusă și separăm pașii administrativi de deciziile care trebuie validate de un profesionist autorizat.",
-    audience: [
-      "Dacă activitatea va fi desfășurată independent sau printr-o societate.",
-      "Activitățile urmărite, sediul și persoanele implicate în PFA sau SRL.",
-      "Documentele care trebuie obținute, completate, semnate sau transmise.",
-      "Pașii administrativi de după înregistrare și modul de organizare a documentelor."
-    ],
-    benefitsTitle: "Ce primești pentru pregătirea PFA-ului sau SRL-ului",
-    benefits: [
-      { title: "Listă adaptată formei alese", text: "Primești o succesiune clară de informații, documente și decizii pentru PFA sau SRL." },
-      { title: "Dosar verificat administrativ", text: "Semnalăm lipsurile și neconcordanțele vizibile înainte ca documentele să fie transmise." },
-      { title: "Sprijin după înregistrare", text: "Putem continua cu organizarea documentelor, secretariat și activități recurente de back-office." }
-    ],
-    processTitle: "Cum pregătim înființarea unui PFA sau SRL",
-    steps: [
-      { title: "Clarificăm situația", text: "Discutăm activitatea, forma avută în vedere, sediul și persoanele implicate." },
-      { title: "Pregătim lista", text: "Stabilim datele, documentele și semnăturile necesare pentru situația concretă." },
-      { title: "Organizăm dosarul", text: "Centralizăm documentele și semnalăm informațiile care lipsesc sau trebuie confirmate." },
-      { title: "Urmărim pașii", text: "Ținem evidența transmiterii, completărilor și documentelor primite la final." }
-    ],
-    faq: [
-      ["Este mai potrivit un PFA sau un SRL?", "Nu există o alegere universală. Activitatea, modul de lucru și implicațiile juridice sau fiscale trebuie analizate pentru situația ta; decizia finală se validează, când este necesar, cu un profesionist autorizat."],
-      ["Ce documente sunt necesare pentru înființare?", "Lista diferă între PFA și SRL și depinde de activitate, sediu și persoanele implicate. După discuția inițială îți trimitem lista administrativă potrivită situației descrise."],
-      ["Oferiți consultanță juridică, fiscală sau contabilă?", "Serviciul nostru este administrativ. Nu înlocuim avocatul, notarul, contabilul sau consultantul fiscal și indicăm separat deciziile care trebuie validate de aceștia."],
-      ["Puteți garanta termenul de înființare?", "Nu. Durata depinde de pregătirea documentelor, verificările instituției și eventualele solicitări de completare. Urmărim însă fiecare etapă și comunicăm blocajele observate."],
-      ["Pot continua cu servicii administrative după înființare?", "Da. Putem organiza documentele, secretariatul, evidențele și alte activități recurente de back-office." ]
-    ],
-    related: [
-      { href: "/servicii-administrative/infiintare-pfa", label: "Înființare PFA", text: "Acte și pași administrativi pentru activitatea independentă." },
-      { href: "/servicii-administrative/infiintare-srl", label: "Înființare SRL", text: "Date, documente și etape pentru înregistrarea societății." },
-      { href: "/contact?service=infiintare-firma", label: "Solicită sprijin pentru PFA / SRL", text: "Spune-ne activitatea, forma avută în vedere și stadiul în care te afli." }
-    ]
-  },
   pfaSetup: {
     path: "/servicii-administrative/infiintare-pfa",
     title: "Înființare PFA: acte și pași administrativi",
@@ -332,7 +289,7 @@ export const seoServicePages = {
     h1: "Înființare PFA, cu actele și pașii administrativi bine organizați",
     intro: "Clarificăm activitatea pe care vrei să o desfășori, informațiile necesare și documentele care trebuie pregătite. Serviciul este administrativ și nu înlocuiește analiza juridică, fiscală sau contabilă.",
     category: "admin",
-    parent: { label: "Înființare PFA / SRL", href: "/servicii-administrative/infiintare-pfa-srl" },
+    parent: { label: "Servicii administrative", href: "/servicii-administrative" },
     contactService: "infiintare-firma",
     serviceType: ["Înființare PFA", "Acte PFA", "Deschidere PFA", "Înregistrare PFA", "Cod CAEN PFA"],
     audienceTitle: "Ce clarificăm înainte de pregătirea unui PFA",
@@ -363,9 +320,9 @@ export const seoServicePages = {
       ["Mă ajutați să aleg între PFA și SRL?", "Putem explica diferențele administrative și informațiile necesare. Implicațiile juridice, fiscale și contabile trebuie validate cu profesioniști autorizați."]
     ],
     related: [
-      { href: "/servicii-administrative/infiintare-pfa-srl", label: "PFA sau SRL", text: "Compară traseele administrative înainte să alegi forma." },
+      { href: "/servicii-administrative", label: "Servicii administrative", text: "Vezi toate activitățile care pot fi preluate." },
       { href: "/servicii-administrative/infiintare-srl", label: "Înființare SRL", text: "Vezi documentele și etapele specifice unei societăți." },
-      { href: "/contact?service=infiintare-firma", label: "Solicită lista pentru PFA", text: "Descrie activitatea și sediul avut în vedere." }
+      { href: "/contact?service=infiintare-pfa", label: "Solicită lista pentru PFA", text: "Descrie activitatea și sediul avut în vedere." }
     ]
   },
   srlSetup: {
@@ -376,7 +333,7 @@ export const seoServicePages = {
     h1: "Înființare SRL, cu datele și documentele pregătite coerent",
     intro: "Organizăm informațiile despre societate, asociați, administrator, sediu și activități, apoi urmărim pașii administrativi ai dosarului. Deciziile juridice, fiscale și contabile se validează separat atunci când este necesar.",
     category: "admin",
-    parent: { label: "Înființare PFA / SRL", href: "/servicii-administrative/infiintare-pfa-srl" },
+    parent: { label: "Servicii administrative", href: "/servicii-administrative" },
     contactService: "infiintare-firma",
     serviceType: ["Înființare SRL", "Acte SRL", "Deschidere firmă", "Înregistrare SRL", "Cod CAEN SRL"],
     audienceTitle: "Ce trebuie stabilit înainte de pregătirea SRL-ului",
@@ -407,9 +364,9 @@ export const seoServicePages = {
       ["Serviciul include contabilitate sau consultanță juridică?", "Nu. Organizăm administrativ înființarea. Pentru decizii juridice, fiscale sau contabile indicăm aspectele care trebuie validate cu un profesionist autorizat."]
     ],
     related: [
-      { href: "/servicii-administrative/infiintare-pfa-srl", label: "PFA sau SRL", text: "Vezi diferențele administrative dintre cele două trasee." },
+      { href: "/servicii-administrative", label: "Servicii administrative", text: "Vezi toate activitățile care pot fi preluate." },
       { href: "/servicii-administrative/infiintare-pfa", label: "Înființare PFA", text: "Pașii pentru o activitate desfășurată independent." },
-      { href: "/contact?service=infiintare-firma", label: "Solicită lista pentru SRL", text: "Trimite informațiile despre activitate, persoane și sediu." }
+      { href: "/contact?service=infiintare-srl", label: "Solicită lista pentru SRL", text: "Trimite informațiile despre activitate, persoane și sediu." }
     ]
   }
 } satisfies Record<string, SeoServicePageConfig>;

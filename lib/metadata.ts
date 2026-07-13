@@ -4,15 +4,17 @@ import { siteConfig } from "@/lib/site-config";
 export function createPageMetadata({
   title,
   description = siteConfig.description,
-  path
+  path,
+  index = true
 }: {
   title?: string;
   description?: string;
   path: string;
+  index?: boolean;
 }): Metadata {
   const resolvedTitle = title
     ? title.includes(siteConfig.name) ? title : `${title} | ${siteConfig.name}`
-    : `${siteConfig.name} | Fonduri europene & servicii administrative`;
+    : `Consultanță fonduri europene și servicii administrative | ${siteConfig.name}`;
 
   const absoluteUrl = new URL(path, siteConfig.url).toString();
 
@@ -40,7 +42,7 @@ export function createPageMetadata({
           url: siteConfig.defaultOgImage,
           width: 1200,
           height: 630,
-          alt: `${siteConfig.name} - consultanță fonduri europene și servicii administrative externalizate`
+          alt: `${siteConfig.name} - consultanță fonduri europene și servicii administrative`
         }
       ]
     },
@@ -51,10 +53,10 @@ export function createPageMetadata({
       images: [siteConfig.defaultOgImage]
     },
     robots: {
-      index: true,
+      index,
       follow: true,
       googleBot: {
-        index: true,
+        index,
         follow: true,
         "max-image-preview": "large",
         "max-snippet": -1,

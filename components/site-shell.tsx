@@ -8,12 +8,14 @@ import { WhatsAppIcon } from "@/components/whatsapp-icon";
 export function SiteShell({
   children,
   showFooter = true,
+  showReviews = true,
   showNavigation = true,
   showWhatsApp = true,
   navigationContext = "general"
 }: Readonly<{
   children: React.ReactNode;
   showFooter?: boolean;
+  showReviews?: boolean;
   showNavigation?: boolean;
   showWhatsApp?: boolean;
   navigationContext?: "funding" | "admin" | "general";
@@ -26,7 +28,7 @@ export function SiteShell({
       {showNavigation && <SiteHeader navigationContext={navigationContext} />}
       <main className="site-content" id="continut">
         {children}
-        {showFooter && <GoogleReviewsSection />}
+        {showFooter && showReviews && <GoogleReviewsSection variant="default" />}
         {showFooter && <SiteFooter />}
       </main>
       {showQuickContact && (

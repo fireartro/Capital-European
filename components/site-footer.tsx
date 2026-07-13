@@ -11,35 +11,32 @@ export function SiteFooter({ showCookieSettings = true }: { showCookieSettings?:
       <div className="section-container footer-main">
         <div>
           <Brand variant="light" />
-          <p>{siteConfig.description}</p>
+          <p>Consultanță pentru fonduri europene și servicii administrative pentru firme, ONG-uri și activități independente.</p>
         </div>
         <div>
           <h3>Fonduri europene</h3>
-          <Link href="/fonduri-europene">Programe și eligibilitate</Link>
+          <Link href="/fonduri-europene">Prezentare și programe</Link>
           <Link href="/consultanta-fonduri-europene">Consultanță fonduri europene</Link>
-          <Link href="/fonduri-europene-pentru-firme">Fonduri pentru firme</Link>
-          <Link href="/fonduri-europene-pentru-ong">Fonduri pentru ONG-uri</Link>
           <Link href="/fonduri-europene#fonduri-active">Oportunități de finanțare</Link>
         </div>
         <div>
           <h3>Servicii administrative</h3>
           <Link href="/servicii-administrative">Servicii administrative</Link>
-          <Link href="/servicii-administrative/secretariat">Secretariat externalizat</Link>
-          <Link href="/servicii-administrative/administrare-documente">Administrare documente</Link>
-          <Link href="/servicii-administrative/infiintare-pfa-srl">Înființare PFA / SRL</Link>
           <Link href="/servicii-administrative/infiintare-pfa">Înființare PFA</Link>
           <Link href="/servicii-administrative/infiintare-srl">Înființare SRL</Link>
+          <Link href="/servicii-administrative/administrare-documente">Administrare documente</Link>
+          <Link href="/servicii-administrative/secretariat">Secretariat externalizat</Link>
         </div>
         <div>
-          <h3>Contact</h3>
+          <h3>Companie și contact</h3>
+          <Link href="/despre">Despre Capital European</Link>
+          <Link href="/intrebari">Întrebări frecvente</Link>
+          <Link href="/contact">Formular de contact</Link>
           {siteConfig.phoneHref && <a href={`tel:${siteConfig.phoneHref}`} title={`Sună ${siteConfig.name}`}>{siteConfig.phoneDisplay}</a>}
           <a href={`mailto:${siteConfig.email}`} title={`Trimite email către ${siteConfig.name}`}>{siteConfig.email}</a>
           <a href={siteConfig.googleBusiness.url} target="_blank" rel="noopener noreferrer" title="Vezi profilul Capital European pe Google">Profil Google Business</a>
           {siteConfig.schedule && <span>Program: {siteConfig.schedule}</span>}
-          {siteConfig.legal.entityName && <span>Operator: {siteConfig.legal.entityName}</span>}
-          {siteConfig.legal.registrationNumber && <span>Registrul comerțului: {siteConfig.legal.registrationNumber}</span>}
-          {siteConfig.legal.taxId && <span>CUI: {siteConfig.legal.taxId}</span>}
-          <Link className="footer-cta-link" href="/contact" title="Trimite solicitarea">Descrie situația ta</Link>
+          {siteConfig.legal.entityName && <span>{siteConfig.legal.entityName}{siteConfig.legal.taxId ? ` · CUI ${siteConfig.legal.taxId}` : ""}</span>}
         </div>
       </div>
       {siteConfig.locations.length > 0 && (

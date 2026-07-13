@@ -106,12 +106,15 @@ function escapeHtml(value: string) {
 
 function serviceLabel(service: ContactDeliveryData["service"]) {
   const labels: Record<ContactDeliveryData["service"], string> = {
+    nesigur: "Nu stie inca serviciul potrivit",
     "servicii-administrative": "Servicii administrative",
     documente: "Administrare documente",
     secretariat: "Secretariat",
     administrativ: "Asistenta administrativa",
     consultanta: "Consultanta fonduri europene",
     "infiintare-firma": "Infiintare PFA / SRL",
+    "infiintare-pfa": "Infiintare PFA",
+    "infiintare-srl": "Infiintare SRL",
     "fonduri-europene": "Fonduri europene"
   };
 
@@ -129,7 +132,7 @@ function contactEmailHtml(data: ContactDeliveryData) {
       <h2>Solicitare noua de pe site</h2>
       <p><strong>Nume:</strong> ${escapeHtml(data.name)}</p>
       <p><strong>Email:</strong> ${escapeHtml(data.email)}</p>
-      <p><strong>Telefon:</strong> ${escapeHtml(data.phone)}</p>
+      <p><strong>Telefon:</strong> ${data.phone ? escapeHtml(data.phone) : "Necompletat"}</p>
       <p><strong>Categorie:</strong> ${escapeHtml(data.category)}</p>
       <p><strong>Serviciu:</strong> ${escapeHtml(serviceLabel(data.service))}</p>
       ${fundingProgram}
@@ -148,7 +151,7 @@ function contactEmailText(data: ContactDeliveryData) {
     "",
     `Nume: ${data.name}`,
     `Email: ${data.email}`,
-    `Telefon: ${data.phone}`,
+    `Telefon: ${data.phone || "Necompletat"}`,
     `Categorie: ${data.category}`,
     `Serviciu: ${serviceLabel(data.service)}`,
     data.fundingProgram ? `Linie de finantare: ${data.fundingProgram}` : "",

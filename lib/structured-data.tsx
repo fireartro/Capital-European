@@ -25,14 +25,6 @@ function postalAddress(address: string): JsonObject {
   };
 }
 
-function locationSchema() {
-  return siteConfig.locations.map((location) => ({
-    "@type": "Place",
-    name: `${siteConfig.name} - ${location.label}`,
-    address: postalAddress(location.address)
-  }));
-}
-
 function sanitizeJsonLd(data: JsonObject | JsonObject[]) {
   return JSON.stringify(data).replace(/</g, "\\u003c");
 }
@@ -55,6 +47,7 @@ export function organizationSchema(): JsonObject {
         "@id": `${siteConfig.url}#organization`,
         name: siteConfig.name,
         url: siteConfig.url,
+        slogan: siteConfig.tagline,
         logo: {
           "@type": "ImageObject",
           url: absoluteUrl("/images/Consultanta-Fonduri-Europene-si-Servicii-Administrari-firme-2.webp"),
@@ -71,7 +64,6 @@ export function organizationSchema(): JsonObject {
           availableLanguage: ["ro"]
         },
         ...(siteConfig.address ? { address: postalAddress(siteConfig.address) } : {}),
-        ...(siteConfig.locations.length > 0 ? { location: locationSchema() } : {}),
         sameAs: siteConfig.sameAs.length > 0 ? [...siteConfig.sameAs] : undefined,
         knowsAbout: [
           "Fonduri europene",
@@ -93,56 +85,68 @@ export function organizationSchema(): JsonObject {
         ]
       },
       {
-        "@type": siteConfig.address ? ["LocalBusiness", "ProfessionalService"] : "ProfessionalService",
+        "@type": "ProfessionalService",
         "@id": `${siteConfig.url}#local-business`,
         name: siteConfig.name,
         url: siteConfig.url,
+        description: siteConfig.description,
+        slogan: siteConfig.tagline,
         image: absoluteUrl(siteConfig.defaultOgImage),
         email: siteConfig.email,
         ...(siteConfig.phoneHref ? { telephone: siteConfig.phoneHref } : {}),
         ...(siteConfig.address ? { address: postalAddress(siteConfig.address) } : {}),
-        areaServed: [
-          { "@type": "Country", name: "România" }
-        ],
+        parentOrganization: { "@id": `${siteConfig.url}#organization` },
+        areaServed: { "@type": "Country", name: "România" },
+        sameAs: [siteConfig.googleBusiness.url],
         hasOfferCatalog: {
           "@type": "OfferCatalog",
-          name: "Servicii Capital European",
+          name: "Serviciile Capital European",
           itemListElement: [
             {
-              "@type": "Offer",
-              itemOffered: {
-                "@type": "Service",
-                name: "Consultanță fonduri europene",
-                description: "Analiză de eligibilitate, pregătire documentație, depunere cereri de finanțare și implementare proiecte cu fonduri europene.",
-                url: absoluteUrl("/consultanta-fonduri-europene")
-              }
+              "@type": "OfferCatalog",
+              name: "Consultanță fonduri europene",
+              itemListElement: [{
+                "@type": "Offer",
+                itemOffered: {
+                  "@type": "Service",
+                  name: "Consultanță fonduri europene",
+                  description: "Analiză de eligibilitate, pregătire documentație, depunere cereri de finanțare și implementare proiecte cu fonduri europene.",
+                  url: absoluteUrl("/consultanta-fonduri-europene")
+                }
+              }]
             },
             {
-              "@type": "Offer",
-              itemOffered: {
-                "@type": "Service",
-                name: "Servicii administrative externalizate",
-                description: "Secretariat extern, procesare documente, back-office, organizare operațională și sprijin pentru înființare PFA sau SRL.",
-                url: absoluteUrl("/servicii-administrative")
-              }
-            },
-            {
-              "@type": "Offer",
-              itemOffered: {
-                "@type": "Service",
-                name: "Înființare PFA",
-                description: "Sprijin administrativ pentru informațiile, actele și pașii necesari înființării unui PFA.",
-                url: absoluteUrl("/servicii-administrative/infiintare-pfa")
-              }
-            },
-            {
-              "@type": "Offer",
-              itemOffered: {
-                "@type": "Service",
-                name: "Înființare SRL",
-                description: "Sprijin administrativ pentru informațiile, actele și pașii necesari înființării unui SRL.",
-                url: absoluteUrl("/servicii-administrative/infiintare-srl")
-              }
+              "@type": "OfferCatalog",
+              name: "Servicii administrative",
+              itemListElement: [
+                {
+                  "@type": "Offer",
+                  itemOffered: {
+                    "@type": "Service",
+                    name: "Servicii administrative externalizate",
+                    description: "Secretariat extern, procesare documente, back-office și organizare operațională pentru firme.",
+                    url: absoluteUrl("/servicii-administrative")
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  itemOffered: {
+                    "@type": "Service",
+                    name: "Înființare PFA",
+                    description: "Sprijin administrativ pentru informațiile, actele și pașii necesari înființării unui PFA.",
+                    url: absoluteUrl("/servicii-administrative/infiintare-pfa")
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  itemOffered: {
+                    "@type": "Service",
+                    name: "Înființare SRL",
+                    description: "Sprijin administrativ pentru informațiile, actele și pașii necesari înființării unui SRL.",
+                    url: absoluteUrl("/servicii-administrative/infiintare-srl")
+                  }
+                }
+              ]
             }
           ]
         }
@@ -205,47 +209,6 @@ export function serviceSchema({
       "@type": "Country",
       name: "România"
     }
-  };
-}
-
-export function professionalServiceSchema({
-  path,
-  description,
-  serviceName
-}: {
-  path: string;
-  description: string;
-  serviceName: string | string[];
-}): JsonObject {
-  const url = absoluteUrl(path);
-  const serviceNames = Array.isArray(serviceName) ? serviceName : [serviceName];
-
-  return {
-    "@context": "https://schema.org",
-    "@type": "ProfessionalService",
-    "@id": `${url}#professional-service`,
-    name: siteConfig.name,
-    url,
-    description,
-    image: absoluteUrl(siteConfig.defaultOgImage),
-    email: siteConfig.email,
-    ...(siteConfig.address ? { address: postalAddress(siteConfig.address) } : {}),
-    areaServed: {
-      "@type": "Country",
-      name: "România"
-    },
-    makesOffer: serviceNames.map((name) => ({
-      "@type": "Offer",
-      itemOffered: {
-        "@type": "Service",
-        name,
-        serviceType: name,
-        url: name === "Servicii administrative" ? absoluteUrl("/servicii-administrative") : url,
-        provider: {
-          "@id": `${siteConfig.url}#organization`
-        }
-      }
-    }))
   };
 }
 

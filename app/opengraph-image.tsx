@@ -43,17 +43,17 @@ export default function OpenGraphImage() {
       {/* Main headline */}
       <div style={{ display: "flex", flexDirection: "column", position: "relative" }}>
         <div style={{ display: "flex", flexDirection: "column", fontSize: 62, fontWeight: 800, lineHeight: 1.08, letterSpacing: -1, maxWidth: 900 }}>
-          <span>Fonduri europene &</span>
-          <span>servicii administrative</span>
+          <span>Consultanță fonduri europene</span>
+          <span style={{ fontSize: 48, color: "#ffcc00" }}>Servicii administrative</span>
         </div>
         <div style={{ marginTop: 24, fontSize: 24, color: "rgba(255,255,255,.78)", lineHeight: 1.5 }}>
-          Consultanță pentru firme, IMM-uri și ONG-uri din România
+          Două direcții distincte pentru proiecte și activitatea curentă
         </div>
       </div>
 
       {/* Bottom pills */}
       <div style={{ display: "flex", gap: 14, position: "relative" }}>
-        {["Analiză de eligibilitate", "Cereri de finanțare", "Secretariat externalizat", "Servicii administrative"].map((tag) => (
+        {["Analiză de eligibilitate", "Cereri de finanțare", "Implementare proiect", "Servicii administrative"].map((tag) => (
           <div key={tag} style={{
             padding: "10px 18px", borderRadius: 999,
             background: "rgba(255,255,255,.1)", border: "1px solid rgba(255,255,255,.2)",

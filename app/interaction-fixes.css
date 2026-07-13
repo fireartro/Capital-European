@@ -173,11 +173,11 @@ body:has(.cookie-preferences-backdrop) .quick-contact-float { display: none; }
   .hero-proof { gap: 8px; margin-top: 22px; font-size: .75rem; }
 
   .funding-photo-hero {
-    min-height: clamp(560px, calc(100svh - 64px), 650px);
+    min-height: clamp(620px, calc(100svh - 64px), 700px);
   }
-  .funding-photo-hero-content { padding-block: 40px 28px; }
+  .funding-photo-hero-content { padding-block: 44px 32px; }
   .funding-photo-hero-content h1 { font-size: clamp(1.78rem, 8.3vw, 2rem); line-height: 1.06; }
-  .funding-hero-active-copy { margin-top: 18px; }
+  .funding-hero-active-copy { min-height: 138px; margin-top: 18px; }
   .funding-hero-active-copy h2 { font-size: 1.12rem; line-height: 1.2; }
   .funding-hero-active-copy p { margin-top: 9px; font-size: .76rem; line-height: 1.52; }
   .funding-hero-actions { margin-top: 18px; }
@@ -188,8 +188,7 @@ body:has(.cookie-preferences-backdrop) .quick-contact-float { display: none; }
 
   .funding-service-card { padding: 19px 18px; }
   .service-round-icon { margin: 18px 0 14px; }
-  .funding-programs-section,
-  .funding-eligibility { margin-top: 38px; padding: 20px 14px; }
+  .funding-programs-section { margin-top: 38px; padding: 20px 14px; }
   .funding-program-list:not([data-expanded="true"]) .funding-program-card:nth-child(n+3) { display: none; }
   .funding-program-body { padding: 17px 15px; }
   .funding-program-meta { margin-bottom: 13px; }
@@ -308,9 +307,11 @@ body:has(.cookie-preferences-backdrop) .quick-contact-float { display: none; }
 
 @media (max-width: 360px) {
   .funding-hero-active-copy p { display: none; }
-  .funding-photo-hero { min-height: 540px; }
+  .funding-hero-active-copy { min-height: 74px; }
+  .funding-photo-hero { min-height: 620px; }
   .funding-photo-hero-content { padding-block: 30px 22px; }
   .funding-hero-controls { margin-top: 12px; }
+  .funding-hero-controls > div button { width: 32px; }
   .hero-proof span:nth-child(n+3) { display: none; }
   .company-form-options { grid-template-columns: 1fr 1fr; }
 }

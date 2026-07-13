@@ -1,25 +1,11 @@
-import { ArrowRight, BadgeCheck, BookOpenCheck, ShieldCheck, Users, Zap } from "lucide-react";
+import { ArrowRight, BadgeCheck, BookOpenCheck, ShieldCheck, Users } from "lucide-react";
 import Image from "next/image";
 import { SiteShell } from "@/components/site-shell";
 
 const principles = [
-  [ShieldCheck, "Confidențialitate", "Datele și documentele sunt tratate cu discreție și acces controlat."],
-  [Zap, "Claritate", "Stabilim termene, responsabilități și puncte de verificare înainte de lucru."],
-  [BadgeCheck, "Rigoare", "Verificăm informațiile și păstrăm documentele într-un circuit ușor de urmărit."],
-  [Users, "Colaborare", "Adaptăm serviciul la context, volum și deciziile care rămân la client."]
-] as const;
-
-const aboutStats = [
-  ["2", "direcții de servicii", "fonduri europene și administrare externalizată"],
-  ["4", "principii de lucru", "confidențialitate, claritate, rigoare și colaborare"],
-  ["1", "punct de coordonare", "mai puține fire pierdute între documente și decizii"]
-] as const;
-
-const workingRhythm = [
-  ["Ascultăm contextul", "Înțelegem situația, documentele existente și presiunea reală de timp."],
-  ["Definim responsabilități", "Stabilim ce preluăm, ce rămâne la client și ce trebuie aprobat."],
-  ["Lucrăm verificabil", "Păstrăm pașii, termenele și documentele într-un flux clar."],
-  ["Ajustăm colaborarea", "Volumul și structura pot fi schimbate când apar proiecte sau nevoi noi."]
+  [BadgeCheck, "Serviciu delimitat", "Spunem ce putem prelua, ce informații sunt necesare și ce rămâne în responsabilitatea clientului."],
+  [ShieldCheck, "Date protejate", "Accesăm numai informațiile necesare activităților stabilite și tratăm documentele ca informații confidențiale."],
+  [Users, "Comunicare directă", "Întrebările, aprobările și termenele sunt discutate cu persoanele responsabile, fără promisiuni pe care nu le putem controla."]
 ] as const;
 
 export function AboutPage() {
@@ -28,8 +14,8 @@ export function AboutPage() {
       <section className="inner-hero about-hero" aria-labelledby="about-hero-title" aria-describedby="about-hero-description">
         <div className="section-container inner-hero-content">
           <p className="eyebrow eyebrow-light"><BookOpenCheck /> Despre noi</p>
-          <h1 id="about-hero-title">Consultanță și suport administrativ,{" "}<br />într-un proces <em>clar.</em></h1>
-          <p id="about-hero-description">Organizăm informațiile, responsabilitățile și documentele necesare pentru proiecte de finanțare și activități administrative.</p>
+          <h1 id="about-hero-title">Despre Capital European</h1>
+          <p id="about-hero-description">Lucrăm pe două direcții distincte: consultanță pentru fonduri europene și servicii administrative pentru firme, ONG-uri și activități independente.</p>
         </div>
       </section>
 
@@ -38,24 +24,14 @@ export function AboutPage() {
           <div className="about-panel">
             <span className="about-mark"><BookOpenCheck /></span>
             <p className="eyebrow eyebrow-light">Abordarea noastră</p>
-            <h2 id="about-approach-title">Mai întâi clarificăm. Apoi stabilim ce preluăm.</h2>
-            <p>Fiecare colaborare începe cu situația reală a clientului: obiectiv, documente, termene și persoane responsabile. Din aceste informații construim un mod de lucru verificabil.</p>
+            <h2 id="about-approach-title">Începem de la situația reală a clientului</h2>
+            <p>Discutăm obiectivul, documentele disponibile, termenul și persoanele care pot decide. Abia apoi definim serviciul și livrabilele.</p>
             <a href="/contact" aria-label="Discută cu Capital European despre nevoia ta" title="Discută cu Capital European">Discută despre nevoia ta <ArrowRight aria-hidden="true" /></a>
           </div>
           <div className="principles-grid">
-            {principles.map(([Icon, title, text], index) => (
+            {principles.map(([Icon, title, text]) => (
               <article key={title}>
-                <span className="principle-number">0{index + 1}</span>
                 <Icon />
-                <h3>{title}</h3>
-                <p>{text}</p>
-              </article>
-            ))}
-          </div>
-          <div className="about-rhythm" aria-label="Ritmul de lucru Capital European">
-            {workingRhythm.map(([title, text], index) => (
-              <article key={title}>
-                <span>{String(index + 1).padStart(2, "0")}</span>
                 <h3>{title}</h3>
                 <p>{text}</p>
               </article>
@@ -69,15 +45,15 @@ export function AboutPage() {
           <div className="story-grid">
             <div>
               <p className="eyebrow">Pentru cine lucrăm</p>
-              <h2 id="about-audience-title">Pentru organizații care au nevoie de structură, nu de o soluție generică.</h2>
+              <h2 id="about-audience-title">Pentru firme, ONG-uri și persoane care încep o activitate</h2>
             </div>
             <div className="story-copy">
-              <p>Serviciile se adresează antreprenorilor, IMM-urilor, ONG-urilor și echipelor care pregătesc un proiect sau vor să organizeze mai bine activitatea administrativă.</p>
-              <p>Volumul, livrabilele și responsabilitățile se stabilesc după o discuție inițială. Nu recomandăm mai mult decât este necesar pentru situația analizată.</p>
+              <p>Poți apela la noi pentru evaluarea unui proiect de finanțare, pregătirea documentației, înființarea unui PFA sau SRL ori preluarea unor activități administrative recurente.</p>
+              <p>Oferta precizează serviciile incluse, informațiile necesare și responsabilitățile fiecărei părți.</p>
             </div>
           </div>
 
-          <div className="about-media-panel" id="repere-despre">
+          <div className="about-media-panel about-media-panel-simple" id="repere-despre">
             <figure className="about-media">
               <Image
                 src="/images/capital-european-consultanta-organizare-real.webp"
@@ -88,15 +64,6 @@ export function AboutPage() {
                 sizes="(max-width: 960px) 100vw, 52vw"
               />
             </figure>
-            <div className="about-stat-grid" aria-label="Repere despre Capital European">
-              {aboutStats.map(([value, label, detail]) => (
-                <article key={label}>
-                  <strong>{value}</strong>
-                  <span>{label}</span>
-                  <p>{detail}</p>
-                </article>
-              ))}
-            </div>
           </div>
         </div>
       </section>

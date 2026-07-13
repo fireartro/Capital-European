@@ -7,25 +7,46 @@ import { useEffect, useState } from "react";
 
 const slides = [
   {
-    image: "/images/funding-hero-manufacturing.webp",
-    alt: "Antreprenor și specialist care analizează modernizarea unei unități de producție",
+    image: "/images/funding-hero-manufacturing-v2.webp",
+    alt: "Antreprenor și consultant care analizează un plan de investiții într-un atelier de producție din România",
     label: "Investiții productive",
-    title: "Modernizare, echipamente și capacitate de producție",
-    text: "Verificăm dacă investiția, solicitantul și calendarul se potrivesc cu regulile apelului înainte să înceapă documentația."
+    title: "Modernizare și capacitate de producție",
+    text: "Verificăm investiția, solicitantul și calendarul înainte de pregătirea documentației."
   },
   {
-    image: "/images/funding-hero-energy.webp",
-    alt: "Specialiști care verifică o investiție în panouri fotovoltaice pentru o unitate de producție",
+    image: "/images/funding-hero-energy-v2.webp",
+    alt: "Manager și specialist tehnic care verifică o investiție energetică la o fabrică din România",
     label: "Energie și eficiență",
-    title: "Investiții care reduc consumul și susțin dezvoltarea",
-    text: "Punem în aceeași analiză eligibilitatea tehnică, bugetul, contribuția proprie și obligațiile pe care proiectul le aduce după aprobare."
+    title: "Eficiență energetică pentru activitatea curentă",
+    text: "Corelăm soluția tehnică, consumul, bugetul și obligațiile care continuă după aprobare."
   },
   {
-    image: "/images/funding-hero-digitalization.webp",
-    alt: "Antreprenoare și tehnician care verifică digitalizarea unei linii de producție alimentară",
+    image: "/images/funding-hero-digitalization-v2.webp",
+    alt: "Antreprenoare și tehnician care verifică digitalizarea unei mici unități alimentare din România",
     label: "Digitalizare și automatizare",
-    title: "Procese mai bune, susținute de o investiție bine justificată",
-    text: "Legăm echipamentele și soluțiile digitale de nevoia reală a afacerii, de indicatori și de cheltuielile permise prin ghid."
+    title: "Digitalizare legată de nevoia reală a afacerii",
+    text: "Justificăm echipamentele și soluțiile digitale prin fluxuri, indicatori și cheltuieli eligibile."
+  },
+  {
+    image: "/images/funding-hero-rural-v2.webp",
+    alt: "Fermier și consultant care discută un proiect de investiții într-o fermă din nord-vestul României",
+    label: "Agricultură și mediul rural",
+    title: "Investiții rurale construite de la situația din teren",
+    text: "Analizăm exploatația, capacitatea de cofinanțare și etapele care pot fi susținute în practică."
+  },
+  {
+    image: "/images/funding-hero-ngo-v2.webp",
+    alt: "Coordonatori ai unui ONG care planifică activități într-un centru comunitar din România",
+    label: "ONG și comunități",
+    title: "Proiecte comunitare cu activități și rezultate verificabile",
+    text: "Clarificăm grupul țintă, resursele, partenerii și modul în care rezultatele vor fi documentate."
+  },
+  {
+    image: "/images/funding-hero-startup-v2.webp",
+    alt: "Fondatori care analizează un prototip și bugetul unei afaceri noi într-un atelier din România",
+    label: "Startup și afaceri noi",
+    title: "De la idee la un plan de afaceri realist",
+    text: "Verificăm cererea din piață, investiția inițială și ipotezele care trebuie susținute prin date."
   }
 ] as const;
 
@@ -65,7 +86,7 @@ export function FundingHeroCarousel() {
               fill
               priority={index === 0}
               fetchPriority={index === 0 ? "high" : "auto"}
-              sizes="(max-width: 640px) 200vw, (max-width: 1100px) 100vw, calc(100vw - 288px)"
+              sizes="(max-width: 1100px) 100vw, calc(100vw - 288px)"
             />
           </div>
         ))}
@@ -73,18 +94,18 @@ export function FundingHeroCarousel() {
       <div className="funding-hero-shade" aria-hidden="true" />
       <div className="section-container funding-photo-hero-content">
         <p className="eyebrow eyebrow-light"><Landmark aria-hidden="true" /> Programe și oportunități de finanțare</p>
-        <h1 id="funding-hero-title">Fonduri europene pentru firme, ONG-uri și startup-uri</h1>
-        <div className="funding-hero-active-copy">
+        <h1 id="funding-hero-title">Consultanță fonduri europene</h1>
+        <div className="funding-hero-active-copy" key={`funding-copy-${activeIndex}`}>
           <span>{slides[activeIndex].label}</span>
           <h2>{slides[activeIndex].title}</h2>
           <p id="funding-hero-description">{slides[activeIndex].text}</p>
         </div>
         <div className="funding-hero-actions">
-          <Link className="primary-button yellow-button" href="#fonduri-active">Vezi oportunitățile urmărite <ArrowRight aria-hidden="true" /></Link>
-          <Link className="funding-hero-contact" href="/consultanta-fonduri-europene">Vezi serviciul de consultanță</Link>
+          <Link className="primary-button yellow-button" href="#fonduri-active">Vezi programele de finanțare <ArrowRight aria-hidden="true" /></Link>
+          <Link className="funding-hero-contact" href="/consultanta-fonduri-europene">Vezi serviciul complet</Link>
         </div>
         <div className="funding-hero-controls">
-          <button type="button" onClick={() => selectSlide(activeIndex - 1)} aria-label="Imaginea anterioară"><ChevronLeft aria-hidden="true" /></button>
+          <button className="funding-hero-arrow" type="button" onClick={() => selectSlide(activeIndex - 1)} aria-label="Imaginea anterioară"><ChevronLeft aria-hidden="true" /></button>
           <div role="group" aria-label="Alege tipul de investiție prezentat">
             {slides.map((slide, index) => (
               <button
@@ -97,8 +118,9 @@ export function FundingHeroCarousel() {
               />
             ))}
           </div>
-          <button type="button" onClick={() => selectSlide(activeIndex + 1)} aria-label="Imaginea următoare"><ChevronRight aria-hidden="true" /></button>
+          <button className="funding-hero-arrow" type="button" onClick={() => selectSlide(activeIndex + 1)} aria-label="Imaginea următoare"><ChevronRight aria-hidden="true" /></button>
           <button
+            className="funding-hero-pause"
             type="button"
             onClick={() => setManuallyPaused((current) => !current)}
             aria-label={manuallyPaused ? "Pornește rotația automată" : "Oprește rotația automată"}

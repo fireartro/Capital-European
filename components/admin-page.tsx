@@ -3,12 +3,9 @@ import {
   BriefcaseBusiness,
   Building2,
   Check,
-  FileCheck2,
-  FilePenLine,
   Files,
   FolderKanban,
-  Headphones,
-  Network
+  Headphones
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -18,37 +15,52 @@ import { ScrollStarOrbit } from "@/components/scroll-star-orbit";
 import { administrativeFaq } from "@/lib/service-content";
 
 const services = [
-  { icon: FilePenLine, title: "Redactare și procesare documente", text: "Redactăm, formatăm și actualizăm documente după structura și regulile convenite.", benefits: ["Fișiere editabile", "Format consecvent", "Versiuni urmărite"] },
-  { icon: FolderKanban, title: "Administrare documente", text: "Clasificăm, înregistrăm și urmărim documentele într-un circuit ușor de verificat.", benefits: ["Structură coerentă", "Acces controlat", "Trasabilitate"] },
-  { icon: Headphones, title: "Secretariat externalizat", text: "Urmărim corespondența, programările și solicitările recurente după reguli stabilite.", benefits: ["Continuitate", "Escaladare clară", "Evidență centralizată"] },
-  { icon: BriefcaseBusiness, title: "Asistență administrativă", text: "Preluăm centralizări, programări, evidențe și activități recurente de back-office.", benefits: ["Volum ajustabil", "Responsabilități clare", "Raportare periodică"] },
-  { icon: Network, title: "Organizare operațională", text: "Cartografiem fluxurile și stabilim pași, roluri și puncte de verificare ușor de delegat.", benefits: ["Fluxuri documentate", "Roluri definite", "Plan de lucru"] }
-];
-
-const companySteps = [
-  ["1", "Clarificarea opțiunii PFA sau SRL"],
-  ["2", "Centralizarea datelor și documentelor"],
-  ["3", "Verificarea și transmiterea dosarului"],
-  ["4", "Predarea documentelor și pașii următori"]
+  {
+    icon: BriefcaseBusiness,
+    title: "Înființare PFA",
+    text: "Organizăm informațiile despre activitate, sediu și documentele necesare pentru traseul administrativ al unui PFA.",
+    included: ["listă adaptată situației", "verificarea administrativă a dosarului"],
+    href: "/servicii-administrative/infiintare-pfa",
+    linkLabel: "Vezi serviciul PFA"
+  },
+  {
+    icon: Building2,
+    title: "Înființare SRL",
+    text: "Centralizăm datele societății, asociaților, administratorului, sediului și activităților declarate.",
+    included: ["date și documente centralizate", "urmărirea completărilor"],
+    href: "/servicii-administrative/infiintare-srl",
+    linkLabel: "Vezi serviciul SRL"
+  },
+  {
+    icon: FolderKanban,
+    title: "Administrare documente",
+    text: "Înregistrăm, clasificăm și urmărim documentele care necesită aprobare, răspuns sau completare.",
+    included: ["reguli de denumire și predare", "evidența termenelor"],
+    href: "/servicii-administrative/administrare-documente",
+    linkLabel: "Vezi administrarea documentelor"
+  },
+  {
+    icon: Headphones,
+    title: "Secretariat externalizat",
+    text: "Gestionăm corespondența, programările și solicitările recurente după regulile stabilite cu echipa ta.",
+    included: ["răspunsuri și escaladări", "istoricul solicitărilor"],
+    href: "/servicii-administrative/secretariat",
+    linkLabel: "Vezi serviciul de secretariat"
+  },
+  {
+    icon: Files,
+    title: "Asistență administrativă",
+    text: "Preluăm centralizări, actualizări de evidențe și alte activități recurente de back-office.",
+    included: ["volum și termene convenite", "raportarea activităților preluate"],
+    href: "/contact?service=administrativ",
+    linkLabel: "Descrie activitatea"
+  }
 ] as const;
 
-const adminStats = [
-  ["6", "direcții administrative", "PFA/SRL, documente, secretariat, back-office, evidență și procese"],
-  ["4", "pași pentru PFA / SRL", "clarificare, documente, transmitere și predare organizată"],
-  ["1", "flux delegat", "responsabilități, termene și verificări într-un loc clar"],
-  ["3", "puncte urmărite", "documente, termene și comunicare centralizate consecvent"]
-] as const;
-
-const adminWorkflow = [
-  ["Documente", ["redactare și formatare", "centralizare și evidență", "arhivare și trasabilitate"]],
-  ["Comunicare", ["agenda solicitărilor", "răspunsuri recurente", "urmărirea termenelor"]],
-  ["Back-office", ["relația cu furnizorii", "raportări interne", "procese ușor de delegat"]]
-] as const;
-
-const adminConversionSteps = [
-  ["1", "Alegi un flux mic", "Începem cu documente, secretariat sau o zonă administrativă clară."],
-  ["2", "Stabilim regulile", "Definim ce se predă, cine aprobă, cum se verifică și la ce interval."],
-  ["3", "Extindem controlat", "După ce fluxul funcționează, poți adăuga activități fără haos operațional."]
+const collaborationSteps = [
+  ["Inventar", "Stabilim activitățile, volumul, documentele și persoanele care aprobă."],
+  ["Reguli de lucru", "Convenim predarea, termenele, accesul și situațiile care trebuie escaladate."],
+  ["Preluare", "Începem cu activitățile stabilite și ajustăm volumul după munca reală."]
 ] as const;
 
 export function AdminPage() {
@@ -57,24 +69,19 @@ export function AdminPage() {
       <ScrollStarOrbit sectionIds={[
         "admin-hero",
         "servicii-administrative",
-        "repere-administrative",
-        "infiintare-firma",
-        "externalizare-administrativa",
+        "delegare-administrativa",
+        "proces-administrativ",
         "intrebari-administrative"
       ]} />
+
       <section className="inner-hero admin-hero" id="admin-hero" aria-labelledby="admin-hero-title" aria-describedby="admin-hero-description">
         <div className="section-container inner-hero-content">
-          <p className="eyebrow eyebrow-light"><Files /> Servicii administrative externalizate</p>
-          <h1 id="admin-hero-title">Servicii administrative și sprijin pentru <em>PFA / SRL.</em></h1>
-          <p id="admin-hero-description">Te ajutăm cu înființarea unui PFA sau SRL și preluăm documente, secretariat ori activități de back-office în limite și termene stabilite clar.</p>
+          <p className="eyebrow eyebrow-light"><Files aria-hidden="true" /> Servicii administrative</p>
+          <h1 id="admin-hero-title">Activități administrative pe care le poți delega</h1>
+          <p id="admin-hero-description">Oferim sprijin pentru înființarea PFA sau SRL, documente, secretariat și activități recurente de back-office.</p>
           <div className="inner-hero-actions">
-            <a className="primary-button yellow-button" href="/contact?service=servicii-administrative" aria-label="Solicită o ofertă pentru servicii administrative externalizate" title="Solicită ofertă pentru servicii administrative">Solicită o ofertă <ArrowRight aria-hidden="true" /></a>
-            <a className="secondary-link" href="#infiintare-firma" aria-label="Vezi serviciul de înființare PFA sau SRL" title="Vezi înființare PFA sau SRL">Vezi PFA / SRL</a>
-          </div>
-          <div className="hero-proof">
-            <span><Check /> Sprijin pentru PFA sau SRL</span>
-            <span><Check /> Documente și termene urmărite</span>
-            <span><Check /> Reguli clare de predare</span>
+            <Link className="primary-button yellow-button" href="/contact?service=servicii-administrative">Descrie activitatea <ArrowRight aria-hidden="true" /></Link>
+            <a className="secondary-link" href="#servicii-administrative">Vezi serviciile</a>
           </div>
         </div>
       </section>
@@ -83,179 +90,70 @@ export function AdminPage() {
         <div className="section-container">
           <header className="section-title-row">
             <div>
-              <p className="eyebrow"><Files /> Servicii administrative</p>
-              <h2 id="admin-services-title">Alege activitățile administrative pe care vrei să le delegi</h2>
+              <p className="eyebrow"><Files aria-hidden="true" /> Ce putem prelua</p>
+              <h2 id="admin-services-title">Alege serviciul de care ai nevoie</h2>
             </div>
-            <p id="admin-services-description">Poți începe cu un singur flux. Stabilim ce intră în serviciu, cine aprobă și cum se face predarea.</p>
+            <p id="admin-services-description">Fiecare serviciu are o pagină separată. Pentru un caz mixt, descrie activitățile în formular și stabilim ce poate fi grupat.</p>
           </header>
 
-          <section className="visual-story visual-story-admin" id="repere-administrative" aria-labelledby="admin-story-title" aria-describedby="admin-story-description">
-            <div className="visual-story-copy">
-              <p className="eyebrow"><FileCheck2 /> Back-office organizat</p>
-              <h3 id="admin-story-title">Back-office externalizat, cu reguli vizibile</h3>
-              <p id="admin-story-description">Documentele și solicitările sunt urmărite într-un flux cu intrări, aprobări, termene și livrabile convenite.</p>
-              <div className="service-metrics">
-                {adminStats.map(([value, label, detail]) => (
-                  <article key={label}>
-                    <strong>{value}</strong>
-                    <span>{label}</span>
-                    <p>{detail}</p>
-                  </article>
-                ))}
-              </div>
-            </div>
-            <figure className="visual-story-media">
-              <Image
-                src="/images/servicii-administrative-workflow-real.webp"
-                alt="Servicii administrative externalizate cu documente organizate, laptop și flux de lucru"
-                width={1400}
-                height={1050}
-                loading="lazy"
-                sizes="(max-width: 960px) 100vw, 48vw"
-              />
-              <figcaption>
-                <strong>Documente organizate</strong>
-                <span>Structură, responsabilități și termene ușor de verificat.</span>
-              </figcaption>
-            </figure>
-          </section>
-
           <div className="admin-service-grid" aria-describedby="admin-services-description">
-            <article className="company-card" id="infiintare-firma" aria-labelledby="company-setup-title" aria-describedby="company-setup-description">
-              <div className="company-card-copy">
-                <span className="company-label"><Building2 /> PFA sau SRL</span>
-                <h3 id="company-setup-title">Înființare PFA / SRL</h3>
-                <p id="company-setup-description">Organizăm datele, documentele și pașii administrativi pentru forma aleasă. Atunci când decizia cere analiză juridică, contabilă sau fiscală, indicăm clar ce trebuie validat cu un profesionist autorizat.</p>
-                <ul>
-                  <li><Check /> Listă de informații și documente pentru PFA sau SRL</li>
-                  <li><Check /> Verificarea administrativă a dosarului înainte de transmitere</li>
-                  <li><Check /> Urmărirea completărilor și a etapelor comunicate</li>
-                  <li><Check /> Organizarea documentelor după înființare</li>
-                </ul>
-                <div className="company-card-actions">
-                  <Link className="primary-button yellow-button" href="/contact?service=infiintare-firma" title="Solicită sprijin pentru înființarea unui PFA sau SRL">Solicită sprijin <ArrowRight aria-hidden="true" /></Link>
-                  <Link className="company-card-secondary" href="/servicii-administrative/infiintare-pfa-srl">Vezi pașii PFA / SRL</Link>
-                </div>
-              </div>
-              <div className="company-setup-guide">
-                <div className="company-form-options" aria-label="Forme de organizare pentru care oferim sprijin administrativ">
-                  <article>
-                    <strong>PFA</strong>
-                    <p>Pentru activitate independentă, cu un traseu administrativ adaptat situației tale.</p>
-                    <Link href="/servicii-administrative/infiintare-pfa">Vezi pașii pentru PFA <ArrowRight aria-hidden="true" /></Link>
-                  </article>
-                  <article>
-                    <strong>SRL</strong>
-                    <p>Pentru o societate, cu datele asociaților, sediul și documentele organizate coerent.</p>
-                    <Link href="/servicii-administrative/infiintare-srl">Vezi pașii pentru SRL <ArrowRight aria-hidden="true" /></Link>
-                  </article>
-                </div>
-                <ol className="company-steps" aria-label="Pașii pentru înființarea unui PFA sau SRL">
-                  {companySteps.map(([number, label]) => <li key={number}><span>{number}</span><p>{label}</p></li>)}
-                </ol>
-              </div>
-            </article>
-
-            {services.map((service, index) => {
+            {services.map((service) => {
               const Icon = service.icon;
               return (
-                <article className="admin-service-card" key={service.title} aria-labelledby={`admin-service-${index + 1}-title`} aria-describedby={`admin-service-${index + 1}-description`}>
-                  <span className="admin-card-icon"><Icon /></span>
-                  <h3 id={`admin-service-${index + 1}-title`}>{service.title}</h3>
-                  <p id={`admin-service-${index + 1}-description`}>{service.text}</p>
-                  <ul>{service.benefits.map((benefit) => <li key={benefit}><Check /> {benefit}</li>)}</ul>
-                  <a href="/contact?service=servicii-administrative" aria-label={`Solicită detalii despre ${service.title}`} title={`Solicită detalii despre ${service.title}`}>Solicită detalii <ArrowRight aria-hidden="true" /></a>
+                <article className="admin-service-card" key={service.title}>
+                  <span className="admin-card-icon"><Icon aria-hidden="true" /></span>
+                  <h3>{service.title}</h3>
+                  <p>{service.text}</p>
+                  <ul>{service.included.map((item) => <li key={item}><Check aria-hidden="true" /> {item}</li>)}</ul>
+                  <Link href={service.href}>{service.linkLabel} <ArrowRight aria-hidden="true" /></Link>
                 </article>
               );
             })}
           </div>
 
-          <section className="operations-board" aria-labelledby="operations-title" aria-describedby="operations-description">
-            <div className="operations-copy">
-              <p className="eyebrow"><FolderKanban /> Flux operațional</p>
-              <h3 id="operations-title">Activități grupate în fluxuri verificabile</h3>
-              <p id="operations-description">O colaborare bună trebuie să fie ușor de urmărit: ce intră, cine aprobă, ce se predă și când se verifică.</p>
-            </div>
-            <div className="operations-lanes">
-              {adminWorkflow.map(([title, items]) => (
-                <article key={title}>
-                  <h4>{title}</h4>
-                  <ul>
-                    {items.map((item) => <li key={item}><Check /> {item}</li>)}
-                  </ul>
-                </article>
-              ))}
-            </div>
-          </section>
-
-          <section className="conversion-panel admin-conversion-panel" aria-labelledby="admin-conversion-title" aria-describedby="admin-conversion-description">
-            <div className="conversion-copy">
-              <p className="eyebrow"><FileCheck2 /> Delegare controlată</p>
-              <h3 id="admin-conversion-title">Începe cu procesul care consumă cel mai mult timp</h3>
-              <p id="admin-conversion-description">Definim un flux restrâns, îl testăm și îl extindem numai după ce regulile de lucru sunt clare.</p>
-              <a className="primary-button blue-button" href="/contact?service=servicii-administrative" title="Discută despre servicii administrative">Discută despre un flux <ArrowRight aria-hidden="true" /></a>
-            </div>
-            <div className="conversion-steps" aria-label="Pașii pentru delegarea unui flux administrativ">
-              {adminConversionSteps.map(([number, title, text]) => (
-                <article key={number}>
-                  <span>{number}</span>
-                  <h4>{title}</h4>
-                  <p>{text}</p>
-                </article>
-              ))}
+          <section className="admin-delegation-summary" id="delegare-administrativa" aria-labelledby="delegation-title">
+            <figure>
+              <Image
+                src="/images/servicii-administrative-workflow-real.webp"
+                alt="Birou cu documente și instrumente folosite pentru activități administrative"
+                width={1400}
+                height={1050}
+                loading="lazy"
+                sizes="(max-width: 960px) 100vw, 48vw"
+              />
+            </figure>
+            <div>
+              <p className="eyebrow"><FolderKanban aria-hidden="true" /> Limite și responsabilități</p>
+              <h2 id="delegation-title">Ce trebuie stabilit înainte de delegare</h2>
+              <p>Definim ce documente primim, ce putem executa fără aprobare și cine decide în situațiile care depășesc regulile convenite.</p>
+              <ul>
+                <li><Check aria-hidden="true" /> Clientul păstrează deciziile și aprobările.</li>
+                <li><Check aria-hidden="true" /> Accesul este limitat la activitățile contractate.</li>
+                <li><Check aria-hidden="true" /> Serviciile juridice, fiscale și contabile se validează separat.</li>
+              </ul>
             </div>
           </section>
 
-          <section className="semantic-content" id="externalizare-administrativa" aria-labelledby="administrative-content-title">
-            <div className="semantic-content-intro">
-              <p className="eyebrow"><FileCheck2 aria-hidden="true" /> Externalizare administrativă</p>
-              <h2 id="administrative-content-title">Cum funcționează externalizarea administrativă</h2>
-              <p>
-                Activitățile de back-office consumă timp și atenție, chiar dacă nu fac parte din obiectivul principal al companiei.
-                Prin externalizare, documentele, centralizările și solicitările recurente sunt gestionate într-un flux clar, cu
-                responsabilități și termene convenite.
-              </p>
+          <section className="process-block admin-process" id="proces-administrativ" aria-labelledby="admin-process-title">
+            <div className="process-heading">
+              <p className="eyebrow">Colaborarea</p>
+              <h2 id="admin-process-title">Cum începe preluarea activităților</h2>
             </div>
-            <div className="semantic-content-grid">
-              <article>
-                <h3>Ce activități pot fi preluate</h3>
-                <p>Procesare și organizare documente, secretariat, actualizarea evidențelor interne, centralizări, programări și suport administrativ pentru relația cu furnizorii.</p>
-              </article>
-              <article>
-                <h3>Cum începe colaborarea</h3>
-                <p>Cartografiem volumul de lucru, canalele de comunicare și documentele folosite, apoi stabilim un proces, un calendar și puncte de verificare ușor de urmărit.</p>
-              </article>
-              <article>
-                <h3>Ce rămâne sub controlul companiei</h3>
-                <p>Deciziile, aprobările și accesul la informații sensibile rămân la client. Activitățile delegate sunt executate în limitele și regulile convenite.</p>
-              </article>
-            </div>
+            <ol className="plain-process-list">
+              {collaborationSteps.map(([title, text]) => <li key={title}><h3>{title}</h3><p>{text}</p></li>)}
+            </ol>
           </section>
 
           <ServiceFaq
             id="intrebari-administrative"
-            title="Răspunsuri despre serviciile administrative."
-            description="Clarificări despre externalizare, documente, confidențialitate și modul de colaborare."
+            title="Întrebări despre serviciile administrative"
+            description="Răspunsuri despre activități, confidențialitate și modul de colaborare."
             items={administrativeFaq}
           />
 
-          <section className="seo-related-section" aria-labelledby="admin-guides-title">
-            <p className="eyebrow">Servicii detaliate</p>
-            <h2 id="admin-guides-title">Vezi în detaliu serviciul de care ai nevoie</h2>
-            <div className="seo-related-links">
-              <Link href="/servicii-administrative/infiintare-pfa-srl"><span><strong>Înființare PFA / SRL</strong><small>Pașii, documentele și sprijinul administrativ pentru forma aleasă.</small></span><ArrowRight aria-hidden="true" /></Link>
-              <Link href="/servicii-administrative/secretariat"><span><strong>Secretariat externalizat</strong><small>Corespondență, programări și solicitări urmărite.</small></span><ArrowRight aria-hidden="true" /></Link>
-              <Link href="/servicii-administrative/administrare-documente"><span><strong>Administrare documente</strong><small>Clasificare, evidență și responsabilități clare.</small></span><ArrowRight aria-hidden="true" /></Link>
-              <Link href="/contact?service=servicii-administrative"><span><strong>Discută un flux administrativ</strong><small>Descrie activitatea, volumul și termenul urmărit.</small></span><ArrowRight aria-hidden="true" /></Link>
-            </div>
-          </section>
-
           <section className="section-cta admin-cta" aria-labelledby="admin-cta-title">
-            <div><p>Ai un proces administrativ care consumă prea mult timp?</p><h3 id="admin-cta-title">Descrie activitatea, volumul și termenul. Îți spunem ce poate fi preluat.</h3></div>
-            <div className="section-cta-actions">
-              <Link className="primary-button yellow-button" href="/contact?service=servicii-administrative" aria-label="Solicită o ofertă pentru servicii administrative" title="Solicită ofertă servicii administrative">Solicită o ofertă <ArrowRight aria-hidden="true" /></Link>
-              <Link className="section-cta-secondary" href="/servicii-administrative/infiintare-pfa-srl">Vezi înființare PFA / SRL</Link>
-            </div>
+            <div><p>Ai o activitate administrativă de delegat?</p><h2 id="admin-cta-title">Spune-ne ce presupune și cât de des apare.</h2></div>
+            <Link className="primary-button yellow-button" href="/contact?service=servicii-administrative">Trimite solicitarea <ArrowRight aria-hidden="true" /></Link>
           </section>
         </div>
       </section>

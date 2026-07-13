@@ -1,11 +1,22 @@
 import { z } from "zod";
 
 const fundingServices = new Set(["consultanta", "fonduri-europene"]);
+const administrativeServices = new Set([
+  "servicii-administrative",
+  "documente",
+  "secretariat",
+  "administrativ",
+  "infiintare-firma",
+  "infiintare-pfa",
+  "infiintare-srl"
+]);
 
-export type ContactCategory = "fonduri-europene" | "servicii-administrative";
+export type ContactCategory = "fonduri-europene" | "servicii-administrative" | "general";
 
 export function contactCategoryForService(service: string): ContactCategory {
-  return fundingServices.has(service) ? "fonduri-europene" : "servicii-administrative";
+  if (fundingServices.has(service)) return "fonduri-europene";
+  if (administrativeServices.has(service)) return "servicii-administrative";
+  return "general";
 }
 
 const cleanText = (maximum: number) =>
@@ -22,15 +33,19 @@ export const contactSchema = z.object({
   phone: z
     .string()
     .trim()
-    .regex(/^[+0-9()\s.-]{7,24}$/, "Introdu un număr de telefon valid."),
-  category: z.enum(["fonduri-europene", "servicii-administrative"]).optional(),
+    .max(24, "Folosește maximum 24 de caractere.")
+    .refine((value) => value === "" || /^[+0-9()\s.-]{7,24}$/.test(value), "Introdu un număr de telefon valid."),
+  category: z.enum(["fonduri-europene", "servicii-administrative", "general"]).optional(),
   service: z.enum([
+    "nesigur",
     "servicii-administrative",
     "documente",
     "secretariat",
     "administrativ",
     "consultanta",
     "infiintare-firma",
+    "infiintare-pfa",
+    "infiintare-srl",
     "fonduri-europene"
   ]),
   fundingProgram: z.string().trim().max(180).optional().default(""),

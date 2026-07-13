@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Check, LoaderCircle, Send } from "lucide-react";
+import { BriefcaseBusiness, Check, Landmark, LoaderCircle, Send } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { contactCategoryForService, contactSchema, type ContactCategory, type ContactInput } from "@/lib/contact-schema";
@@ -9,24 +9,20 @@ import { fundingProgramOptions } from "@/lib/funding-programs";
 import { siteConfig } from "@/lib/site-config";
 import { trackAnalyticsEvent } from "@/lib/analytics";
 
-const servicesByCategory = {
-  "fonduri-europene": [
-    ["fonduri-europene", "Consultanță pentru fonduri europene"],
-    ["consultanta", "Analiză sau consultanță de proiect"]
-  ],
-  "servicii-administrative": [
-    ["servicii-administrative", "Pachet de servicii administrative"],
-    ["documente", "Administrare documente"],
-    ["secretariat", "Secretariat externalizat"],
-    ["administrativ", "Asistență administrativă"],
-    ["infiintare-firma", "Înființare PFA / SRL"]
-  ]
-} as const;
+type FormCategory = Exclude<ContactCategory, "general">;
 
-const formTrust = [
-  "Este suficientă o descriere scurtă pentru primul contact.",
-  "Nu este necesar să trimiți documente sensibile prin formular.",
-  "Solicitarea este verificată înainte de ofertare."
+const fundingServiceOptions: ReadonlyArray<[ContactInput["service"], string]> = [
+  ["fonduri-europene", "Fonduri europene: eligibilitate și proiect"],
+  ["consultanta", "Consultanță pentru pregătire și implementare"]
+] as const;
+
+const administrativeServiceOptions: ReadonlyArray<[ContactInput["service"], string]> = [
+  ["servicii-administrative", "Servicii administrative"],
+  ["infiintare-pfa", "Înființare PFA"],
+  ["infiintare-srl", "Înființare SRL"],
+  ["documente", "Administrare documente"],
+  ["secretariat", "Secretariat externalizat"],
+  ["administrativ", "Asistență administrativă"]
 ] as const;
 
 export function ContactForm({
@@ -38,7 +34,13 @@ export function ContactForm({
   defaultFundingProgram?: string;
   defaultMessage?: string;
 }) {
-  const defaultCategory = contactCategoryForService(defaultService);
+  const requestedCategory = contactCategoryForService(defaultService);
+  const initialCategory: FormCategory = requestedCategory === "servicii-administrative"
+    ? "servicii-administrative"
+    : "fonduri-europene";
+  const initialService: ContactInput["service"] = requestedCategory === "general"
+    ? "fonduri-europene"
+    : defaultService;
   const [serverMessage, setServerMessage] = useState("");
   const [sent, setSent] = useState(false);
   const [demoMode, setDemoMode] = useState(false);
@@ -52,30 +54,38 @@ export function ContactForm({
   } = useForm<ContactInput>({
     resolver: zodResolver(contactSchema),
     defaultValues: {
-      category: defaultCategory,
-      service: defaultService,
+      name: "",
+      email: "",
+      phone: "",
+      category: initialCategory,
+      service: initialService,
       fundingProgram: defaultFundingProgram,
       message: defaultMessage,
       consent: false,
       website: ""
     }
   });
-  const category = (useWatch({ control, name: "category" }) ?? defaultCategory) as ContactCategory;
-  const selectedService = useWatch({ control, name: "service" });
-  const availableServices = servicesByCategory[category];
+  const selectedCategory = (useWatch({ control, name: "category" }) ?? initialCategory) as FormCategory;
+  const selectedService = useWatch({ control, name: "service" }) ?? initialService;
+  const isFundingService = selectedService === "fonduri-europene" || selectedService === "consultanta";
+  const serviceOptions = selectedCategory === "fonduri-europene"
+    ? fundingServiceOptions
+    : administrativeServiceOptions;
+
+  const selectCategory = (category: FormCategory) => {
+    setValue("category", category, { shouldDirty: true, shouldValidate: true });
+    setValue(
+      "service",
+      category === "fonduri-europene" ? "fonduri-europene" : "servicii-administrative",
+      { shouldDirty: true, shouldValidate: true }
+    );
+  };
 
   useEffect(() => {
-    const serviceIsAvailable = availableServices.some(([value]) => value === selectedService);
-    if (!serviceIsAvailable) {
-      setValue("service", availableServices[0][0], { shouldValidate: true });
-    }
-  }, [availableServices, selectedService, setValue]);
-
-  useEffect(() => {
-    if (category !== "fonduri-europene") {
+    if (!isFundingService) {
       setValue("fundingProgram", "");
     }
-  }, [category, setValue]);
+  }, [isFundingService, setValue]);
 
   const submit = async (data: ContactInput) => {
     setServerMessage("");
@@ -91,14 +101,17 @@ export function ContactForm({
       setDemoMode(Boolean(result.demo));
       trackAnalyticsEvent("generate_lead", {
         lead_source: "contact_form",
-        service_category: data.category,
+        service_category: contactCategoryForService(data.service),
         service: data.service,
         funding_program: data.fundingProgram || undefined
       });
       setSent(true);
       reset({
-        category: defaultCategory,
-        service: defaultService,
+        name: "",
+        email: "",
+        phone: "",
+        category: initialCategory,
+        service: initialService,
         fundingProgram: defaultFundingProgram,
         message: defaultMessage,
         consent: false,
@@ -115,7 +128,7 @@ export function ContactForm({
         <span><Check /></span>
         <p className="kicker">Solicitare înregistrată</p>
         <h2>Solicitarea a fost înregistrată.</h2>
-        <p>{demoMode ? "Formularul funcționează în modul de test. Configurează CONTACT_WEBHOOK_URL pentru livrarea solicitărilor reale." : `${siteConfig.name} va reveni pentru clarificarea situației și a următorilor pași.`}</p>
+        <p>{demoMode ? "Solicitarea a fost validată în mediul local de test." : `${siteConfig.name} va reveni pentru clarificarea situației și a următorilor pași.`}</p>
         <button className="button button-dark" type="button" onClick={() => setSent(false)}>
           Trimite o altă solicitare
         </button>
@@ -126,39 +139,60 @@ export function ContactForm({
   return (
     <form className="contact-form" onSubmit={handleSubmit(submit)} aria-busy={isSubmitting} noValidate>
       <div className="form-heading">
-        <p className="kicker">Solicitare inițială</p>
-        <h2>Spune-ne de ce serviciu ai nevoie</h2>
-        <p className="form-intro">Completează informațiile esențiale. Nu trebuie să ai dosarul sau toate documentele pregătite.</p>
+        <p className="kicker">Formular de contact</p>
+        <h2>Spune-ne pe scurt cu ce te putem ajuta</h2>
+        <p className="form-intro">Sunt suficiente informațiile pe care le ai acum. Nu trimite documente sensibile prin formular.</p>
       </div>
-      <ul className="form-trust-list" aria-label="Ce se întâmplă cu solicitarea trimisă">
-        {formTrust.map((item) => <li key={item}><Check aria-hidden="true" /> {item}</li>)}
-      </ul>
       <div className="form-service-path">
+        <fieldset className="form-category-choice">
+          <legend>Alege direcția</legend>
+          <div className="form-category-options">
+            <label data-selected={selectedCategory === "fonduri-europene"}>
+              <input
+                type="radio"
+                value="fonduri-europene"
+                {...register("category")}
+                onClick={() => selectCategory("fonduri-europene")}
+              />
+              <span><Landmark aria-hidden="true" /><strong>Consultanță fonduri europene</strong></span>
+            </label>
+            <label data-selected={selectedCategory === "servicii-administrative"}>
+              <input
+                type="radio"
+                value="servicii-administrative"
+                {...register("category")}
+                onClick={() => selectCategory("servicii-administrative")}
+              />
+              <span><BriefcaseBusiness aria-hidden="true" /><strong>Servicii administrative</strong></span>
+            </label>
+          </div>
+          {errors.category && <small>{errors.category.message}</small>}
+        </fieldset>
         <label>
-          <span>Categoria serviciului</span>
-          <select required {...register("category")}>
-            <option value="fonduri-europene">Fonduri europene</option>
-            <option value="servicii-administrative">Servicii administrative</option>
-          </select>
-        </label>
-        <label>
-          <span>Serviciu de interes</span>
+          <span>Ce serviciu te interesează</span>
           <select required {...register("service")} aria-invalid={!!errors.service} aria-describedby={errors.service ? "service-error" : undefined}>
-            {availableServices.map(([value, label]) => <option key={value} value={value}>{label}</option>)}
+            {serviceOptions.map(([value, label]) => <option key={value} value={value}>{label}</option>)}
           </select>
           {errors.service && <small id="service-error">{errors.service.message}</small>}
         </label>
-        {category === "fonduri-europene" && (
-          <label className="funding-program-field">
-            <span>Linia de finanțare</span>
-            <select {...register("fundingProgram")}>
-              <option value="">Selectează linia de finanțare</option>
-              {fundingProgramOptions.map((option) => (
-                <option key={option.value} value={option.value}>{option.label}</option>
-              ))}
-            </select>
-          </label>
-        )}
+        <div className="form-dependent-slot" aria-live="polite">
+          {isFundingService ? (
+            <label className="funding-program-field">
+              <span>Linia de finanțare, dacă o cunoști</span>
+              <select {...register("fundingProgram")}>
+                <option value="">Nu știu încă / nu apare în listă</option>
+                {fundingProgramOptions.map((option) => (
+                  <option key={option.value} value={option.value}>{option.label}</option>
+                ))}
+              </select>
+            </label>
+          ) : (
+            <div className="form-context-note">
+              <strong>Servicii administrative</strong>
+              <span>Alege serviciul și descrie situația în câmpul „Mesaj”.</span>
+            </div>
+          )}
+        </div>
       </div>
       <div className="form-grid">
         <label>
@@ -172,13 +206,13 @@ export function ContactForm({
           {errors.email && <small id="email-error">{errors.email.message}</small>}
         </label>
         <label>
-          <span>Telefon</span>
-          <input type="tel" autoComplete="tel" placeholder="07xx xxx xxx" maxLength={24} required {...register("phone")} aria-invalid={!!errors.phone} aria-describedby={errors.phone ? "phone-error" : undefined} />
+          <span>Telefon <small>(opțional)</small></span>
+          <input type="tel" autoComplete="tel" placeholder="07xx xxx xxx" maxLength={24} {...register("phone")} aria-invalid={!!errors.phone} aria-describedby={errors.phone ? "phone-error" : undefined} />
           {errors.phone && <small id="phone-error">{errors.phone.message}</small>}
         </label>
         <label className="full-field">
           <span>Mesaj</span>
-          <textarea placeholder="Descrie obiectivul, situația actuală și termenul relevant..." maxLength={2000} required {...register("message")} aria-invalid={!!errors.message} aria-describedby={errors.message ? "message-error" : undefined} />
+          <textarea placeholder="Ce vrei să rezolvi și în ce stadiu te afli?" maxLength={2000} required {...register("message")} aria-invalid={!!errors.message} aria-describedby={errors.message ? "message-error" : undefined} />
           {errors.message && <small id="message-error">{errors.message.message}</small>}
         </label>
         <label className="honeypot" aria-hidden="true">
@@ -188,7 +222,7 @@ export function ContactForm({
       </div>
       <label className="consent">
         <input type="checkbox" {...register("consent")} required aria-invalid={!!errors.consent} aria-describedby={errors.consent ? "consent-error" : undefined} />
-        <span>Confirm că am citit <a href="/confidentialitate" title="Politica de confidențialitate Capital European">politica de confidențialitate</a> și înțeleg cum sunt folosite datele pentru soluționarea solicitării.</span>
+        <span>Am citit <a href="/confidentialitate" title="Politica de confidențialitate Capital European">politica de confidențialitate</a> și sunt de acord cu folosirea datelor pentru a primi răspuns.</span>
       </label>
       {errors.consent && <small className="standalone-error" id="consent-error">{errors.consent.message}</small>}
       {serverMessage && <p className="server-error" role="alert" aria-live="polite">{serverMessage}</p>}
@@ -196,7 +230,7 @@ export function ContactForm({
         {isSubmitting ? <LoaderCircle className="spin" aria-hidden="true" /> : <Send aria-hidden="true" />}
         {isSubmitting ? "Se trimite..." : "Trimite solicitarea"}
       </button>
-      <p className="form-note">După trimitere, verificăm solicitarea și revenim pentru clarificări. Formularul nu creează o obligație contractuală.</p>
+      <p className="form-note">Revenim pentru clarificări înainte de orice ofertă. Trimiterea formularului nu creează obligații contractuale.</p>
     </form>
   );
 }
