@@ -96,7 +96,7 @@ export async function getGoogleBusinessReviews(): Promise<GoogleBusinessReviews 
 
   try {
     const fields = ["displayName", "rating", "userRatingCount", "googleMapsUri", "reviews"].join(",");
-    const query = new URLSearchParams({ fields, languageCode: "ro", regionCode: "RO" });
+    const query = new URLSearchParams({ $fields: fields, languageCode: "ro", regionCode: "RO" });
     const response = await fetch(`https://places.googleapis.com/v1/places/${encodeURIComponent(placeId)}?${query}`, {
       headers: {
         "X-Goog-Api-Key": apiKey
