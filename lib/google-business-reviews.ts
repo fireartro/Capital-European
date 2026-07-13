@@ -32,6 +32,11 @@ function getNumber(value: unknown) {
   return typeof value === "number" && Number.isFinite(value) ? value : 0;
 }
 
+function getLocalizedText(value: unknown) {
+  if (typeof value === "string") return value.trim();
+  return isRecord(value) ? getText(value.text) : "";
+}
+
 function getHttpsUrl(value: unknown, fallback: string) {
   const candidate = getText(value);
   return /^https:\/\//i.test(candidate) ? candidate : fallback;
@@ -52,11 +57,7 @@ function getGoogleAvatarUrl(value: unknown) {
 function parseReview(value: unknown): GoogleBusinessReview | null {
   if (!isRecord(value)) return null;
 
-  const textValue = isRecord(value.originalText)
-    ? getText(value.originalText.text)
-    : isRecord(value.text)
-      ? getText(value.text.text)
-      : "";
+  const textValue = getLocalizedText(value.originalText) || getLocalizedText(value.text);
 
   if (!textValue) return null;
 
@@ -94,17 +95,11 @@ export async function getGoogleBusinessReviews(): Promise<GoogleBusinessReviews 
   if (!apiKey || !placeId) return null;
 
   try {
-    const query = new URLSearchParams({ languageCode: "ro", regionCode: "RO" });
+    const fields = ["displayName", "rating", "userRatingCount", "googleMapsUri", "reviews"].join(",");
+    const query = new URLSearchParams({ fields, languageCode: "ro", regionCode: "RO" });
     const response = await fetch(`https://places.googleapis.com/v1/places/${encodeURIComponent(placeId)}?${query}`, {
       headers: {
-        "X-Goog-Api-Key": apiKey,
-        "X-Goog-FieldMask": [
-        "displayName",
-        "rating",
-        "userRatingCount",
-        "googleMapsUri",
-        "reviews"
-        ].join(",")
+        "X-Goog-Api-Key": apiKey
       },
       next: { revalidate: 300, tags: ["google-business-reviews"] }
     });
