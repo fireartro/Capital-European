@@ -1,4 +1,3 @@
-import { createHash } from "node:crypto";
 import { NextResponse } from "next/server";
 
 type JsonRecord = Record<string, unknown>;
@@ -7,12 +6,14 @@ function isRecord(value: unknown): value is JsonRecord {
   return typeof value === "object" && value !== null;
 }
 
-function fingerprint(value: string) {
-  return createHash("sha256").update(value).digest("hex").slice(0, 12);
+async function fingerprint(value: string) {
+  const bytes = new TextEncoder().encode(value);
+  const digest = await crypto.subtle.digest("SHA-256", bytes);
+  return Array.from(new Uint8Array(digest), (byte) => byte.toString(16).padStart(2, "0")).join("").slice(0, 12);
 }
 
 export const dynamic = "force-dynamic";
-export const preferredRegion = "fra1";
+export const runtime = "edge";
 
 export async function GET() {
   const apiKey = process.env.GOOGLE_PLACES_API_KEY?.trim() ?? "";
@@ -42,8 +43,8 @@ export async function GET() {
 
   return NextResponse.json({
     configured: true,
-    keyFingerprint: fingerprint(apiKey),
-    placeFingerprint: fingerprint(placeId),
+    keyFingerprint: await fingerprint(apiKey),
+    placeFingerprint: await fingerprint(placeId),
     googleStatus: response.status,
     contentType: response.headers.get("content-type"),
     payloadKeys: Object.keys(record),
