@@ -1,8 +1,5 @@
-"use client";
-
 import { MessageCircleHeart, Star } from "lucide-react";
 import Image from "next/image";
-import { useEffect, useState } from "react";
 import type { GoogleBusinessReview, GoogleBusinessReviews } from "@/lib/google-business-reviews";
 import { siteConfig } from "@/lib/site-config";
 
@@ -21,7 +18,7 @@ type ReviewMarqueeItem =
 function ReviewItem({ review, hidden = false }: { review: GoogleBusinessReview; hidden?: boolean }) {
   return (
     <article className="google-review-card" aria-hidden={hidden || undefined}>
-      <span className="google-stars google-review-stars" aria-label={`${review.rating} din 5 stele`}>
+      <span className="google-stars google-review-stars" role="img" aria-label={`${review.rating} din 5 stele`}>
         {Array.from({ length: 5 }, (_, starIndex) => <Star key={starIndex} fill={starIndex < review.rating ? "currentColor" : "none"} />)}
       </span>
       <blockquote>{review.text}</blockquote>
@@ -60,45 +57,8 @@ type GoogleReviewsSectionClientProps = {
   variant?: "default" | "split" | "compact";
 };
 
-function isGoogleBusinessReviews(value: unknown): value is GoogleBusinessReviews {
-  if (typeof value !== "object" || value === null) return false;
-
-  const candidate = value as Partial<GoogleBusinessReviews>;
-  return typeof candidate.name === "string"
-    && typeof candidate.rating === "number"
-    && typeof candidate.reviewCount === "number"
-    && typeof candidate.mapsUrl === "string"
-    && Array.isArray(candidate.reviews);
-}
-
 export function GoogleReviewsSectionClient({ initialData, variant = "default" }: GoogleReviewsSectionClientProps) {
-  const [data, setData] = useState(initialData);
-
-  useEffect(() => {
-    const controller = new AbortController();
-
-    async function refreshFromNearestEdge() {
-      try {
-        const response = await fetch("/api/google-reviews", {
-          cache: "no-store",
-          signal: controller.signal
-        });
-
-        if (!response.ok) return;
-
-        const payload: unknown = await response.json();
-        if (typeof payload !== "object" || payload === null || !("data" in payload)) return;
-
-        const nextData = (payload as { data?: unknown }).data;
-        if (isGoogleBusinessReviews(nextData)) setData(nextData);
-      } catch {
-        // Keep the server-rendered rating if the visitor is offline or Google is unavailable.
-      }
-    }
-
-    void refreshFromNearestEdge();
-    return () => controller.abort();
-  }, []);
+  const data = initialData;
 
   if (!data) {
     const fallbackClassName = variant === "split"
@@ -177,7 +137,7 @@ export function GoogleReviewsSectionClient({ initialData, variant = "default" }:
           <h2 id="google-reviews-title">Ce spun clienții</h2>
         </header>
 
-        <div className="google-reviews-marquee" aria-label={`Evaluare Google: ${formatRating(data.rating)} din 5, din ${reviewLabel(data.reviewCount)}`}>
+        <div className="google-reviews-marquee" role="group" aria-label={`Evaluare Google: ${formatRating(data.rating)} din 5, din ${reviewLabel(data.reviewCount)}`}>
           <div className="google-reviews-track">
             {[false, true].map((duplicate) => (
               <div className="google-reviews-group" aria-hidden={duplicate || undefined} key={duplicate ? "duplicate" : "source"}>

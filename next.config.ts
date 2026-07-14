@@ -46,7 +46,13 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   compress: true,
   reactStrictMode: true,
+  experimental: {
+    inlineCss: true,
+    optimizePackageImports: ["lucide-react"]
+  },
   images: {
+    formats: ["image/avif", "image/webp"],
+    qualities: [55, 75],
     remotePatterns: [
       { protocol: "https", hostname: "lh3.googleusercontent.com" },
       { protocol: "https", hostname: "*.public.blob.vercel-storage.com" }

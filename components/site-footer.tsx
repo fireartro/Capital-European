@@ -56,7 +56,6 @@ export function SiteFooter({ showCookieSettings = true }: { showCookieSettings?:
                   key={location.label}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={`${location.label}, ${location.address}. Deschide în Google Maps.`}
                   title={`Deschide ${location.address} în Google Maps`}
                 >
                   <MapPin aria-hidden="true" />
