@@ -2,6 +2,7 @@ import { MessageCircleHeart, Star } from "lucide-react";
 import Image from "next/image";
 import type { GoogleBusinessReview, GoogleBusinessReviews } from "@/lib/google-business-reviews";
 import { siteConfig } from "@/lib/site-config";
+import { TrackedAnchor } from "@/components/tracked-anchor";
 
 function formatRating(value: number) {
   return new Intl.NumberFormat("ro-RO", { minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(value);
@@ -73,9 +74,9 @@ export function GoogleReviewsSectionClient({ initialData, variant = "default" }:
             <p className="eyebrow"><MessageCircleHeart aria-hidden="true" /> Recenzii Google</p>
             <h2 id="google-reviews-title">Ce spun clienții</h2>
           </div>
-          <a href={siteConfig.googleBusiness.url} target="_blank" rel="noopener noreferrer" title="Vezi recenziile Capital European pe Google">
+          <TrackedAnchor eventName="review_click" eventParameters={{ placement: variant }} href={siteConfig.googleBusiness.url} target="_blank" rel="noopener noreferrer" title="Vezi recenziile Capital European pe Google">
             Vezi toate recenziile pe Google
-          </a>
+          </TrackedAnchor>
         </div>
       </section>
     );
@@ -97,7 +98,7 @@ export function GoogleReviewsSectionClient({ initialData, variant = "default" }:
               <cite>{review.author}</cite>
             </blockquote>
           )}
-          <a href={data.mapsUrl} target="_blank" rel="noopener noreferrer">Vezi recenziile pe Google</a>
+          <TrackedAnchor eventName="review_click" eventParameters={{ placement: "compact" }} href={data.mapsUrl} target="_blank" rel="noopener noreferrer">Vezi recenziile pe Google</TrackedAnchor>
         </div>
       </section>
     );
@@ -114,7 +115,7 @@ export function GoogleReviewsSectionClient({ initialData, variant = "default" }:
           <div className="google-reviews-rating-only">
             <RatingItem rating={data.rating} reviewCount={data.reviewCount} />
           </div>
-          <a className="google-reviews-all-link" href={data.mapsUrl} target="_blank" rel="noopener noreferrer">Citește recenzia pe Google</a>
+          <TrackedAnchor eventName="review_click" eventParameters={{ placement: variant }} className="google-reviews-all-link" href={data.mapsUrl} target="_blank" rel="noopener noreferrer">Citește recenzia pe Google</TrackedAnchor>
         </div>
       </section>
     );
@@ -160,7 +161,7 @@ export function GoogleReviewsSectionClient({ initialData, variant = "default" }:
           </div>
         </div>
 
-        <a className="google-reviews-all-link" href={data.mapsUrl} target="_blank" rel="noopener noreferrer" title="Vezi toate recenziile Capital European pe Google">Vezi toate recenziile pe Google</a>
+        <TrackedAnchor eventName="review_click" eventParameters={{ placement: variant }} className="google-reviews-all-link" href={data.mapsUrl} target="_blank" rel="noopener noreferrer" title="Vezi toate recenziile Capital European pe Google">Vezi toate recenziile pe Google</TrackedAnchor>
       </div>
     </section>
   );

@@ -5,6 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import type { FundingProgram } from "@/lib/funding-programs";
+import { AnalyticsLink } from "@/components/analytics-link";
+import { trackAnalyticsEvent } from "@/lib/analytics";
 
 const INITIAL_PROGRAM_COUNT = 3;
 
@@ -42,8 +44,8 @@ export function FundingProgramList({ programs }: { programs: readonly FundingPro
                 <div><dt>Arie</dt><dd>{program.region}</dd></div>
               </dl>
               <div className="funding-program-actions">
-                <Link href={`/contact?service=fonduri-europene&program=${program.id}`}>Sunt interesat <ArrowRight aria-hidden="true" /></Link>
-                <a href={program.sourceUrl} target="_blank" rel="noopener noreferrer">Portal oficial <ExternalLink aria-hidden="true" /></a>
+                <AnalyticsLink eventName="select_program" eventParameters={{ program_id: program.id, program_name: program.title }} href={`/contact?service=fonduri-europene&program=${program.id}`}>Sunt interesat <ArrowRight aria-hidden="true" /></AnalyticsLink>
+                <a href={program.sourceUrl} target="_blank" rel="noopener noreferrer" onClick={() => trackAnalyticsEvent("program_source_click", { program_id: program.id, program_name: program.title })}>Portal oficial <ExternalLink aria-hidden="true" /></a>
               </div>
             </div>
           </article>
@@ -60,7 +62,11 @@ export function FundingProgramList({ programs }: { programs: readonly FundingPro
         <button
           className="funding-program-list-toggle"
           type="button"
-          onClick={() => setExpanded((current) => !current)}
+          onClick={() => setExpanded((current) => {
+            const next = !current;
+            if (next) trackAnalyticsEvent("program_view", { visible_programs: programs.length });
+            return next;
+          })}
           aria-controls="funding-program-list"
           aria-expanded={expanded}
         >

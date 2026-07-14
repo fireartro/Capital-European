@@ -18,7 +18,6 @@ export default function Page() {
         breadcrumbSchema([
           { name: "Acasă", path: "/" },
           { name: "Servicii administrative", path: "/servicii-administrative" },
-          { name: page.parent.label, path: page.parent.href },
           { name: page.title, path: page.path }
         ]),
         serviceSchema({ name: page.title, description: page.metaDescription, path: page.path, serviceType: page.serviceType }),

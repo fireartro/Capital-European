@@ -96,6 +96,17 @@ export function AdminPage() {
             <p id="admin-services-description">Fiecare serviciu are o pagină separată. Pentru un caz mixt, descrie activitățile în formular și stabilim ce poate fi grupat.</p>
           </header>
 
+          <aside className="admin-company-setup" aria-labelledby="admin-company-setup-title">
+            <div>
+              <p className="eyebrow">Înființare firmă</p>
+              <h3 id="admin-company-setup-title">Nu știi încă dacă ai nevoie de PFA sau SRL?</h3>
+              <p>Compară traseele administrative, apoi intră pe pagina dedicată formei pe care vrei să o pregătești.</p>
+            </div>
+            <Link href="/servicii-administrative/infiintare-firma">
+              Compară PFA și SRL <ArrowRight aria-hidden="true" />
+            </Link>
+          </aside>
+
           <div className="admin-service-grid" aria-describedby="admin-services-description">
             {services.map((service) => {
               const Icon = service.icon;

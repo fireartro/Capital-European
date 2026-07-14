@@ -4,6 +4,7 @@ import { FooterMap } from "@/components/footer-map";
 import { siteConfig } from "@/lib/site-config";
 import { ExternalLink, MapPin } from "lucide-react";
 import Link from "next/link";
+import { TrackedAnchor } from "@/components/tracked-anchor";
 
 export function SiteFooter({ showCookieSettings = true }: { showCookieSettings?: boolean }) {
   return (
@@ -22,6 +23,7 @@ export function SiteFooter({ showCookieSettings = true }: { showCookieSettings?:
         <div>
           <h3>Servicii administrative</h3>
           <Link href="/servicii-administrative">Servicii administrative</Link>
+          <Link href="/servicii-administrative/infiintare-firma">Înființare firmă</Link>
           <Link href="/servicii-administrative/infiintare-pfa">Înființare PFA</Link>
           <Link href="/servicii-administrative/infiintare-srl">Înființare SRL</Link>
           <Link href="/servicii-administrative/administrare-documente">Administrare documente</Link>
@@ -32,13 +34,13 @@ export function SiteFooter({ showCookieSettings = true }: { showCookieSettings?:
           <Link href="/anunturi">Anunțuri</Link>
           <Link href="/despre">Despre Capital European</Link>
           <Link href="/intrebari">Întrebări frecvente</Link>
-          <a href={siteConfig.googleBusiness.url} target="_blank" rel="noopener noreferrer" title="Vezi profilul Capital European pe Google">Profil Google Business</a>
+          <TrackedAnchor eventName="google_business_click" eventParameters={{ placement: "footer" }} href={siteConfig.googleBusiness.url} target="_blank" rel="noopener noreferrer" title="Vezi profilul Capital European pe Google">Profil Google Business</TrackedAnchor>
         </div>
         <div className="footer-contact-column">
           <h3>Contact</h3>
           <Link href="/contact">Formular de contact</Link>
-          {siteConfig.phoneHref && <a href={`tel:${siteConfig.phoneHref}`} title={`Sună ${siteConfig.name}`}>{siteConfig.phoneDisplay}</a>}
-          <a href={`mailto:${siteConfig.email}`} title={`Trimite email către ${siteConfig.name}`}>{siteConfig.email}</a>
+          {siteConfig.phoneHref && <TrackedAnchor eventName="click_phone" eventParameters={{ placement: "footer" }} href={`tel:${siteConfig.phoneHref}`} title={`Sună ${siteConfig.name}`}>{siteConfig.phoneDisplay}</TrackedAnchor>}
+          <TrackedAnchor eventName="click_email" eventParameters={{ placement: "footer" }} href={`mailto:${siteConfig.email}`} title={`Trimite email către ${siteConfig.name}`}>{siteConfig.email}</TrackedAnchor>
           {siteConfig.schedule && <span>Program: {siteConfig.schedule}</span>}
           {siteConfig.legal.entityName && <span>{siteConfig.legal.entityName}{siteConfig.legal.taxId ? ` · CUI ${siteConfig.legal.taxId}` : ""}</span>}
         </div>
@@ -51,8 +53,10 @@ export function SiteFooter({ showCookieSettings = true }: { showCookieSettings?:
             <p>Alege locația potrivită și deschide direct indicațiile în Google Maps.</p>
             <div className="footer-location-links">
               {siteConfig.locations.map((location) => (
-                <a
+                <TrackedAnchor
                   href={location.mapsUrl}
+                  eventName="location_click"
+                  eventParameters={{ location_name: location.label }}
                   key={location.label}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -61,7 +65,7 @@ export function SiteFooter({ showCookieSettings = true }: { showCookieSettings?:
                   <MapPin aria-hidden="true" />
                   <span><strong>{location.label}</strong><small>{location.address}</small></span>
                   <ExternalLink aria-hidden="true" />
-                </a>
+                </TrackedAnchor>
               ))}
             </div>
           </div>

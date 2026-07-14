@@ -83,13 +83,8 @@ const nextConfig: NextConfig = {
         permanent: true
       },
       {
-        source: "/servicii-administrative/infiintare-firma",
-        destination: "/servicii-administrative",
-        permanent: true
-      },
-      {
         source: "/infiintare-firma",
-        destination: "/servicii-administrative",
+        destination: "/servicii-administrative/infiintare-firma",
         permanent: true
       },
       {

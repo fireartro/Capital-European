@@ -47,6 +47,7 @@ export function organizationSchema(): JsonObject {
         "@id": `${siteConfig.url}#organization`,
         name: siteConfig.name,
         url: siteConfig.url,
+        inLanguage: "ro-RO",
         slogan: siteConfig.tagline,
         logo: {
           "@type": "ImageObject",
@@ -89,6 +90,7 @@ export function organizationSchema(): JsonObject {
         "@id": `${siteConfig.url}#local-business`,
         name: siteConfig.name,
         url: siteConfig.url,
+        inLanguage: "ro-RO",
         description: siteConfig.description,
         slogan: siteConfig.tagline,
         image: absoluteUrl(siteConfig.defaultOgImage),
@@ -119,6 +121,15 @@ export function organizationSchema(): JsonObject {
               "@type": "OfferCatalog",
               name: "Servicii administrative",
               itemListElement: [
+                {
+                  "@type": "Offer",
+                  itemOffered: {
+                    "@type": "Service",
+                    name: "Înființare firmă",
+                    description: "Orientare administrativă între PFA și SRL, organizarea informațiilor și pregătirea dosarului de înregistrare.",
+                    url: absoluteUrl("/servicii-administrative/infiintare-firma")
+                  }
+                },
                 {
                   "@type": "Offer",
                   itemOffered: {
@@ -200,6 +211,7 @@ export function serviceSchema({
     name,
     description,
     serviceType,
+    inLanguage: "ro-RO",
     url: absoluteUrl(path),
     image: absoluteUrl(siteConfig.defaultOgImage),
     provider: {

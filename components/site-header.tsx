@@ -24,6 +24,7 @@ import { type MouseEvent, useCallback, useEffect, useMemo, useRef, useState } fr
 import { Brand } from "@/components/brand";
 import { CookieSettingsButton } from "@/components/cookie-settings-button";
 import { siteConfig } from "@/lib/site-config";
+import { trackAnalyticsEvent } from "@/lib/analytics";
 
 type NavigationItem = {
   label: string;
@@ -275,8 +276,8 @@ export function SiteHeader({ navigationContext }: { navigationContext?: "funding
     <>
       <div className="sidebar-contact">
         <span>Ai o situație de analizat?</span>
-        {siteConfig.phoneHref && <a href={`tel:${siteConfig.phoneHref}`} onClick={closeMenu} aria-label={`Sună ${siteConfig.name}`} title={`Sună ${siteConfig.name}`}><Phone aria-hidden="true" /> {siteConfig.phoneDisplay}</a>}
-        <a href={`mailto:${siteConfig.email}`} onClick={closeMenu} title={`Trimite email către ${siteConfig.name}`}><Mail aria-hidden="true" /> {siteConfig.email}</a>
+        {siteConfig.phoneHref && <a href={`tel:${siteConfig.phoneHref}`} onClick={() => { trackAnalyticsEvent("click_phone", { placement: "navigation" }); closeMenu(); }} aria-label={`Sună ${siteConfig.name}`} title={`Sună ${siteConfig.name}`}><Phone aria-hidden="true" /> {siteConfig.phoneDisplay}</a>}
+        <a href={`mailto:${siteConfig.email}`} onClick={() => { trackAnalyticsEvent("click_email", { placement: "navigation" }); closeMenu(); }} title={`Trimite email către ${siteConfig.name}`}><Mail aria-hidden="true" /> {siteConfig.email}</a>
         <Link className="sidebar-cta" href={context.contactHref} onClick={closeMenu} aria-label={`Solicită o discuție cu ${siteConfig.name}`} title={`Solicită o discuție cu ${siteConfig.name}`}>
           Trimite o solicitare
         </Link>

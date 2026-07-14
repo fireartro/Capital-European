@@ -3,7 +3,7 @@ import { createPageMetadata } from "@/lib/metadata";
 import { seoServicePages } from "@/lib/seo-service-pages";
 import { breadcrumbSchema, faqSchema, JsonLd, serviceSchema } from "@/lib/structured-data";
 
-const page = seoServicePages.srlSetup;
+const page = seoServicePages.companySetup;
 
 export const metadata = createPageMetadata({
   title: page.title,

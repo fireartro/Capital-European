@@ -18,6 +18,7 @@ const fundingServiceOptions: ReadonlyArray<[ContactInput["service"], string]> = 
 
 const administrativeServiceOptions: ReadonlyArray<[ContactInput["service"], string]> = [
   ["servicii-administrative", "Servicii administrative"],
+  ["infiintare-firma", "Înființare firmă: alegerea între PFA și SRL"],
   ["infiintare-pfa", "Înființare PFA"],
   ["infiintare-srl", "Înființare SRL"],
   ["documente", "Administrare documente"],

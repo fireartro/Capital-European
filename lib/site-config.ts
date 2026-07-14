@@ -80,7 +80,7 @@ export const siteConfig = {
     fonduriUe: "https://www.fonduri-ue.ro/",
     pnrr: "https://pnrr.gov.ro/"
   },
-  lastUpdated: "2026-07-13",
+  lastUpdated: "2026-07-15",
   email: contactEmail,
   phoneDisplay,
   phoneHref,

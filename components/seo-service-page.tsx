@@ -14,7 +14,10 @@ export function SeoServicePage({ page }: { page: SeoServicePageConfig }) {
   const contactService = contactServiceForPage(page);
   const isPfa = page.path.endsWith("/infiintare-pfa");
   const isSrl = page.path.endsWith("/infiintare-srl");
-  const actionLabel = isPfa
+  const isCompanySetup = page.path.endsWith("/infiintare-firma");
+  const actionLabel = isCompanySetup
+    ? "Clarifică opțiunea potrivită"
+    : isPfa
     ? "Solicită lista pentru PFA"
     : isSrl
       ? "Solicită lista pentru SRL"

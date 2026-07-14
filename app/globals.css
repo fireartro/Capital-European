@@ -540,6 +540,11 @@ body:has(.funding-photo-hero) .scroll-star-orbit.section-0 { right: -150px; opac
 
 /* Administrative services */
 .admin-section { background: var(--paper); }
+.admin-company-setup { display: flex; align-items: center; justify-content: space-between; gap: 28px; margin: -2px 0 22px; padding: 22px 26px; border: 1px solid #c9d8ee; border-radius: 8px; background: #f4f7fc; }
+.admin-company-setup .eyebrow { margin-bottom: 7px; }
+.admin-company-setup h3 { margin: 0; font: 760 1.05rem/1.35 var(--font-display); }
+.admin-company-setup p:last-child { max-width: 760px; margin: 6px 0 0; color: var(--muted); font-size: .78rem; line-height: 1.55; }
+.admin-company-setup > a { min-height: 44px; flex: 0 0 auto; display: inline-flex; align-items: center; gap: 8px; color: var(--eu-blue); font-size: .78rem; font-weight: 800; }
 .admin-service-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 17px; }
 .admin-service-card { min-height: 370px; display: flex; flex-direction: column; padding: 28px; border: 1px solid var(--line); border-radius: 16px; background: #fff; transition: transform .22s, box-shadow .22s, border-color .22s; }
 .admin-service-card:hover { transform: translateY(-5px); border-color: #c4d4eb; box-shadow: 0 18px 45px rgba(4, 31, 73, .08); }
@@ -1228,6 +1233,8 @@ body:has(.funding-photo-hero) .scroll-star-orbit.section-0 { right: -150px; opac
   .funding-benefits { gap: 26px; padding: 28px 22px; }
   .benefit-copy h3 { font-size: 1.55rem; line-height: 1.16; }
   .process-steps, .admin-service-grid, .principles-grid { grid-template-columns: 1fr; }
+  .admin-company-setup { align-items: flex-start; flex-direction: column; gap: 12px; padding: 20px 18px; }
+  .admin-company-setup > a { width: 100%; justify-content: space-between; }
   .process-steps article { min-height: 165px; }
   .section-cta { align-items: stretch; flex-direction: column; padding: 26px 22px; }
   .section-cta .primary-button { width: 100%; }

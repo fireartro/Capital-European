@@ -15,14 +15,14 @@ export const dynamic = "force-dynamic";
 
 const allowedServices = new Set<ContactInput["service"]>([
   "nesigur", "servicii-administrative", "documente", "secretariat", "administrativ", "consultanta",
-  "infiintare-pfa", "infiintare-srl", "fonduri-europene"
+  "infiintare-firma", "infiintare-pfa", "infiintare-srl", "fonduri-europene"
 ]);
 
 export default async function Page({ searchParams }: { searchParams: Promise<{ service?: string; program?: string; score?: string }> }) {
   const content = await getManagedContent();
   const fundingProgramOptions = createFundingProgramOptions(content.fundingPrograms);
   const { service, program, score } = await searchParams;
-  const normalizedService = service === "birotica" || service === "infiintare-firma"
+  const normalizedService = service === "birotica"
     ? "servicii-administrative"
     : service;
   const defaultService = normalizedService && allowedServices.has(normalizedService as ContactInput["service"])

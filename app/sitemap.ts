@@ -15,6 +15,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/servicii-administrative",
     "/servicii-administrative/secretariat",
     "/servicii-administrative/administrare-documente",
+    "/servicii-administrative/infiintare-firma",
     "/servicii-administrative/infiintare-pfa",
     "/servicii-administrative/infiintare-srl",
     "/anunturi",

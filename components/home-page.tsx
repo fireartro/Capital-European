@@ -78,8 +78,8 @@ export function HomePage() {
               <span className="choice-icon"><Files aria-hidden="true" /></span>
               <h2 id="choice-admin-title">Servicii<br />Administrative</h2>
               <p id="choice-admin-description">Documente, secretariat, back-office și sprijin administrativ pentru înființarea firmei.</p>
-              <Link className="choice-secondary-link" href="/servicii-administrative#servicii-administrative" title="Vezi serviciile de înființare PFA și SRL">
-                <ClipboardCheck aria-hidden="true" /> Înființare PFA și SRL
+              <Link className="choice-secondary-link" href="/servicii-administrative/infiintare-firma" title="Compară opțiunile pentru înființarea unei firme">
+                <ClipboardCheck aria-hidden="true" /> Înființare firmă
               </Link>
               <AnalyticsLink
                 className="choice-button"

@@ -112,7 +112,7 @@ function serviceLabel(service: ContactDeliveryData["service"]) {
     secretariat: "Secretariat",
     administrativ: "Asistenta administrativa",
     consultanta: "Consultanta fonduri europene",
-    "infiintare-firma": "Infiintare PFA / SRL",
+    "infiintare-firma": "Infiintare firma - alegere PFA sau SRL",
     "infiintare-pfa": "Infiintare PFA",
     "infiintare-srl": "Infiintare SRL",
     "fonduri-europene": "Fonduri europene"
