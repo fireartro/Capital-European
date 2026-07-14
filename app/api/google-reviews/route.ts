@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { getGoogleBusinessReviews } from "@/lib/google-business-reviews";
 
 export const dynamic = "force-dynamic";
-export const runtime = "edge";
+export const runtime = "nodejs";
 
 export async function GET() {
   const data = await getGoogleBusinessReviews({ cache: "no-store" });
