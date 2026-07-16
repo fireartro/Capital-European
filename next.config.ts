@@ -83,6 +83,11 @@ const nextConfig: NextConfig = {
         permanent: true
       },
       {
+        source: "/calculator-pret-consultanta",
+        destination: "/consultanta-fonduri-europene",
+        permanent: true
+      },
+      {
         source: "/infiintare-firma",
         destination: "/servicii-administrative/infiintare-firma",
         permanent: true
