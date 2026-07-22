@@ -95,7 +95,6 @@
 .admin-auth-panel input { min-height: 46px; padding: 0 12px; border: 1px solid #c7d3e4; border-radius: 6px; }
 .admin-auth-panel button { min-height: 46px; display: flex; align-items: center; justify-content: center; gap: 8px; border: 0; border-radius: 6px; color: #fff; background: var(--admin-blue); font-weight: 800; }
 .admin-auth-panel button:disabled { opacity: .55; cursor: not-allowed; }
-.admin-auth-panel .admin-auth-secondary { border: 1px solid var(--admin-line); color: var(--admin-blue); background: #fff; }
 .admin-auth-panel > a { color: var(--admin-blue); font-size: .78rem; font-weight: 780; text-align: center; }
 .admin-login-error { margin: 0; color: var(--admin-red); font-size: .78rem; line-height: 1.45; }
 .admin-hidden-username { position: absolute; width: 1px !important; height: 1px !important; margin: -1px; padding: 0 !important; overflow: hidden; clip: rect(0 0 0 0); opacity: 0; pointer-events: none; }

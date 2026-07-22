@@ -87,6 +87,8 @@ function publicContactData(data: ContactSubmission): ContactDeliveryData {
     name: data.name,
     email: data.email,
     phone: data.phone,
+    organization: data.organization,
+    taxId: data.taxId,
     category: data.category,
     service: data.service,
     fundingProgram: data.fundingProgram,
@@ -133,6 +135,8 @@ function contactEmailHtml(data: ContactDeliveryData) {
       <p><strong>Nume:</strong> ${escapeHtml(data.name)}</p>
       <p><strong>Email:</strong> ${escapeHtml(data.email)}</p>
       <p><strong>Telefon:</strong> ${data.phone ? escapeHtml(data.phone) : "Necompletat"}</p>
+      <p><strong>Solicitant:</strong> ${data.organization ? escapeHtml(data.organization) : "Necompletat"}</p>
+      <p><strong>CUI:</strong> ${data.taxId ? escapeHtml(data.taxId) : "Necompletat"}</p>
       <p><strong>Categorie:</strong> ${escapeHtml(data.category)}</p>
       <p><strong>Serviciu:</strong> ${escapeHtml(serviceLabel(data.service))}</p>
       ${fundingProgram}
@@ -152,6 +156,8 @@ function contactEmailText(data: ContactDeliveryData) {
     `Nume: ${data.name}`,
     `Email: ${data.email}`,
     `Telefon: ${data.phone || "Necompletat"}`,
+    `Solicitant: ${data.organization || "Necompletat"}`,
+    `CUI: ${data.taxId || "Necompletat"}`,
     `Categorie: ${data.category}`,
     `Serviciu: ${serviceLabel(data.service)}`,
     data.fundingProgram ? `Linie de finantare: ${data.fundingProgram}` : "",

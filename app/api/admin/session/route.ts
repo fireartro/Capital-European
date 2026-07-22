@@ -1,34 +1,22 @@
-import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import {
   ADMIN_COOKIE_NAME,
-  ADMIN_MFA_CHALLENGE_COOKIE_NAME,
   adminCookieOptions,
   adminLoginAttemptKey,
-  adminMfaChallengeCookieOptions,
   adminSessionPolicy,
-  createAdminMfaChallengeToken,
   createAdminSession,
   getAdminSession,
   hasValidAdminOrigin,
   isAdminConfigured,
   revokeCurrentAdminSession,
-  verifyAdminCredentials,
-  verifyAdminMfaChallengeToken
+  verifyAdminCredentials
 } from "@/lib/admin-auth";
-import {
-  isAdminMfaConfigured,
-  maskedAdminMfaPhone,
-  sendAdminMfaCode,
-  verifyAdminMfaCode
-} from "@/lib/admin-mfa";
 import { clearAdminLoginAttempts, consumeAdminLoginAttempt } from "@/lib/admin-session-store";
 
 export const runtime = "nodejs";
 
 const LOGIN_WINDOW_SECONDS = 15 * 60;
 const MAX_LOGIN_ATTEMPTS = 6;
-const MAX_MFA_ATTEMPTS = 5;
 
 function response(body: unknown, init?: ResponseInit) {
   const headers = new Headers(init?.headers);
@@ -55,7 +43,6 @@ async function authenticatedResponse(request: Request) {
     sessionPolicy: adminSessionPolicy()
   });
   result.cookies.set(ADMIN_COOKIE_NAME, session.token, adminCookieOptions(request));
-  result.cookies.set(ADMIN_MFA_CHALLENGE_COOKIE_NAME, "", { ...adminMfaChallengeCookieOptions(request), maxAge: 0 });
   return result;
 }
 
@@ -65,7 +52,6 @@ export async function GET() {
     configured: isAdminConfigured(),
     authenticated: Boolean(session),
     expiresAt: session?.expiresAt ?? null,
-    mfaEnabled: isAdminMfaConfigured(),
     sessionPolicy: adminSessionPolicy()
   });
 }
@@ -97,57 +83,6 @@ export async function POST(request: Request) {
   }
 
   await clearAdminLoginAttempts(attemptKey);
-  if (!isAdminMfaConfigured()) return authenticatedResponse(request);
-
-  try {
-    await sendAdminMfaCode();
-  } catch (error) {
-    return response({ message: error instanceof Error ? error.message : "Codul SMS nu a putut fi trimis." }, { status: 502 });
-  }
-
-  const result = response({
-    mfaRequired: true,
-    destination: maskedAdminMfaPhone()
-  }, { status: 202 });
-  result.cookies.set(
-    ADMIN_MFA_CHALLENGE_COOKIE_NAME,
-    createAdminMfaChallengeToken(),
-    adminMfaChallengeCookieOptions(request)
-  );
-  return result;
-}
-
-export async function PUT(request: Request) {
-  if (!isAdminConfigured() || !isAdminMfaConfigured()) {
-    return response({ message: "Verificarea SMS nu este disponibilă." }, { status: 503 });
-  }
-  if (!hasValidAdminOrigin(request)) {
-    return response({ message: "Cerere respinsă." }, { status: 403 });
-  }
-
-  const cookieStore = await cookies();
-  if (!verifyAdminMfaChallengeToken(cookieStore.get(ADMIN_MFA_CHALLENGE_COOKIE_NAME)?.value)) {
-    return response({ message: "Verificarea a expirat. Reia autentificarea." }, { status: 401 });
-  }
-
-  const attemptKey = `${adminLoginAttemptKey(request)}:mfa`;
-  if (await consumeAdminLoginAttempt(attemptKey, MAX_MFA_ATTEMPTS, LOGIN_WINDOW_SECONDS)) {
-    return response({ message: "Prea multe coduri greșite. Reia autentificarea mai târziu." }, { status: 429 });
-  }
-
-  let code = "";
-  try {
-    const body = await parseBody(request);
-    code = typeof body.code === "string" ? body.code.trim() : "";
-  } catch {
-    return response({ message: "Cod invalid." }, { status: 400 });
-  }
-
-  if (!await verifyAdminMfaCode(code)) {
-    return response({ message: "Cod incorect sau expirat." }, { status: 401 });
-  }
-
-  await clearAdminLoginAttempts(attemptKey);
   return authenticatedResponse(request);
 }
 
@@ -158,6 +93,5 @@ export async function DELETE(request: Request) {
   await revokeCurrentAdminSession();
   const result = response({ success: true });
   result.cookies.set(ADMIN_COOKIE_NAME, "", { ...adminCookieOptions(request), maxAge: 0 });
-  result.cookies.set(ADMIN_MFA_CHALLENGE_COOKIE_NAME, "", { ...adminMfaChallengeCookieOptions(request), maxAge: 0 });
   return result;
 }

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { defaultFundingPrograms, type FundingProgram } from "@/lib/funding-programs";
+import type { FundingProgram } from "@/lib/funding-programs";
 
 export const announcementStatuses = ["Publicat", "Ciornă", "Arhivat"] as const;
 export type AnnouncementStatus = (typeof announcementStatuses)[number];
@@ -94,11 +94,11 @@ export const managedContentSchema = z.object({
   ensureUnique(content.announcements.map((announcement) => announcement.slug), "announcements", "Adresa anunțului");
 });
 
-export function createDefaultManagedContent(): ManagedContent {
+export function createDefaultManagedContent(fundingPrograms: readonly FundingProgram[] = []): ManagedContent {
   return {
     version: 1,
     updatedAt: new Date().toISOString(),
-    fundingPrograms: defaultFundingPrograms.map((program) => ({ ...program })),
+    fundingPrograms: fundingPrograms.map((program) => ({ ...program })),
     announcements: []
   };
 }

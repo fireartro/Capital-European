@@ -46,6 +46,15 @@ export function organizationSchema(): JsonObject {
         "@type": "Organization",
         "@id": `${siteConfig.url}#organization`,
         name: siteConfig.name,
+        ...(siteConfig.legal.entityName ? { legalName: siteConfig.legal.entityName } : {}),
+        ...(siteConfig.legal.taxId ? { taxID: siteConfig.legal.taxId } : {}),
+        ...(siteConfig.legal.registrationNumber ? {
+          identifier: {
+            "@type": "PropertyValue",
+            propertyID: "Registrul Comerțului",
+            value: siteConfig.legal.registrationNumber
+          }
+        } : {}),
         url: siteConfig.url,
         inLanguage: "ro-RO",
         slogan: siteConfig.tagline,
@@ -89,6 +98,8 @@ export function organizationSchema(): JsonObject {
         "@type": "ProfessionalService",
         "@id": `${siteConfig.url}#local-business`,
         name: siteConfig.name,
+        ...(siteConfig.legal.entityName ? { legalName: siteConfig.legal.entityName } : {}),
+        ...(siteConfig.legal.taxId ? { taxID: siteConfig.legal.taxId } : {}),
         url: siteConfig.url,
         inLanguage: "ro-RO",
         description: siteConfig.description,

@@ -1,8 +1,7 @@
 import "server-only";
 
 import { cookies } from "next/headers";
-import { createHmac, randomBytes, timingSafeEqual } from "node:crypto";
-import { isAdminMfaConfigured, isAdminMfaRequired } from "@/lib/admin-mfa";
+import { createHmac, timingSafeEqual } from "node:crypto";
 import {
   createAdminSessionRecord,
   hasPersistentAdminSessionStorage,
@@ -11,8 +10,6 @@ import {
 } from "@/lib/admin-session-store";
 
 export const ADMIN_COOKIE_NAME = "capital_admin_session";
-export const ADMIN_MFA_CHALLENGE_COOKIE_NAME = "capital_admin_mfa_challenge";
-const MFA_CHALLENGE_DURATION_SECONDS = 10 * 60;
 
 function boundedMinutes(value: string | undefined, fallback: number, minimum: number, maximum: number) {
   const parsed = Number(value);
@@ -43,12 +40,7 @@ function sessionSecret() {
 export function isAdminConfigured() {
   const baseConfigured = adminUsername().length >= 3 && adminPassword().length >= 12 && sessionSecret().length >= 32;
   const storageConfigured = process.env.NODE_ENV !== "production" || hasPersistentAdminSessionStorage();
-  const mfaConfigured = !isAdminMfaRequired() || isAdminMfaConfigured();
-  return baseConfigured && storageConfigured && mfaConfigured;
-}
-
-function signature(payload: string) {
-  return createHmac("sha256", sessionSecret()).update(payload).digest("base64url");
+  return baseConfigured && storageConfigured;
 }
 
 function safeEqual(left: string, right: string) {
@@ -84,42 +76,6 @@ export async function revokeCurrentAdminSession() {
   await revokeAdminSessionRecord(cookieStore.get(ADMIN_COOKIE_NAME)?.value);
 }
 
-type MfaChallengePayload = {
-  issuedAt: number;
-  expiresAt: number;
-  nonce: string;
-};
-
-export function createAdminMfaChallengeToken() {
-  const issuedAt = Math.floor(Date.now() / 1000);
-  const payload: MfaChallengePayload = {
-    issuedAt,
-    expiresAt: issuedAt + MFA_CHALLENGE_DURATION_SECONDS,
-    nonce: randomBytes(18).toString("base64url")
-  };
-  const encoded = Buffer.from(JSON.stringify(payload)).toString("base64url");
-  return `${encoded}.${signature(encoded)}`;
-}
-
-export function verifyAdminMfaChallengeToken(token: string | undefined) {
-  if (!token || token.length > 600) return false;
-  const [encoded, receivedSignature, ...extra] = token.split(".");
-  if (!encoded || !receivedSignature || extra.length || !safeEqual(signature(encoded), receivedSignature)) return false;
-
-  try {
-    const payload = JSON.parse(Buffer.from(encoded, "base64url").toString("utf8")) as Partial<MfaChallengePayload>;
-    const now = Math.floor(Date.now() / 1000);
-    return Number.isInteger(payload.issuedAt)
-      && Number.isInteger(payload.expiresAt)
-      && typeof payload.nonce === "string"
-      && payload.nonce.length >= 20
-      && Number(payload.issuedAt) <= now + 60
-      && Number(payload.expiresAt) > now;
-  } catch {
-    return false;
-  }
-}
-
 function isLoopbackHostname(hostname: string) {
   return hostname === "localhost" || hostname === "127.0.0.1" || hostname === "::1";
 }
@@ -136,10 +92,6 @@ function cookieSecurity(request?: Request) {
 
 export function adminCookieOptions(request?: Request) {
   return { ...cookieSecurity(request), maxAge: adminSessionPolicy().durationSeconds };
-}
-
-export function adminMfaChallengeCookieOptions(request?: Request) {
-  return { ...cookieSecurity(request), maxAge: MFA_CHALLENGE_DURATION_SECONDS };
 }
 
 export function adminLoginAttemptKey(request: Request) {

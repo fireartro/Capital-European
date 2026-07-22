@@ -1,6 +1,7 @@
 import { Brand } from "@/components/brand";
 import { CookieSettingsButton } from "@/components/cookie-settings-button";
 import { FooterMap } from "@/components/footer-map";
+import { PnrrPromotionBanner } from "@/components/pnrr-promotion-banner";
 import { siteConfig } from "@/lib/site-config";
 import { ExternalLink, MapPin } from "lucide-react";
 import Link from "next/link";
@@ -42,7 +43,13 @@ export function SiteFooter({ showCookieSettings = true }: { showCookieSettings?:
           {siteConfig.phoneHref && <TrackedAnchor eventName="click_phone" eventParameters={{ placement: "footer" }} href={`tel:${siteConfig.phoneHref}`} title={`Sună ${siteConfig.name}`}>{siteConfig.phoneDisplay}</TrackedAnchor>}
           <TrackedAnchor eventName="click_email" eventParameters={{ placement: "footer" }} href={`mailto:${siteConfig.email}`} title={`Trimite email către ${siteConfig.name}`}>{siteConfig.email}</TrackedAnchor>
           {siteConfig.schedule && <span>Program: {siteConfig.schedule}</span>}
-          {siteConfig.legal.entityName && <span>{siteConfig.legal.entityName}{siteConfig.legal.taxId ? ` · CUI ${siteConfig.legal.taxId}` : ""}</span>}
+          {siteConfig.legal.entityName && (
+            <span>
+              {siteConfig.legal.entityName}
+              {siteConfig.legal.taxId ? ` · CUI ${siteConfig.legal.taxId}` : ""}
+              {siteConfig.legal.registrationNumber ? ` · ${siteConfig.legal.registrationNumber}` : ""}
+            </span>
+          )}
         </div>
       </div>
       {siteConfig.locations.length > 0 && (
@@ -74,6 +81,7 @@ export function SiteFooter({ showCookieSettings = true }: { showCookieSettings?:
           )}
         </section>
       )}
+      <PnrrPromotionBanner />
       <div className="section-container footer-bottom">
         <span>© {new Date().getFullYear()} {siteConfig.name}. Toate drepturile rezervate.</span>
         <div>

@@ -52,12 +52,12 @@ export function HomePage() {
               </Link>
               <AnalyticsLink
                 className="choice-button"
-                href="/fonduri-europene"
+                href="/contact?service=fonduri-europene&program=program-nespecificat#formular-contact"
                 eventName="select_service"
-                eventParameters={{ service_area: "fonduri_europene", destination: "fonduri_prezentare" }}
-                title="Vezi prezentarea serviciilor pentru fonduri europene"
+                eventParameters={{ service_area: "fonduri_europene", destination: "analiza_eligibilitate" }}
+                title="Solicită o analiză inițială de eligibilitate"
               >
-                Vezi consultanța <ArrowRight aria-hidden="true" />
+                Solicită analiza de eligibilitate <ArrowRight aria-hidden="true" />
               </AnalyticsLink>
             </div>
             <div className="eu-emblem" aria-hidden="true">

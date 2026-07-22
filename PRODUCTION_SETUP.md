@@ -16,31 +16,30 @@ GOOGLE_PLACES_API_KEY=cheie-server-only-restrictionata-la-Places-API-New
 GOOGLE_PLACE_ID=place-id-ul-profilului-Google
 NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX
 NEXT_PUBLIC_CLARITY_PROJECT_ID=xxxxxxxxxx
-NEXT_PUBLIC_CONTACT_EMAIL=contact@domeniul-real.ro
-NEXT_PUBLIC_PHONE_DISPLAY=+40 xxx xxx xxx
-NEXT_PUBLIC_PHONE_HREF=+40xxxxxxxxx
-NEXT_PUBLIC_WHATSAPP_NUMBER=40xxxxxxxxx
-NEXT_PUBLIC_BUSINESS_ADDRESS=adresa reală
-NEXT_PUBLIC_WORKING_OFFICE=punctul de lucru real, dacă există
-NEXT_PUBLIC_SECONDARY_OFFICE=adresa administrativă secundară, dacă există
-NEXT_PUBLIC_BUSINESS_SCHEDULE=L-V · 08:00-18:00
+NEXT_PUBLIC_CONTACT_EMAIL=contact@capitaleuropean.ro
+NEXT_PUBLIC_PHONE_DISPLAY=+40 753 527 110
+NEXT_PUBLIC_PHONE_HREF=+40753527110
+NEXT_PUBLIC_WHATSAPP_NUMBER=+40753527110
+NEXT_PUBLIC_BUSINESS_ADDRESS=Satu Mare, Piața Soarelui, Bl. UU6, et. 3, ap. 9, 440221
+NEXT_PUBLIC_WORKING_OFFICE=Seini, Piața Unirii nr. 2
+NEXT_PUBLIC_SECONDARY_OFFICE=Cluj-Napoca, Strada Oltului nr. 1
+NEXT_PUBLIC_BUSINESS_SCHEDULE=L-V · 10:00-18:00
 NEXT_PUBLIC_FACEBOOK_URL=https://...
 NEXT_PUBLIC_INSTAGRAM_URL=https://...
 NEXT_PUBLIC_LINKEDIN_URL=https://...
-NEXT_PUBLIC_LEGAL_ENTITY_NAME=denumirea juridică reală
-NEXT_PUBLIC_REGISTRATION_NUMBER=numărul real
-NEXT_PUBLIC_TAX_ID=CUI real
-NEXT_PUBLIC_REGISTERED_OFFICE=sediul real
-NEXT_PUBLIC_ESTIMATOR_BASE_PRICE_RON=prețul de bază aprobat
+NEXT_PUBLIC_LEGAL_ENTITY_NAME=1A BEST EVENTS SRL
+NEXT_PUBLIC_REGISTRATION_NUMBER=J2017000108306
+NEXT_PUBLIC_TAX_ID=RO37037033
+NEXT_PUBLIC_REGISTERED_OFFICE=Satu Mare, Piața Soarelui, Bl. UU6, et. 3, ap. 9, 440221
 ```
 
-Nu publica date juridice, numere de contact sau prețuri aproximative fără confirmarea companiei. `CONTACT_WEBHOOK_URL` este opțional, secret server-side și trebuie să fie HTTPS dacă este folosit. Pentru trimitere directă prin email, setează `RESEND_API_KEY`, `CONTACT_FROM_EMAIL` și `CONTACT_TO_EMAIL`.
+Datele juridice și de contact de mai sus trebuie menținute identice cu informațiile oficiale ale companiei. `CONTACT_WEBHOOK_URL` este opțional, secret server-side și trebuie să fie HTTPS dacă este folosit. Pentru trimitere directă prin email, setează `RESEND_API_KEY`, `CONTACT_FROM_EMAIL` și `CONTACT_TO_EMAIL`.
 
 ## 2. Contact
 
 Formularul poate livra mesajele prin `CONTACT_WEBHOOK_URL`, dacă ai un endpoint HTTPS extern, sau direct prin Resend, dacă setezi `RESEND_API_KEY`, `CONTACT_FROM_EMAIL` și `CONTACT_TO_EMAIL`.
 
-Webhook-ul primește JSON validat cu: `name`, `email`, `phone`, `category`, `service`, `fundingProgram`, `message` și `consent`. Câmpul honeypot nu este transmis. Endpoint-ul trebuie să răspundă cu status `2xx` în maximum 8 secunde.
+Webhook-ul primește JSON validat cu: `name`, `email`, `phone`, `organization`, `taxId`, `category`, `service`, `fundingProgram`, `message` și `consent`. Câmpul honeypot nu este transmis. Endpoint-ul trebuie să răspundă cu status `2xx` în maximum 8 secunde.
 
 ## 3. Indexare
 

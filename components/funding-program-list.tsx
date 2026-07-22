@@ -44,8 +44,8 @@ export function FundingProgramList({ programs }: { programs: readonly FundingPro
                 <div><dt>Arie</dt><dd>{program.region}</dd></div>
               </dl>
               <div className="funding-program-actions">
-                <AnalyticsLink eventName="select_program" eventParameters={{ program_id: program.id, program_name: program.title }} href={`/contact?service=fonduri-europene&program=${program.id}`}>Sunt interesat <ArrowRight aria-hidden="true" /></AnalyticsLink>
-                <a href={program.sourceUrl} target="_blank" rel="noopener noreferrer" onClick={() => trackAnalyticsEvent("program_source_click", { program_id: program.id, program_name: program.title })}>Portal oficial <ExternalLink aria-hidden="true" /></a>
+                <AnalyticsLink eventName="select_program" eventParameters={{ program_id: program.id, program_name: program.title }} href={`/contact?service=fonduri-europene&program=${program.id}#formular-contact`}>Solicită analiza <ArrowRight aria-hidden="true" /></AnalyticsLink>
+                <a href={program.sourceUrl} target="_blank" rel="noopener noreferrer" onClick={() => trackAnalyticsEvent("program_source_click", { program_id: program.id, program_name: program.title })}>Ghid / sursă oficială <ExternalLink aria-hidden="true" /></a>
               </div>
             </div>
           </article>
@@ -70,7 +70,7 @@ export function FundingProgramList({ programs }: { programs: readonly FundingPro
           aria-controls="funding-program-list"
           aria-expanded={expanded}
         >
-          {expanded ? "Restrânge lista" : `Vezi toate cele ${programs.length} categorii urmărite`}
+          {expanded ? "Restrânge lista" : `Vezi toate cele ${programs.length} programe urmărite`}
           {expanded ? <ChevronUp aria-hidden="true" /> : <ChevronDown aria-hidden="true" />}
         </button>
       )}

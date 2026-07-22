@@ -3,10 +3,18 @@ import "server-only";
 import { neon } from "@neondatabase/serverless";
 import { promises as fs } from "node:fs";
 import path from "node:path";
+import managedContentSeed from "@/content/managed-content.seed.json";
 import { createDefaultManagedContent, managedContentSchema, type ManagedContent } from "@/lib/managed-content";
 
 const CONTENT_ROW_ID = "primary";
 const LOCAL_DATA_PATH = path.join(process.cwd(), ".data", "managed-content.json");
+const LEGACY_PLACEHOLDER_PROGRAM_IDS = new Set([
+  "investitii-productive",
+  "eficienta-energetica",
+  "digitalizare-automatizare",
+  "startup-antreprenoriat",
+  "ong-impact-local"
+]);
 
 export type ContentStorage = {
   mode: "postgres" | "local-file" | "read-only-default";
@@ -77,6 +85,24 @@ async function readLocalContent() {
   }
 }
 
+async function readSeedContent(): Promise<ManagedContent> {
+  const parsed = managedContentSchema.safeParse(managedContentSeed);
+  if (parsed.success) return parsed.data;
+  console.error("Managed content seed validation failed", parsed.error.flatten());
+  return createDefaultManagedContent();
+}
+
+async function writeDatabaseContent(content: ManagedContent) {
+  const sql = await ensureContentTable();
+  const serialized = JSON.stringify(content);
+  await sql`
+    INSERT INTO capital_european_managed_content (id, content, updated_at)
+    VALUES (${CONTENT_ROW_ID}, CAST(${serialized} AS JSONB), NOW())
+    ON CONFLICT (id)
+    DO UPDATE SET content = EXCLUDED.content, updated_at = NOW()
+  `;
+}
+
 export async function getManagedContent(): Promise<ManagedContent> {
   const storage = getContentStorage();
   try {
@@ -85,13 +111,36 @@ export async function getManagedContent(): Promise<ManagedContent> {
       : storage.mode === "local-file"
         ? await readLocalContent()
         : null;
-    if (!stored) return createDefaultManagedContent();
+    if (!stored) {
+      const seed = await readSeedContent();
+      if (storage.mode === "postgres") await writeDatabaseContent(seed);
+      return seed;
+    }
 
     const parsed = managedContentSchema.safeParse(stored);
-    return parsed.success ? parsed.data : createDefaultManagedContent();
+    if (!parsed.success) {
+      const seed = await readSeedContent();
+      if (storage.mode === "postgres") await writeDatabaseContent(seed);
+      return seed;
+    }
+
+    const hasNoPrograms = parsed.data.fundingPrograms.length === 0;
+    const containsOnlyLegacyPlaceholders = parsed.data.fundingPrograms.length > 0
+      && parsed.data.fundingPrograms.every((program) => LEGACY_PLACEHOLDER_PROGRAM_IDS.has(program.id));
+
+    if (hasNoPrograms || containsOnlyLegacyPlaceholders) {
+      const seed = await readSeedContent();
+      if (Date.parse(parsed.data.updatedAt) < Date.parse(seed.updatedAt)) {
+        const migrated = { ...seed, announcements: parsed.data.announcements };
+        if (storage.mode === "postgres") await writeDatabaseContent(migrated);
+        return migrated;
+      }
+    }
+
+    return parsed.data;
   } catch (error) {
     console.error("Managed content read failed", error);
-    return createDefaultManagedContent();
+    return readSeedContent();
   }
 }
 
@@ -110,16 +159,9 @@ export async function saveManagedContent(input: unknown): Promise<ManagedContent
 
   const parsed = managedContentSchema.parse(input);
   const content: ManagedContent = { ...parsed, updatedAt: new Date().toISOString() };
-  const serialized = JSON.stringify(content);
 
   if (storage.mode === "postgres") {
-    const sql = await ensureContentTable();
-    await sql`
-      INSERT INTO capital_european_managed_content (id, content, updated_at)
-      VALUES (${CONTENT_ROW_ID}, CAST(${serialized} AS JSONB), NOW())
-      ON CONFLICT (id)
-      DO UPDATE SET content = EXCLUDED.content, updated_at = NOW()
-    `;
+    await writeDatabaseContent(content);
   } else {
     await fs.mkdir(path.dirname(LOCAL_DATA_PATH), { recursive: true });
     const temporaryPath = `${LOCAL_DATA_PATH}.${process.pid}.tmp`;

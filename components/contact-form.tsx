@@ -60,6 +60,8 @@ export function ContactForm({
       name: "",
       email: "",
       phone: "",
+      organization: "",
+      taxId: "",
       category: initialCategory,
       service: initialService,
       fundingProgram: defaultFundingProgram,
@@ -113,6 +115,8 @@ export function ContactForm({
         name: "",
         email: "",
         phone: "",
+        organization: "",
+        taxId: "",
         category: initialCategory,
         service: initialService,
         fundingProgram: defaultFundingProgram,
@@ -144,7 +148,7 @@ export function ContactForm({
       <div className="form-heading">
         <p className="kicker">Formular de contact</p>
         <h2>Spune-ne pe scurt cu ce te putem ajuta</h2>
-        <p className="form-intro">Sunt suficiente informațiile pe care le ai acum. Nu trimite documente sensibile prin formular.</p>
+        <p className="form-intro">Sunt suficiente informațiile pe care le ai acum. După clarificarea inițială îți cerem numai documentele necesare situației, fără date sensibile trimise prin formular.</p>
       </div>
       <div className="form-service-path">
         <fieldset className="form-category-choice">
@@ -183,7 +187,7 @@ export function ContactForm({
             <label className="funding-program-field">
               <span>Linia de finanțare, dacă o cunoști</span>
               <select {...register("fundingProgram")}>
-                <option value="">Nu știu încă / nu apare în listă</option>
+                <option value="">Selectează un program sau indică altul</option>
                 {fundingProgramOptions.map((option) => (
                   <option key={option.value} value={option.value}>{option.label}</option>
                 ))}
@@ -212,6 +216,16 @@ export function ContactForm({
           <span>Telefon <small>(opțional)</small></span>
           <input type="tel" autoComplete="tel" placeholder="07xx xxx xxx" maxLength={24} {...register("phone")} aria-invalid={!!errors.phone} aria-describedby={errors.phone ? "phone-error" : undefined} />
           {errors.phone && <small id="phone-error">{errors.phone.message}</small>}
+        </label>
+        <label>
+          <span>Firmă / ONG / PFA <small>(opțional)</small></span>
+          <input autoComplete="organization" placeholder="Denumirea solicitantului" maxLength={160} {...register("organization")} aria-invalid={!!errors.organization} aria-describedby={errors.organization ? "organization-error" : undefined} />
+          {errors.organization && <small id="organization-error">{errors.organization.message}</small>}
+        </label>
+        <label>
+          <span>CUI <small>(opțional)</small></span>
+          <input inputMode="text" autoCapitalize="characters" placeholder="RO12345678" maxLength={32} {...register("taxId")} aria-invalid={!!errors.taxId} aria-describedby={errors.taxId ? "tax-id-error" : undefined} />
+          {errors.taxId && <small id="tax-id-error">{errors.taxId.message}</small>}
         </label>
         <label className="full-field">
           <span>Mesaj</span>

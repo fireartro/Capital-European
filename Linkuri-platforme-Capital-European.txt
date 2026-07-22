@@ -1,8 +1,8 @@
 CAPITAL EUROPEAN - LINKURI PLATFORME SI EXPLICATII
-Actualizat: 14 iulie 2026
+Actualizat: 23 iulie 2026
 
 IMPORTANT
-- Acest fisier nu contine parole, chei API, tokenuri, coduri SMS sau alte secrete.
+- Acest fisier nu contine parole, chei API, tokenuri sau alte secrete.
 - Datele sensibile se pastreaza numai in Vercel Environment Variables si in managerul de parole.
 - Daca un link cere autentificare, foloseste contul asociat proiectului Capital European.
 
@@ -15,7 +15,7 @@ Site-ul public principal Capital European.
 
 https://capitaleuropean.ro/admin
 Panoul privat pentru administrarea programelor de finantare si a anunturilor.
-Accesul este protejat prin utilizator, parola, sesiune temporara si cod SMS Twilio.
+Accesul este protejat prin utilizator, parola, sesiune temporara, expirare la inactivitate si limitarea incercarilor de autentificare.
 
 https://capitaleuropean.ro/sitemap.xml
 Sitemap-ul transmis catre Google Search Console. Contine paginile publice indexabile.
@@ -50,7 +50,7 @@ https://vercel.com/capital-european/capital-european/settings
 Setarile generale ale proiectului.
 
 https://vercel.com/capital-european/capital-european/settings/environment-variables
-Variabilele Production/Preview/Development: email, Analytics, Google Places, admin, Twilio si baza de date.
+Variabilele Production/Preview/Development: email, Analytics, Google Places, admin si baza de date.
 Nu copia valorile secrete in acest fisier.
 
 https://vercel.com/capital-european/capital-european/settings/domains
@@ -96,21 +96,7 @@ https://mail.google.com/mail/u/0/#inbox
 Inbox-ul Gmail in care sunt primite mesajele redirectionate pentru Capital European.
 
 ======================================================================
-6. AUTENTIFICARE ADMIN PRIN SMS - TWILIO
-======================================================================
-
-https://console.twilio.com/
-Consola Twilio folosita pentru codurile SMS de autentificare admin.
-
-https://console.twilio.com/us1/develop/verify/services
-Serviciul Twilio Verify pentru generarea si verificarea codurilor SMS.
-Regiunea API folosita este US1, iar mesajele pot fi trimise catre numere din Romania.
-
-https://console.twilio.com/us1/account/keys-credentials/api-keys
-Credentialele Twilio. Account SID, Auth Token si cheile API raman secrete in Vercel.
-
-======================================================================
-7. GOOGLE BUSINESS PROFILE SI GOOGLE MAPS
+6. GOOGLE BUSINESS PROFILE SI GOOGLE MAPS
 ======================================================================
 
 https://business.google.com/locations
@@ -132,7 +118,7 @@ https://console.cloud.google.com/billing
 Contul de facturare Google Cloud necesar pentru functionarea Places API.
 
 ======================================================================
-8. GOOGLE ANALYTICS SI MASURAREA CONVERSIILOR
+7. GOOGLE ANALYTICS SI MASURAREA CONVERSIILOR
 ======================================================================
 
 https://analytics.google.com/analytics/web/
@@ -146,7 +132,7 @@ https://tagmanager.google.com/
 Google Tag Manager. Momentan este optional; se foloseste doar daca NEXT_PUBLIC_GTM_ID este configurat.
 
 ======================================================================
-9. GOOGLE SEARCH CONSOLE SI INDEXARE
+8. GOOGLE SEARCH CONSOLE SI INDEXARE
 ======================================================================
 
 https://search.google.com/search-console?resource_id=sc-domain%3Acapitaleuropean.ro
@@ -162,7 +148,7 @@ https://search.google.com/test/rich-results?url=https%3A%2F%2Fcapitaleuropean.ro
 Testarea datelor structurate si a rezultatelor imbogatite pentru pagina principala.
 
 ======================================================================
-10. PAGESPEED INSIGHTS / LIGHTHOUSE
+9. PAGESPEED INSIGHTS / LIGHTHOUSE
 ======================================================================
 
 https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fcapitaleuropean.ro%2F
@@ -185,7 +171,7 @@ https://developer.chrome.com/docs/lighthouse/overview/
 Documentatia Lighthouse si explicatia auditurilor PageSpeed.
 
 ======================================================================
-11. DOMENIU, DNS SI CPANEL - ROMARG
+10. DOMENIU, DNS SI CPANEL - ROMARG
 ======================================================================
 
 https://my.romarg.com/
@@ -201,11 +187,11 @@ https://www.whatsmydns.net/
 Verificare alternativa pentru A, CNAME, MX si TXT.
 
 ======================================================================
-12. LINKURI DE VERIFICARE RAPIDA
+11. LINKURI DE VERIFICARE RAPIDA
 ======================================================================
 
 https://capitaleuropean.ro/api/admin/session
-Verifica doar starea publica a configurarii admin/MFA. Nu afiseaza secrete.
+Verifica doar starea publica a configurarii si sesiunii admin. Nu afiseaza secrete.
 
 https://capitaleuropean.ro/api/google-reviews
 Endpoint-ul public folosit pentru datele Google Business afisate pe site.
@@ -223,8 +209,7 @@ REGULA DE SIGURANTA
 Nu salva niciodata in acest document:
 - RESEND_API_KEY
 - GOOGLE_PLACES_API_KEY
-- TWILIO_AUTH_TOKEN
 - ADMIN_PASSWORD sau ADMIN_SESSION_SECRET
 - DATABASE_URL / POSTGRES_URL
 - BLOB_READ_WRITE_TOKEN
-- coduri SMS sau parole Gmail/GitHub/Vercel
+- parole Gmail/GitHub/Vercel

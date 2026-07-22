@@ -26,10 +26,10 @@ function formatRomanianPhone(digits: string) {
   return `+40 ${digits.slice(2, 5)} ${digits.slice(5, 8)} ${digits.slice(8)}`;
 }
 
-const legalEntityName = publicValue(process.env.NEXT_PUBLIC_LEGAL_ENTITY_NAME);
-const registrationNumber = publicValue(process.env.NEXT_PUBLIC_REGISTRATION_NUMBER);
-const taxId = publicValue(process.env.NEXT_PUBLIC_TAX_ID);
-const registeredOffice = publicValue(process.env.NEXT_PUBLIC_REGISTERED_OFFICE) || "Satu Mare, Piața Soarelui, Bl. UU6, Ap. 9";
+const legalEntityName = publicValue(process.env.NEXT_PUBLIC_LEGAL_ENTITY_NAME) || "1A BEST EVENTS SRL";
+const registrationNumber = publicValue(process.env.NEXT_PUBLIC_REGISTRATION_NUMBER) || "J2017000108306";
+const taxId = publicValue(process.env.NEXT_PUBLIC_TAX_ID) || "RO37037033";
+const registeredOffice = publicValue(process.env.NEXT_PUBLIC_REGISTERED_OFFICE) || "Satu Mare, Piața Soarelui, Bl. UU6, et. 3, ap. 9, 440221";
 const workingOffice = publicValue(process.env.NEXT_PUBLIC_WORKING_OFFICE) || "Seini, Piața Unirii nr. 2";
 const secondaryOffice = publicValue(process.env.NEXT_PUBLIC_SECONDARY_OFFICE) || "Cluj-Napoca, Strada Oltului nr. 1";
 const contactEmail = publicValue(process.env.NEXT_PUBLIC_CONTACT_EMAIL) || "contact@capitaleuropean.ro";
@@ -80,7 +80,7 @@ export const siteConfig = {
     fonduriUe: "https://www.fonduri-ue.ro/",
     pnrr: "https://pnrr.gov.ro/"
   },
-  lastUpdated: "2026-07-15",
+  lastUpdated: "2026-07-23",
   email: contactEmail,
   phoneDisplay,
   phoneHref,

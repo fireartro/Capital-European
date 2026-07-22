@@ -109,7 +109,6 @@ export function ContentAdminConsole({
   const [dirty, setDirty] = useState(false);
   const [busy, setBusy] = useState(false);
   const [notice, setNotice] = useState<Notice>(null);
-  const [mfaDestination, setMfaDestination] = useState("");
   const [sessionPolicy, setSessionPolicy] = useState(initialSessionPolicy);
   const lastActivityRef = useRef(0);
 
@@ -145,7 +144,6 @@ export function ContentAdminConsole({
     setContent(null);
     setStorage(null);
     setDirty(false);
-    setMfaDestination("");
     setNotice(message ? { type: "error", text: message } : null);
   }, []);
 
@@ -159,12 +157,8 @@ export function ContentAdminConsole({
         headers: requestHeaders,
         body: JSON.stringify({ username, password })
       });
-      const result = await readJson(response) as { message?: string; mfaRequired?: boolean; destination?: string; sessionPolicy?: SessionPolicy };
+      const result = await readJson(response) as { message?: string; sessionPolicy?: SessionPolicy };
       if (!response.ok) throw new Error(result.message || "Autentificarea a eșuat.");
-      if (result.mfaRequired) {
-        setMfaDestination(result.destination || "numărul configurat");
-        return;
-      }
       if (result.sessionPolicy) setSessionPolicy(result.sessionPolicy);
       sessionCreated = true;
       await loadContent();
@@ -172,31 +166,6 @@ export function ContentAdminConsole({
     } catch (error) {
       if (sessionCreated) await logout();
       setNotice({ type: "error", text: error instanceof Error ? error.message : "Autentificarea a eșuat." });
-    } finally {
-      setBusy(false);
-    }
-  };
-
-  const verifyMfa = async (code: string) => {
-    setBusy(true);
-    setNotice(null);
-    let sessionCreated = false;
-    try {
-      const response = await fetch("/api/admin/session", {
-        method: "PUT",
-        headers: requestHeaders,
-        body: JSON.stringify({ code })
-      });
-      const result = await readJson(response) as { message?: string; sessionPolicy?: SessionPolicy };
-      if (!response.ok) throw new Error(result.message || "Codul nu a putut fi verificat.");
-      if (result.sessionPolicy) setSessionPolicy(result.sessionPolicy);
-      setMfaDestination("");
-      sessionCreated = true;
-      await loadContent();
-      setAuthenticated(true);
-    } catch (error) {
-      if (sessionCreated) await logout();
-      setNotice({ type: "error", text: error instanceof Error ? error.message : "Codul nu a putut fi verificat." });
     } finally {
       setBusy(false);
     }
@@ -352,7 +321,7 @@ export function ContentAdminConsole({
   };
 
   if (!configured) return <AdminSetup />;
-  if (!authenticated) return <AdminLogin onLogin={login} onVerifyMfa={verifyMfa} onResetMfa={() => { setMfaDestination(""); setNotice(null); }} mfaDestination={mfaDestination} busy={busy} notice={notice} />;
+  if (!authenticated) return <AdminLogin onLogin={login} busy={busy} notice={notice} />;
   if (!content) return <AdminLoading />;
 
   const items = tab === "funding" ? content.fundingPrograms : content.announcements;
@@ -426,41 +395,29 @@ export function ContentAdminConsole({
 
 function AdminLogin({
   onLogin,
-  onVerifyMfa,
-  onResetMfa,
-  mfaDestination,
   busy,
   notice
 }: {
   onLogin: (username: string, password: string) => Promise<void>;
-  onVerifyMfa: (code: string) => Promise<void>;
-  onResetMfa: () => void;
-  mfaDestination: string;
   busy: boolean;
   notice: Notice;
 }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [code, setCode] = useState("");
   const submit = (event: FormEvent) => {
     event.preventDefault();
-    if (mfaDestination) void onVerifyMfa(code);
-    else void onLogin(username, password);
+    void onLogin(username, password);
   };
   return (
     <main className="admin-auth-page">
       <form className="admin-auth-panel" onSubmit={submit}>
         <p className="admin-auth-kicker"><Settings2 aria-hidden="true" /> Capital European</p>
-        <h1>{mfaDestination ? "Verificare în doi pași" : "Administrare conținut"}</h1>
-        <p>{mfaDestination ? `Introdu codul trimis prin SMS la ${mfaDestination}. Codul expiră în 10 minute.` : "Acces protejat pentru actualizarea fondurilor și anunțurilor publice."}</p>
-        {!mfaDestination && <>
-          <label><span>Utilizator</span><input type="text" name="username" autoComplete="username" value={username} onChange={(event) => setUsername(event.target.value)} required minLength={3} autoFocus /></label>
-          <label><span>Parolă</span><input type="password" autoComplete="current-password" value={password} onChange={(event) => setPassword(event.target.value)} required minLength={12} /></label>
-        </>}
-        {mfaDestination && <label><span>Cod SMS</span><input type="text" name="one-time-code" autoComplete="one-time-code" inputMode="numeric" pattern="[0-9]*" maxLength={10} value={code} onChange={(event) => setCode(event.target.value.replace(/\D/g, ""))} required autoFocus /></label>}
+        <h1>Administrare conținut</h1>
+        <p>Acces protejat pentru actualizarea fondurilor și anunțurilor publice.</p>
+        <label><span>Utilizator</span><input type="text" name="username" autoComplete="username" value={username} onChange={(event) => setUsername(event.target.value)} required minLength={3} autoFocus /></label>
+        <label><span>Parolă</span><input type="password" autoComplete="current-password" value={password} onChange={(event) => setPassword(event.target.value)} required minLength={12} /></label>
         {notice && <p className="admin-login-error" role="alert">{notice.text}</p>}
-        <button type="submit" disabled={busy || (mfaDestination ? code.length < 4 : username.trim().length < 3 || password.length < 12)}>{busy && <LoaderCircle className="spin" aria-hidden="true" />}{busy ? "Se verifică" : mfaDestination ? "Verifică și continuă" : "Intră în panou"}</button>
-        {mfaDestination && <button className="admin-auth-secondary" type="button" onClick={() => { setCode(""); onResetMfa(); }} disabled={busy}>Reia autentificarea</button>}
+        <button type="submit" disabled={busy || username.trim().length < 3 || password.length < 12}>{busy && <LoaderCircle className="spin" aria-hidden="true" />}{busy ? "Se verifică" : "Intră în panou"}</button>
         <Link href="/">Înapoi la site</Link>
       </form>
     </main>
@@ -474,7 +431,6 @@ function AdminSetup() {
         <p className="admin-auth-kicker"><Settings2 aria-hidden="true" /> Configurare necesară</p>
         <h1>Activează panoul de administrare</h1>
         <p>Adaugă în Vercel variabilele <code>ADMIN_USERNAME</code>, <code>ADMIN_PASSWORD</code>, <code>ADMIN_SESSION_SECRET</code> și o conexiune <code>DATABASE_URL</code>, apoi redeploy.</p>
-        <p>Pentru cod SMS obligatoriu, configurează și variabilele Twilio Verify descrise în <code>.env.example</code>.</p>
         <Link href="/">Înapoi la site</Link>
       </section>
     </main>

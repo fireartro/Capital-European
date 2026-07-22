@@ -35,6 +35,14 @@ export const contactSchema = z.object({
     .trim()
     .max(24, "Folosește maximum 24 de caractere.")
     .refine((value) => value === "" || /^[+0-9()\s.-]{7,24}$/.test(value), "Introdu un număr de telefon valid."),
+  organization: z.string().trim().max(160, "Folosește maximum 160 de caractere.").optional().default(""),
+  taxId: z
+    .string()
+    .trim()
+    .max(32, "Folosește maximum 32 de caractere.")
+    .refine((value) => value === "" || /^(RO)?[0-9]{2,10}$/i.test(value.replace(/\s/g, "")), "Introdu un CUI valid sau lasă câmpul liber.")
+    .optional()
+    .default(""),
   category: z.enum(["fonduri-europene", "servicii-administrative", "general"]).optional(),
   service: z.enum([
     "nesigur",
