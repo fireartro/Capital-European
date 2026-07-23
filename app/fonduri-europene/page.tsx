@@ -4,7 +4,7 @@ import { fundingFaq } from "@/lib/service-content";
 import { breadcrumbSchema, faqSchema, fundingProgramListSchema, JsonLd } from "@/lib/structured-data";
 import { getManagedContent } from "@/lib/content-store";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 300;
 
 export const metadata = createPageMetadata({
   title: "Fonduri europene pentru firme, ONG-uri și startup-uri",

@@ -55,6 +55,7 @@ export function FundingHeroCarousel() {
   const [interactionPaused, setInteractionPaused] = useState(false);
   const [manuallyPaused, setManuallyPaused] = useState(false);
   const paused = interactionPaused || manuallyPaused;
+  const activeSlide = slides[activeIndex];
 
   useEffect(() => {
     if (paused || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -78,27 +79,25 @@ export function FundingHeroCarousel() {
       onBlurCapture={() => setInteractionPaused(false)}
     >
       <div className="funding-hero-slides">
-        {slides.map((slide, index) => (
-          <div className={`funding-hero-slide${index === activeIndex ? " is-active" : ""}`} key={slide.image} aria-hidden={index !== activeIndex}>
-            <Image
-              src={slide.image}
-              alt={slide.alt}
-              fill
-              priority={index === 0}
-              fetchPriority={index === 0 ? "high" : "auto"}
-              sizes="(max-width: 1100px) 100vw, calc(100vw - 288px)"
-            />
-          </div>
-        ))}
+        <div className="funding-hero-slide is-active" key={activeSlide.image}>
+          <Image
+            src={activeSlide.image}
+            alt={activeSlide.alt}
+            fill
+            priority={activeIndex === 0}
+            fetchPriority={activeIndex === 0 ? "high" : "auto"}
+            sizes="(max-width: 1100px) 100vw, calc(100vw - 288px)"
+          />
+        </div>
       </div>
       <div className="funding-hero-shade" aria-hidden="true" />
       <div className="section-container funding-photo-hero-content">
         <p className="eyebrow eyebrow-light"><Landmark aria-hidden="true" /> Programe și oportunități de finanțare</p>
         <h1 id="funding-hero-title">Consultanță fonduri europene</h1>
         <div className="funding-hero-active-copy" key={`funding-copy-${activeIndex}`}>
-          <span>{slides[activeIndex].label}</span>
-          <h2>{slides[activeIndex].title}</h2>
-          <p id="funding-hero-description">{slides[activeIndex].text}</p>
+          <span>{activeSlide.label}</span>
+          <h2>{activeSlide.title}</h2>
+          <p id="funding-hero-description">{activeSlide.text}</p>
         </div>
         <div className="funding-hero-actions">
           <Link className="primary-button yellow-button" href="#fonduri-active">Vezi programele de finanțare <ArrowRight aria-hidden="true" /></Link>

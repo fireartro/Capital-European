@@ -1,215 +1,174 @@
-CAPITAL EUROPEAN - LINKURI PLATFORME SI EXPLICATII
+LINKURI UTILE - CAPITAL EUROPEAN
 Actualizat: 23 iulie 2026
 
-IMPORTANT
-- Acest fisier nu contine parole, chei API, tokenuri sau alte secrete.
-- Datele sensibile se pastreaza numai in Vercel Environment Variables si in managerul de parole.
-- Daca un link cere autentificare, foloseste contul asociat proiectului Capital European.
+Am pus aici toate paginile pe care le folosesc pentru site, ca sa le gasesc usor.
+Nu am trecut parole, chei API sau alte date private.
 
-======================================================================
-1. WEBSITE SI ADMINISTRARE CONTINUT
-======================================================================
+
+1. SITE-UL
 
 https://capitaleuropean.ro/
-Site-ul public principal Capital European.
-
-https://capitaleuropean.ro/admin
-Panoul privat pentru administrarea programelor de finantare si a anunturilor.
-Accesul este protejat prin utilizator, parola, sesiune temporara, expirare la inactivitate si limitarea incercarilor de autentificare.
+Site-ul principal.
 
 https://capitaleuropean.ro/sitemap.xml
-Sitemap-ul transmis catre Google Search Console. Contine paginile publice indexabile.
+Lista paginilor pe care o trimit la Google pentru indexare.
 
 https://capitaleuropean.ro/robots.txt
-Regulile pentru robotii motoarelor de cautare. Pagina /admin nu trebuie indexata.
+Regulile dupa care Google si ceilalti roboti pot parcurge site-ul.
 
 https://capitaleuropean.ro/manifest.webmanifest
-Configurarea web-app pentru iconite si instalare pe dispozitive compatibile.
+Datele folosite pentru iconita si instalarea site-ului pe dispozitive compatibile.
 
-======================================================================
-2. COD SURSA - GITHUB
-======================================================================
+
+2. GITHUB - CODUL SITE-ULUI
 
 https://github.com/fireartro/Capital-European
-Repository-ul GitHub folosit pentru versiunea curenta a proiectului si deploy.
+Repository-ul principal din care este publicat site-ul.
 
 https://github.com/Manu8733/Capital-European
-Repository-ul secundar/origin existent local. Verifica inainte de push ce remote este folosit.
+Repository-ul secundar pe care il pastrez ca referinta.
 
-======================================================================
-3. HOSTING, DEPLOY SI VARIABILE - VERCEL
-======================================================================
+
+3. VERCEL - PUBLICARE SI DOMENIU
 
 https://vercel.com/capital-european/capital-european
-Proiectul Vercel principal. De aici se verifica deploy-urile, domeniile, logurile si setarile.
+Pagina principala a proiectului Vercel.
 
 https://vercel.com/capital-european/capital-european/deployments
-Istoricul deployment-urilor. Se foloseste pentru verificarea buildurilor Ready/Error.
-
-https://vercel.com/capital-european/capital-european/settings
-Setarile generale ale proiectului.
+Aici verific daca ultima versiune s-a publicat cu succes.
 
 https://vercel.com/capital-european/capital-european/settings/environment-variables
-Variabilele Production/Preview/Development: email, Analytics, Google Places, admin si baza de date.
-Nu copia valorile secrete in acest fisier.
+Aici sunt setarile pentru email, Google Analytics, Google Places si celelalte servicii conectate.
 
 https://vercel.com/capital-european/capital-european/settings/domains
-Configurarea domeniilor capitaleuropean.ro si www.capitaleuropean.ro.
+Aici verific domeniile capitaleuropean.ro si www.capitaleuropean.ro.
 
 https://vercel.com/capital-european/capital-european/logs
-Logurile runtime pentru erori din API, formular, recenzii si admin.
+Aici caut erorile aparute la formular, email sau recenziile Google.
 
-https://vercel.com/storage
-Administrarea integrarilor de stocare. Proiectul foloseste PostgreSQL/Neon si poate folosi Vercel Blob pentru imaginile incarcate din admin.
 
-======================================================================
-4. BAZA DE DATE SI FISIERE
-======================================================================
-
-https://console.neon.tech/
-Consola Neon PostgreSQL folosita de continutul administrabil si sesiunile admin.
-Conexiunea este pastrata in DATABASE_URL/POSTGRES_URL pe Vercel.
-
-https://vercel.com/storage/blob
-Vercel Blob pentru imaginile incarcate din panoul admin, daca store-ul este conectat.
-
-======================================================================
-5. EMAIL - RESEND SI GMAIL
-======================================================================
+4. EMAIL - RESEND SI GMAIL
 
 https://resend.com/overview
-Panoul principal Resend pentru trimiterea si primirea emailurilor site-ului.
+Pagina principala Resend.
 
 https://resend.com/domains
-Verificarea domeniului capitaleuropean.ro si a inregistrarilor DNS pentru email.
+Aici verific domeniul capitaleuropean.ro pentru trimiterea si primirea emailurilor.
 
 https://resend.com/emails
-Istoricul mesajelor trimise prin formular si al redirectionarilor email.
+Aici vad mesajele trimise de site.
 
 https://resend.com/webhooks
-Webhook-ul pentru emailurile primite pe contact@capitaleuropean.ro.
+Aici este legatura care preia mesajele primite pe contact@capitaleuropean.ro.
 
 https://resend.com/api-keys
-Cheile API Resend. Nu copia si nu salva cheia in fisiere publice sau in GitHub.
+Aici se gestioneaza cheia Resend. Cheia nu trebuie pusa in GitHub sau in acest fisier.
 
 https://mail.google.com/mail/u/0/#inbox
-Inbox-ul Gmail in care sunt primite mesajele redirectionate pentru Capital European.
+Inbox-ul in care primesc mesajele redirectionate pentru Capital European.
 
-======================================================================
-6. GOOGLE BUSINESS PROFILE SI GOOGLE MAPS
-======================================================================
+
+5. GOOGLE BUSINESS SI GOOGLE MAPS
 
 https://business.google.com/locations
-Administrarea profilului Google Business: categorie, servicii, program, adrese, fotografii si actualizari.
+Aici modific profilul firmei: servicii, program, adresa, fotografii si informatii.
 
 https://www.google.com/maps?cid=14253260384950460462
-Profilul public Capital European in Google Maps, inclusiv recenziile reale.
+Profilul public Capital European din Google Maps si recenziile primite.
 
 https://console.cloud.google.com/google/maps-apis/credentials
-Credentialele Google Maps Platform/Places API folosite pentru recenziile afisate pe site.
+Aici este cheia folosita pentru legatura dintre profilul Google si recenziile afisate pe site.
 
 https://console.cloud.google.com/apis/library/places-backend.googleapis.com
-Activarea si verificarea Places API pentru proiectul Google Cloud.
-
-https://console.cloud.google.com/apis/credentials
-Lista generala de credentiale Google Cloud. Cheia trebuie restrictionata la API-urile si domeniile necesare.
+Aici verific daca Places API este activ.
 
 https://console.cloud.google.com/billing
-Contul de facturare Google Cloud necesar pentru functionarea Places API.
+Aici verific facturarea proiectului Google Cloud, necesara pentru Places API.
 
-======================================================================
-7. GOOGLE ANALYTICS SI MASURAREA CONVERSIILOR
-======================================================================
+
+6. GOOGLE ANALYTICS
 
 https://analytics.google.com/analytics/web/
-Google Analytics 4 pentru trafic, surse, pagini si conversii.
-Measurement ID public folosit de site: G-JJDLTV4VX9.
+Aici urmaresc traficul, paginile vizitate si actiunile importante de pe site.
+Codul folosit de site este G-JJDLTV4VX9.
 
 https://analytics.google.com/analytics/web/#/realtime/overview
-Raportul Realtime pentru verificarea rapida a vizitelor si evenimentelor, dupa acordul pentru cookies analytics.
+Aici pot verifica o vizita in timp real, dupa ce utilizatorul accepta cookie-urile de analiza.
 
 https://tagmanager.google.com/
-Google Tag Manager. Momentan este optional; se foloseste doar daca NEXT_PUBLIC_GTM_ID este configurat.
+Google Tag Manager. Il folosesc numai daca va fi nevoie de etichete suplimentare.
 
-======================================================================
-8. GOOGLE SEARCH CONSOLE SI INDEXARE
-======================================================================
+
+7. GOOGLE SEARCH CONSOLE
 
 https://search.google.com/search-console?resource_id=sc-domain%3Acapitaleuropean.ro
-Proprietatea de domeniu capitaleuropean.ro in Google Search Console.
+Pagina principala pentru indexare si cautarile prin care este gasit site-ul.
 
 https://search.google.com/search-console/sitemaps?resource_id=sc-domain%3Acapitaleuropean.ro
-Trimiterea si verificarea sitemap-ului https://capitaleuropean.ro/sitemap.xml.
+Aici trimit si verific sitemap-ul:
+https://capitaleuropean.ro/sitemap.xml
 
 https://search.google.com/search-console/inspect?resource_id=sc-domain%3Acapitaleuropean.ro
-Inspectarea unui URL, solicitarea indexarii si verificarea versiunii vazute de Google.
+Aici verific o pagina anume si pot cere indexarea ei.
 
 https://search.google.com/test/rich-results?url=https%3A%2F%2Fcapitaleuropean.ro%2F
-Testarea datelor structurate si a rezultatelor imbogatite pentru pagina principala.
+Aici verific datele structurate pe care Google le citeste din pagina principala.
 
-======================================================================
-9. PAGESPEED INSIGHTS / LIGHTHOUSE
-======================================================================
+
+8. VITEZA SI VERIFICARI TEHNICE
 
 https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fcapitaleuropean.ro%2F
-Audit PageSpeed Insights pentru pagina principala. Verifica separat Mobil si Computer.
-
-Rezultatele din 14 iulie 2026, inaintea optimizarilor curente:
-- Computer: Performanta 95, Accesibilitate 96, Best Practices 100, SEO 100.
-- Mobil: Performanta 81, Accesibilitate 96, Best Practices 100, SEO 100.
-
-Problemele observate in raport:
-- Google Maps incarcat prea devreme si aproximativ 250 KB JavaScript nefolosit.
-- Reflow fortat provenit din scripturile Google Maps.
-- Resurse CSS care blocau randarea initiala.
-- Imaginea logo livrata la o dimensiune/compresie mai mare decat era necesar.
-- Aproximativ 14 KB JavaScript pentru compatibilitate cu browsere vechi.
-- Atribut aria-label nepermis pe elementul span al stelelor Google.
-- Scor Navigare autonoma 1/2, cauzat de aceeasi structura ARIA.
-
-https://developer.chrome.com/docs/lighthouse/overview/
-Documentatia Lighthouse si explicatia auditurilor PageSpeed.
-
-======================================================================
-10. DOMENIU, DNS SI CPANEL - ROMARG
-======================================================================
-
-https://my.romarg.com/
-Contul ROMARG pentru domeniu, hosting si acces la cPanel.
-
-In ROMARG/cPanel: Domains -> Zone Editor -> Manage
-Zona in care au fost adaugate/modificate inregistrarile A, CNAME si TXT pentru Vercel, Google si Resend.
-
-https://dnschecker.org/
-Verificarea propagarii globale a inregistrarilor DNS.
-
-https://www.whatsmydns.net/
-Verificare alternativa pentru A, CNAME, MX si TXT.
-
-======================================================================
-11. LINKURI DE VERIFICARE RAPIDA
-======================================================================
-
-https://capitaleuropean.ro/api/admin/session
-Verifica doar starea publica a configurarii si sesiunii admin. Nu afiseaza secrete.
-
-https://capitaleuropean.ro/api/google-reviews
-Endpoint-ul public folosit pentru datele Google Business afisate pe site.
+Testul PageSpeed pentru telefon si calculator.
 
 https://securityheaders.com/?q=https%3A%2F%2Fcapitaleuropean.ro%2F&followRedirects=on
-Verificarea headerelor de securitate HTTP.
+Verificarea protectiilor trimise de server.
 
 https://validator.schema.org/#url=https%3A%2F%2Fcapitaleuropean.ro%2F
-Validarea Schema.org/JSON-LD publicat de site.
+Verificarea informatiilor Schema.org despre firma si servicii.
 
-======================================================================
-REGULA DE SIGURANTA
-======================================================================
+https://capitaleuropean.ro/api/google-reviews
+Verificare rapida pentru legatura dintre site si recenziile Google.
 
-Nu salva niciodata in acest document:
-- RESEND_API_KEY
-- GOOGLE_PLACES_API_KEY
-- ADMIN_PASSWORD sau ADMIN_SESSION_SECRET
-- DATABASE_URL / POSTGRES_URL
-- BLOB_READ_WRITE_TOKEN
-- parole Gmail/GitHub/Vercel
+
+9. DOMENIU SI DNS
+
+https://my.romarg.com/
+Contul ROMARG pentru domeniu si accesul la cPanel.
+
+In cPanel intru la:
+Domains -> Zone Editor -> Manage
+
+Acolo sunt inregistrarile A, CNAME, MX si TXT pentru Vercel, Google si Resend.
+
+https://dnschecker.org/
+Verific aici daca modificarile DNS s-au propagat.
+
+https://www.whatsmydns.net/
+O a doua verificare pentru inregistrarile DNS.
+
+
+CE ESTE LEGAT DE SITE
+
+- alegerea dintre consultanta pentru fonduri europene si servicii administrative;
+- pagini separate pentru consultanta, firme, ONG-uri si startup-uri;
+- lista programelor de finantare, cu sursa si formular de solicitare;
+- pagini separate pentru PFA, SRL, documente si secretariat;
+- anunturi publice;
+- formular de contact cu trimitere pe email;
+- integrarea pentru recenziile reale din Google Business;
+- harta si linkuri directe catre locatii;
+- Google Analytics numai dupa acceptarea cookie-urilor de analiza;
+- sitemap, robots.txt si date structurate pentru Google;
+- afisare adaptata pentru telefon, tableta si calculator.
+
+
+DE RETINUT
+
+Nu salvez niciodata aici:
+- parole;
+- chei API;
+- tokenuri;
+- datele complete de conectare;
+- coduri primite prin email sau telefon.
+
+Datele private raman doar in conturile platformelor si in setarile protejate din Vercel.

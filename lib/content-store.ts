@@ -15,6 +15,48 @@ const LEGACY_PLACEHOLDER_PROGRAM_IDS = new Set([
   "startup-antreprenoriat",
   "ong-impact-local"
 ]);
+const BROKEN_SOURCE_URL_MIGRATIONS = new Map([
+  [
+    "https://www.gwconsulting.ro/planul-national-strategic-2023/dr-23-investitii-pentru-procesarea-si-marketingul-produselor-agricole-in-vederea-obtinerii-unor-produse-alimentare-si-produse-transformate/",
+    "https://www.gwconsulting.ro/planul-national-strategic-2023/"
+  ],
+  [
+    "https://www.gwconsulting.ro/planul-national-strategic-2023/dr-24-investitii-in-tehnologii-forestiere/",
+    "https://www.gwconsulting.ro/planul-national-strategic-2023/"
+  ],
+  [
+    "https://www.gwconsulting.ro/planul-national-strategic-2023/dr-25-modernizarea-infrastructurii-de-irigatii/",
+    "https://www.gwconsulting.ro/planul-national-strategic-2023/"
+  ],
+  [
+    "https://www.gwconsulting.ro/planul-national-strategic-2023/investitii-in-crearea-si-dezvoltarea-de-activitati-neagricole-dr-29/",
+    "https://www.gwconsulting.ro/planul-national-strategic-2023/"
+  ],
+  [
+    "https://www.gwconsulting.ro/planul-national-strategic-2023/investitii-in-exploatatii-agricole-pndr-4-1/",
+    "https://www.gwconsulting.ro/planul-national-strategic-2023/"
+  ],
+  [
+    "https://www.gwconsulting.ro/planul-national-strategic-2023/pndr-4-1-1-achizitii-simple-de-utilaje-agricole/",
+    "https://www.gwconsulting.ro/planul-national-strategic-2023/"
+  ],
+  [
+    "https://www.gwconsulting.ro/agrivoltaic-2-sectorul-agricol-industria-alimentara/",
+    "https://www.gwconsulting.ro/energie-verde-si-reciclare/"
+  ],
+  [
+    "https://www.gwconsulting.ro/fm-dezvoltarea-capacitatilor-de-stocare-a-energiei-electrice/",
+    "https://www.gwconsulting.ro/energie-verde-si-reciclare/"
+  ],
+  [
+    "https://www.gwconsulting.ro/fm-pc-1-sprijinirea-investitiilor-in-dezvoltarea-capacitatilor-de-stocare-a-energiei-electrice-baterii/",
+    "https://www.gwconsulting.ro/energie-verde-si-reciclare/"
+  ],
+  [
+    "https://www.gwconsulting.ro/fondul-pentru-modernizare-surse-regenerabile-pentru-autoconsum/",
+    "https://www.gwconsulting.ro/energie-verde-si-reciclare/"
+  ]
+]);
 
 export type ContentStorage = {
   mode: "postgres" | "local-file" | "read-only-default";
@@ -159,7 +201,10 @@ export async function getManagedContent(): Promise<ManagedContent> {
         seedVersion: seed.seedVersion,
         updatedAt: new Date().toISOString(),
         fundingPrograms: [
-          ...parsed.data.fundingPrograms,
+          ...parsed.data.fundingPrograms.map((program) => {
+            const replacementUrl = BROKEN_SOURCE_URL_MIGRATIONS.get(program.sourceUrl);
+            return replacementUrl ? { ...program, sourceUrl: replacementUrl } : program;
+          }),
           ...seed.fundingPrograms.filter((program) => !existingIds.has(program.id))
         ]
       };

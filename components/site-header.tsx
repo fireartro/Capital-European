@@ -226,21 +226,20 @@ export function SiteHeader({ navigationContext }: { navigationContext?: "funding
   };
 
   const handleNavigationClick = (event: MouseEvent<HTMLAnchorElement>, href: string) => {
-    closeMenu();
     const { path, hash } = getHrefParts(href);
     const isSamePageAnchor = path === pathname && hash;
+    closeMenu();
     if (!isSamePageAnchor) return;
 
     event.preventDefault();
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const behavior: ScrollBehavior = reduceMotion ? "auto" : "smooth";
-
     const section = document.getElementById(hash.slice(1));
     if (!section) return;
 
-    section.scrollIntoView({ behavior, block: "start" });
+    // The mobile drawer locks body scrolling, so release it before moving.
+    document.body.style.removeProperty("overflow");
     window.history.replaceState(null, "", `${path}${hash}`);
     setActiveSection({ pathname, hash });
+    section.scrollIntoView({ behavior: "auto", block: "start" });
   };
 
   const navigationContent = (

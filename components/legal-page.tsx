@@ -33,7 +33,7 @@ export function LegalPage({
       <header className="legal-header">
         <div className="shell legal-nav">
           <Link className="brand" href="/" aria-label="Înapoi la pagina principală Capital European" title="Capital European">
-            <Brand variant="light" priority />
+            <Brand variant="light" />
           </Link>
           <div className="legal-nav-actions">
             <CookieSettingsButton compact />

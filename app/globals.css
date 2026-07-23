@@ -311,7 +311,7 @@ h2 em { color: var(--eu-blue); font-style: normal; }
 .funding-photo-hero { position: relative; min-height: clamp(700px, 84vh, 860px); display: flex; align-items: center; overflow: hidden; isolation: isolate; color: #fff; background: #06152f; }
 .funding-hero-slides, .funding-hero-slide, .funding-hero-shade { position: absolute; inset: 0; }
 .funding-hero-slide { opacity: 0; transform: scale(1.025); transition: opacity .8s ease, transform 7s ease; }
-.funding-hero-slide.is-active { opacity: 1; transform: scale(1); }
+.funding-hero-slide.is-active { opacity: 1; transform: scale(1); animation: fundingHeroImageIn .8s ease both; }
 .funding-hero-slide img { object-fit: cover; object-position: center; }
 .funding-hero-shade { z-index: 1; background: linear-gradient(90deg, rgba(2,13,35,.96) 0%, rgba(2,20,54,.86) 42%, rgba(2,19,49,.35) 72%, rgba(2,16,40,.28) 100%); }
 .funding-photo-hero-content { position: relative; z-index: 2; padding-block: 82px 64px; }
@@ -334,6 +334,10 @@ h2 em { color: var(--eu-blue); font-style: normal; }
 @keyframes fundingHeroCopyIn {
   from { opacity: 0; transform: translate3d(0, 16px, 0); }
   to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+@keyframes fundingHeroImageIn {
+  from { opacity: .72; transform: scale(1.025); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 /* Scroll-linked orbit for service pages */
@@ -791,6 +795,7 @@ body:has(.funding-photo-hero) .scroll-star-orbit.section-0 { right: -150px; opac
 .google-reviews-section-split .google-review-live-fallback > a { color: rgba(255,255,255,.68); }
 
 @media (prefers-reduced-motion: reduce) {
+  .funding-hero-slide.is-active,
   .funding-hero-active-copy { animation: none; }
   .google-reviews-marquee { overflow-x: auto; mask-image: none; scroll-snap-type: x proximity; }
   .google-reviews-track { animation: none; }
