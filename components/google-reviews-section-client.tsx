@@ -70,9 +70,10 @@ export function GoogleReviewsSectionClient({ initialData, variant = "default" }:
     return (
       <section className={fallbackClassName} aria-labelledby="google-reviews-title">
         <div className="section-container google-review-live-fallback">
-          <div>
+          <div className="google-review-fallback-copy">
             <p className="eyebrow"><MessageCircleHeart aria-hidden="true" /> Recenzii Google</p>
             <h2 id="google-reviews-title">Ce spun clienții</h2>
+            <p>Recenziile verificate sunt disponibile direct în profilul nostru Google Business.</p>
           </div>
           <TrackedAnchor eventName="review_click" eventParameters={{ placement: variant }} href={siteConfig.googleBusiness.url} target="_blank" rel="noopener noreferrer" title="Vezi recenziile Capital European pe Google">
             Vezi toate recenziile pe Google
