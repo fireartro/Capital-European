@@ -103,6 +103,21 @@ async function writeDatabaseContent(content: ManagedContent) {
   `;
 }
 
+async function writeLocalContent(content: ManagedContent) {
+  await fs.mkdir(path.dirname(LOCAL_DATA_PATH), { recursive: true });
+  const temporaryPath = `${LOCAL_DATA_PATH}.${process.pid}.tmp`;
+  await fs.writeFile(temporaryPath, JSON.stringify(content, null, 2), "utf8");
+  await fs.rename(temporaryPath, LOCAL_DATA_PATH);
+}
+
+async function persistContent(content: ManagedContent, storage: ContentStorage) {
+  if (storage.mode === "postgres") {
+    await writeDatabaseContent(content);
+  } else if (storage.mode === "local-file") {
+    await writeLocalContent(content);
+  }
+}
+
 export async function getManagedContent(): Promise<ManagedContent> {
   const storage = getContentStorage();
   try {
@@ -124,17 +139,32 @@ export async function getManagedContent(): Promise<ManagedContent> {
       return seed;
     }
 
+    const seed = await readSeedContent();
     const hasNoPrograms = parsed.data.fundingPrograms.length === 0;
     const containsOnlyLegacyPlaceholders = parsed.data.fundingPrograms.length > 0
       && parsed.data.fundingPrograms.every((program) => LEGACY_PLACEHOLDER_PROGRAM_IDS.has(program.id));
 
     if (hasNoPrograms || containsOnlyLegacyPlaceholders) {
-      const seed = await readSeedContent();
       if (Date.parse(parsed.data.updatedAt) < Date.parse(seed.updatedAt)) {
-        const migrated = { ...seed, announcements: parsed.data.announcements };
-        if (storage.mode === "postgres") await writeDatabaseContent(migrated);
+        const migrated = { ...seed, announcements: parsed.data.announcements, updatedAt: new Date().toISOString() };
+        await persistContent(migrated, storage);
         return migrated;
       }
+    }
+
+    if (parsed.data.seedVersion < seed.seedVersion) {
+      const existingIds = new Set(parsed.data.fundingPrograms.map((program) => program.id));
+      const migrated: ManagedContent = {
+        ...parsed.data,
+        seedVersion: seed.seedVersion,
+        updatedAt: new Date().toISOString(),
+        fundingPrograms: [
+          ...parsed.data.fundingPrograms,
+          ...seed.fundingPrograms.filter((program) => !existingIds.has(program.id))
+        ]
+      };
+      await persistContent(migrated, storage);
+      return migrated;
     }
 
     return parsed.data;
@@ -163,10 +193,7 @@ export async function saveManagedContent(input: unknown): Promise<ManagedContent
   if (storage.mode === "postgres") {
     await writeDatabaseContent(content);
   } else {
-    await fs.mkdir(path.dirname(LOCAL_DATA_PATH), { recursive: true });
-    const temporaryPath = `${LOCAL_DATA_PATH}.${process.pid}.tmp`;
-    await fs.writeFile(temporaryPath, JSON.stringify(content, null, 2), "utf8");
-    await fs.rename(temporaryPath, LOCAL_DATA_PATH);
+    await writeLocalContent(content);
   }
 
   return content;

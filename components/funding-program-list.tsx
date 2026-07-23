@@ -45,7 +45,7 @@ export function FundingProgramList({ programs }: { programs: readonly FundingPro
               </dl>
               <div className="funding-program-actions">
                 <AnalyticsLink eventName="select_program" eventParameters={{ program_id: program.id, program_name: program.title }} href={`/contact?service=fonduri-europene&program=${program.id}#formular-contact`}>Solicită analiza <ArrowRight aria-hidden="true" /></AnalyticsLink>
-                <a href={program.sourceUrl} target="_blank" rel="noopener noreferrer" onClick={() => trackAnalyticsEvent("program_source_click", { program_id: program.id, program_name: program.title })}>Ghid / sursă oficială <ExternalLink aria-hidden="true" /></a>
+                <a href={program.sourceUrl} target="_blank" rel="noopener noreferrer" onClick={() => trackAnalyticsEvent("program_source_click", { program_id: program.id, program_name: program.title })}>Ghid și detalii <ExternalLink aria-hidden="true" /></a>
               </div>
             </div>
           </article>

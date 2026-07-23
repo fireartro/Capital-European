@@ -1,7 +1,7 @@
 import { FundingPage } from "@/components/funding-page";
 import { createPageMetadata } from "@/lib/metadata";
 import { fundingFaq } from "@/lib/service-content";
-import { breadcrumbSchema, faqSchema, JsonLd } from "@/lib/structured-data";
+import { breadcrumbSchema, faqSchema, fundingProgramListSchema, JsonLd } from "@/lib/structured-data";
 import { getManagedContent } from "@/lib/content-store";
 
 export const dynamic = "force-dynamic";
@@ -21,7 +21,8 @@ export default async function Page() {
           { name: "Acasă", path: "/" },
           { name: "Fonduri europene", path: "/fonduri-europene" }
         ]),
-        faqSchema(fundingFaq)
+        faqSchema(fundingFaq),
+        fundingProgramListSchema(content.fundingPrograms)
       ]} />
       <FundingPage programs={content.fundingPrograms} />
     </>

@@ -22,6 +22,7 @@ export type Announcement = {
 
 export type ManagedContent = {
   version: 1;
+  seedVersion: number;
   updatedAt: string;
   fundingPrograms: FundingProgram[];
   announcements: Announcement[];
@@ -78,6 +79,7 @@ export const announcementSchema = z.object({
 
 export const managedContentSchema = z.object({
   version: z.literal(1),
+  seedVersion: z.number().int().nonnegative().default(0),
   updatedAt: z.string().datetime(),
   fundingPrograms: z.array(fundingProgramSchema).max(100),
   announcements: z.array(announcementSchema).max(250)
@@ -97,6 +99,7 @@ export const managedContentSchema = z.object({
 export function createDefaultManagedContent(fundingPrograms: readonly FundingProgram[] = []): ManagedContent {
   return {
     version: 1,
+    seedVersion: 0,
     updatedAt: new Date().toISOString(),
     fundingPrograms: fundingPrograms.map((program) => ({ ...program })),
     announcements: []

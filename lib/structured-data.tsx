@@ -1,4 +1,5 @@
 import { siteConfig } from "@/lib/site-config";
+import type { FundingProgram } from "@/lib/funding-programs";
 
 type JsonObject = Record<string, unknown>;
 
@@ -200,6 +201,24 @@ export function breadcrumbSchema(items: Array<{ name: string; path: string }>): 
       position: index + 1,
       name: item.name,
       item: absoluteUrl(item.path)
+    }))
+  };
+}
+
+export function fundingProgramListSchema(programs: readonly FundingProgram[]): JsonObject {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Programe de finanțare urmărite",
+    description: "Programe de finanțare urmărite și reconfirmate înaintea fiecărei evaluări de eligibilitate.",
+    numberOfItems: programs.length,
+    itemListOrder: "https://schema.org/ItemListUnordered",
+    itemListElement: programs.map((program, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: program.title,
+      description: `${program.program}. ${program.summary}`,
+      url: program.sourceUrl
     }))
   };
 }
