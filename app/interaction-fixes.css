@@ -42,7 +42,6 @@ body:has(.cookie-preferences-backdrop) .quick-contact-float { display: none; }
 
 .contact-layout-simplified { align-items: center; }
 .contact-layout-simplified .contact-copy { max-width: 560px; }
-.contact-layout-simplified .contact-primary-link { margin-bottom: 18px; }
 .contact-layout-simplified .contact-steps { margin-top: 8px; }
 
 .content-section { padding-block: 84px; }
@@ -255,7 +254,6 @@ body:has(.cookie-preferences-backdrop) .quick-contact-float { display: none; }
 
   .contact-copy h1 { font-size: clamp(1.85rem, 8.2vw, 2rem); line-height: 1.07; }
   .contact-copy > p:not(.eyebrow) { font-size: .8rem; line-height: 1.58; }
-  .contact-primary-link { margin-bottom: 20px; }
   .contact-steps article { padding: 10px; }
   .contact-form { padding: 20px 15px; }
   .form-heading h2 { font-size: 1.22rem; }

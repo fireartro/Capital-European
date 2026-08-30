@@ -675,8 +675,6 @@ body:has(.funding-photo-hero) .scroll-star-orbit.section-0 { right: -150px; opac
 .contact-copy h1 em { color: var(--eu-yellow); font-style: normal; }
 .contact-copy h2 { color: #fff; }
 .contact-copy > p:not(.eyebrow) { max-width: 520px; margin: 17px 0 25px; color: rgba(255,255,255,.82); line-height: 1.66; }
-.contact-primary-link { min-height: 48px; display: inline-flex; align-items: center; justify-content: center; gap: 9px; margin: -8px 0 26px; padding: 0 18px; border-radius: 10px; color: var(--eu-blue-dark); background: var(--eu-yellow); font-size: .82rem; font-weight: 850; box-shadow: 0 14px 35px rgba(255,204,0,.2); }
-.contact-primary-link:hover { background: #ffdc4d; transform: translateY(-2px); }
 .contact-steps { display: grid; gap: 8px; margin-top: 18px; }
 .contact-steps article { display: grid; grid-template-columns: 36px 1fr; gap: 11px; padding: 11px; border: 1px solid rgba(255,255,255,.11); border-radius: 10px; background: rgba(255,255,255,.045); }
 .contact-steps article > span { width: 36px; height: 36px; display: grid; place-items: center; border-radius: 9px; color: var(--eu-blue-dark); background: var(--eu-yellow); font-size: .75rem; font-weight: 850; }
