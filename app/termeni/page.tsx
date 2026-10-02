@@ -22,7 +22,7 @@ export default function TermsPage() {
       <LegalPage
         eyebrow="Informații contractuale și reguli de utilizare"
         title="Termeni și condiții"
-        updated="13 iulie 2026"
+        updated="2 octombrie 2026"
         intro="Acești termeni reglementează utilizarea website-ului și transmiterea solicitărilor. Prestarea efectivă a serviciilor este guvernată de oferta și contractul încheiat separat, care prevalează în cazul oricărei neconcordanțe."
         notice={!legal.isComplete ? (
           <>
@@ -53,7 +53,7 @@ export default function TermsPage() {
           {
             title: "3. Acceptarea termenilor",
             content: [
-              "Prin utilizarea website-ului confirmi că ai citit termenii aplicabili navigării. Transmiterea formularului confirmă că datele furnizate sunt corecte și că ai consultat Politica de confidențialitate.",
+              "Transmiterea formularului confirmă că datele furnizate sunt corecte și că ai consultat Politica de confidențialitate. Checkboxul este o confirmare a informării pentru analizarea cererii și răspuns, nu consimțământ pentru marketing sau pentru cookie-uri opționale.",
               "Simpla navigare nu echivalează cu acceptarea unei oferte comerciale și nu creează o obligație de a contracta. Consimțământul pentru cookie-uri opționale este separat și poate fi refuzat fără a pierde accesul la conținut."
             ]
           },

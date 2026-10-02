@@ -31,21 +31,51 @@ export type ManagedContent = {
 const requiredText = (max: number) => z.string().trim().min(1).max(max);
 const optionalText = (max: number) => z.string().trim().max(max);
 const slugSchema = z.string().trim().min(2).max(100).regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "Folosește doar litere mici, cifre și cratimă.");
-const linkSchema = z.string().trim().max(600).refine(
-  (value) => value === "" || value.startsWith("/") || /^https:\/\//i.test(value),
-  "Folosește o cale internă sau un URL HTTPS."
+function hasSafeUrlCharacters(value: string) {
+  try {
+    return !/[\\\u0000-\u001F\u007F]/.test(value)
+      && !/[\\\u0000-\u001F\u007F]/.test(decodeURIComponent(value));
+  } catch {
+    return false;
+  }
+}
+
+function isLocalAbsolutePath(value: string) {
+  if (!value.startsWith("/") || value.startsWith("//") || !hasSafeUrlCharacters(value)) return false;
+  const decoded = decodeURIComponent(value).split(/[?#]/)[0];
+  return !decoded.startsWith("//") && !decoded.split("/").some((segment) => segment === "." || segment === "..");
+}
+
+function httpsUrl(value: string) {
+  if (!/^https:\/\/[^/\\?#\s]+/i.test(value) || !hasSafeUrlCharacters(value)) return null;
+  try {
+    const url = new URL(value);
+    return url.protocol === "https:" && url.hostname && !url.username && !url.password ? url : null;
+  } catch {
+    return null;
+  }
+}
+
+const urlCharacters = z.string().refine(hasSafeUrlCharacters, "URL-ul nu poate conține backslash sau caractere de control.").trim();
+const linkSchema = urlCharacters.max(600).refine(
+  (value) => value === "" || isLocalAbsolutePath(value) || Boolean(httpsUrl(value)),
+  "Folosește o cale internă absolută sau un URL HTTPS valid."
 );
-const imageSchema = z.string().trim().min(1).max(700).refine(
-  (value) => value.startsWith("/") || /^https:\/\//i.test(value),
-  "Folosește o imagine locală sau un URL HTTPS."
-);
+const imageSchema = urlCharacters.min(1).max(700).refine((value) => {
+  if (isLocalAbsolutePath(value)) return /^\/images\/(?:[a-z0-9_-]+\/)*[a-z0-9_-]+\.(?:jpe?g|png|webp|avif)$/i.test(value);
+  const url = httpsUrl(value);
+  if (!url || url.port || url.search || url.hash) return false;
+  if (url.hostname === "lh3.googleusercontent.com") return /^\/(?:a|a-)\/[a-z0-9_.=-]+$/i.test(url.pathname);
+  return /^[a-z0-9-]+\.public\.blob\.vercel-storage\.com$/.test(url.hostname)
+    && /^\/cms\/media\/(?:[a-z0-9_-]+\/)*[a-z0-9_-]+\.(?:jpe?g|png|webp|avif)$/i.test(url.pathname);
+}, "Folosește un asset local existent, un avatar Google sau o imagine Vercel Blob din /cms/media/.");
 
 export const fundingProgramSchema = z.object({
   id: slugSchema,
   code: requiredText(160),
   title: requiredText(180),
   program: requiredText(120),
-  status: z.enum(["Deschis", "În pregătire", "Închis"]),
+  status: z.enum(["Deschis", "În pregătire", "Închis", "De verificat"]),
   audience: requiredText(350),
   summary: requiredText(600),
   value: requiredText(180),
@@ -54,6 +84,7 @@ export const fundingProgramSchema = z.object({
   image: imageSchema,
   imageAlt: requiredText(220),
   sourceUrl: z.string().trim().url().max(600).refine((value) => value.startsWith("https://"), "Sursa trebuie să folosească HTTPS."),
+  sourceKind: z.enum(["guide", "consultation", "authority", "legislation", "archive"]).optional(),
   lastVerified: requiredText(120)
 });
 

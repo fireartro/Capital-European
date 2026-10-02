@@ -19,6 +19,7 @@ import Link from "next/link";
 import { type FormEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { ContentStorage } from "@/lib/content-store";
 import type { FundingProgram } from "@/lib/funding-programs";
+import { fundingSourceLabels, type FundingSourceKind } from "@/lib/funding-sources";
 import {
   announcementStatuses,
   slugifyContent,
@@ -93,13 +94,15 @@ export function ContentAdminConsole({
   initialAuthenticated,
   initialContent,
   initialStorage,
-  initialSessionPolicy
+  initialSessionPolicy,
+  initialError = null
 }: {
   configured: boolean;
   initialAuthenticated: boolean;
   initialContent: ManagedContent | null;
   initialStorage: ContentStorage | null;
   initialSessionPolicy: SessionPolicy;
+  initialError?: string | null;
 }) {
   const [authenticated, setAuthenticated] = useState(initialAuthenticated);
   const [content, setContent] = useState(initialContent);
@@ -108,7 +111,7 @@ export function ContentAdminConsole({
   const [selectedId, setSelectedId] = useState(initialContent?.fundingPrograms[0]?.id || "");
   const [dirty, setDirty] = useState(false);
   const [busy, setBusy] = useState(false);
-  const [notice, setNotice] = useState<Notice>(null);
+  const [notice, setNotice] = useState<Notice>(initialError ? { type: "error", text: initialError } : null);
   const [sessionPolicy, setSessionPolicy] = useState(initialSessionPolicy);
   const lastActivityRef = useRef(0);
 
@@ -139,12 +142,22 @@ export function ContentAdminConsole({
   };
 
   const logout = useCallback(async (message?: string) => {
-    await fetch("/api/admin/session", { method: "DELETE", headers: { "X-Requested-With": "XMLHttpRequest" } }).catch(() => undefined);
+    try {
+      const response = await fetch("/api/admin/session", { method: "DELETE", headers: { "X-Requested-With": "XMLHttpRequest" } });
+      if (!response.ok) {
+        setNotice({ type: "error", text: "Deconectarea nu a putut fi confirmată. Reîncearcă." });
+        return false;
+      }
+    } catch {
+      setNotice({ type: "error", text: "Deconectarea nu a putut fi confirmată. Verifică conexiunea și reîncearcă." });
+      return false;
+    }
     setAuthenticated(false);
     setContent(null);
     setStorage(null);
     setDirty(false);
     setNotice(message ? { type: "error", text: message } : null);
+    return true;
   }, []);
 
   const login = async (username: string, password: string) => {
@@ -164,7 +177,10 @@ export function ContentAdminConsole({
       await loadContent();
       setAuthenticated(true);
     } catch (error) {
-      if (sessionCreated) await logout();
+      if (sessionCreated && !await logout()) {
+        setAuthenticated(true);
+        return;
+      }
       setNotice({ type: "error", text: error instanceof Error ? error.message : "Autentificarea a eșuat." });
     } finally {
       setBusy(false);
@@ -322,7 +338,13 @@ export function ContentAdminConsole({
 
   if (!configured) return <AdminSetup />;
   if (!authenticated) return <AdminLogin onLogin={login} busy={busy} notice={notice} />;
-  if (!content) return <AdminLoading />;
+  if (!content) return notice ? (
+    <main className="admin-auth-page"><section className="admin-auth-panel">
+      <h1>Panoul nu este disponibil</h1>
+      <p role="alert">{notice.text}</p>
+      <button type="button" onClick={() => { void logout(); }}>Reîncearcă deconectarea</button>
+    </section></main>
+  ) : <AdminLoading />;
 
   const items = tab === "funding" ? content.fundingPrograms : content.announcements;
 
@@ -430,7 +452,7 @@ function AdminSetup() {
       <section className="admin-auth-panel">
         <p className="admin-auth-kicker"><Settings2 aria-hidden="true" /> Configurare necesară</p>
         <h1>Activează panoul de administrare</h1>
-        <p>Adaugă în Vercel variabilele <code>ADMIN_USERNAME</code>, <code>ADMIN_PASSWORD</code>, <code>ADMIN_SESSION_SECRET</code> și o conexiune <code>DATABASE_URL</code>, apoi redeploy.</p>
+        <p>Adaugă în Vercel variabilele <code>ADMIN_USERNAME</code>, <code>ADMIN_PASSWORD_HASH</code>, <code>ADMIN_SESSION_SECRET</code> și o conexiune <code>DATABASE_URL</code>, apoi redeploy.</p>
         <Link href="/">Înapoi la site</Link>
       </section>
     </main>
@@ -466,7 +488,7 @@ function FundingEditor({
       <div className="admin-form-grid">
         <label className="wide"><span>Titlu</span><input value={program.title} maxLength={180} onChange={(event) => update("title", event.target.value)} /></label>
         <label><span>ID unic</span><input value={program.id} maxLength={100} readOnly aria-readonly="true" /></label>
-        <label><span>Status</span><select value={program.status} onChange={(event) => update("status", event.target.value as FundingProgram["status"])}><option>Deschis</option><option>În pregătire</option><option>Închis</option></select></label>
+        <label><span>Status</span><select value={program.status} onChange={(event) => update("status", event.target.value as FundingProgram["status"])}><option>Deschis</option><option>În pregătire</option><option>Închis</option><option>De verificat</option></select></label>
         <label><span>Program / categorie</span><input value={program.program} maxLength={120} onChange={(event) => update("program", event.target.value)} /></label>
         <label><span>Cod apel</span><input value={program.code} maxLength={160} onChange={(event) => update("code", event.target.value)} /></label>
         <label className="wide"><span>Rezumat</span><textarea rows={4} value={program.summary} maxLength={600} onChange={(event) => update("summary", event.target.value)} /></label>
@@ -477,6 +499,7 @@ function FundingEditor({
         <label><span>Ultima verificare</span><input value={program.lastVerified} maxLength={120} onChange={(event) => update("lastVerified", event.target.value)} /></label>
         <label className="wide"><span>Text alternativ imagine</span><input value={program.imageAlt} maxLength={220} onChange={(event) => update("imageAlt", event.target.value)} /></label>
         <label className="wide"><span>Sursă oficială HTTPS</span><input type="url" value={program.sourceUrl} maxLength={600} onChange={(event) => update("sourceUrl", event.target.value)} /></label>
+        <label><span>Tipul sursei</span><select value={program.sourceKind || "authority"} onChange={(event) => update("sourceKind", event.target.value as FundingSourceKind)}>{Object.entries(fundingSourceLabels).map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></label>
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import "server-only";
 
 import { cookies } from "next/headers";
-import { createHmac, timingSafeEqual } from "node:crypto";
+import { createHmac, scrypt, timingSafeEqual } from "node:crypto";
 import {
   createAdminSessionRecord,
   hasPersistentAdminSessionStorage,
@@ -10,6 +10,22 @@ import {
 } from "@/lib/admin-session-store";
 
 export const ADMIN_COOKIE_NAME = "capital_admin_session";
+function derivePassword(password: string, salt: string): Promise<Buffer> {
+  return new Promise((resolve, reject) => {
+    scrypt(password, salt, 64, { N: 131072, r: 8, p: 1, maxmem: 256 * 1024 * 1024 }, (error, key) => {
+      if (error) reject(error);
+      else resolve(key);
+    });
+  });
+}
+
+function passwordHash() {
+  return process.env.ADMIN_PASSWORD_HASH?.trim() || "";
+}
+
+function validPasswordHash(value: string) {
+  return /^scrypt:[a-f0-9]{32}:[a-f0-9]{128}$/.test(value);
+}
 
 function boundedMinutes(value: string | undefined, fallback: number, minimum: number, maximum: number) {
   const parsed = Number(value);
@@ -38,7 +54,9 @@ function sessionSecret() {
 }
 
 export function isAdminConfigured() {
-  const baseConfigured = adminUsername().length >= 3 && adminPassword().length >= 12 && sessionSecret().length >= 32;
+  const hash = passwordHash();
+  const passwordConfigured = hash ? validPasswordHash(hash) : adminPassword().length >= 12;
+  const baseConfigured = adminUsername().length >= 3 && passwordConfigured && sessionSecret().length >= 32;
   const storageConfigured = process.env.NODE_ENV !== "production" || hasPersistentAdminSessionStorage();
   return baseConfigured && storageConfigured;
 }
@@ -49,10 +67,15 @@ function safeEqual(left: string, right: string) {
   return timingSafeEqual(leftHash, rightHash);
 }
 
-export function verifyAdminCredentials(username: string, password: string) {
-  return isAdminConfigured()
-    && safeEqual(username.trim().toLowerCase(), adminUsername())
-    && safeEqual(password, adminPassword());
+export async function verifyAdminCredentials(username: string, password: string) {
+  if (!isAdminConfigured()) return false;
+  const usernameMatches = safeEqual(username.trim().toLowerCase(), adminUsername());
+  const hash = passwordHash();
+  if (!hash) return usernameMatches && safeEqual(password, adminPassword());
+
+  const [, salt, expected] = hash.split(":");
+  const actual = await derivePassword(password, salt);
+  return timingSafeEqual(actual, Buffer.from(expected, "hex")) && usernameMatches;
 }
 
 export async function createAdminSession() {

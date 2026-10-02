@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { z } from "zod";
 import {
   ADMIN_COOKIE_NAME,
   adminCookieOptions,
@@ -12,11 +13,16 @@ import {
   verifyAdminCredentials
 } from "@/lib/admin-auth";
 import { clearAdminLoginAttempts, consumeAdminLoginAttempt } from "@/lib/admin-session-store";
+import { BodyTooLargeError, readLimitedBody } from "@/lib/request-body";
 
 export const runtime = "nodejs";
 
 const LOGIN_WINDOW_SECONDS = 15 * 60;
 const MAX_LOGIN_ATTEMPTS = 6;
+const loginSchema = z.object({
+  username: z.string().trim().min(3).max(120),
+  password: z.string().min(12).max(300)
+});
 
 function response(body: unknown, init?: ResponseInit) {
   const headers = new Headers(init?.headers);
@@ -30,9 +36,8 @@ function acceptsJson(request: Request) {
 
 async function parseBody(request: Request) {
   if (!acceptsJson(request)) throw new Error("Invalid content type");
-  const body = await request.text();
-  if (body.length > 2_000) throw new Error("Payload too large");
-  return JSON.parse(body) as Record<string, unknown>;
+  const body = await readLimitedBody(request, 2_000);
+  return loginSchema.parse(JSON.parse(body.toString("utf8")));
 }
 
 async function authenticatedResponse(request: Request) {
@@ -65,32 +70,45 @@ export async function POST(request: Request) {
   }
 
   const attemptKey = adminLoginAttemptKey(request);
-  if (await consumeAdminLoginAttempt(attemptKey, MAX_LOGIN_ATTEMPTS, LOGIN_WINDOW_SECONDS)) {
-    return response({ message: "Prea multe încercări. Reîncearcă peste 15 minute." }, { status: 429 });
+  try {
+    if (await consumeAdminLoginAttempt(attemptKey, MAX_LOGIN_ATTEMPTS, LOGIN_WINDOW_SECONDS)) {
+      return response({ message: "Prea multe încercări. Reîncearcă peste 15 minute." }, { status: 429 });
+    }
+  } catch {
+    return response({ message: "Autentificarea este temporar indisponibilă." }, { status: 503 });
   }
 
-  let credentials: Record<string, unknown>;
+  let credentials: z.infer<typeof loginSchema>;
   try {
     credentials = await parseBody(request);
-  } catch {
+  } catch (error) {
+    if (error instanceof BodyTooLargeError) {
+      return response({ message: "Solicitarea este prea mare." }, { status: 413 });
+    }
     return response({ message: "Date de autentificare invalide." }, { status: 400 });
   }
 
-  const username = typeof credentials.username === "string" ? credentials.username : "";
-  const password = typeof credentials.password === "string" ? credentials.password : "";
-  if (username.length > 120 || password.length > 300 || !verifyAdminCredentials(username, password)) {
+  if (!await verifyAdminCredentials(credentials.username, credentials.password)) {
     return response({ message: "Utilizator sau parolă incorectă." }, { status: 401 });
   }
 
-  await clearAdminLoginAttempts(attemptKey);
-  return authenticatedResponse(request);
+  try {
+    await clearAdminLoginAttempts(attemptKey);
+    return await authenticatedResponse(request);
+  } catch {
+    return response({ message: "Autentificarea este temporar indisponibilă." }, { status: 503 });
+  }
 }
 
 export async function DELETE(request: Request) {
   if (!hasValidAdminOrigin(request)) {
     return response({ message: "Cerere respinsă." }, { status: 403 });
   }
-  await revokeCurrentAdminSession();
+  try {
+    await revokeCurrentAdminSession();
+  } catch {
+    return response({ message: "Sesiunea nu a putut fi revocată. Reîncearcă deconectarea." }, { status: 503 });
+  }
   const result = response({ success: true });
   result.cookies.set(ADMIN_COOKIE_NAME, "", { ...adminCookieOptions(request), maxAge: 0 });
   return result;

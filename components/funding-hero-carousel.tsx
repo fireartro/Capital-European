@@ -7,43 +7,43 @@ import { useEffect, useState } from "react";
 
 const slides = [
   {
-    image: "/images/funding-hero-manufacturing-v2.webp",
-    alt: "Antreprenor și consultant care analizează un plan de investiții într-un atelier de producție din România",
+    image: "/images/investitii-productie-atelier-cnc-romania.webp",
+    alt: "Mașină CNC și piesă metalică într-un atelier de producție, imagine ilustrativă",
     label: "Investiții productive",
     title: "Modernizare și capacitate de producție",
     text: "Verificăm investiția, solicitantul și calendarul înainte de pregătirea documentației."
   },
   {
-    image: "/images/funding-hero-energy-v2.webp",
-    alt: "Manager și specialist tehnic care verifică o investiție energetică la o fabrică din România",
+    image: "/images/energie-acoperis-industrial-fotovoltaic.webp",
+    alt: "Panouri fotovoltaice pe un acoperiș industrial, imagine ilustrativă",
     label: "Energie și eficiență",
     title: "Eficiență energetică pentru activitatea curentă",
     text: "Corelăm soluția tehnică, consumul, bugetul și obligațiile care continuă după aprobare."
   },
   {
-    image: "/images/funding-hero-digitalization-v2.webp",
-    alt: "Antreprenoare și tehnician care verifică digitalizarea unei mici unități alimentare din România",
+    image: "/images/digitalizare-linie-alimentara-automatizata.webp",
+    alt: "Linie alimentară automatizată cu inspecție optică a produselor, imagine ilustrativă",
     label: "Digitalizare și automatizare",
     title: "Digitalizare legată de nevoia reală a afacerii",
     text: "Justificăm echipamentele și soluțiile digitale prin fluxuri, indicatori și cheltuieli eligibile."
   },
   {
-    image: "/images/funding-hero-rural-v2.webp",
-    alt: "Fermier și consultant care discută un proiect de investiții într-o fermă din nord-vestul României",
+    image: "/images/agricultura-sera-tomate-irigare.webp",
+    alt: "Cultură de tomate într-o seră cu irigare prin picurare, imagine ilustrativă",
     label: "Agricultură și mediul rural",
     title: "Investiții rurale construite de la situația din teren",
     text: "Analizăm exploatația, capacitatea de cofinanțare și etapele care pot fi susținute în practică."
   },
   {
-    image: "/images/funding-hero-ngo-v2.webp",
-    alt: "Coordonatori ai unui ONG care planifică activități într-un centru comunitar din România",
+    image: "/images/ong-atelier-comunitar-reparare-carti.webp",
+    alt: "Voluntari care repară cărți într-un atelier comunitar, imagine ilustrativă",
     label: "ONG și comunități",
     title: "Proiecte comunitare cu activități și rezultate verificabile",
     text: "Clarificăm grupul țintă, resursele, partenerii și modul în care rezultatele vor fi documentate."
   },
   {
-    image: "/images/funding-hero-startup-v2.webp",
-    alt: "Fondatori care analizează un prototip și bugetul unei afaceri noi într-un atelier din România",
+    image: "/images/startup-prototip-lampa-atelier-ceramica.webp",
+    alt: "Realizarea unui prototip de lampă într-un atelier de ceramică, imagine ilustrativă",
     label: "Startup și afaceri noi",
     title: "De la idee la un plan de afaceri realist",
     text: "Verificăm cererea din piață, investiția inițială și ipotezele care trebuie susținute prin date."
@@ -54,11 +54,27 @@ export function FundingHeroCarousel() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [interactionPaused, setInteractionPaused] = useState(false);
   const [manuallyPaused, setManuallyPaused] = useState(false);
-  const paused = interactionPaused || manuallyPaused;
+  const [reducedMotion, setReducedMotion] = useState(false);
+  const [documentHidden, setDocumentHidden] = useState(false);
+  const paused = interactionPaused || manuallyPaused || reducedMotion || documentHidden;
   const activeSlide = slides[activeIndex];
 
   useEffect(() => {
-    if (paused || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const updateMotion = () => setReducedMotion(preference.matches);
+    const updateVisibility = () => setDocumentHidden(document.hidden);
+    updateMotion();
+    updateVisibility();
+    preference.addEventListener("change", updateMotion);
+    document.addEventListener("visibilitychange", updateVisibility);
+    return () => {
+      preference.removeEventListener("change", updateMotion);
+      document.removeEventListener("visibilitychange", updateVisibility);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (paused) return;
     const interval = window.setInterval(() => {
       setActiveIndex((current) => (current + 1) % slides.length);
     }, 7000);
@@ -76,7 +92,9 @@ export function FundingHeroCarousel() {
       onMouseEnter={() => setInteractionPaused(true)}
       onMouseLeave={() => setInteractionPaused(false)}
       onFocusCapture={() => setInteractionPaused(true)}
-      onBlurCapture={() => setInteractionPaused(false)}
+      onBlurCapture={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget)) setInteractionPaused(false);
+      }}
     >
       <div className="funding-hero-slides">
         <div className="funding-hero-slide is-active" key={activeSlide.image}>
@@ -84,9 +102,10 @@ export function FundingHeroCarousel() {
             src={activeSlide.image}
             alt={activeSlide.alt}
             fill
+            quality={55}
             priority={activeIndex === 0}
             fetchPriority={activeIndex === 0 ? "high" : "auto"}
-            sizes="(max-width: 1100px) 100vw, calc(100vw - 288px)"
+            sizes="(max-width: 1100px) 100vw, (min-width: 2000px) calc(100vw - 320px), calc(100vw - 288px)"
           />
         </div>
       </div>
@@ -121,11 +140,13 @@ export function FundingHeroCarousel() {
           <button
             className="funding-hero-pause"
             type="button"
+            disabled={reducedMotion}
             onClick={() => setManuallyPaused((current) => !current)}
-            aria-label={manuallyPaused ? "Pornește rotația automată" : "Oprește rotația automată"}
-            aria-pressed={manuallyPaused}
+            aria-label={reducedMotion ? "Rotația automată este oprită pentru mișcare redusă" : manuallyPaused ? "Pornește rotația automată" : "Oprește rotația automată"}
+            title={reducedMotion ? "Mișcare redusă activată" : manuallyPaused ? "Pornește rotația automată" : "Oprește rotația automată"}
+            aria-pressed={manuallyPaused || reducedMotion}
           >
-            {manuallyPaused ? <Play aria-hidden="true" /> : <Pause aria-hidden="true" />}
+            {manuallyPaused || reducedMotion ? <Play aria-hidden="true" /> : <Pause aria-hidden="true" />}
           </button>
         </div>
       </div>

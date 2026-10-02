@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const isDevelopment = process.env.NODE_ENV === "development";
-const googleAnalyticsId = process.env.NEXT_PUBLIC_GA_ID || "G-JJDLTV4VX9";
+const googleAnalyticsId = process.env.NEXT_PUBLIC_GA_ID?.trim() || "";
 const hasGoogleAnalytics = Boolean(googleAnalyticsId);
 const hasGoogleTagManager = Boolean(process.env.NEXT_PUBLIC_GTM_ID);
 const hasClarity = Boolean(process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID);
@@ -52,10 +52,10 @@ const nextConfig: NextConfig = {
   },
   images: {
     formats: ["image/avif", "image/webp"],
-    qualities: [55, 75],
+    qualities: [55, 75, 90],
     remotePatterns: [
       { protocol: "https", hostname: "lh3.googleusercontent.com" },
-      { protocol: "https", hostname: "*.public.blob.vercel-storage.com" }
+      { protocol: "https", hostname: "*.public.blob.vercel-storage.com", pathname: "/cms/media/**" }
     ]
   },
   async headers() {

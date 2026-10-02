@@ -239,7 +239,7 @@ export function ContactForm({
       </div>
       <label className="consent">
         <input type="checkbox" {...register("consent")} required aria-invalid={!!errors.consent} aria-describedby={errors.consent ? "consent-error" : undefined} />
-        <span>Am citit <a href="/confidentialitate" title="Politica de confidențialitate Capital European">politica de confidențialitate</a> și sunt de acord cu folosirea datelor pentru a primi răspuns.</span>
+        <span>Confirm că am citit <a href="/confidentialitate" title="Politica de confidențialitate Capital European">politica de confidențialitate</a> privind analizarea cererii și primirea unui răspuns. Această confirmare nu reprezintă acord pentru marketing.</span>
       </label>
       {errors.consent && <small className="standalone-error" id="consent-error">{errors.consent.message}</small>}
       {serverMessage && <p className="server-error" role="alert" aria-live="polite">{serverMessage}</p>}

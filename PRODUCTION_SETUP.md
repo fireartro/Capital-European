@@ -37,7 +37,7 @@ Datele juridice și de contact de mai sus trebuie menținute identice cu informa
 
 ## 2. Contact
 
-Formularul poate livra mesajele prin `CONTACT_WEBHOOK_URL`, dacă ai un endpoint HTTPS extern, sau direct prin Resend, dacă setezi `RESEND_API_KEY`, `CONTACT_FROM_EMAIL` și `CONTACT_TO_EMAIL`.
+Formularul poate livra mesajele prin `CONTACT_WEBHOOK_URL`, dacă ai un endpoint HTTPS extern, sau direct prin Resend, dacă setezi `RESEND_API_KEY`, `CONTACT_FROM_EMAIL` și `CONTACT_TO_EMAIL`. În producție este necesară și o conexiune PostgreSQL (`DATABASE_URL` sau `POSTGRES_URL`) pentru limita de solicitări comună tuturor instanțelor. Dacă stocarea nu este disponibilă, formularul răspunde temporar cu `503`, fără să ocolească protecția.
 
 Webhook-ul primește JSON validat cu: `name`, `email`, `phone`, `organization`, `taxId`, `category`, `service`, `fundingProgram`, `message` și `consent`. Câmpul honeypot nu este transmis. Endpoint-ul trebuie să răspundă cu status `2xx` în maximum 8 secunde.
 
@@ -62,6 +62,7 @@ Documentație oficială:
 - GTM: setează ID-ul containerului în `NEXT_PUBLIC_GTM_ID`; fiecare tag publicat trebuie să respecte Consent Mode. Nu publica încă o etichetă GA4 în GTM dacă GA4 este deja încărcat direct prin `NEXT_PUBLIC_GA_ID`.
 - Microsoft Clarity: setează project ID-ul în `NEXT_PUBLIC_CLARITY_PROJECT_ID`.
 - Scripturile nu se încarcă până când vizitatorul acceptă categoria corespunzătoare.
+- Harta Google are o categorie separată, „Conținut extern”. Se încarcă în apropierea footerului numai după acord și este eliminată când acesta este retras, inclusiv din altă filă. Acordurile vechi trebuie solicitate din nou pentru acest scop nou.
 
 Documentație oficială:
 
@@ -76,3 +77,13 @@ Documentație oficială:
 Creează sau revendică Google Business Profile numai cu date reale și verificabile. Folosește aceeași denumire, adresă, telefon și adresă web ca pe site.
 
 Documentație: https://support.google.com/business/answer/2911778
+
+## 6. Administrare și stocare
+
+În `Production`, configurează server-side `ADMIN_USERNAME`, `ADMIN_PASSWORD_HASH`, `ADMIN_SESSION_SECRET` și conexiunea PostgreSQL. Hash-ul are forma `scrypt:<salt hex 32 caractere>:<digest hex 128 caractere>`, derivat cu `N=131072`, `r=8`, `p=1`, lungime 64 bytes. `ADMIN_PASSWORD` rămâne o opțiune de compatibilitate numai când hash-ul lipsește; nu configura un hash invalid peste o parolă validă.
+
+Sesiunile sunt stocate în PostgreSQL, expiră implicit după 60 de minute și după 15 minute fără activitate. Rotirea `ADMIN_SESSION_SECRET` invalidează sesiunile existente. Nicio parolă, conexiune sau cheie nu primește prefixul `NEXT_PUBLIC_` și nu intră în repository.
+
+Catalogul existent este gestionat din Admin, nu sincronizat automat cu seed-ul la fiecare vizită. Salvarea respinge modificările bazate pe o versiune veche, iar sursele noi sau schimbate trebuie să aparțină autorităților oficiale. Păstrează separat ghidurile finale, consultările, legislația și documentația istorică. Fă un backup înainte de actualizările în masă și verifică restaurarea bazei de date.
+
+Pentru upload, configurează `BLOB_STORE_ID` cu identitatea Vercel sau `BLOB_READ_WRITE_TOKEN`. Sunt acceptate numai imagini decodabile, re-encodate înainte de publicare, maximum 3 MB. Variabilele schimbate în Vercel devin active după un deployment nou.

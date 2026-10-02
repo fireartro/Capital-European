@@ -21,7 +21,7 @@ export default function CookiesPage() {
       <LegalPage
         eyebrow="Legea nr. 506/2004 · Directiva ePrivacy"
         title="Politica de cookies"
-        updated="13 iulie 2026"
+        updated="2 octombrie 2026"
         intro="Această politică explică ce informații pot fi stocate pe dispozitiv, când cerem consimțământul și cum poți accepta, refuza sau modifica preferințele fără să pierzi accesul la conținut."
         actions={<CookieSettingsButton />}
         sections={[
@@ -29,7 +29,7 @@ export default function CookiesPage() {
             title: "1. Ce sunt cookie-urile și tehnologiile similare",
             content: [
               "Cookie-urile sunt fișiere mici salvate de browser la solicitarea unui website. Tehnologiile similare includ localStorage și identificatorii de consimțământ.",
-              "Aceste tehnologii pot avea scopuri strict tehnice sau, numai cu acordul tău, scopuri de analiză. Website-ul nu condiționează accesul la informațiile publice de acceptarea cookie-urilor opționale."
+              "Aceste tehnologii pot avea scopuri strict tehnice sau, numai cu acordul tău, scopuri de analiză, marketing ori afișare a conținutului extern. Website-ul nu condiționează accesul la informațiile publice de acceptarea categoriilor opționale."
             ]
           },
           {
@@ -46,9 +46,10 @@ export default function CookiesPage() {
           {
             title: "3. Stocare strict necesară",
             content: [
-              "Utilizăm identificatorul propriu «ce_cookie_consent_v3» în localStorage și, ca mecanism de rezervă, într-un cookie first-party. Acesta reține versiunea politicii, alegerile pentru analiză și marketing, precum și data actualizării.",
+              "Utilizăm identificatorul propriu «ce_cookie_consent_v4» în localStorage. Numai când această stocare este indisponibilă folosim un cookie first-party de rezervă. Sunt reținute versiunea, alegerile separate pentru analiză, marketing și conținut extern, precum și data actualizării.",
               "Durata maximă este de 180 de zile. Scopul exclusiv este să respectăm alegerea ta și să nu afișăm bannerul la fiecare pagină. Nu este folosit pentru profilare, publicitate sau urmărire între website-uri.",
-              "Website-ul nu mai instalează un service worker. Astfel reducem riscul ca browserul să păstreze o versiune veche a paginilor sau a centrului de consimțământ."
+              "Acordurile vechi v2/v3 nu includ categoria nouă și nu sunt convertite în permisiune pentru hartă; este solicitată o alegere nouă. Lipsa, invaliditatea sau expirarea acordului dezactivează categoriile opționale.",
+              "Zona de administrare poate utiliza cookie-ul strict necesar «capital_admin_session», inaccesibil JavaScript, pentru autentificare. Durata configurabilă este între 15 și 240 de minute, implicit 60 de minute; acesta nu este un cookie de marketing."
             ]
           },
           {
@@ -56,7 +57,7 @@ export default function CookiesPage() {
             content: [
               "Dacă identificatorii sunt configurați și activezi categoria «Analiză audiență», website-ul poate încărca Google Analytics 4 și Microsoft Clarity. Niciunul dintre aceste instrumente nu este încărcat înaintea alegerii tale.",
               "În acest caz pot fi utilizate cookie-uri precum «_ga» și «_ga_<container>» pentru diferențierea vizitelor și generarea de statistici agregate. Durata lor este stabilită de furnizor și poate ajunge până la 2 ani, în funcție de configurația activă.",
-              "Microsoft Clarity poate înregistra interacțiuni mascate și poate utiliza identificatori precum «_clck» sau «_clsk». Configurarea folosește API-ul de consimțământ Clarity și dezactivează colectarea atunci când retragi acordul.",
+              "Microsoft Clarity poate înregistra interacțiuni și poate utiliza identificatori precum «_clck» sau «_clsk». Mascarea și setările efective din cont trebuie verificate de operator. La retragerea acordului transmitem starea refuzată, eliminăm etichetele și reîncărcăm pagina dacă un instrument de tracking a fost inițializat, pentru a opri și codul rămas în memorie.",
               "Am dezactivat semnalele Google pentru publicitate în configurarea directă GA4. Categoria de analiză nu este folosită pentru reclame personalizate."
             ]
           },
@@ -69,17 +70,25 @@ export default function CookiesPage() {
             ]
           },
           {
-            title: "6. Cum alegi, refuzi sau retragi consimțământul",
+            title: "6. Conținut extern — Google Maps, opțional",
+            content: [
+              "Harta integrată în footer este conținut furnizat de Google. Ea nu este încărcată până când activezi separat categoria «Conținut extern — Google Maps». Acordul pentru analiză sau marketing nu activează această categorie.",
+              "După acord, harta se încarcă automat când ajunge în apropierea zonei vizibile. Google poate primi adresa IP, date despre browser și dispozitiv și poate utiliza propriile cookie-uri ori identificatori. Duratele și comportamentul acestora depind de serviciul Google și de setările browserului; nu sunt controlate integral de acest website.",
+              "Dacă refuzi, rămân disponibile adresa locală și linkul către Google Maps. «Activează harta» deschide preferințele fără să acorde automat permisiunea. Revocarea elimină imediat documentul extern, inclusiv când alegerea este schimbată în altă filă; datele deja transmise nu sunt șterse retroactiv."
+            ]
+          },
+          {
+            title: "7. Cum alegi, refuzi sau retragi consimțământul",
             content: [
               "La prima vizită poți accepta toate categoriile, refuza opțiunile neesențiale sau alege separat fiecare categorie. Refuzul nu limitează accesul la conținut.",
-              "Poți modifica oricând alegerea folosind «Preferințe cookies» din footer sau butonul de mai sus. Modificarea se aplică încărcărilor viitoare și încercăm să eliminăm cookie-urile first-party de analiză deja create.",
+              "Poți modifica oricând alegerea folosind «Preferințe cookies» din footer sau butonul de mai sus. Modificările sunt sincronizate între file. La revocare, inclusiv prin lipsa, invaliditatea sau expirarea acordului, blocăm evenimentele proprii, eliminăm scripturile și cookie-urile first-party de tracking accesibile și reîncărcăm pagina când un runtime de tracking a fost deja inițializat. Cookie-urile de pe domeniile terților nu pot fi șterse direct de website.",
               "Retragerea consimțământului nu afectează legalitatea prelucrărilor efectuate anterior retragerii."
             ]
           },
           {
-            title: "7. Furnizori terți și transferuri",
+            title: "8. Furnizori terți și transferuri",
             content: [
-              "Dacă GA4 sau GTM sunt activate, Google poate prelucra date tehnice ca furnizor distinct ori persoană împuternicită, în funcție de serviciu și configurație. Dacă Microsoft Clarity este activat, Microsoft poate prelucra date tehnice și informații despre interacțiune.",
+              "Dacă GA4, GTM sau Google Maps sunt activate, Google poate prelucra date tehnice ca furnizor distinct ori persoană împuternicită, în funcție de serviciu și configurație. Dacă Microsoft Clarity este activat, Microsoft poate prelucra date tehnice și informații despre interacțiune. Operatorul trebuie să confirme rolurile, acordurile, duratele și mecanismele de transfer aplicabile; integrarea tehnică nu reprezintă certificare juridică.",
               "Accesarea linkurilor externe, inclusiv WhatsApp, platforme publice sau resurse instituționale, te transferă pe website-uri care aplică propriile politici și pot utiliza propriile cookie-uri. Acestea nu sunt controlate de noi."
             ],
             links: [
@@ -88,14 +97,14 @@ export default function CookiesPage() {
             ]
           },
           {
-            title: "8. Setările browserului",
+            title: "9. Setările browserului",
             content: [
               "Poți șterge sau bloca cookie-urile din setările browserului. Blocarea completă poate elimina inclusiv memorarea opțiunii tale, caz în care bannerul poate reapărea.",
               "Pentru control suplimentar, folosește funcțiile «Confidențialitate și securitate» din Chrome, Firefox, Edge sau Safari. Setările browserului operează separat de centrul de preferințe al acestui website."
             ]
           },
           {
-            title: "9. Contact și actualizări",
+            title: "10. Contact și actualizări",
             content: [
               `Pentru întrebări privind cookie-urile sau consimțământul ne poți scrie la ${siteConfig.email}.`,
               "Politica poate fi actualizată când se schimbă tehnologiile, furnizorii sau cadrul legal. Data versiunii curente este afișată în partea de sus a paginii."

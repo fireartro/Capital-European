@@ -1,14 +1,15 @@
 import { NextResponse } from "next/server";
 import { contactSchema, type ContactSubmission } from "@/lib/contact-schema";
+import { consumeContactAttempt } from "@/lib/contact-rate-limit";
+import { BodyTooLargeError, readLimitedBody } from "@/lib/request-body";
 import { siteConfig } from "@/lib/site-config";
 
 export const runtime = "nodejs";
 
-const WINDOW_MS = 10 * 60 * 1000;
+const WINDOW_SECONDS = 10 * 60;
 const MAX_REQUESTS = 5;
 const MAX_BODY_LENGTH = 12_000;
 const RESEND_EMAIL_ENDPOINT = "https://api.resend.com/emails";
-const attempts = new Map<string, { count: number; resetAt: number }>();
 type ContactDeliveryData = Omit<ContactSubmission, "website">;
 
 function getClientIp(request: Request) {
@@ -16,27 +17,6 @@ function getClientIp(request: Request) {
   const candidate = forwarded?.split(",")[0]?.trim();
   if (candidate && /^[a-fA-F0-9:.]{3,45}$/.test(candidate)) return candidate;
   return "local";
-}
-
-function pruneAttempts(now: number) {
-  for (const [key, value] of attempts) {
-    if (value.resetAt < now) attempts.delete(key);
-  }
-}
-
-function isRateLimited(key: string) {
-  const now = Date.now();
-  pruneAttempts(now);
-  const current = attempts.get(key);
-
-  if (!current || current.resetAt < now) {
-    attempts.set(key, { count: 1, resetAt: now + WINDOW_MS });
-    return false;
-  }
-
-  current.count += 1;
-  attempts.set(key, current);
-  return current.count > MAX_REQUESTS;
 }
 
 function hasValidOrigin(request: Request) {
@@ -208,26 +188,28 @@ export async function POST(request: Request) {
     return jsonResponse({ message: "Cerere respinsă." }, { status: 403 });
   }
 
-  const contentLength = Number(request.headers.get("content-length") || 0);
-  if (contentLength > MAX_BODY_LENGTH) {
-    return jsonResponse({ message: "Solicitarea este prea mare." }, { status: 413 });
-  }
-
-  if (isRateLimited(getClientIp(request))) {
+  try {
+    if (await consumeContactAttempt(getClientIp(request), MAX_REQUESTS, WINDOW_SECONDS)) {
+      return jsonResponse(
+        { message: "Prea multe solicitări. Încearcă din nou peste câteva minute." },
+        { status: 429, headers: { "Retry-After": "600" } }
+      );
+    }
+  } catch {
     return jsonResponse(
-      { message: "Prea multe solicitări. Încearcă din nou peste câteva minute." },
-      { status: 429, headers: { "Retry-After": "600" } }
+      { message: `Formularul online este temporar indisponibil. Scrie-ne direct la ${siteConfig.email}.` },
+      { status: 503, headers: { "Retry-After": "60" } }
     );
   }
 
   let payload: unknown;
   try {
-    const body = await request.text();
-    if (body.length > MAX_BODY_LENGTH) {
+    const body = await readLimitedBody(request, MAX_BODY_LENGTH);
+    payload = JSON.parse(body.toString("utf8"));
+  } catch (error) {
+    if (error instanceof BodyTooLargeError) {
       return jsonResponse({ message: "Solicitarea este prea mare." }, { status: 413 });
     }
-    payload = JSON.parse(body);
-  } catch {
     return jsonResponse({ message: "Format invalid." }, { status: 400 });
   }
 

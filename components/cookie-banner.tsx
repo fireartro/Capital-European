@@ -1,17 +1,19 @@
 "use client";
 
 import Link from "next/link";
-import { BarChart3, Check, LockKeyhole, Megaphone, Settings2, X } from "lucide-react";
+import { BarChart3, Check, LockKeyhole, MapPin, Megaphone, Settings2, X } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import {
-  COOKIE_CONSENT_EVENT,
   COOKIE_SETTINGS_EVENT,
   type CookieConsent,
+  isCurrentCookieConsent,
   readCookieConsent,
+  reloadAfterConsentWithdrawal,
+  subscribeCookieConsent,
   saveCookieConsent
 } from "@/lib/cookie-consent";
-import { setAnalyticsReady } from "@/lib/analytics";
+import { analyticsPageParameters, setAnalyticsReady } from "@/lib/analytics";
 
 type BannerView = "loading" | "banner" | "settings" | "hidden";
 
@@ -64,6 +66,50 @@ function removeTrackingScript(marker: string) {
   document.querySelector(`script[${marker}]`)?.remove();
 }
 
+function reconcileTrackingConsent(consent: CookieConsent | null, googleAnalyticsId?: string) {
+  const flags = window as unknown as Record<string, unknown>;
+  const allowed = isCurrentCookieConsent(consent) && !window.location.pathname.startsWith("/admin");
+  const analytics = allowed && consent.analytics;
+  const marketing = allowed && consent.marketing;
+  const analyticsWithdrawn = flags.__ceAnalyticsGranted === true && !analytics;
+  const marketingWithdrawn = flags.__ceMarketingGranted === true && !marketing;
+  flags.__ceAnalyticsGranted = analytics;
+  flags.__ceMarketingGranted = marketing;
+
+  if (googleAnalyticsId) flags[`ga-disable-${googleAnalyticsId}`] = !analytics;
+  if (!analytics) setAnalyticsReady(false);
+
+  window.gtag?.("consent", "update", {
+    analytics_storage: analytics ? "granted" : "denied",
+    ad_storage: marketing ? "granted" : "denied",
+    ad_user_data: marketing ? "granted" : "denied",
+    ad_personalization: marketing ? "granted" : "denied"
+  });
+  window.clarity?.("consentv2", {
+    ad_Storage: marketing ? "granted" : "denied",
+    analytics_Storage: analytics ? "granted" : "denied"
+  });
+  if (!analytics) {
+    setAnalyticsReady(false);
+    removeTrackingScript("data-ce-ga");
+    removeTrackingScript("data-ce-clarity");
+    deleteTrackingCookies(["_ga", "_gid", "_gat", "_cl", "CLID", "ANONCHK", "MR", "MUID", "SM"]);
+  }
+  if (!marketing) {
+    removeTrackingScript("data-ce-gtm");
+    deleteTrackingCookies(["_gcl"]);
+  }
+
+  // Removing a script cannot unload vendor listeners or queued requests. Reset the document on withdrawal.
+  const needsReload = (analyticsWithdrawn && (flags.__ceGaInitialized || flags.__ceGtmInitialized || flags.__ceClarityInitialized))
+    || (marketingWithdrawn && (flags.__ceGtmInitialized || flags.__ceClarityInitialized));
+  if (needsReload && !flags.__ceTrackingReloading) {
+    flags.__ceTrackingReloading = true;
+    window.setTimeout(reloadAfterConsentWithdrawal, 0);
+  }
+  return { analytics, marketing, reloading: Boolean(flags.__ceTrackingReloading) };
+}
+
 function TrackingController({
   googleAnalyticsId,
   googleTagManagerId,
@@ -78,118 +124,79 @@ function TrackingController({
   const pathname = usePathname();
 
   useEffect(() => {
-    if (!consent) return;
-
     let disposed = false;
-    const analyticsState = consent.analytics ? "granted" : "denied";
-    const marketingState = consent.marketing ? "granted" : "denied";
-    const windowFlags = window as unknown as Record<string, unknown>;
-
+    const flags = window as unknown as Record<string, unknown>;
     window.dataLayer ??= [];
     window.gtag ??= function gtag(...args: unknown[]) {
       void args;
-      // Google Tag consumes the native arguments object from its official bootstrap snippet.
+      // Google consumes the native arguments object, not an array.
       // eslint-disable-next-line prefer-rest-params
       window.dataLayer?.push(arguments);
     };
-
-    // Google must see a default before the dynamic tag loads; the saved choice then updates it.
-    if (!windowFlags.__ceConsentDefault) {
+    if (!flags.__ceConsentDefault) {
       window.gtag("consent", "default", {
         analytics_storage: "denied",
         ad_storage: "denied",
         ad_user_data: "denied",
         ad_personalization: "denied"
       });
-      windowFlags.__ceConsentDefault = true;
+      flags.__ceConsentDefault = true;
     }
 
-    window.gtag("consent", "update", {
-      analytics_storage: analyticsState,
-      ad_storage: marketingState,
-      ad_user_data: marketingState,
-      ad_personalization: marketingState
-    });
+    const current = reconcileTrackingConsent(readCookieConsent(), googleAnalyticsId);
+    if (current.reloading) return;
 
-    if (googleAnalyticsId && /^G-[A-Z0-9]+$/i.test(googleAnalyticsId)) {
-      windowFlags[`ga-disable-${googleAnalyticsId}`] = !consent.analytics;
-
-      if (consent.analytics) {
-        const pagePath = `${pathname || "/"}${window.location.search}`;
-        setAnalyticsReady(false);
-        if (!windowFlags.__ceGaInitialized) {
-          window.gtag?.("js", new Date());
-          windowFlags.__ceGaInitialized = true;
-        }
-        window.gtag?.("config", googleAnalyticsId, {
-          page_path: pagePath,
+    if (current.analytics && googleAnalyticsId && /^G-[A-Z0-9]+$/i.test(googleAnalyticsId)) {
+      const page = analyticsPageParameters();
+      if (!flags.__ceGaInitialized) {
+        window.gtag("js", new Date());
+        window.gtag("config", googleAnalyticsId, {
+          ...page,
           send_page_view: false,
-          anonymize_ip: true,
           allow_google_signals: false,
-          allow_ad_personalization_signals: false
+          allow_ad_personalization_signals: false,
+          // Enhanced measurement must also be disabled in the GA property.
+          ignore_referrer: true
         });
-        window.gtag?.("event", "page_view", {
-          send_to: googleAnalyticsId,
-          page_title: document.title,
-          page_location: window.location.href,
-          page_path: pagePath
-        });
-        appendTrackingScript(
-          `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(googleAnalyticsId)}`,
-          "data-ce-ga",
-          () => {
-            if (!disposed && consent.analytics) setAnalyticsReady(true);
-          },
-          () => setAnalyticsReady(false)
-        );
-      } else {
-        windowFlags.__ceGaInitialized = false;
-        setAnalyticsReady(false);
-        removeTrackingScript("data-ce-ga");
+        flags.__ceGaInitialized = true;
       }
+      window.gtag("set", page);
+      // Dedupe effect replays/category-only changes, but count a later return to this route.
+      if (flags.__ceLastPagePath !== pathname) {
+        window.gtag("event", "page_view", { ...page, send_to: googleAnalyticsId });
+        flags.__ceLastPagePath = pathname;
+      }
+      appendTrackingScript(
+        `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(googleAnalyticsId)}`,
+        "data-ce-ga",
+        () => {
+          if (!disposed && readCookieConsent()?.analytics && !flags.__ceTrackingReloading) setAnalyticsReady(true);
+        },
+        () => setAnalyticsReady(false)
+      );
     }
 
-    if (googleTagManagerId && /^GTM-[A-Z0-9]+$/i.test(googleTagManagerId)) {
-      if (consent.marketing) {
-        window.dataLayer.push({ "gtm.start": Date.now(), event: "gtm.js" });
-        appendTrackingScript(
-          `https://www.googletagmanager.com/gtm.js?id=${encodeURIComponent(googleTagManagerId)}`,
-          "data-ce-gtm"
-        );
-      } else {
-        removeTrackingScript("data-ce-gtm");
-      }
+    if (current.marketing && googleTagManagerId && /^GTM-[A-Z0-9]+$/i.test(googleTagManagerId) && !flags.__ceGtmInitialized) {
+      flags.__ceGtmInitialized = true;
+      window.dataLayer.push({ "gtm.start": Date.now(), event: "gtm.js" });
+      appendTrackingScript(
+        `https://www.googletagmanager.com/gtm.js?id=${encodeURIComponent(googleTagManagerId)}`,
+        "data-ce-gtm"
+      );
     }
 
-    if (clarityProjectId && /^[a-z0-9]+$/i.test(clarityProjectId)) {
-      if (!window.clarity) {
-        const clarityQueue: unknown[][] = [];
-        const clarity = ((...args: unknown[]) => clarityQueue.push(args)) as NonNullable<Window["clarity"]>;
-        clarity.q = clarityQueue;
-        window.clarity = clarity;
-      }
+    if (current.analytics && clarityProjectId && /^[a-z0-9]+$/i.test(clarityProjectId) && !flags.__ceClarityInitialized) {
+      const clarityQueue: unknown[][] = [];
+      window.clarity ??= Object.assign((...args: unknown[]) => clarityQueue.push(args), { q: clarityQueue });
       window.clarity("consentv2", {
-        ad_Storage: marketingState,
-        analytics_Storage: analyticsState
+        ad_Storage: current.marketing ? "granted" : "denied",
+        analytics_Storage: "granted"
       });
-
-      if (consent.analytics) {
-        appendTrackingScript(
-          `https://www.clarity.ms/tag/${encodeURIComponent(clarityProjectId)}`,
-          "data-ce-clarity"
-        );
-      } else {
-        window.clarity("consent", false);
-        removeTrackingScript("data-ce-clarity");
-      }
+      flags.__ceClarityInitialized = true;
+      appendTrackingScript(`https://www.clarity.ms/tag/${encodeURIComponent(clarityProjectId)}`, "data-ce-clarity");
     }
 
-    if (!consent.analytics) deleteTrackingCookies(["_ga", "_gid", "_gat", "_cl", "CLID", "ANONCHK", "MR", "MUID", "SM"]);
-    if (!consent.marketing) deleteTrackingCookies(["_gcl"]);
-
-    return () => {
-      disposed = true;
-    };
+    return () => { disposed = true; };
   }, [clarityProjectId, consent, googleAnalyticsId, googleTagManagerId, pathname]);
 
   return null;
@@ -209,46 +216,33 @@ export function CookieBanner({
   const [view, setView] = useState<BannerView>("loading");
   const [analyticsDraft, setAnalyticsDraft] = useState(false);
   const [marketingDraft, setMarketingDraft] = useState(false);
+  const [externalContentDraft, setExternalContentDraft] = useState(false);
   const settingsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const initializeConsent = () => {
-      const storedConsent = readCookieConsent();
-      setConsent(storedConsent);
-      setAnalyticsDraft(storedConsent?.analytics ?? false);
-      setMarketingDraft(storedConsent?.marketing ?? false);
-      setView(storedConsent ? "hidden" : "banner");
-    };
-
-    initializeConsent();
-
+    const unsubscribe = subscribeCookieConsent((current) => {
+      reconcileTrackingConsent(current, googleAnalyticsId);
+      setConsent(current);
+      setAnalyticsDraft(current?.analytics ?? false);
+      setMarketingDraft(current?.marketing ?? false);
+      setExternalContentDraft(current?.externalContent ?? false);
+      setView(current ? "hidden" : "banner");
+    });
     const openSettings = () => {
-      const currentConsent = readCookieConsent();
-      setAnalyticsDraft(currentConsent?.analytics ?? false);
-      setMarketingDraft(currentConsent?.marketing ?? false);
+      const current = readCookieConsent();
+      reconcileTrackingConsent(current, googleAnalyticsId);
+      setConsent(current);
+      setAnalyticsDraft(current?.analytics ?? false);
+      setMarketingDraft(current?.marketing ?? false);
+      setExternalContentDraft(current?.externalContent ?? false);
       setView("settings");
     };
-    const syncConsent = (event: Event) => {
-      const nextConsent = (event as CustomEvent<CookieConsent>).detail;
-      setConsent(nextConsent);
-      setAnalyticsDraft(nextConsent.analytics);
-      setMarketingDraft(nextConsent.marketing);
-      setView("hidden");
-    };
-    const handleStorage = (event: StorageEvent) => {
-      if (event.key && !event.key.includes("cookie")) return;
-      initializeConsent();
-    };
-
     window.addEventListener(COOKIE_SETTINGS_EVENT, openSettings);
-    window.addEventListener(COOKIE_CONSENT_EVENT, syncConsent);
-    window.addEventListener("storage", handleStorage);
     return () => {
+      unsubscribe();
       window.removeEventListener(COOKIE_SETTINGS_EVENT, openSettings);
-      window.removeEventListener(COOKIE_CONSENT_EVENT, syncConsent);
-      window.removeEventListener("storage", handleStorage);
     };
-  }, []);
+  }, [googleAnalyticsId]);
 
   useEffect(() => {
     if (view !== "settings") return;
@@ -284,24 +278,13 @@ export function CookieBanner({
     };
   }, [consent, view]);
 
-  const applyConsent = (analytics: boolean, marketing: boolean) => {
-    const reloadAfterMarketingWithdrawal = Boolean(
-      consent?.marketing
-      && !marketing
-      && document.querySelector("script[data-ce-gtm]")
-    );
-    const nextConsent = saveCookieConsent({ analytics, marketing });
+  const applyConsent = (analytics: boolean, marketing: boolean, externalContent: boolean) => {
+    const nextConsent = saveCookieConsent({ analytics, marketing, externalContent });
+    reconcileTrackingConsent(nextConsent, googleAnalyticsId);
     setConsent(nextConsent);
-    setAnalyticsDraft(analytics);
-    setMarketingDraft(marketing);
-    setView("hidden");
-
-    // A loaded GTM container can retain third-party state. Reload after an
-    // explicit withdrawal so the next document starts without that container.
-    if (reloadAfterMarketingWithdrawal) window.setTimeout(() => window.location.reload(), 0);
+    setView(nextConsent ? "hidden" : "banner");
   };
-
-  if (pathname.startsWith("/admin")) return null;
+  const isAdmin = pathname.startsWith("/admin");
 
   return (
     <>
@@ -312,7 +295,7 @@ export function CookieBanner({
         consent={consent}
       />
 
-      {view === "banner" && (
+      {!isAdmin && view === "banner" && (
         <section
           className="cookie-banner"
           role="dialog"
@@ -326,7 +309,7 @@ export function CookieBanner({
               <strong id="cookie-banner-title">Alege cum putem folosi cookie-urile</strong>
               <p id="cookie-banner-description">
                 Folosim doar stocarea necesară pentru funcționare și memorarea alegerii tale.
-                Analiza și marketingul rămân dezactivate până când le accepți.
+                Analiza, marketingul și harta Google Maps rămân dezactivate până când accepți categoria corespunzătoare.
               </p>
               <div className="cookie-banner-links">
                 <Link href="/cookies">Politica de cookies</Link>
@@ -335,20 +318,20 @@ export function CookieBanner({
             </div>
           </div>
           <div className="cookie-banner-actions">
-            <button type="button" className="cookie-button cookie-button-secondary" onClick={() => applyConsent(false, false)}>
+            <button type="button" className="cookie-button cookie-button-secondary" onClick={() => applyConsent(false, false, false)}>
               Refuză opționalele
             </button>
             <button type="button" className="cookie-button cookie-button-secondary" onClick={() => setView("settings")}>
               <Settings2 aria-hidden="true" /> Alege preferințele
             </button>
-            <button type="button" className="cookie-button cookie-button-primary" onClick={() => applyConsent(true, true)}>
+            <button type="button" className="cookie-button cookie-button-primary" onClick={() => applyConsent(true, true, true)}>
               Acceptă toate
             </button>
           </div>
         </section>
       )}
 
-      {view === "settings" && (
+      {!isAdmin && view === "settings" && (
         <div className="cookie-preferences-backdrop">
           <div
             className="cookie-preferences"
@@ -373,7 +356,7 @@ export function CookieBanner({
               </button>
             </header>
             <p className="cookie-preferences-intro">
-              Poți modifica opțiunile oricând. Cookie-urile strict necesare rămân active pentru securitate, memorarea alegerii și funcționarea formularului.
+              Poți modifica opțiunile oricând. Cookie-urile strict necesare rămân active pentru securitate și memorarea alegerii. Harta are o categorie opțională separată.
             </p>
 
             <div className="cookie-category">
@@ -417,15 +400,29 @@ export function CookieBanner({
               />
             </label>
 
+            <label className="cookie-category cookie-category-toggle">
+              <span className="cookie-category-icon"><MapPin aria-hidden="true" /></span>
+              <span>
+                <strong>Conținut extern — Google Maps</strong>
+                <small>Încarcă harta de la Google, care poate primi adresa IP și date despre browser și poate utiliza propriile cookie-uri. Nu activează analiza sau marketingul.</small>
+              </span>
+              <input
+                type="checkbox"
+                checked={externalContentDraft}
+                onChange={(event) => setExternalContentDraft(event.target.checked)}
+                aria-label="Permite conținut extern Google Maps"
+              />
+            </label>
+
             <p className="cookie-preferences-note">
               Detalii despre durată, furnizori și retragerea consimțământului sunt disponibile în <Link href="/cookies">Politica de cookies</Link>.
             </p>
 
             <div className="cookie-preferences-actions">
-              <button type="button" className="cookie-button cookie-button-secondary" onClick={() => applyConsent(false, false)}>
+              <button type="button" className="cookie-button cookie-button-secondary" onClick={() => applyConsent(false, false, false)}>
                 Refuză opționalele
               </button>
-              <button type="button" className="cookie-button cookie-button-primary" onClick={() => applyConsent(analyticsDraft, marketingDraft)}>
+              <button type="button" className="cookie-button cookie-button-primary" onClick={() => applyConsent(analyticsDraft, marketingDraft, externalContentDraft)}>
                 Salvează preferințele
               </button>
             </div>

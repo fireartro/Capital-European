@@ -1,9 +1,11 @@
+import type { FundingSourceKind } from "@/lib/funding-sources";
+
 export type FundingProgram = {
   id: string;
   code: string;
   title: string;
   program: string;
-  status: "Deschis" | "În pregătire" | "Închis";
+  status: "Deschis" | "În pregătire" | "Închis" | "De verificat";
   audience: string;
   summary: string;
   value: string;
@@ -12,6 +14,7 @@ export type FundingProgram = {
   image: string;
   imageAlt: string;
   sourceUrl: string;
+  sourceKind?: FundingSourceKind;
   lastVerified: string;
 };
 

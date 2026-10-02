@@ -13,7 +13,15 @@ export const metadata: Metadata = {
 export default async function AdminPage() {
   const configured = isAdminConfigured();
   const authenticated = configured && await isAdminAuthenticated();
-  const snapshot = authenticated ? await getManagedContentSnapshot() : null;
+  let snapshot = null;
+  let initialError = null;
+  if (authenticated) {
+    try {
+      snapshot = await getManagedContentSnapshot();
+    } catch {
+      initialError = "Conținutul CMS nu poate fi încărcat în siguranță. Datele existente au fost păstrate.";
+    }
+  }
 
   return (
     <ContentAdminConsole
@@ -22,6 +30,7 @@ export default async function AdminPage() {
       initialContent={snapshot?.content ?? null}
       initialStorage={snapshot?.storage ?? null}
       initialSessionPolicy={adminSessionPolicy()}
+      initialError={initialError}
     />
   );
 }

@@ -1,5 +1,5 @@
 LINKURI UTILE - CAPITAL EUROPEAN
-Actualizat: 23 iulie 2026
+Actualizat: 2 octombrie 2026
 
 Am pus aici toate paginile pe care le folosesc pentru site, ca sa le gasesc usor.
 Nu am trecut parole, chei API sau alte date private.
@@ -26,7 +26,7 @@ https://github.com/fireartro/Capital-European
 Repository-ul principal din care este publicat site-ul.
 
 https://github.com/Manu8733/Capital-European
-Repository-ul secundar pe care il pastrez ca referinta.
+Linkul vechi pe care il pastrez ca referinta; accesul la el trebuie verificat.
 
 
 3. VERCEL - PUBLICARE SI DOMENIU
@@ -156,7 +156,7 @@ CE ESTE LEGAT DE SITE
 - anunturi publice;
 - formular de contact cu trimitere pe email;
 - integrarea pentru recenziile reale din Google Business;
-- harta si linkuri directe catre locatii;
+- harta dupa acordul pentru continut extern si linkuri directe catre locatii;
 - Google Analytics numai dupa acceptarea cookie-urilor de analiza;
 - sitemap, robots.txt si date structurate pentru Google;
 - afisare adaptata pentru telefon, tableta si calculator.

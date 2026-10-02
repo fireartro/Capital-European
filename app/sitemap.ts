@@ -4,7 +4,12 @@ import { getManagedContent } from "@/lib/content-store";
 import { publishedAnnouncements } from "@/lib/managed-content";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const lastModified = new Date(siteConfig.lastUpdated);
+  const content = await getManagedContent();
+  const actualDate = (value: string) => {
+    const date = new Date(value);
+    return Number.isFinite(date.getTime()) && date.getTime() <= Date.now() ? date : undefined;
+  };
+  const cmsUpdatedAt = actualDate(content.updatedAt);
   const routes = [
     "",
     "/fonduri-europene",
@@ -25,12 +30,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ];
   const staticRoutes = routes.map((path) => ({
     url: `${siteConfig.url}${path}`,
-    lastModified
+    ...(["/fonduri-europene", "/anunturi", "/contact"].includes(path) && cmsUpdatedAt
+      ? { lastModified: cmsUpdatedAt } : {})
   }));
-  const announcements = publishedAnnouncements(await getManagedContent()).map((announcement) => ({
-    url: `${siteConfig.url}/anunturi/${announcement.slug}`,
-    lastModified: new Date(announcement.updatedAt)
-  }));
+  const announcements = publishedAnnouncements(content).map((announcement) => {
+    const lastModified = actualDate(announcement.updatedAt);
+    return {
+      url: `${siteConfig.url}/anunturi/${announcement.slug}`,
+      ...(lastModified ? { lastModified } : {})
+    };
+  });
 
   return [...staticRoutes, ...announcements];
 }

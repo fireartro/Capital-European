@@ -3,60 +3,14 @@ import "server-only";
 import { neon } from "@neondatabase/serverless";
 import { promises as fs } from "node:fs";
 import path from "node:path";
+import { ZodError } from "zod";
 import managedContentSeed from "@/content/managed-content.seed.json";
 import { createDefaultManagedContent, managedContentSchema, type ManagedContent } from "@/lib/managed-content";
+import { getOfficialFundingSource } from "@/lib/funding-sources";
 
 const CONTENT_ROW_ID = "primary";
 const LOCAL_DATA_PATH = path.join(process.cwd(), ".data", "managed-content.json");
-const LEGACY_PLACEHOLDER_PROGRAM_IDS = new Set([
-  "investitii-productive",
-  "eficienta-energetica",
-  "digitalizare-automatizare",
-  "startup-antreprenoriat",
-  "ong-impact-local"
-]);
-const BROKEN_SOURCE_URL_MIGRATIONS = new Map([
-  [
-    "https://www.gwconsulting.ro/planul-national-strategic-2023/dr-23-investitii-pentru-procesarea-si-marketingul-produselor-agricole-in-vederea-obtinerii-unor-produse-alimentare-si-produse-transformate/",
-    "https://www.gwconsulting.ro/planul-national-strategic-2023/"
-  ],
-  [
-    "https://www.gwconsulting.ro/planul-national-strategic-2023/dr-24-investitii-in-tehnologii-forestiere/",
-    "https://www.gwconsulting.ro/planul-national-strategic-2023/"
-  ],
-  [
-    "https://www.gwconsulting.ro/planul-national-strategic-2023/dr-25-modernizarea-infrastructurii-de-irigatii/",
-    "https://www.gwconsulting.ro/planul-national-strategic-2023/"
-  ],
-  [
-    "https://www.gwconsulting.ro/planul-national-strategic-2023/investitii-in-crearea-si-dezvoltarea-de-activitati-neagricole-dr-29/",
-    "https://www.gwconsulting.ro/planul-national-strategic-2023/"
-  ],
-  [
-    "https://www.gwconsulting.ro/planul-national-strategic-2023/investitii-in-exploatatii-agricole-pndr-4-1/",
-    "https://www.gwconsulting.ro/planul-national-strategic-2023/"
-  ],
-  [
-    "https://www.gwconsulting.ro/planul-national-strategic-2023/pndr-4-1-1-achizitii-simple-de-utilaje-agricole/",
-    "https://www.gwconsulting.ro/planul-national-strategic-2023/"
-  ],
-  [
-    "https://www.gwconsulting.ro/agrivoltaic-2-sectorul-agricol-industria-alimentara/",
-    "https://www.gwconsulting.ro/energie-verde-si-reciclare/"
-  ],
-  [
-    "https://www.gwconsulting.ro/fm-dezvoltarea-capacitatilor-de-stocare-a-energiei-electrice/",
-    "https://www.gwconsulting.ro/energie-verde-si-reciclare/"
-  ],
-  [
-    "https://www.gwconsulting.ro/fm-pc-1-sprijinirea-investitiilor-in-dezvoltarea-capacitatilor-de-stocare-a-energiei-electrice-baterii/",
-    "https://www.gwconsulting.ro/energie-verde-si-reciclare/"
-  ],
-  [
-    "https://www.gwconsulting.ro/fondul-pentru-modernizare-surse-regenerabile-pentru-autoconsum/",
-    "https://www.gwconsulting.ro/energie-verde-si-reciclare/"
-  ]
-]);
+export class ContentConflictError extends Error {}
 
 export type ContentStorage = {
   mode: "postgres" | "local-file" | "read-only-default";
@@ -115,14 +69,14 @@ async function readDatabaseContent() {
     WHERE id = ${CONTENT_ROW_ID}
     LIMIT 1
   `;
-  return rows[0]?.content ?? null;
+  return rows[0]?.content;
 }
 
 async function readLocalContent() {
   try {
     return JSON.parse(await fs.readFile(LOCAL_DATA_PATH, "utf8")) as unknown;
   } catch (error) {
-    if ((error as NodeJS.ErrnoException).code === "ENOENT") return null;
+    if ((error as NodeJS.ErrnoException).code === "ENOENT") return undefined;
     throw error;
   }
 }
@@ -134,14 +88,31 @@ async function readSeedContent(): Promise<ManagedContent> {
   return createDefaultManagedContent();
 }
 
-async function writeDatabaseContent(content: ManagedContent) {
+async function writeDatabaseContent(content: ManagedContent, revision: string | undefined) {
+  const sql = await ensureContentTable();
+  const serialized = JSON.stringify(content);
+  const rows = revision === undefined
+    ? await sql`
+        INSERT INTO capital_european_managed_content (id, content, updated_at)
+        VALUES (${CONTENT_ROW_ID}, CAST(${serialized} AS JSONB), NOW())
+        ON CONFLICT (id) DO NOTHING RETURNING id
+      `
+    : await sql`
+        UPDATE capital_european_managed_content
+        SET content = CAST(${serialized} AS JSONB), updated_at = NOW()
+        WHERE id = ${CONTENT_ROW_ID} AND content->>'updatedAt' = ${revision}
+        RETURNING id
+      `;
+  if (!rows.length) throw new ContentConflictError("Conținutul a fost modificat într-o altă sesiune. Reîncarcă pagina înainte de publicare.");
+}
+
+async function initializeDatabaseContent(content: ManagedContent) {
   const sql = await ensureContentTable();
   const serialized = JSON.stringify(content);
   await sql`
     INSERT INTO capital_european_managed_content (id, content, updated_at)
     VALUES (${CONTENT_ROW_ID}, CAST(${serialized} AS JSONB), NOW())
-    ON CONFLICT (id)
-    DO UPDATE SET content = EXCLUDED.content, updated_at = NOW()
+    ON CONFLICT (id) DO NOTHING
   `;
 }
 
@@ -152,76 +123,57 @@ async function writeLocalContent(content: ManagedContent) {
   await fs.rename(temporaryPath, LOCAL_DATA_PATH);
 }
 
-async function persistContent(content: ManagedContent, storage: ContentStorage) {
-  if (storage.mode === "postgres") {
-    await writeDatabaseContent(content);
-  } else if (storage.mode === "local-file") {
-    await writeLocalContent(content);
+async function validateLocalContentImages(content: ManagedContent) {
+  const paths = new Set(content.fundingPrograms.map((program) => program.image).filter((image) => image.startsWith("/")));
+  const missing = new Set<string>();
+  await Promise.all([...paths].map(async (image) => {
+    try {
+      const stat = await fs.stat(path.join(process.cwd(), "public", image.slice(1)));
+      if (!stat.isFile()) missing.add(image);
+    } catch {
+      missing.add(image);
+    }
+  }));
+  if (missing.size) {
+    throw new ZodError(content.fundingPrograms.flatMap((program, index) => missing.has(program.image) ? [{
+      code: "custom" as const,
+      path: ["fundingPrograms", index, "image"],
+      message: "Imaginea locală nu există în asseturile publice."
+    }] : []));
   }
 }
 
-export async function getManagedContent(): Promise<ManagedContent> {
+export async function getManagedContent(options: { strict?: boolean } = {}): Promise<ManagedContent> {
   const storage = getContentStorage();
   try {
     const stored = storage.mode === "postgres"
       ? await readDatabaseContent()
       : storage.mode === "local-file"
         ? await readLocalContent()
-        : null;
-    if (!stored) {
+        : undefined;
+    if (stored === undefined) {
       const seed = await readSeedContent();
-      if (storage.mode === "postgres") await writeDatabaseContent(seed);
+      if (storage.mode === "postgres") await initializeDatabaseContent(seed);
       return seed;
     }
 
     const parsed = managedContentSchema.safeParse(stored);
     if (!parsed.success) {
-      const seed = await readSeedContent();
-      if (storage.mode === "postgres") await writeDatabaseContent(seed);
-      return seed;
+      throw new Error("Stored CMS content is invalid; no data was overwritten.");
     }
 
-    const seed = await readSeedContent();
-    const hasNoPrograms = parsed.data.fundingPrograms.length === 0;
-    const containsOnlyLegacyPlaceholders = parsed.data.fundingPrograms.length > 0
-      && parsed.data.fundingPrograms.every((program) => LEGACY_PLACEHOLDER_PROGRAM_IDS.has(program.id));
-
-    if (hasNoPrograms || containsOnlyLegacyPlaceholders) {
-      if (Date.parse(parsed.data.updatedAt) < Date.parse(seed.updatedAt)) {
-        const migrated = { ...seed, announcements: parsed.data.announcements, updatedAt: new Date().toISOString() };
-        await persistContent(migrated, storage);
-        return migrated;
-      }
-    }
-
-    if (parsed.data.seedVersion < seed.seedVersion) {
-      const existingIds = new Set(parsed.data.fundingPrograms.map((program) => program.id));
-      const migrated: ManagedContent = {
-        ...parsed.data,
-        seedVersion: seed.seedVersion,
-        updatedAt: new Date().toISOString(),
-        fundingPrograms: [
-          ...parsed.data.fundingPrograms.map((program) => {
-            const replacementUrl = BROKEN_SOURCE_URL_MIGRATIONS.get(program.sourceUrl);
-            return replacementUrl ? { ...program, sourceUrl: replacementUrl } : program;
-          }),
-          ...seed.fundingPrograms.filter((program) => !existingIds.has(program.id))
-        ]
-      };
-      await persistContent(migrated, storage);
-      return migrated;
-    }
-
+    // Existing CMS data is authoritative, including deliberate deletions and an empty catalogue.
     return parsed.data;
   } catch (error) {
-    console.error("Managed content read failed", error);
+    console.error("Managed content read failed; stored data was not replaced with seed content.");
+    if (options.strict) throw error;
     return readSeedContent();
   }
 }
 
 export async function getManagedContentSnapshot() {
   return {
-    content: await getManagedContent(),
+    content: await getManagedContent({ strict: true }),
     storage: getContentStorage()
   };
 }
@@ -233,10 +185,32 @@ export async function saveManagedContent(input: unknown): Promise<ManagedContent
   }
 
   const parsed = managedContentSchema.parse(input);
-  const content: ManagedContent = { ...parsed, updatedAt: new Date().toISOString() };
+  await validateLocalContentImages(parsed);
+  // Never turn a read fallback into an implicit recovery write over damaged CMS data.
+  const stored = storage.mode === "postgres" ? await readDatabaseContent() : await readLocalContent();
+  const previous = stored === undefined ? undefined : managedContentSchema.safeParse(stored);
+  if (previous && !previous.success) {
+    throw new Error("Stored CMS content is invalid; restore it before publishing.");
+  }
+  const previousContent = previous?.success ? previous.data : undefined;
+  if (previousContent && parsed.updatedAt !== previousContent.updatedAt) {
+    throw new ContentConflictError("Conținutul a fost modificat într-o altă sesiune. Reîncarcă pagina înainte de publicare.");
+  }
+  const oldPrograms = new Map(previousContent?.fundingPrograms.map((program) => [program.id, program]) ?? []);
+  const invalidSources = parsed.fundingPrograms.flatMap((program, index) => {
+    const previousSource = oldPrograms.get(program.id)?.sourceUrl;
+    return program.sourceUrl !== previousSource && !getOfficialFundingSource(program.sourceUrl) ? [{
+      code: "custom" as const,
+      path: ["fundingPrograms", index, "sourceUrl"],
+      message: "Alege documentația unei autorități oficiale, nu site-ul unei firme de consultanță."
+    }] : [];
+  });
+  if (invalidSources.length) throw new ZodError(invalidSources);
+  const updatedAt = new Date(Math.max(Date.now(), Date.parse(parsed.updatedAt) + 1)).toISOString();
+  const content: ManagedContent = { ...parsed, updatedAt };
 
   if (storage.mode === "postgres") {
-    await writeDatabaseContent(content);
+    await writeDatabaseContent(content, previousContent?.updatedAt);
   } else {
     await writeLocalContent(content);
   }

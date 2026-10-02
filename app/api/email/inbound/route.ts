@@ -1,6 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { Resend, type Attachment } from "resend";
 import { siteConfig } from "@/lib/site-config";
+import { BodyTooLargeError, readLimitedBody } from "@/lib/request-body";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -26,8 +27,9 @@ function jsonResponse(body: unknown, init?: ResponseInit) {
 }
 
 function normalizeAddress(value: string) {
-  const match = value.toLowerCase().match(/<([^>]+)>/);
-  return (match?.[1] || value).trim();
+  const normalized = value.trim().toLowerCase();
+  const match = normalized.match(/<([^>]+)>/);
+  return (match?.[1] || normalized).trim();
 }
 
 function configuredAddresses(value: string | undefined, fallback: string) {
@@ -62,11 +64,6 @@ export async function POST(request: NextRequest) {
     return jsonResponse({ message: "Serviciul de primire nu este configurat." }, { status: 503 });
   }
 
-  const contentLength = Number(request.headers.get("content-length") || 0);
-  if (contentLength > MAX_WEBHOOK_BODY_BYTES) {
-    return jsonResponse({ message: "Payload prea mare." }, { status: 413 });
-  }
-
   const id = request.headers.get("svix-id");
   const timestamp = request.headers.get("svix-timestamp");
   const signature = request.headers.get("svix-signature");
@@ -74,9 +71,14 @@ export async function POST(request: NextRequest) {
     return jsonResponse({ message: "Semnătură absentă." }, { status: 400 });
   }
 
-  const payload = await request.text();
-  if (new TextEncoder().encode(payload).byteLength > MAX_WEBHOOK_BODY_BYTES) {
-    return jsonResponse({ message: "Payload prea mare." }, { status: 413 });
+  let payload: string;
+  try {
+    payload = (await readLimitedBody(request, MAX_WEBHOOK_BODY_BYTES)).toString("utf8");
+  } catch (error) {
+    if (error instanceof BodyTooLargeError) {
+      return jsonResponse({ message: "Payload prea mare." }, { status: 413 });
+    }
+    return jsonResponse({ message: "Payload invalid." }, { status: 400 });
   }
 
   const resend = new Resend(apiKey);

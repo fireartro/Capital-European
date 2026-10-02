@@ -7,6 +7,7 @@ import { useState } from "react";
 import type { FundingProgram } from "@/lib/funding-programs";
 import { AnalyticsLink } from "@/components/analytics-link";
 import { trackAnalyticsEvent } from "@/lib/analytics";
+import { fundingSourceLabels, getOfficialFundingSource } from "@/lib/funding-sources";
 
 const INITIAL_PROGRAM_COUNT = 3;
 
@@ -18,7 +19,9 @@ export function FundingProgramList({ programs }: { programs: readonly FundingPro
   return (
     <>
       <div className="funding-program-list" id="funding-program-list" data-expanded={expanded}>
-        {visiblePrograms.map((program) => (
+        {visiblePrograms.map((program) => {
+          const officialSource = getOfficialFundingSource(program.sourceUrl);
+          return (
           <article className="funding-program-card" key={program.id}>
             <figure className="funding-program-image">
               <Image
@@ -45,11 +48,12 @@ export function FundingProgramList({ programs }: { programs: readonly FundingPro
               </dl>
               <div className="funding-program-actions">
                 <AnalyticsLink eventName="select_program" eventParameters={{ program_id: program.id, program_name: program.title }} href={`/contact?service=fonduri-europene&program=${program.id}#formular-contact`}>Solicită analiza <ArrowRight aria-hidden="true" /></AnalyticsLink>
-                <a href={program.sourceUrl} target="_blank" rel="noopener noreferrer" onClick={() => trackAnalyticsEvent("program_source_click", { program_id: program.id, program_name: program.title })}>Ghid și detalii <ExternalLink aria-hidden="true" /></a>
+                {officialSource && <a href={officialSource} target="_blank" rel="noopener noreferrer" onClick={() => trackAnalyticsEvent("program_source_click", { program_id: program.id, program_name: program.title })}>{program.sourceKind ? fundingSourceLabels[program.sourceKind] : "Documentația oficială"} <ExternalLink aria-hidden="true" /></a>}
               </div>
             </div>
           </article>
-        ))}
+          );
+        })}
         {!programs.length && (
           <div className="funding-program-empty">
             <h3>Lista se actualizează</h3>
