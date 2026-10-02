@@ -72,7 +72,7 @@ body:has(.cookie-preferences-backdrop) .quick-contact-float { display: none; }
   border-radius: 999px;
   color: var(--eu-yellow);
   background: rgba(255, 204, 0, .08);
-  font-size: .75rem;
+  font-size: var(--text-small, .75rem);
   font-weight: 850;
 }
 
@@ -167,9 +167,9 @@ body:has(.cookie-preferences-backdrop) .quick-contact-float { display: none; }
   .inner-hero { min-height: 0; }
   .inner-hero-content { padding-block: 42px 34px; }
   .inner-hero h1 { font-size: clamp(1.78rem, 8vw, 1.95rem); line-height: 1.07; }
-  .inner-hero-content > p:not(.eyebrow) { margin-top: 14px; font-size: .8rem; }
+  .inner-hero-content > p:not(.eyebrow) { margin-top: 14px; font-size: var(--text-small, .8rem); }
   .inner-hero-actions { gap: 12px; margin-top: 22px; }
-  .hero-proof { gap: 8px; margin-top: 22px; font-size: .75rem; }
+  .hero-proof { gap: 8px; margin-top: 22px; font-size: var(--text-small, .75rem); }
 
   .funding-photo-hero {
     min-height: clamp(620px, calc(100svh - 64px), 700px);
@@ -178,7 +178,7 @@ body:has(.cookie-preferences-backdrop) .quick-contact-float { display: none; }
   .funding-photo-hero-content h1 { font-size: clamp(1.78rem, 8.3vw, 2rem); line-height: 1.06; }
   .funding-hero-active-copy { min-height: 138px; margin-top: 18px; }
   .funding-hero-active-copy h2 { font-size: 1.12rem; line-height: 1.2; }
-  .funding-hero-active-copy p { margin-top: 9px; font-size: .76rem; line-height: 1.52; }
+  .funding-hero-active-copy p { margin-top: 9px; font-size: var(--text-small, .76rem); line-height: 1.52; }
   .funding-hero-actions { margin-top: 18px; }
   .funding-hero-controls { margin-top: 18px; }
   .funding-hero-shade {
@@ -220,17 +220,17 @@ body:has(.cookie-preferences-backdrop) .quick-contact-float { display: none; }
   .process-steps article { min-height: 0; padding: 18px; }
   .semantic-content,
   .service-faq { gap: 28px; margin-top: 58px; padding-top: 44px; }
-  .semantic-content-intro > p:not(.eyebrow) { margin-top: 17px; font-size: .82rem; line-height: 1.68; }
+  .semantic-content-intro > p:not(.eyebrow) { margin-top: 17px; font-size: var(--text-small, .82rem); line-height: 1.68; }
   .semantic-content-grid article { padding-block: 21px; }
-  .service-faq-heading > p:last-child { margin-top: 14px; font-size: .8rem; }
-  .service-faq-list summary { padding-block: 18px; font-size: .86rem; }
+  .service-faq-heading > p:last-child { margin-top: 14px; font-size: var(--text-small, .8rem); }
+  .service-faq-list summary { padding-block: 18px; font-size: var(--text-small, .86rem); }
 
   .admin-service-card { padding: 20px 18px; }
   .admin-service-card h3 { margin-top: 22px; }
   .admin-service-card ul { margin-block: 16px; }
   .company-card { padding: 24px 18px; }
   .company-card h3 { font-size: 1.82rem; }
-  .company-card-copy > p { font-size: .8rem; line-height: 1.62; }
+  .company-card-copy > p { font-size: var(--text-small, .8rem); line-height: 1.62; }
   .company-card ul { margin-block: 17px; }
   .company-card-actions { margin-top: 20px; }
   .company-form-options { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -241,19 +241,19 @@ body:has(.cookie-preferences-backdrop) .quick-contact-float { display: none; }
   .about-panel { padding: 25px 19px; }
   .about-mark { margin-bottom: 26px; }
   .about-panel h2 { font-size: 2rem; line-height: 1.08; }
-  .about-panel > p:not(.eyebrow) { margin-block: 17px; font-size: .8rem; }
+  .about-panel > p:not(.eyebrow) { margin-block: 17px; font-size: var(--text-small, .8rem); }
   .principles-grid article { min-height: 0; padding: 20px; }
   .principles-grid article > svg { margin-top: 22px; }
   .about-rhythm article { padding: 16px; }
   .story-grid { gap: 24px; }
   .story-grid h2 { font-size: 2rem; line-height: 1.08; }
   .story-copy { padding-top: 24px; }
-  .story-copy p { margin-bottom: 15px; font-size: .82rem; line-height: 1.68; }
+  .story-copy p { margin-bottom: 15px; font-size: var(--text-small, .82rem); line-height: 1.68; }
   .about-media-panel { gap: 18px; }
   .about-stat-grid article { padding: 15px; }
 
   .contact-copy h1 { font-size: clamp(1.85rem, 8.2vw, 2rem); line-height: 1.07; }
-  .contact-copy > p:not(.eyebrow) { font-size: .8rem; line-height: 1.58; }
+  .contact-copy > p:not(.eyebrow) { font-size: var(--text-small, .8rem); line-height: 1.58; }
   .contact-steps article { padding: 10px; }
   .contact-form { padding: 20px 15px; }
   .form-heading h2 { font-size: 1.22rem; }
@@ -266,8 +266,8 @@ body:has(.cookie-preferences-backdrop) .quick-contact-float { display: none; }
   .seo-service-hero h1 { font-size: clamp(1.78rem, 8vw, 1.9rem); line-height: 1.07; }
   .seo-service-band { padding-block: 44px; }
   .seo-service-band h2 { font-size: 1.55rem; line-height: 1.14; }
-  .seo-service-band p { font-size: .82rem; line-height: 1.64; }
-  .seo-check-list li { min-height: 52px; padding: 12px 13px; font-size: .8rem; }
+  .seo-service-band p { font-size: var(--text-small, .82rem); line-height: 1.64; }
+  .seo-check-list li { min-height: 52px; padding: 12px 13px; font-size: var(--text-small, .8rem); }
   .seo-benefit-grid,
   .seo-process-grid,
   .seo-related-links { gap: 9px; margin-top: 25px; }
@@ -297,7 +297,7 @@ body:has(.cookie-preferences-backdrop) .quick-contact-float { display: none; }
     justify-content: center;
     min-height: 44px;
     margin: 0 0 10px;
-    font-size: .75rem;
+    font-size: var(--text-small, .75rem);
   }
 
   .site-footer { padding-bottom: 86px; }
@@ -320,5 +320,5 @@ body:has(.cookie-preferences-backdrop) .quick-contact-float { display: none; }
   .about-panel h2,
   .story-grid h2 { font-size: 2rem; line-height: 1.08; }
   .about-panel > p:not(.eyebrow),
-  .story-copy p { font-size: .8rem; line-height: 1.6; }
+  .story-copy p { font-size: var(--text-small, .8rem); line-height: 1.6; }
 }

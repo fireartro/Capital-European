@@ -21,7 +21,7 @@ export default function CookiesPage() {
       <LegalPage
         eyebrow="Legea nr. 506/2004 · Directiva ePrivacy"
         title="Politica de cookies"
-        updated="2 octombrie 2026"
+        updated="3 octombrie 2026"
         intro="Această politică explică ce informații pot fi stocate pe dispozitiv, când cerem consimțământul și cum poți accepta, refuza sau modifica preferințele fără să pierzi accesul la conținut."
         actions={<CookieSettingsButton />}
         sections={[
@@ -48,6 +48,7 @@ export default function CookiesPage() {
             content: [
               "Utilizăm identificatorul propriu «ce_cookie_consent_v4» în localStorage. Numai când această stocare este indisponibilă folosim un cookie first-party de rezervă. Sunt reținute versiunea, alegerile separate pentru analiză, marketing și conținut extern, precum și data actualizării.",
               "Durata maximă este de 180 de zile. Scopul exclusiv este să respectăm alegerea ta și să nu afișăm bannerul la fiecare pagină. Nu este folosit pentru profilare, publicitate sau urmărire între website-uri.",
+              "Dacă alegi o dimensiune mai mare a afișării, preferința «ce_display_size_v1» este păstrată local în browser pentru această opțiune solicitată de tine. Nu este transmisă către servicii de analiză sau publicitate. Rămâne până când revii la dimensiunea implicită sau ștergi datele website-ului din browser.",
               "Acordurile vechi v2/v3 nu includ categoria nouă și nu sunt convertite în permisiune pentru hartă; este solicitată o alegere nouă. Lipsa, invaliditatea sau expirarea acordului dezactivează categoriile opționale.",
               "Zona de administrare poate utiliza cookie-ul strict necesar «capital_admin_session», inaccesibil JavaScript, pentru autentificare. Durata configurabilă este între 15 și 240 de minute, implicit 60 de minute; acesta nu este un cookie de marketing."
             ]

@@ -3,7 +3,7 @@
 import { ArrowRight, ChevronLeft, ChevronRight, Landmark, Pause, Play } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 
 const slides = [
   {
@@ -113,10 +113,14 @@ export function FundingHeroCarousel() {
       <div className="section-container funding-photo-hero-content">
         <p className="eyebrow eyebrow-light"><Landmark aria-hidden="true" /> Programe și oportunități de finanțare</p>
         <h1 id="funding-hero-title">Consultanță fonduri europene</h1>
-        <div className="funding-hero-active-copy" key={`funding-copy-${activeIndex}`}>
-          <span>{activeSlide.label}</span>
-          <h2>{activeSlide.title}</h2>
-          <p id="funding-hero-description">{activeSlide.text}</p>
+        <div className="funding-hero-active-copy">
+          {slides.map((slide, index) => (
+            <Fragment key={slide.image}>
+              <span data-active={index === activeIndex} aria-hidden={index !== activeIndex}>{slide.label}</span>
+              <h2 data-active={index === activeIndex} aria-hidden={index !== activeIndex}>{slide.title}</h2>
+              <p data-active={index === activeIndex} aria-hidden={index !== activeIndex} id={index === activeIndex ? "funding-hero-description" : undefined}>{slide.text}</p>
+            </Fragment>
+          ))}
         </div>
         <div className="funding-hero-actions">
           <Link className="primary-button yellow-button" href="#fonduri-active">Vezi programele de finanțare <ArrowRight aria-hidden="true" /></Link>

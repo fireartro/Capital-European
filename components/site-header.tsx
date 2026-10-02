@@ -23,6 +23,7 @@ import { usePathname } from "next/navigation";
 import { type MouseEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Brand } from "@/components/brand";
 import { CookieSettingsButton } from "@/components/cookie-settings-button";
+import { DisplaySizeButton } from "@/components/display-size-button";
 import { siteConfig } from "@/lib/site-config";
 import { trackAnalyticsEvent } from "@/lib/analytics";
 
@@ -196,6 +197,7 @@ export function SiteHeader({ navigationContext }: { navigationContext?: "funding
     first?.focus();
 
     const handleKeyDown = (event: KeyboardEvent) => {
+      if (drawerRef.current?.querySelector("dialog[open]")) return;
       if (event.key === "Escape") {
         closeMenu();
         return;
@@ -244,10 +246,13 @@ export function SiteHeader({ navigationContext }: { navigationContext?: "funding
 
   const navigationContent = (
     <>
-      <Link className="back-to-choice" href="/" onClick={closeMenu} aria-label="Schimbă categoria de servicii" title="Schimbă categoria de servicii">
-        <ArrowLeft aria-hidden="true" />
-        <span>Schimbă categoria</span>
-      </Link>
+      <div className="navigation-tools">
+        <Link className="back-to-choice" href="/" onClick={closeMenu} aria-label="Schimbă categoria de servicii" title="Schimbă categoria de servicii">
+          <ArrowLeft aria-hidden="true" />
+          <span>Schimbă categoria</span>
+        </Link>
+        <DisplaySizeButton />
+      </div>
       <nav className="side-nav" aria-label={`Navigare ${context.label}`}>
         {context.navigation.map((item) => {
           const Icon = item.icon;

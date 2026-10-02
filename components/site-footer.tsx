@@ -1,5 +1,6 @@
 import { Brand } from "@/components/brand";
 import { CookieSettingsButton } from "@/components/cookie-settings-button";
+import { DisplaySizeButton } from "@/components/display-size-button";
 import { FooterMap } from "@/components/footer-map";
 import { PnrrPromotionBanner } from "@/components/pnrr-promotion-banner";
 import { siteConfig } from "@/lib/site-config";
@@ -90,6 +91,7 @@ export function SiteFooter({ showCookieSettings = true }: { showCookieSettings?:
           <Link href="/cookies" title="Politica de cookies">Cookies</Link>
           <a href="https://anpc.ro/sal/" target="_blank" rel="noopener noreferrer" title="Soluționarea alternativă a litigiilor prin ANPC">SAL ANPC</a>
           {showCookieSettings && <CookieSettingsButton compact />}
+          <DisplaySizeButton />
         </div>
       </div>
     </footer>
