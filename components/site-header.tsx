@@ -284,7 +284,7 @@ export function SiteHeader({ navigationContext }: { navigationContext?: "funding
       <div className="sidebar-legal">
         <a href="/confidentialitate" onClick={closeMenu} title="Politica de confidențialitate">Confidențialitate</a>
         <a href="/termeni" onClick={closeMenu} title="Termeni și condiții">Termeni</a>
-        <CookieSettingsButton compact />
+        <CookieSettingsButton compact onOpen={closeMenu} />
       </div>
     </>
   );

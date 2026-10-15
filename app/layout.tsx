@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import "./interaction-fixes.css";
+import "./viewport-scaling.css";
 import { ServiceWorkerCleanup } from "@/components/service-worker-cleanup";
 import { CookieBanner } from "@/components/cookie-banner";
 import { siteConfig } from "@/lib/site-config";

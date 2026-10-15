@@ -1,0 +1,34 @@
+:root { --site-scale: 1; }
+
+/* Keep the Windows reference layout; scale the whole public interface together. */
+@media screen {
+  @media (min-width: 1920px) and (min-height: 1080px) { :root { --site-scale: 1.25; } }
+  @media (min-width: 2304px) and (min-height: 1296px) { :root { --site-scale: 1.5; } }
+  @media (min-width: 2560px) and (min-height: 1440px) { :root { --site-scale: 1.666667; } }
+  @media (min-width: 3072px) and (min-height: 1728px) { :root { --site-scale: 2; } }
+  @media (min-width: 3840px) and (min-height: 2160px) { :root { --site-scale: 2.5; } }
+  @media (min-width: 5120px) and (min-height: 2880px) { :root { --site-scale: 3.333333; } }
+
+  @supports (zoom: max(1, min(100vw / 1536px, 100svh / 864px))) {
+    :root { --site-scale: max(1, min(100vw / 1536px, 100svh / 864px)); }
+  }
+
+  @supports (zoom: 1) {
+    body:has(.app-layout, .legal-page, .not-found-page) {
+      zoom: var(--site-scale);
+      --page-scale: var(--site-scale);
+      /* Viewport units otherwise receive the scale twice inside a zoomed layout. */
+      --page-viewport-height: calc(100vh / var(--site-scale));
+      --page-small-viewport-height: calc(100svh / var(--site-scale));
+      --page-dynamic-viewport-height: calc(100dvh / var(--site-scale));
+    }
+  }
+}
+
+@media (min-width: 1101px) {
+  .split-grid { container: choices / inline-size; }
+  @container choices (max-width: 1440px) {
+    .choice-admin { grid-template-columns: minmax(0, 1fr); }
+    .choice-admin > .admin-visual { position: absolute; right: -20px; bottom: 28px; opacity: .16; transform: scale(.85); }
+  }
+}
