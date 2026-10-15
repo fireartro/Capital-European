@@ -1,8 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import "./interaction-fixes.css";
-import "./display-size.css";
-import { DisplaySizePreference } from "@/components/display-size-button";
 import { ServiceWorkerCleanup } from "@/components/service-worker-cleanup";
 import { CookieBanner } from "@/components/cookie-banner";
 import { siteConfig } from "@/lib/site-config";
@@ -75,7 +73,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <style id="critical-split-css" dangerouslySetInnerHTML={{ __html: splitCriticalCss }} />
       </head>
       <body>
-        <DisplaySizePreference />
         <JsonLd data={organizationSchema()} />
         <JsonLd data={webSiteSchema()} />
         <CookieBanner

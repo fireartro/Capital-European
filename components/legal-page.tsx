@@ -3,7 +3,6 @@ import { ArrowLeft } from "lucide-react";
 import type { ReactNode } from "react";
 import { Brand } from "@/components/brand";
 import { CookieSettingsButton } from "@/components/cookie-settings-button";
-import { DisplaySizeButton } from "@/components/display-size-button";
 
 export type LegalSection = {
   title: string;
@@ -37,7 +36,6 @@ export function LegalPage({
             <Brand variant="light" />
           </Link>
           <div className="legal-nav-actions">
-            <DisplaySizeButton />
             <CookieSettingsButton compact />
             <Link className="legal-back" href="/" aria-label="Înapoi la site-ul Capital European" title="Înapoi la site"><ArrowLeft aria-hidden="true" /> Înapoi la site</Link>
           </div>
