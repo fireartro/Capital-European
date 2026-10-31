@@ -89,7 +89,7 @@ function escapeHtml(value: string) {
 
 function serviceLabel(service: ContactDeliveryData["service"]) {
   const sunService = getStartUpNationService(service);
-  if (sunService) return sunService.label;
+  if (sunService) return `${sunService.label} - ${sunService.price} lei`;
   const labels: Record<Exclude<ContactDeliveryData["service"], typeof startUpNationServiceIds[number]>, string> = {
     nesigur: "Nu stie inca serviciul potrivit",
     "servicii-administrative": "Servicii administrative",

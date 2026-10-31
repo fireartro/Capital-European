@@ -2,7 +2,7 @@
 
 import { ArrowRight, GraduationCap } from "lucide-react";
 import { AnalyticsLink } from "@/components/analytics-link";
-import { startUpNationPackageEvent, startUpNationPackageHref } from "@/lib/start-up-nation";
+import { startUpNationPackageEvent, startUpNationPackageHref, startUpNationPackagePrice, startUpNationPrices } from "@/lib/start-up-nation";
 import { trackAnalyticsEvent } from "@/lib/analytics";
 
 export function StartUpNationBanner() {
@@ -10,7 +10,12 @@ export function StartUpNationBanner() {
     <aside className="sun-offer" aria-label="Pachet Start-Up Nation">
       <div className="sun-offer-inner">
         <GraduationCap className="sun-offer-icon" aria-hidden="true" />
-        <p><strong>Start-Up Nation</strong><span>Înscriere curs antreprenoriat + înființare firmă</span></p>
+        <div className="sun-offer-copy">
+          <p><strong>Pachet Start-Up Nation</strong><span>Înscriere curs antreprenoriat + înființare firmă</span></p>
+          <p className="sun-offer-breakdown">Asistență înscriere la curs: {startUpNationPrices.courseRegistration} lei + înființare firmă SUN: {startUpNationPrices.companyFormation} lei</p>
+        </div>
+        <div className="sun-offer-actions">
+          <div className="sun-offer-price"><span>Pachet complet</span><strong>{startUpNationPackagePrice} <small>lei</small></strong></div>
         <AnalyticsLink
           className="sun-offer-link"
           href={startUpNationPackageHref}
@@ -32,6 +37,7 @@ export function StartUpNationBanner() {
         >
           Solicită pachetul <ArrowRight aria-hidden="true" />
         </AnalyticsLink>
+        </div>
       </div>
     </aside>
   );

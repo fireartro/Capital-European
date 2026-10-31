@@ -8,7 +8,7 @@ import { contactCategoryForService, contactSchema, type ContactCategory, type Co
 import type { FundingProgramOption } from "@/lib/funding-programs";
 import { siteConfig } from "@/lib/site-config";
 import { trackAnalyticsEvent } from "@/lib/analytics";
-import { getStartUpNationService, startUpNationPackageEvent, startUpNationServiceOptions } from "@/lib/start-up-nation";
+import { getStartUpNationService, startUpNationPackageEvent, startUpNationPrices, startUpNationServiceOptions } from "@/lib/start-up-nation";
 
 type FormCategory = Exclude<ContactCategory, "general">;
 
@@ -238,8 +238,10 @@ export function ContactForm({
           ) : sunService ? (
             <div className="form-sun-context">
               <strong>{sunService.label}</strong>
+              <p className="form-sun-price"><span>{selectedService === "pachet-start-up-nation" ? "Tarif pachet" : "Tarif serviciu"}</span><strong>{sunService.price} lei</strong></p>
+              {selectedService === "pachet-start-up-nation" && <p>Înscriere la curs: {startUpNationPrices.courseRegistration} lei + înființare firmă SUN: {startUpNationPrices.companyFormation} lei.</p>}
               <p>{sunService.description}</p>
-              <small>Confirmăm condițiile, tariful și pașii înainte de contract. Serviciile de asistență nu garantează admiterea la curs sau obținerea finanțării.</small>
+              <small>Confirmăm condițiile și pașii înainte de contract. Serviciile de asistență nu garantează admiterea la curs sau obținerea finanțării.</small>
             </div>
           ) : (
             <div className="form-context-note">
