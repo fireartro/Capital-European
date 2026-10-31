@@ -4,6 +4,7 @@ import { createFundingProgramOptions, getFundingProgramLabel } from "@/lib/fundi
 import { getManagedContent } from "@/lib/content-store";
 import { createPageMetadata } from "@/lib/metadata";
 import { breadcrumbSchema, JsonLd } from "@/lib/structured-data";
+import { getStartUpNationService, startUpNationServiceIds } from "@/lib/start-up-nation";
 
 export const metadata = createPageMetadata({
   title: "Contact Capital European | Trimite o solicitare",
@@ -14,6 +15,7 @@ export const metadata = createPageMetadata({
 export const dynamic = "force-dynamic";
 
 const allowedServices = new Set<ContactInput["service"]>([
+  ...startUpNationServiceIds,
   "nesigur", "servicii-administrative", "documente", "secretariat", "administrativ", "consultanta",
   "infiintare-firma", "infiintare-pfa", "infiintare-srl", "fonduri-europene"
 ]);
@@ -33,7 +35,8 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ s
     : "";
   const parsedScore = score && /^\d{1,3}$/.test(score) ? Number(score) : undefined;
   const validScore = parsedScore !== undefined && parsedScore >= 0 && parsedScore <= 100 ? parsedScore : undefined;
-  const defaultMessage = defaultService === "fonduri-europene" && defaultFundingProgram
+  const sunService = defaultService ? getStartUpNationService(defaultService) : undefined;
+  const defaultMessage = sunService ? sunService.message : defaultService === "fonduri-europene" && defaultFundingProgram
     ? `Solicit evaluarea eligibilității și a punctajului pentru ${getFundingProgramLabel(defaultFundingProgram, content.fundingPrograms)}.${validScore !== undefined ? ` Punctaj orientativ de pregătire calculat pe site: ${validScore}/100.` : ""} Doresc verificarea criteriilor și a grilei oficiale.`
     : "";
 

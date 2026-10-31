@@ -2,18 +2,20 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { BriefcaseBusiness, Check, Landmark, LoaderCircle, Send } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { contactCategoryForService, contactSchema, type ContactCategory, type ContactInput } from "@/lib/contact-schema";
 import type { FundingProgramOption } from "@/lib/funding-programs";
 import { siteConfig } from "@/lib/site-config";
 import { trackAnalyticsEvent } from "@/lib/analytics";
+import { getStartUpNationService, startUpNationPackageEvent, startUpNationServiceOptions } from "@/lib/start-up-nation";
 
 type FormCategory = Exclude<ContactCategory, "general">;
 
-const fundingServiceOptions: ReadonlyArray<[ContactInput["service"], string]> = [
+const fundingServiceOptions: ReadonlyArray<readonly [ContactInput["service"], string]> = [
   ["fonduri-europene", "Fonduri europene: eligibilitate și proiect"],
-  ["consultanta", "Consultanță pentru pregătire și implementare"]
+  ["consultanta", "Consultanță pentru pregătire și implementare"],
+  ...startUpNationServiceOptions
 ] as const;
 
 const administrativeServiceOptions: ReadonlyArray<[ContactInput["service"], string]> = [
@@ -53,6 +55,7 @@ export function ContactForm({
     reset,
     control,
     setValue,
+    getValues,
     formState: { errors, isSubmitting }
   } = useForm<ContactInput>({
     resolver: zodResolver(contactSchema),
@@ -73,9 +76,33 @@ export function ContactForm({
   const selectedCategory = (useWatch({ control, name: "category" }) ?? initialCategory) as FormCategory;
   const selectedService = useWatch({ control, name: "service" }) ?? initialService;
   const isFundingService = selectedService === "fonduri-europene" || selectedService === "consultanta";
+  const sunService = getStartUpNationService(selectedService);
   const serviceOptions = selectedCategory === "fonduri-europene"
     ? fundingServiceOptions
     : administrativeServiceOptions;
+  const lastAutoMessage = useRef(defaultMessage);
+  const prefillSignature = `${initialService}:${defaultFundingProgram}:${defaultMessage}`;
+  const lastPrefill = useRef(prefillSignature);
+  const applyAutoMessage = useCallback((nextMessage: string) => {
+    const message = getValues("message");
+    if ((!message || message === lastAutoMessage.current) && message !== nextMessage) {
+      setValue("message", nextMessage);
+    }
+    lastAutoMessage.current = nextMessage;
+  }, [getValues, setValue]);
+
+  useEffect(() => {
+    if (isSubmitting || lastPrefill.current === prefillSignature) return;
+    lastPrefill.current = prefillSignature;
+    setValue("category", initialCategory);
+    setValue("service", initialService);
+    setValue("fundingProgram", defaultFundingProgram);
+  }, [defaultFundingProgram, initialCategory, initialService, isSubmitting, prefillSignature, setValue]);
+
+  useEffect(() => {
+    if (isSubmitting) return;
+    applyAutoMessage(getStartUpNationService(selectedService)?.message ?? (selectedService === initialService ? defaultMessage : ""));
+  }, [applyAutoMessage, defaultMessage, initialService, isSubmitting, selectedService]);
 
   const selectCategory = (category: FormCategory) => {
     setValue("category", category, { shouldDirty: true, shouldValidate: true });
@@ -91,6 +118,21 @@ export function ContactForm({
       setValue("fundingProgram", "");
     }
   }, [isFundingService, setValue]);
+
+  useEffect(() => {
+    const selectPackage = (event: Event) => {
+      event.preventDefault();
+      if (isSubmitting) return;
+      setSent(false);
+      setServerMessage("");
+      setValue("category", "fonduri-europene", { shouldDirty: true });
+      setValue("service", "pachet-start-up-nation", { shouldDirty: true, shouldValidate: true });
+      setValue("fundingProgram", "");
+      applyAutoMessage(getStartUpNationService("pachet-start-up-nation")!.message);
+    };
+    window.addEventListener(startUpNationPackageEvent, selectPackage);
+    return () => window.removeEventListener(startUpNationPackageEvent, selectPackage);
+  }, [applyAutoMessage, isSubmitting, setValue]);
 
   const submit = async (data: ContactInput) => {
     setServerMessage("");
@@ -117,10 +159,10 @@ export function ContactForm({
         phone: "",
         organization: "",
         taxId: "",
-        category: initialCategory,
-        service: initialService,
-        fundingProgram: defaultFundingProgram,
-        message: defaultMessage,
+        category: contactCategoryForService(data.service),
+        service: data.service,
+        fundingProgram: data.fundingProgram ?? "",
+        message: getStartUpNationService(data.service)?.message ?? (data.service === initialService ? defaultMessage : ""),
         consent: false,
         website: ""
       });
@@ -177,7 +219,7 @@ export function ContactForm({
         </fieldset>
         <label>
           <span>Ce serviciu te interesează</span>
-          <select required {...register("service")} aria-invalid={!!errors.service} aria-describedby={errors.service ? "service-error" : undefined}>
+          <select required {...register("service")} value={selectedService} aria-invalid={!!errors.service} aria-describedby={errors.service ? "service-error" : undefined}>
             {serviceOptions.map(([value, label]) => <option key={value} value={value}>{label}</option>)}
           </select>
           {errors.service && <small id="service-error">{errors.service.message}</small>}
@@ -193,6 +235,12 @@ export function ContactForm({
                 ))}
               </select>
             </label>
+          ) : sunService ? (
+            <div className="form-sun-context">
+              <strong>{sunService.label}</strong>
+              <p>{sunService.description}</p>
+              <small>Confirmăm condițiile, tariful și pașii înainte de contract. Serviciile de asistență nu garantează admiterea la curs sau obținerea finanțării.</small>
+            </div>
           ) : (
             <div className="form-context-note">
               <strong>Servicii administrative</strong>

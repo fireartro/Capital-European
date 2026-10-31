@@ -1,6 +1,7 @@
 import { z } from "zod";
+import { startUpNationServiceIds } from "@/lib/start-up-nation";
 
-const fundingServices = new Set(["consultanta", "fonduri-europene"]);
+const fundingServices = new Set(["consultanta", "fonduri-europene", ...startUpNationServiceIds]);
 const administrativeServices = new Set([
   "servicii-administrative",
   "documente",
@@ -45,6 +46,7 @@ export const contactSchema = z.object({
     .default(""),
   category: z.enum(["fonduri-europene", "servicii-administrative", "general"]).optional(),
   service: z.enum([
+    ...startUpNationServiceIds,
     "nesigur",
     "servicii-administrative",
     "documente",

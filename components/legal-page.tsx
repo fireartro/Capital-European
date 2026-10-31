@@ -3,6 +3,7 @@ import { ArrowLeft } from "lucide-react";
 import type { ReactNode } from "react";
 import { Brand } from "@/components/brand";
 import { CookieSettingsButton } from "@/components/cookie-settings-button";
+import { StartUpNationBanner } from "@/components/start-up-nation-banner";
 
 export type LegalSection = {
   title: string;
@@ -41,6 +42,7 @@ export function LegalPage({
           </div>
         </div>
       </header>
+      <StartUpNationBanner />
       <article className="shell legal-content">
         <p className="kicker">{eyebrow}</p>
         <h1>{title}</h1>

@@ -3,6 +3,7 @@ import { contactSchema, type ContactSubmission } from "@/lib/contact-schema";
 import { consumeContactAttempt } from "@/lib/contact-rate-limit";
 import { BodyTooLargeError, readLimitedBody } from "@/lib/request-body";
 import { siteConfig } from "@/lib/site-config";
+import { getStartUpNationService, startUpNationServiceIds } from "@/lib/start-up-nation";
 
 export const runtime = "nodejs";
 
@@ -87,7 +88,9 @@ function escapeHtml(value: string) {
 }
 
 function serviceLabel(service: ContactDeliveryData["service"]) {
-  const labels: Record<ContactDeliveryData["service"], string> = {
+  const sunService = getStartUpNationService(service);
+  if (sunService) return sunService.label;
+  const labels: Record<Exclude<ContactDeliveryData["service"], typeof startUpNationServiceIds[number]>, string> = {
     nesigur: "Nu stie inca serviciul potrivit",
     "servicii-administrative": "Servicii administrative",
     documente: "Administrare documente",
@@ -100,7 +103,7 @@ function serviceLabel(service: ContactDeliveryData["service"]) {
     "fonduri-europene": "Fonduri europene"
   };
 
-  return labels[service] ?? service;
+  return labels[service as keyof typeof labels] ?? service;
 }
 
 function contactEmailHtml(data: ContactDeliveryData) {

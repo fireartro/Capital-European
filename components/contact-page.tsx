@@ -1,6 +1,6 @@
 import { ContactForm } from "@/components/contact-form";
 import { SiteShell } from "@/components/site-shell";
-import type { ContactInput } from "@/lib/contact-schema";
+import { contactCategoryForService, type ContactInput } from "@/lib/contact-schema";
 import type { FundingProgramOption } from "@/lib/funding-programs";
 
 export function ContactPage({
@@ -14,7 +14,7 @@ export function ContactPage({
   defaultMessage?: string;
   fundingProgramOptions?: readonly FundingProgramOption[];
 }) {
-  const navigationContext = defaultService === "fonduri-europene" || defaultService === "consultanta"
+  const navigationContext = defaultService && contactCategoryForService(defaultService) === "fonduri-europene"
     ? "funding"
     : defaultService && defaultService !== "nesigur"
       ? "admin"

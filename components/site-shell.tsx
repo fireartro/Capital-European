@@ -5,6 +5,7 @@ import { SiteHeader } from "@/components/site-header";
 import { getWhatsAppUrl, siteConfig } from "@/lib/site-config";
 import { WhatsAppIcon } from "@/components/whatsapp-icon";
 import { TrackedAnchor } from "@/components/tracked-anchor";
+import { StartUpNationBanner } from "@/components/start-up-nation-banner";
 
 export function SiteShell({
   children,
@@ -28,6 +29,7 @@ export function SiteShell({
       <a className="skip-link" href="#continut" aria-label="Sari direct la conținutul paginii" title="Sari la conținut">Sari la conținut</a>
       {showNavigation && <SiteHeader navigationContext={navigationContext} />}
       <main className="site-content" id="continut">
+        <StartUpNationBanner />
         {children}
         {showFooter && showReviews && <GoogleReviewsSection variant="default" />}
         {showFooter && <SiteFooter />}
